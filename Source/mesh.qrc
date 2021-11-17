@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>sphere.obj</file>
+        <file>sphere.off</file>
+		<file>space_station.off</file>
+    </qresource>
+</RCC>
