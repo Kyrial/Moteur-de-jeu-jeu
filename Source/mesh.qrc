@@ -2,6 +2,8 @@
     <qresource prefix="/">
         <file>sphere.obj</file>
         <file>sphere.off</file>
+        <file>dragon.off</file>
+        <file>house.off</file>
 		<file>space_station.off</file>
     </qresource>
 </RCC>

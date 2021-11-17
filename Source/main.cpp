@@ -78,8 +78,8 @@ int main(int argc, char *argv[])
     MainWidget widget2(60);
 
     widget2.show();
-    MainWidget widge2(5);
-    widge2.show();
+   // MainWidget widge2(5);
+  //  widge2.show();
 
 
 #else
