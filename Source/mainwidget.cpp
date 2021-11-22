@@ -58,7 +58,9 @@
 
 bool Tourne = false;
 
-MainWidget::MainWidget(){}
+MainWidget::MainWidget(){
+    FPS = 40;
+}
 
 MainWidget::MainWidget(int fps){
     FPS = fps;
@@ -74,6 +76,7 @@ MainWidget::MainWidget(QWidget *parent) :
     angularSpeed(0),
     gameObj(0)
 {
+
 }
 
 void MainWidget::initMonde(){
@@ -212,6 +215,12 @@ void MainWidget::scene(){
                     new QOpenGLTexture(QImage(":/textureSoleil.png").mirrored())
                     );
 
+    QObject::connect(control, &Controler::moveObject,
+                     satellite, &Object::controleMouvements);
+
+
+
+
     //Fin creation
 
     Object *cameraObj= new CameraObject();
@@ -341,10 +350,12 @@ void MainWidget::initializeGL()
 
     scene();
 
-    control = new Controler(this);
+    QObject::connect(this, &MainWidget::signalKeyPress,
+                         control, &Controler::keyPressEvent);
 
     QObject::connect(control, &Controler::viewChanged,
-                         this, &MainWidget::keyPressEvent);
+                         this, &MainWidget::keyPress);
+
 
     /*   GameObject *gameObj2 = new GameObject();
 
@@ -496,8 +507,11 @@ void MainWidget::paintGL()
     //lastFrame.start();
     //geometries->drawCubeGeometry(&program);
 }
-
 void MainWidget::keyPressEvent(QKeyEvent *event)
+{emit signalKeyPress(event);
+}
+
+void MainWidget::keyPress(QKeyEvent *event)
 {
     qDebug("touche appuyé ");
     switch (event->key()) {

@@ -8,14 +8,14 @@
 
 class MobileObj  : public Object
 {
-
+Q_OBJECT
 
 public:
 
     MobileObj():Object(){}
 
 
-    MobileObj(Transform tt):Object(tt){}
+   // MobileObj(Transform tt):Object(tt){}
     MobileObj(Transform tt,Transform anim):Object(tt,anim){}
 
 
@@ -68,8 +68,7 @@ public:
     }
 
 
-//public slots:
-  //  void controleMouvements(QKeyEvent *event);
+
 };
 
 #endif // MOBILEOBJ_H

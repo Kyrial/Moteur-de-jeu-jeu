@@ -12,9 +12,9 @@
 #include <QOpenGLWidget>
 #include <QObject>
 #include <QKeyEvent>
-class Object //: public QOpenGLWidget
+class Object: public QObject
 {
- //   Q_OBJECT
+    Q_OBJECT
 
     ///ATTRIBUT
 public:
@@ -35,20 +35,20 @@ protected:
 
     ///Constructeur
 public:
-    Object():t(Transform()),parent(nullptr){}
-    Object(Transform tt):t(tt),parent(nullptr){}
+
+    Object();
     Object(Transform tt,Transform anim):t(tt),animation(anim){}
-    Object(Transform tt, Object par):t(tt){
+  /*  Object(Transform tt, Object par, QObject *parent = 0):t(tt){
         parent = &par;
     }
-    Object(Transform tt, Object par, QVector<Object*> enf)
+    Object(Transform tt, Object par, QVector<Object*> enf, QObject *parent = 0)
         :t(tt),enfants(enf){
         parent = &par;
     }
-    Object( Object par, QVector<Object*> enf)
+    Object( Object par, QVector<Object*> enf, QObject *parent = 0)
         :t(Transform()),enfants(enf){
         parent = &par;
-    }
+    }*/
 
    ///Getter/Setter
     void updateMesh(GeometryEngine *ge){
@@ -127,6 +127,10 @@ public:
     void updateBB();
 
     Object* getRacine();
+
+
+public slots:
+    void controleMouvements(QKeyEvent *event);
 };
 
 

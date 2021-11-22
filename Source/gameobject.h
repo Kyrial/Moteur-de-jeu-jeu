@@ -13,6 +13,7 @@
 #include <QOpenGLTexture>
 class GameObject : public Object
 {
+    Q_OBJECT
     ///ATTRIBUT
 private:
    // QVector< GameObject*> enfants= QVector<GameObject*>();
@@ -22,15 +23,14 @@ private:
     ///Constructeur
 public:
     GameObject():Object(){}
-    GameObject(Transform tt, GameObject par):Object(tt,par){
-    }
+  // GameObject(Transform tt, GameObject par):Object(tt,par){}
 
-    GameObject(Transform tt):Object(tt){}
+   // GameObject(Transform tt):Object(tt){}
     GameObject(Transform tt,Transform anim):Object(tt,anim){}
 
-    GameObject(Transform tt, Object par, QVector<Object*> enf)
+  /*  GameObject(Transform tt, Object par, QVector<Object*> enf)
         :Object(tt,par,enf){
-    }
+    }*/
 
 
 

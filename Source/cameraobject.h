@@ -5,12 +5,13 @@
 #include "QVector3D"
 class CameraObject : public Object
 {
+    Q_OBJECT
 public:
     CameraObject();
     CameraObject(Object par){
         parent = &par;
     }
-    CameraObject(Object par,QVector<Object*> enf):Object(par,enf){}
+//    CameraObject(Object par,QVector<Object*> enf):Object(par,enf){}
 
 
     QVector3D rotation_camera  = QVector3D(1.0f, 1.0f, 1.0f);

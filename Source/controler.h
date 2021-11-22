@@ -12,13 +12,14 @@ class Controler : public QOpenGLWidget
 
 public:
     Controler();
-    Controler(QWidget *parent);
 
-    void keyPressEvent(QKeyEvent *event) override;
+public slots:
+    void keyPressEvent(QKeyEvent *event);
 
 signals:
     void pauseChanged();
     void viewChanged(QKeyEvent *event);
+    void moveObject(QKeyEvent *event);
 };
 
 #endif // CONTROLER_H

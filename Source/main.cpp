@@ -78,6 +78,8 @@ int main(int argc, char *argv[])
     MainWidget widget2(60);
 
     widget2.show();
+    widget2.resize(1600,900);
+    widget2.adjustSize();
    // MainWidget widge2(5);
   //  widge2.show();
 

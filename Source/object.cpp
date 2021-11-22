@@ -1,10 +1,16 @@
 #include "object.h"
 
+
 bool Object::animate = false;
 
-//Object::Object()
-//{
-//}
+Object::Object():t(Transform())
+{
+
+}
+
+
+
+
 void  Object::updateScene(QOpenGLShaderProgram * program, double deltaTime, QMatrix4x4 m){
     setTransf(m);
     chargerTextureForShader(program);
@@ -100,5 +106,33 @@ void Object::updateBB(){
         geo->ajustBB(go->geo);
     }
 }
+
+
+void Object::controleMouvements(QKeyEvent *event){
+        qDebug("[Controler] move mobile objet ");
+            switch (event->key()) {
+            case Qt::Key_O:{  // move Forward
+                animation.forward();
+                break;
+            }
+            case Qt::Key_L: { //  move Backward
+                animation.backward();
+                break;
+            }
+            case Qt::Key_K: {//move Right
+                animation.right();
+                break;
+            }
+            case Qt::Key_M: {//move Left
+                animation.left();
+                break;
+            }
+            case Qt::Key_I: {//jump
+                animation.jump();
+            }
+
+
+    }
+    }
 
 

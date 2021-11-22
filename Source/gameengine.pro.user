@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE QtCreatorProject>
-<!-- Written by QtCreator 4.11.0, 2021-11-22T13:20:05. -->
+<!-- Written by QtCreator 4.11.0, 2021-11-22T15:49:59. -->
 <qtcreator>
  <data>
   <variable>EnvironmentId</variable>
@@ -207,8 +207,9 @@
     </valuelist>
     <value type="int" key="PE.EnvironmentAspect.Base">2</value>
     <valuelist type="QVariantList" key="PE.EnvironmentAspect.Changes"/>
-    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/e20160000668/Bureau/M2/appli interactive/TP-Application-Interactive/TP3/gameengine.pro</value>
-    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/e20160000668/Bureau/M2/appli interactive/TP-Application-Interactive/TP3/gameengine.pro</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.DisplayName">gameengine2</value>
+    <value type="QString" key="ProjectExplorer.ProjectConfiguration.Id">Qt4ProjectManager.Qt4RunConfiguration:/home/e20160000668/Bureau/M2/Moteur-de-jeu-jeu/Source/gameengine.pro</value>
+    <value type="QString" key="ProjectExplorer.RunConfiguration.BuildKey">/home/e20160000668/Bureau/M2/Moteur-de-jeu-jeu/Source/gameengine.pro</value>
     <value type="QString" key="RunConfiguration.Arguments"></value>
     <value type="bool" key="RunConfiguration.Arguments.multi">false</value>
     <value type="QString" key="RunConfiguration.OverrideDebuggerStartup"></value>

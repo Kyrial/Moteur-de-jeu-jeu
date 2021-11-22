@@ -112,7 +112,8 @@ private:
     QOpenGLShaderProgram program;
     GeometryEngine *geometries;
     GameObject *gameObj;
-    Controler *control;
+    Controler *control = new Controler();
+
     //  MobileObj *mobileobj;
     QOpenGLTexture *texture;
 
@@ -128,9 +129,12 @@ private:
     qreal angularSpeed;
     QQuaternion rotation;
 
+    void keyPressEvent(QKeyEvent *e);
+signals:
+    void signalKeyPress(QKeyEvent *e);
 public slots :
     void cameraControle();
-    void keyPressEvent(QKeyEvent *e);
+    void keyPress(QKeyEvent *e);
 };
 
 #endif // MAINWIDGET_H
