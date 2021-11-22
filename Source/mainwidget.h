@@ -54,6 +54,7 @@
 #include "geometryengine.h"
 #include "gameobject.h"
 //#include "meshobject.h"
+#include "controler.h"
 #include "mobileobj.h"
 #include "cameraobject.h"
 #include <QOpenGLWidget>
@@ -78,11 +79,11 @@ public:
 
     MainWidget(int fps);
 
-void modifFPS(int x);
+    void modifFPS(int x);
 
-int FPS = 20;
-QElapsedTimer lastFrame;
-double deltaTime = 1;
+    int FPS = 20;
+    QElapsedTimer lastFrame;
+    double deltaTime = 1;
 
 protected:
     void mousePressEvent(QMouseEvent *e) override;
@@ -96,9 +97,9 @@ protected:
     void initShaders();
     void initTextures();
 
-    void keyPressEvent(QKeyEvent *e) override;
+  //  void keyPressEvent(QKeyEvent *e) override;
 
-    void cameraControle();
+
     Object* addGameObject(Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *txtr);
     Object* addMobileObject(Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *texture);
 
@@ -111,7 +112,8 @@ private:
     QOpenGLShaderProgram program;
     GeometryEngine *geometries;
     GameObject *gameObj;
-  //  MobileObj *mobileobj;
+    Controler *control;
+    //  MobileObj *mobileobj;
     QOpenGLTexture *texture;
 
     QOpenGLTexture * textureGrass;
@@ -126,7 +128,9 @@ private:
     qreal angularSpeed;
     QQuaternion rotation;
 
-
+public slots :
+    void cameraControle();
+    void keyPressEvent(QKeyEvent *e);
 };
 
 #endif // MAINWIDGET_H

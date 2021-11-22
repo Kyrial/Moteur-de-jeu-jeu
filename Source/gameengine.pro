@@ -5,6 +5,7 @@ TEMPLATE = app
 
 SOURCES += main.cpp \
     cameraobject.cpp \
+    controler.cpp \
     gameobject.cpp \
     mobileobj.cpp \
     object.cpp \
@@ -17,6 +18,7 @@ SOURCES += \
 HEADERS += \
     BasicIO.h \
     cameraobject.h \
+    controler.h \
     gameobject.h \
     mainwidget.h \
     geometryengine.h \

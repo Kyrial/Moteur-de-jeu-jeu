@@ -341,6 +341,10 @@ void MainWidget::initializeGL()
 
     scene();
 
+    control = new Controler(this);
+
+    QObject::connect(control, &Controler::viewChanged,
+                         this, &MainWidget::keyPressEvent);
 
     /*   GameObject *gameObj2 = new GameObject();
 
@@ -479,7 +483,7 @@ void MainWidget::paintGL()
 
 //    deltaTime =0.99;// lastFrame.elapsed();
     deltaTime = lastFrame.elapsed();
-    qDebug("deltaTime: %f", deltaTime);
+    //qDebug("deltaTime: %f", deltaTime);
      lastFrame.start();
     gameObj->updateScene(&program, deltaTime);
     //gameObj->updateBB();
@@ -497,32 +501,32 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
 {
     qDebug("touche appuyé ");
     switch (event->key()) {
-    case Qt::Key_Z: /* haut */
+    case Qt::Key_Z: // haut
         projection.translate(0.0, 0.2, 0.0);
         break;
-    case Qt::Key_Q: /* gauche */;
+    case Qt::Key_Q: // gauche
         projection.translate(-0.2, 0.0, 0.0);
         break;
-    case Qt::Key_D: /*droite */
+    case Qt::Key_D: //droite
         projection.translate(0.2, 0.0, 0.0);
         break;
-    case Qt::Key_S: /* bas */
+    case Qt::Key_S: // bas
         projection.translate(0.0, -0.2, 0.0);
         break;
-    case Qt::Key_A: /* descendre */
+    case Qt::Key_A: // descendre
         projection.translate(0.0, 0.0, .2);
         break;
-    case Qt::Key_E: /* monter */
+    case Qt::Key_E: // monter
         projection.translate(0.0, 0.0, -0.2);
         break;
-    case Qt::Key_C: /*  tourne terrain */
+    case Qt::Key_C: // tourne terrain
     {
 
         //lastFrame.start();
         Tourne = Tourne == true ? false: true;
         break;
     }
-    case Qt::Key_P: /*  tourne terrain */
+    case Qt::Key_P: //  tourne terrain
     {
 
         gameObj->animate = gameObj->animate == true ? false: true;
@@ -540,16 +544,7 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
 
 
 void MainWidget::cameraControle(){
-
-    //QMatrix4x4 view = QMatrix4x4::lookAt(camera_position, camera_position + camera_target, camera_up);
-    //float currentFrame = glfwGetTime();
-    // float deltaTime = currentFrame - lastFrame;
-    //   float lastFrame = currentFrame;
-    //Camera zoom in and out
-    /*   float cameraSpeed = 2.5 * deltaTime;
-    if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS)
-        //camera_position += cameraSpeed * camera_target;
-        camera_position += cameraSpeed * glm::vec3(0.0f, 0.0f, -1.0f);
-        */}
+        gameObj->animate = gameObj->animate == true ? false: true;
+}
 
 
