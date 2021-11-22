@@ -171,6 +171,27 @@ protected:
     }
 
 
+public:
+
+    void forward(){
+        t += QVector3D(0.1,0,0);
+    }
+    void backward(){
+        t += QVector3D(-0.1,0,0);
+    }
+    void left(){
+        t += QVector3D(0,0.1,0);
+    }
+    void right(){
+        t += QVector3D(0,-01,0);
+    }
+    void jump(){
+        t += QVector3D(0,0,0.1);
+    }
+
+
+
+
 
 };
 #endif // TRANSFORM_H

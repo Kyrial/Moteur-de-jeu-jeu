@@ -5,8 +5,11 @@
 #include "transform.h"
 #include "geometryengine.h"
 #include "object.h"
+
 class MobileObj  : public Object
 {
+
+
 public:
 
     MobileObj():Object(){}
@@ -38,7 +41,7 @@ public:
     }
 
     void testCollision(QMatrix4x4 m = QMatrix4x4()){
-       QMatrix4x4 anim = animation.doTransformation();
+        QMatrix4x4 anim = animation.doTransformation();
         Monde->findCollision(this,anim,m);
     }
 
@@ -50,7 +53,7 @@ public:
         }
         QMatrix4x4 m= chargeMatriceForShader(program, deltaTime);
 
-         Object::updateScene(program, deltaTime, m);
+        Object::updateScene(program, deltaTime, m);
 
     }
     void  updateScene(QOpenGLShaderProgram * program, double deltaTime,QMatrix4x4 lastM){
@@ -60,10 +63,13 @@ public:
         }
         QMatrix4x4 m= chargeMatriceForShader(program, deltaTime,lastM);
 
-         Object::updateScene(program, deltaTime, m);
+        Object::updateScene(program, deltaTime, m);
 
     }
 
+
+//public slots:
+  //  void controleMouvements(QKeyEvent *event);
 };
 
 #endif // MOBILEOBJ_H

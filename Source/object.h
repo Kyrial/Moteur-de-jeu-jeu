@@ -9,8 +9,13 @@
 #include <QVector>
 #include <QOpenGLTexture>
 
-class Object
+#include <QOpenGLWidget>
+#include <QObject>
+#include <QKeyEvent>
+class Object //: public QOpenGLWidget
 {
+ //   Q_OBJECT
+
     ///ATTRIBUT
 public:
     GeometryEngine *geo = new GeometryEngine();
