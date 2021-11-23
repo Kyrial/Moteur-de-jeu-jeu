@@ -38,19 +38,19 @@ vec2 animationEau(){
 }
 
 vec4  calculTexture(float position,vec2 texcoord ){
-    float herbe = 0.1;
+    float herbe = 0.15;
     float pierre = 0.5;
     float neige = 1;
     float eau = -0.5;
 
-    float gapHerbe = 0.2;
-    float gapPierre = 0.3;
+    float gapHerbe = 0.25;
+    float gapPierre = 0.35;
     float gapNeige = 0.3;
     float gapEau = 0.5;
 
 
     float poids = poid(position, herbe,gapHerbe)+ poid(position, pierre,gapPierre)+ poid(position, neige,gapNeige) + poid(position, eau,gapEau);
-    return (poid(position, eau,0.5)/poids)*texture2D(textureEau, animationEau())+
+    return (poid(position, eau,gapEau)/poids)*texture2D(textureEau, animationEau())+
             (poid(position, herbe,gapHerbe)/poids)*texture2D(textureGrass, texcoord)+
             (poid(position, pierre,gapPierre)/poids)*texture2D(textureRock, texcoord)+
             (poid(position, neige,gapNeige)/poids)*texture2D(textureSnow, texcoord);

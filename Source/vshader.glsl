@@ -41,14 +41,14 @@ void main()
 {
     vec4 color = texture2D(texture, a_texcoord);
 
-   float hauteurTexture = max(-0.5, min(1,color.x*1.65)-0.3);
+   float hauteurTexture = max(-0.5, min(1.25,color.x*2)-0.25);
    float hauteurMesh = color.x*0.7+a_position.z;
 
     // Calculate vertex position in screen space
 
     if(a_position.z==0){
-        if(hauteurTexture<-0.05){
-            hauteurMesh = 0.1*cos((animation+(a_position.y)*300)/300)/6+(0.5)/6;
+        if(hauteurTexture<-0.1){
+            hauteurMesh = 0.1*cos((animation+(a_position.y)*300)/300)/8+(0.5)/8;
             //v_texcoord = a_texcoord*cos((animation+(a_position.y)*1000)/10000)/7+(0.5)/7;
         }
 

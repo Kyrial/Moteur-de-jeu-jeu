@@ -98,8 +98,8 @@ private:
 
 std::vector<QVector3D> getVertex();
 
-    int precisionX = 250;
-    int precisionY= 250;
+    int precisionX = 255;
+    int precisionY= 255;
 
     QVector3D Min = QVector3D(0,0,0);
     QVector3D Max = QVector3D(0,0,0);
