@@ -8,5 +8,6 @@
         <file>Heightmap_Mountain.png</file>
         <file>heightmap-1024x1024.png</file>
         <file>textureSoleil.png</file>
+        <file>textureEau.png</file>
     </qresource>
 </RCC>

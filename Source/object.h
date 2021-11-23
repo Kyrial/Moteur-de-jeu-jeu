@@ -85,8 +85,8 @@ public:
 protected:
     void chargerTextureForShader(QOpenGLShaderProgram * program){
         if(ifTexture){
-            texture->bind(4);
-            program->setUniformValue("textureScene", 4);
+            texture->bind(5);
+            program->setUniformValue("textureScene", 5);
         }
         //ifTexture.bind(5);
         program->setUniformValue("textureSample", ifTexture);

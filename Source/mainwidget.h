@@ -83,6 +83,7 @@ public:
 
     int FPS = 20;
     QElapsedTimer lastFrame;
+    QElapsedTimer absoluteTime;
     double deltaTime = 1;
 
 protected:
@@ -109,6 +110,7 @@ protected:
 
 private:
     QBasicTimer timer;
+
     QOpenGLShaderProgram program;
     GeometryEngine *geometries;
     GameObject *gameObj;
@@ -120,6 +122,7 @@ private:
     QOpenGLTexture * textureGrass;
     QOpenGLTexture * textureRock;
     QOpenGLTexture * textureSnow;
+    QOpenGLTexture * textureEau;
 
 
     QMatrix4x4 projection;

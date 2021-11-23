@@ -341,7 +341,6 @@ void MainWidget::initializeGL()
 
 
 
-    geometries = new GeometryEngine;
     std::cout<<"INIT MONDE"<<std::endl;
     initMonde();
     std::cout<<"INIT SCENE"<<std::endl;
@@ -357,12 +356,7 @@ void MainWidget::initializeGL()
                          this, &MainWidget::keyPress);
 
 
-    /*   GameObject *gameObj2 = new GameObject();
-
-      gameObj2->geo->initCubeGeometry();
-      gameObj->addChild(gameObj2);*/
-
-
+    absoluteTime.start();
 
 
     // Use QBasicTimer because its faster than QTimer
@@ -402,6 +396,7 @@ void MainWidget::initTextures()
     textureGrass =new QOpenGLTexture(QImage(":/grass.png").mirrored());
     textureRock =new QOpenGLTexture(QImage(":/rock.png").mirrored());
     textureSnow =new QOpenGLTexture(QImage(":/snowrocks.png").mirrored());
+    textureEau =new QOpenGLTexture(QImage(":/textureEau.png").mirrored());
 
 
 
@@ -427,6 +422,10 @@ void MainWidget::initTextures()
     textureSnow->setMinificationFilter(QOpenGLTexture::Nearest);
     textureSnow->setMagnificationFilter(QOpenGLTexture::Linear);
     textureSnow->setWrapMode(QOpenGLTexture::Repeat);
+
+    textureEau->setMinificationFilter(QOpenGLTexture::Nearest);
+    textureEau->setMagnificationFilter(QOpenGLTexture::Linear);
+    textureEau->setWrapMode(QOpenGLTexture::Repeat);
 
 }
 //! [4]
@@ -460,6 +459,7 @@ void MainWidget::paintGL()
     textureGrass->bind(1);
     textureRock->bind(2);
     textureSnow->bind(3);
+    textureEau->bind(4);
     //! [6]
     // Calculate model view transformation
     QMatrix4x4 matrix;
@@ -484,6 +484,7 @@ void MainWidget::paintGL()
     program.setUniformValue("textureGrass", 1);
     program.setUniformValue("textureRock", 2);
     program.setUniformValue("textureSnow", 3);
+        program.setUniformValue("textureEau", 4);
     // Draw cube geometry
     // geometries->drawCubeGeometry(&program);
 
@@ -494,6 +495,8 @@ void MainWidget::paintGL()
 
 //    deltaTime =0.99;// lastFrame.elapsed();
     deltaTime = lastFrame.elapsed();
+
+    program.setUniformValue("animation", (float)absoluteTime.elapsed());
     //qDebug("deltaTime: %f", deltaTime);
      lastFrame.start();
     gameObj->updateScene(&program, deltaTime);
