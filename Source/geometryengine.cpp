@@ -280,13 +280,17 @@ float GeometryEngine::getHauteur(QVector2D coordText){
    // QImage im2g = QImage(QString(":/heightmap.png"));
     QRgb rgb = img.pixel(x,y);
 //    float q = (qRed(img.pixel(y,x))/ 125.0-1.0)*0.7;
-    return (qRed(rgb)/ 255.0)*0.7;
+    return (qRed(rgb)/ 255.0);
 }
 
 QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM, bool &collision){
     QMatrix4x4 invObjM = Transform::inverse(objM);
     QMatrix4x4 invOurM = Transform::inverse(ourM);
-    QVector3D a = invObjM*geo->BBMin;
+
+    QVector3D inv_BBMin = invObjM*geo->BBMin;
+    QVector3D inv_BBMax = invObjM*geo->BBMax;
+
+    QVector3D a = (inv_BBMin + QVector3D(inv_BBMax.x(),inv_BBMax.y(), inv_BBMin.z()))/2; // minimum BB
  //   QVector3D b = invObjM*geo->BBMax;
   //  QVector3D c = invOurM*BBMin;
  //   QVector3D d = invOurM*BBMax;
@@ -296,18 +300,35 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     //(val+min)/ interval = case
     int caseX = (a.x()- Min[0])/interval;
     int caseY = (a.y()- Min[1])/interval;
-
-    QVector3D k = vertex[caseX*precisionX+caseY];
-
     float interval_Texture=2/(float)(precisionX-1);
-    QVector2D coordText = QVector2D((interval_Texture*caseX)/2, (interval_Texture*caseY)/2);
-    QVector3D newCoord = a;
-    float j = getHauteur( coordText);
+    QVector3D k = vertex[caseX*precisionX+caseY];
+    VertexData vertices[precisionX*precisionY];
+
+/*   for(int i=0; i<precisionX; i++){
+        for(int j=0;j<precisionY; j++){
+            vertices[i*precisionY+j]= {QVector3D(Min[0]+interval*i, Min[1]+interval*j,0.0f ), QVector2D((interval_Texture*i)/2, (interval_Texture*j)/2)};
+}}
+            vertices[caseX*precisionX+caseY].position.setZ(0.5);
+
+   arrayBuf.bind();
+   arrayBuf.allocate(vertices, precisionX*precisionY * sizeof(VertexData));*/
+
+
+
+
+    QVector2D coordText = QVector2D((interval_Texture*caseY)/2, (interval_Texture*caseX)/2);
+    QVector3D newCoord = inv_BBMin;
+    float colorx = getHauteur( coordText);
+    float hauteurMesh = colorx*0.7 +k[2];
+    float hauteurTexture = std::max(-0.5, std::min((float)1.25,colorx*2)-0.25);
+    if(hauteurTexture<-0.1){
+        hauteurMesh = 2-0.2;
+    }
     QVector3D vecTranslate;
-    if(j < a[2])
+    if(hauteurMesh < a[2])
         collision  = false;
 
-    newCoord[2]= j;
+    newCoord[2]= hauteurMesh;
     newCoord  = objM*newCoord;
     vecTranslate = newCoord - geo->BBMin;
 

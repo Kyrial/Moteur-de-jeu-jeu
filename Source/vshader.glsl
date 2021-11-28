@@ -48,7 +48,7 @@ void main()
 
     if(a_position.z==0){
         if(hauteurTexture<-0.1){
-            hauteurMesh = 0.1*cos((animation+(a_position.y)*300)/300)/8+(0.5)/8;
+            hauteurMesh = 0.1*cos((animation+(a_position.y)*300)/100)/8+(0.5)/8;
             //v_texcoord = a_texcoord*cos((animation+(a_position.y)*1000)/10000)/7+(0.5)/7;
         }
 
