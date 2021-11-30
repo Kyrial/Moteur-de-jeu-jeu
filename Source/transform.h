@@ -174,16 +174,16 @@ protected:
 public:
 
     void forward(){
-        t += QVector3D(0.5,0,0);
+        t += QVector3D(0.6,0,0);
     }
     void backward(){
-        t += QVector3D(-0.5,0,0);
+        t += QVector3D(-0.6,0,0);
     }
     void left(){
-        t += QVector3D(0,0.5,0);
+        t += QVector3D(0,0.6,0);
     }
     void right(){
-        t += QVector3D(0,-0.5,0);
+        t += QVector3D(0,-0.6,0);
     }
     void jump(){
         t += QVector3D(0,0,0.5);

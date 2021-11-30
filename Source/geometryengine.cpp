@@ -385,26 +385,27 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     QVector3D k = vertex[caseX*precisionX+caseY];
     VertexData vertices[precisionX*precisionY];
 
-/*   for(int i=0; i<precisionX; i++){
+   for(int i=0; i<precisionX; i++){
         for(int j=0;j<precisionY; j++){
-            vertices[i*precisionY+j]= {QVector3D(Min[0]+interval*i, Min[1]+interval*j,0.0f ), QVector2D((interval_Texture*i)/2, (interval_Texture*j)/2)};
+            float hauteurMesh = (perlin2d( Min[0]+interval*i,  Min[1]+interval*j , 1)-0.3)*2;
+            vertices[i*precisionY+j]= {QVector3D(Min[0]+interval*i, Min[1]+interval*j,hauteurMesh ), QVector2D((interval_Texture*i)/2, (interval_Texture*j)/2)};
 }}
-            vertices[caseX*precisionX+caseY].position.setZ(0.5);
+   vertices[caseX*precisionX+caseY].position.setZ(1);
 
    arrayBuf.bind();
-   arrayBuf.allocate(vertices, precisionX*precisionY * sizeof(VertexData));*/
+   arrayBuf.allocate(vertices, precisionX*precisionY * sizeof(VertexData));
 
 
 
 
-    QVector2D coordText = QVector2D((interval_Texture*caseX)/2, (interval_Texture*caseY)/2);
+    //QVector2D coordText = QVector2D((interval_Texture*caseX)/2, (interval_Texture*caseY)/2);
     QVector3D newCoord = inv_BBMin;
    // float colorx = getHauteur( coordText);
     //float hauteurMesh = colorx*0.7 +k[2];
-    float hauteurMesh = (perlin2d( caseX, caseY , 8)-0.3)*2;
+    float hauteurMesh = (perlin2d( k.x(), k.y() , 8)-0.3)*2;
     //float hauteurTexture = std::max(-0.5, std::min((float)1.25,colorx*2)-0.25);
     if(hauteurMesh<-0.1){
-        //hauteurMesh = -0.1;//+cos((animation+(a_position.y)*300)/100)/150;
+        hauteurMesh = -0.1;//+cos((animation+(a_position.y)*300)/100)/150;
     }
     QVector3D vecTranslate;
     if(hauteurMesh < a[2])

@@ -40,12 +40,12 @@ vec2 animationEau(){
 vec4  calculTexture(float position,vec2 texcoord ){
     float herbe = 0.15;
     float pierre = 0.5;
-    float neige = 1;
+    float neige = 1.1;
     float eau = -0.5;
 
     float gapHerbe = 0.25;
     float gapPierre = 0.35;
-    float gapNeige = 0.3;
+    float gapNeige = 0.5;
     float gapEau = 0.5;
 
 

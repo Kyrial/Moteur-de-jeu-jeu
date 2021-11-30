@@ -116,7 +116,7 @@ void MainWidget::scene(){
 
     //Instance INIT GAME OBJECT // NOEUD TERRE
     Transform *t_NTerre = new Transform;
-    t_NTerre->setScale(2,2,2);
+    t_NTerre->setScale(1,1,1);
     Transform *anim_NTerre = new Transform;
     //anim_NTerre->setRotation(0,0,0.2,1);
     Object* noeudTerre = addGameObject(NoeudUnivers,t_NTerre,new GeometryEngine, anim_NTerre);
@@ -136,7 +136,7 @@ void MainWidget::scene(){
     //Instance INIT GAME OBJECT // NOEUD LUNE
     Transform *t_NLune = new Transform;
     t_NLune->setScale(0.3,0.3,0.3);
-    t_NLune->setTranslate(16,0,0);
+    t_NLune->setTranslate(26,0,0);
     Transform *anim_NLune = new Transform;
     anim_NLune->setRotation(0,0,-5,5);
     Object* noeudLune = addGameObject(noeudTerre,t_NLune,new GeometryEngine, anim_NLune);

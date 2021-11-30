@@ -64,7 +64,9 @@ int noise2(int x, int y, int seed = SEED)
 }
 
 float Rand(vec2 co){
-    return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+    //return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
+    float value = sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453;
+    return value - floor(value);
 }
 
 
@@ -122,14 +124,14 @@ void main()
     vec4 color = texture2D(texture, a_texcoord);
 
 
-    float hauteurMesh = (perlin2d(a_position.x,a_position.y  , 8)-.3)*2;//color.x*0.7+a_position.z;
+    float hauteurMesh = (perlin2d(a_position.x,a_position.y  , 1)-.3)*2;//+a_position.z;//color.x*0.7+a_position.z;
     float hauteurTexture = hauteurMesh;//max(-0.5, min(1.25,color.x*2)-0.25);
 
     // Calculate vertex position in screen space
 
     if(a_position.z==0){
         if(hauteurMesh<-0.1){//if(hauteurTexture<-0.1){
-            //hauteurMesh = -0.1+cos((animation+(a_position.y)*300)/100)/150;//+(0.5)/8;
+            hauteurMesh = -0.1+cos((animation+(a_position.y)*300)/100)/150;//+(0.5)/8;
             //v_texcoord = a_texcoord*cos((animation+(a_position.y)*1000)/10000)/7+(0.5)/7;
         }
 
@@ -143,7 +145,7 @@ void main()
     }
     else{
         gl_Position = mvp_matrix *camera_matrix* transform_Matrix * a_position;
-
+        hauteurTexture = a_position.z;
     }
     // Pass texture coordinate to fragment shader
     // Value will be automatically interpolated to fragments inside polygon faces
