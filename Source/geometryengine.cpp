@@ -56,6 +56,86 @@
 #include <QVector3D>
 
 
+int SEED = 0;
+
+int hash[256] ={208,34,231,213,32,248,233,56,161,78,24,140,71,48,140,254,245,255,247,247,40,
+                     185,248,251,245,28,124,204,204,76,36,1,107,28,234,163,202,224,245,128,167,204,
+                     9,92,217,54,239,174,173,102,193,189,190,121,100,108,167,44,43,77,180,204,8,81,
+                     70,223,11,38,24,254,210,210,177,32,81,195,243,125,8,169,112,32,97,53,195,13,
+                     203,9,47,104,125,117,114,124,165,203,181,235,193,206,70,180,174,0,167,181,41,
+                     164,30,116,127,198,245,146,87,224,149,206,57,4,192,210,65,210,129,240,178,105,
+                     228,108,245,148,140,40,35,195,38,58,65,207,215,253,65,85,208,76,62,3,237,55,89,
+                     232,50,217,64,244,157,199,121,252,90,17,212,203,149,152,140,187,234,177,73,174,
+                     193,100,192,143,97,53,145,135,19,103,13,90,135,151,199,91,239,247,33,39,145,
+                     101,120,99,3,186,86,99,41,237,203,111,79,220,135,158,42,30,154,120,67,87,167,
+                     135,176,183,191,253,115,184,21,233,58,129,233,142,39,128,211,118,137,139,255,
+                     114,20,218,113,154,27,127,246,250,1,8,198,250,209,92,222,173,21,88,102,219};
+
+int noise2(int x, int y, int seed = SEED)
+{
+    int yindex = (y + seed) % 256;
+    if (yindex < 0) {
+            yindex += 256;
+    }
+    int  xindex = (hash[yindex] + x) % 256;
+    if (xindex < 0) {
+            xindex += 256;
+    }
+    return int (hash[xindex]);
+}
+
+float Rand(QVector2D co){
+    float value = sin(QVector2D::dotProduct(co ,QVector2D(12.9898,78.233))) * 43758.5453;
+    return value - floor(value);
+}
+
+float lin_inter(float x, float y, float s)
+{
+    return x + s * (y-x);
+}
+
+float smooth_inter(float x, float y, float s)
+{
+    return lin_inter(x, y, s * s * (3-2*s));
+}
+float noise2D(float x, float y){
+   float s =Rand(QVector2D(floor(x),floor(y)));
+    float t =Rand(QVector2D(floor(x)+1,floor(y)));
+    float u =Rand(QVector2D(floor(x),floor(y)+1));
+   float v =Rand(QVector2D(floor(x)+1,floor(y)+1));
+
+ //   float s =noise2(int(voisin.leftBot.x),int(voisin.leftBot.y));
+//  float t =noise2(int(voisin.rightBot.x),int(voisin.rightBot.y));
+ //   float u =noise2(int(voisin.leftTop.x),int(voisin.leftTop.y));
+ //   float v =noise2(int(voisin.rightTop.x),int(voisin.rightTop.y));
+
+    float low = smooth_inter(s, t, x-floor(x));
+    float high = smooth_inter(u, v, x-floor(x));
+    return smooth_inter(low, high, y-floor(y));
+}
+
+float perlin2d(float x, float y , int depth)
+{
+    float xa = x*0.3;
+    float ya = y*0.3;
+    float amp = 1;
+    float fin = 0;
+    float div = 0.0;
+    //div += 256;
+    int i;
+    for(i=0; i<depth; i++)
+    {
+        //div += 256*(amp);
+        div+=1*amp;
+        fin += noise2D(xa, ya) * amp;
+        amp /= 10;//2/pow(2,depth+1);
+        xa *= 20;
+        ya *= 20;
+    }
+
+    return fin/div;
+}
+
 
 //! [0]
 GeometryEngine::GeometryEngine()
@@ -277,6 +357,7 @@ float GeometryEngine::getHauteur(QVector2D coordText){
 
     int x = (coordText[0])*img.width();
     int y = (coordText[1])*img.height();
+
    // QImage im2g = QImage(QString(":/heightmap.png"));
     QRgb rgb = img.pixel(x,y);
 //    float q = (qRed(img.pixel(y,x))/ 125.0-1.0)*0.7;
@@ -316,13 +397,14 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
 
 
 
-    QVector2D coordText = QVector2D((interval_Texture*caseY)/2, (interval_Texture*caseX)/2);
+    QVector2D coordText = QVector2D((interval_Texture*caseX)/2, (interval_Texture*caseY)/2);
     QVector3D newCoord = inv_BBMin;
-    float colorx = getHauteur( coordText);
-    float hauteurMesh = colorx*0.7 +k[2];
-    float hauteurTexture = std::max(-0.5, std::min((float)1.25,colorx*2)-0.25);
-    if(hauteurTexture<-0.1){
-        hauteurMesh = 2-0.2;
+   // float colorx = getHauteur( coordText);
+    //float hauteurMesh = colorx*0.7 +k[2];
+    float hauteurMesh = (perlin2d( caseX, caseY , 8)-0.3)*2;
+    //float hauteurTexture = std::max(-0.5, std::min((float)1.25,colorx*2)-0.25);
+    if(hauteurMesh<-0.1){
+        //hauteurMesh = -0.1;//+cos((animation+(a_position.y)*300)/100)/150;
     }
     QVector3D vecTranslate;
     if(hauteurMesh < a[2])
@@ -335,6 +417,21 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     int i=0;
     return vecTranslate;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
@@ -502,7 +599,7 @@ void GeometryEngine::initPlanegeometry()
     VertexData vertices[x*y];
     unsigned int indexCount = x*y+y*(x-2)+2*(x-2)+2;
     GLushort indices[x*y+y*(x-2)+2*(x-2)+2];
-    subdivisePlan(x,  y,  vertices,  indices,-4,-4,4,4);
+    subdivisePlan(x,  y,  vertices,  indices,-10,-10,10,10);
 
    // qDebug("taille index %i",indexCount);
 //qDebug("taille index tab %i",x*y+y*(x-2)+2*(x-2)+2);
@@ -517,12 +614,13 @@ void GeometryEngine::initPlanegeometry()
     // Transfer vertex data to VBO 0
     arrayBuf.bind();
     arrayBuf.allocate(vertices, vertexNumber * sizeof(VertexData));
-
+    arrayBuf.release();
     // Transfer index data to VBO 1
     indexBuf.bind();
     indexBuf.allocate(indices,  ((indexCount)* sizeof(GLushort)));
   //  std::cout << indexBuf.size() << " index count " << indexCount <<"sizeof" <<  sizeof(GLushort) << std::endl;
-//! [1]
+    indexBuf.release();
+    //! [1]
 }
 
 
@@ -556,8 +654,12 @@ void GeometryEngine::drawCubeGeometry(QOpenGLShaderProgram *program)
     // Draw cube geometry using indices from VBO 1
     int size = (int)indexBuf.size();
   // std::cout << indexBuf.size() << " , meow " <<  size << std::endl;
-    if(triangle_strip)
+
+    if(triangle_strip){
         glDrawElements(GL_TRIANGLE_STRIP, size/2, GL_UNSIGNED_SHORT, 0); //Careful update indicesNumber when creating new geometry
+        //glDrawElements(GL_PATCHES, size/2, GL_UNSIGNED_SHORT, 0);
+        //glDrawArrays( GL_PATCHES, 0, size/2 );
+    }
     else
         glDrawElements(GL_TRIANGLES, size/2, GL_UNSIGNED_SHORT, 0);
 }

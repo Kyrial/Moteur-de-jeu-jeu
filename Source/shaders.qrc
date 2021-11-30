@@ -2,5 +2,6 @@
     <qresource prefix="/">
         <file>vshader.glsl</file>
         <file>fshader.glsl</file>
+        <file>tcsshader.glsl</file>
     </qresource>
 </RCC>
