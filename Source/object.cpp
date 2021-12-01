@@ -3,6 +3,7 @@
 
 bool Object::animate = false;
 
+
 Object::Object():t(Transform())
 {
 
@@ -75,6 +76,7 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
                 bool collision = true;
                 QVector3D hauteur = geo->findCoordmesh( obj->geo,  t, this->getTransf(),collision);
                 if(collision){
+                    obj->canJump=true;
                     qDebug("COOOOOOOOOLLLLLLLLLLLIIIIIIIIIIIIISSSSSSSIIIIIIIIIIIOOOOOOOOONNNNNNNNNN");
                     obj->t.addTranslate(hauteur);
                     QVector3D direction =Transform::extracteTranslate(anim);
@@ -128,11 +130,16 @@ void Object::controleMouvements(QKeyEvent *event){
                 break;
             }
             case Qt::Key_I: {//jump
-                animation.jump();
+                if (canJump){
+                    animation.jump();
+                    canJump=false;
+                }
+                }
+
             }
 
 
     }
-    }
+
 
 
