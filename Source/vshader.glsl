@@ -1,4 +1,5 @@
-#version 140
+#version 410
+
 
 uniform float animation = 1;
 
