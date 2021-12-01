@@ -29,6 +29,7 @@ protected:
     QVector< Object*> enfants= QVector<Object*>();
     Object *parent;
     QMatrix4x4 transf = QMatrix4x4();
+    bool canJump = true;
 
 
 
