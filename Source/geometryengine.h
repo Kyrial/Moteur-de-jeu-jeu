@@ -51,7 +51,7 @@
 #ifndef GEOMETRYENGINE_H
 #define GEOMETRYENGINE_H
 
-#include <QOpenGLFunctions_3_1>
+#include <QOpenGLFunctions_4_1_Core>
 #include <QOpenGLShaderProgram>
 #include <QOpenGLBuffer>
 #include <QtGui/QImage>
@@ -67,7 +67,7 @@ struct VertexData
     QVector2D texCoord;
 };
 
-class GeometryEngine : protected QOpenGLFunctions_3_1
+class GeometryEngine : protected QOpenGLFunctions_4_1_Core
 {
 public:
     GeometryEngine();

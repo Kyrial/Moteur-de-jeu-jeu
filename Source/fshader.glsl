@@ -1,4 +1,4 @@
-#version 140
+#version 410
 uniform float animation = 1;
 uniform sampler2D texture;
 uniform sampler2D textureGrass;
