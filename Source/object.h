@@ -30,7 +30,7 @@ protected:
     Object *parent;
     QMatrix4x4 transf = QMatrix4x4();
     bool canJump = true;
-
+    bool lumiere = false;
 
 
 
@@ -80,7 +80,9 @@ public:
        return transf;
     }
 
-
+    void setLumiere(){
+        lumiere = true;
+    }
 
  ///Methode
 protected:

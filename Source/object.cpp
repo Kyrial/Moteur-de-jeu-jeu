@@ -14,6 +14,11 @@ Object::Object():t(Transform())
 
 void  Object::updateScene(QOpenGLShaderProgram * program, double deltaTime, QMatrix4x4 m){
     setTransf(m);
+    if(lumiere){
+       QVector3D a = t.extracteTranslate(m);
+       program->setUniformValue("lumiere", t.extracteTranslate(m));
+    }
+
     chargerTextureForShader(program);
     geo->drawCubeGeometry(program);
     QVector3D newBBMin =QVector3D();
