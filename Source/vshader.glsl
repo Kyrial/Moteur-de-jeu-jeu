@@ -1,8 +1,5 @@
 #version 410
-<<<<<<< HEAD
-=======
 
->>>>>>> 2e9539922ad7367bf1d11a8c0bfbe9cdf51889e8
 
 uniform float animation = 1;
 

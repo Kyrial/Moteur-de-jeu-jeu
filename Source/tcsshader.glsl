@@ -4,6 +4,7 @@
 layout(vertice = 3) out;
 
 uniform vec3 gEyeWorldPos;
+
 in vec3 v_position_in[];
 in vec2 v_texcoord_in[];
 
