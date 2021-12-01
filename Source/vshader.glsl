@@ -65,7 +65,7 @@ int noise2(int x, int y, int seed = SEED)
 
 float Rand(vec2 co){
     //return fract(sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453);
-    float value = sin(dot(co.xy ,vec2(12.9898,78.233))) * 43758.5453;
+    float value = sin(dot(co ,vec2(12.9898,78.233))) * 43758.5453;
     return value - floor(value);
 }
 
@@ -80,15 +80,15 @@ float smooth_inter(float x, float y, float s)
     return lin_inter(x, y, s * s * (3-2*s));
 }
 float noise2D(float x, float y){
-    float s =Rand(vec2(floor(x),floor(y)));
-     float t =Rand(vec2(floor(x)+1,floor(y)));
-     float u =Rand(vec2(floor(x),floor(y)+1));
-    float v =Rand(vec2(floor(x)+1,floor(y)+1));
+   // float s =Rand(vec2(floor(x),floor(y)));
+   //  float t =Rand(vec2(floor(x)+1,floor(y)));
+  //   float u =Rand(vec2(floor(x),floor(y)+1));
+   // float v =Rand(vec2(floor(x)+1,floor(y)+1));
 
- //   float s =noise2(int(voisin.leftBot.x),int(voisin.leftBot.y));
-//  float t =noise2(int(voisin.rightBot.x),int(voisin.rightBot.y));
- //   float u =noise2(int(voisin.leftTop.x),int(voisin.leftTop.y));
- //   float v =noise2(int(voisin.rightTop.x),int(voisin.rightTop.y));
+    float s =noise2(int(floor(x)),int(floor(y)));
+    float t =noise2(int(floor(x)+1),int(floor(y)));
+    float u =noise2(int(floor(x)),int(floor(y)+1));
+    float v =noise2(int(floor(x)+1),int(floor(y)+1));
 
     float low = smooth_inter(s, t, x-floor(x));
     float high = smooth_inter(u, v, x-floor(x));
@@ -107,7 +107,7 @@ float perlin2d(float x, float y , int depth)
     for(i=0; i<depth; i++)
     {
         //div += 256*(amp);
-        div+=1*amp;
+        div+=255*amp;
         fin += noise2D(xa, ya) * amp;
         amp /= 10;//2/pow(2,depth+1);
         xa *= 20;
@@ -123,8 +123,7 @@ void main()
 {
     vec4 color = texture2D(texture, a_texcoord);
 
-
-    float hauteurMesh = (perlin2d(a_position.x,a_position.y  , 1)-.3)*2;//+a_position.z;//color.x*0.7+a_position.z;
+    float hauteurMesh = (perlin2d(a_position.x,a_position.y  , 8)-.3)*2;//+a_position.z;//color.x*0.7+a_position.z;
     float hauteurTexture = hauteurMesh;//max(-0.5, min(1.25,color.x*2)-0.25);
 
     // Calculate vertex position in screen space

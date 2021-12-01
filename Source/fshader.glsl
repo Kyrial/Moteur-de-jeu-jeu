@@ -50,6 +50,11 @@ vec4  calculTexture(float position,vec2 texcoord ){
 
 
     float poids = poid(position, herbe,gapHerbe)+ poid(position, pierre,gapPierre)+ poid(position, neige,gapNeige) + poid(position, eau,gapEau);
+
+    if(position >neige+gapNeige)
+        return texture2D(textureSnow, texcoord);
+    if(position <eau-gapEau)
+        return texture2D(textureEau, texcoord);
     return (poid(position, eau,gapEau)/poids)*texture2D(textureEau, animationEau())+
             (poid(position, herbe,gapHerbe)/poids)*texture2D(textureGrass, texcoord)+
             (poid(position, pierre,gapPierre)/poids)*texture2D(textureRock, texcoord)+

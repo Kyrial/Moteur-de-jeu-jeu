@@ -210,7 +210,7 @@ void MainWidget::scene(){
     t_mobile->setScale(0.02,0.02,0.02);
     t_mobile->setTranslate(80,0,25);
     Transform *anim_mobile = new Transform;
-    anim_mobile->setTranslate(-20,0,0);
+    anim_mobile->setTranslate(0,0,0);
     Object* satellite =addMobileObject(Terre,t_mobile , geo_mobile, anim_mobile,
                     new QOpenGLTexture(QImage(":/textureSoleil.png").mirrored())
                     );
