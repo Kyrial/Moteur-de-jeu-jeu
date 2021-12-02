@@ -20,7 +20,56 @@ void  CameraObject::updateScene(QOpenGLShaderProgram * program, double deltaTime
 
     // Set modelview-projection matrix
     program->setUniformValue("camera_matrix", view);
+    program->setAttributeValue("viewPosition",m*camera_position);
 
+    emit viewDirChanged(m*QVector3D(0, 0, 0)-(m*camera_position));
     Object::updateScene(program, deltaTime, m);
 }
 
+
+
+
+
+void CameraObject::keyPress(QKeyEvent *event)
+{
+  /*  qDebug("touche appuyé ");
+    switch (event->key()) {
+    case Qt::Key_Z: // haut
+        projection.translate(0.0, 0.2, 0.0);
+        break;
+    case Qt::Key_Q: // gauche
+        projection.translate(-0.2, 0.0, 0.0);
+        break;
+    case Qt::Key_D: //droite
+        projection.translate(0.2, 0.0, 0.0);
+        break;
+    case Qt::Key_S: // bas
+        projection.translate(0.0, -0.2, 0.0);
+        break;
+    case Qt::Key_A: // descendre
+        projection.translate(0.0, 0.0, .2);
+        break;
+    case Qt::Key_E: // monter
+        projection.translate(0.0, 0.0, -0.2);
+        break;
+    case Qt::Key_C: // tourne terrain
+    {
+
+        //lastFrame.start();
+        Tourne = Tourne == true ? false: true;
+        break;
+    }
+    case Qt::Key_P: //  tourne terrain
+    {
+
+        gameObj->animate = gameObj->animate == true ? false: true;
+        break;
+    }
+    }
+
+    //projection.translate(0.0, 0.0, -1.0) ;
+    //update();
+
+    // Save mouse press position
+    //  mousePressPosition = QVector2D(e->localPos());*/
+}

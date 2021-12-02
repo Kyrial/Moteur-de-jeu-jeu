@@ -178,6 +178,10 @@ public:
     void forward(){
         t += QVector3D(0.8,0,0);
     }
+    void forward(QVector3D dirView){
+        t += QVector3D(dirView.x(),dirView.y(),0).normalized();
+    }
+
     void backward(){
         t += QVector3D(-0.8,0,0);
     }

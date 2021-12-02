@@ -26,5 +26,9 @@ public:
 
    void  updateScene(QOpenGLShaderProgram * program, double deltaTime =1, QMatrix4x4 m= QMatrix4x4());
 
+   void keyPress(QKeyEvent *event);
+
+
+
  };
 #endif // CAMERAOBJECT_H

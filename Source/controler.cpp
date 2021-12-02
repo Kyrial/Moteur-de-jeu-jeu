@@ -23,4 +23,8 @@ void Controler::keyPressEvent(QKeyEvent *event)
     default:
         emit viewChanged(event);
     }
+
+}
+    void Controler::mouseMoveEvent(QMouseEvent *event){
+
 }

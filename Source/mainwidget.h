@@ -135,6 +135,7 @@ private:
     void keyPressEvent(QKeyEvent *e);
 signals:
     void signalKeyPress(QKeyEvent *e);
+    void projectionChanged(QMatrix4x4 val);
 public slots :
     void cameraControle();
     void keyPress(QKeyEvent *e);

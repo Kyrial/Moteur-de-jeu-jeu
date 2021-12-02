@@ -7,9 +7,10 @@ uniform sampler2D textureSnow;
 uniform sampler2D textureEau;
 
 uniform vec3 lumiere;
-
+uniform vec3 viewPosition;
 uniform sampler2D textureScene;
 uniform bool textureSample = false;
+uniform mat4 mvp_matrix;
 
 in vec2 v_texcoord;
 in vec3 v_position;
@@ -42,9 +43,16 @@ vec2 animationEau(){
 
 vec4 getLumiere(vec3 fragPosition){
     vec3 lightDir = normalize(lumiere - fragPosition);
-    float diff = max(dot(v_normal, lightDir), 0.0);
+    float diff = max(dot(v_normal, lightDir), 0.15);
     vec3 diffuse = diff * vec3(1,1,1);
-    return vec4(diffuse.xyz,1.);
+
+    float specularStrength = 0.5;
+    vec3 viewDir = normalize(vec4(mvp_matrix * vec4(viewPosition.xyz,1)).xyz - fragPosition);
+    vec3 reflectDir = reflect(-lightDir, v_normal);
+    float spec = pow(max(dot(viewDir, reflectDir), 0.0), 256);
+    vec3 specular = specularStrength * spec * vec3(1,1,1);
+
+    return vec4(diffuse.xyz + specular.xyz,1);
 }
 
 
@@ -100,7 +108,7 @@ void main()
 
         //gl_FragColor = texture2D(textureScene, v_texcoord);
 
-        gl_FragColor = getLumiere( FragPos.xyz)+texture2D(textureScene, v_texcoord) ;//,texture2D(textureScene, v_texcoord));
+        gl_FragColor = getLumiere( FragPos.xyz)*texture2D(textureScene, v_texcoord) ;//,texture2D(textureScene, v_texcoord));
     }
     /*gl_FragColor =0*texture2D(textureSnow, v_texcoord)+
             0*texture2D(textureGrass, v_texcoord)+

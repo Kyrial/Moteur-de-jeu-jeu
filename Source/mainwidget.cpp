@@ -136,7 +136,7 @@ void MainWidget::scene(){
     //Instance INIT GAME OBJECT // NOEUD LUNE
     Transform *t_NLune = new Transform;
     t_NLune->setScale(0.3,0.3,0.3);
-    t_NLune->setTranslate(26,0,10);
+    t_NLune->setTranslate(26,0,20);
     Transform *anim_NLune = new Transform;
     anim_NLune->setRotation(0,0,-5,5);
     Object* noeudLune = addGameObject(noeudTerre,t_NLune,new GeometryEngine, anim_NLune);
@@ -217,16 +217,22 @@ void MainWidget::scene(){
                     new QOpenGLTexture(QImage(":/textureSoleil.png").mirrored())
                     );
 
+    Object *cameraObj= new CameraObject();
+    satellite->addChild(cameraObj);
+
+
     QObject::connect(control, &Controler::moveObject,
                      satellite, &Object::controleMouvements);
-
+    QObject::connect(cameraObj, &Object::viewDirChanged,
+                         satellite, &Object::getDirView);
+    QObject::connect(this, &MainWidget::projectionChanged,
+                         satellite, &Object::getProjection);
 
 
 
     //Fin creation
 
-    Object *cameraObj= new CameraObject();
-    satellite->addChild(cameraObj);
+
     ///
 
 
@@ -293,7 +299,7 @@ void MainWidget::timerEvent(QTimerEvent *)
 
 
     // Decrease angular speed (friction)
-    angularSpeed *= 0.99;
+    angularSpeed *= 0.90;
 
     // Stop rotation when speed goes below threshold
     if (angularSpeed < 0.01) {
@@ -356,6 +362,7 @@ void MainWidget::initializeGL()
 
     QObject::connect(control, &Controler::viewChanged,
                          this, &MainWidget::keyPress);
+
 
 
     absoluteTime.start();
@@ -468,18 +475,14 @@ void MainWidget::paintGL()
     matrix.translate(0.0, 0.0, -2);
     matrix.rotate(rotation);
 
-
-
-    QMatrix4x4 view;
-    view.lookAt((camera_position), QVector3D(0, 0, 0), camera_up);
-
-
+    //QMatrix4x4 view;
+    //view.lookAt((camera_position), QVector3D(0, 0, 0), camera_up);
 
     // Set modelview-projection matrix
     program.setUniformValue("mvp_matrix",  projection *  matrix /** view*/);
     // program.setUniformValue("mvp_matrix",  matrix * view * projection);
     //! [6]
-
+    emit projectionChanged(projection*matrix);
     // Use texture unit 0 which contains cube.png
 
     program.setUniformValue("texture", 0);
@@ -553,6 +556,7 @@ void MainWidget::keyPress(QKeyEvent *event)
         break;
     }
     }
+    //emit projectionChanged(projection);
 
     //projection.translate(0.0, 0.0, -1.0) ;
     //update();

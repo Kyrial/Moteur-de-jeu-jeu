@@ -31,15 +31,15 @@ protected:
     QMatrix4x4 transf = QMatrix4x4();
     bool canJump = true;
     bool lumiere = false;
-
-
+    QVector3D dirView = QVector3D(0,1,0);
+    QMatrix4x4 projection = QMatrix4x4();
 
     ///Constructeur
 public:
 
     Object();
     Object(Transform tt,Transform anim):t(tt),animation(anim){}
-  /*  Object(Transform tt, Object par, QObject *parent = 0):t(tt){
+    /*  Object(Transform tt, Object par, QObject *parent = 0):t(tt){
         parent = &par;
     }
     Object(Transform tt, Object par, QVector<Object*> enf, QObject *parent = 0)
@@ -51,7 +51,7 @@ public:
         parent = &par;
     }*/
 
-   ///Getter/Setter
+    ///Getter/Setter
     void updateMesh(GeometryEngine *ge){
         geo = ge;
     }
@@ -77,14 +77,14 @@ public:
         transf= m;
     }
     QMatrix4x4 getTransf(){
-       return transf;
+        return transf;
     }
 
     void setLumiere(){
         lumiere = true;
     }
 
- ///Methode
+    ///Methode
 protected:
     void chargerTextureForShader(QOpenGLShaderProgram * program){
         if(ifTexture){
@@ -98,11 +98,11 @@ protected:
     QMatrix4x4 calculMatrice(QOpenGLShaderProgram * program, double deltaTime){
         QMatrix4x4 a;
         if(animate)
-             a = t.doAnimation(&animation, deltaTime);
+            a = t.doAnimation(&animation, deltaTime);
         else
-             a = t.doTransformation();
+            a = t.doTransformation();
         return a;
-}
+    }
     virtual QMatrix4x4 ApplyMatriceForShader(QOpenGLShaderProgram * program, double deltaTime, QMatrix4x4 m){
         QMatrix4x4 anim= calculMatrice(program,  deltaTime);
         program->setUniformValue("transform_Matrix", m*anim);
@@ -132,8 +132,12 @@ public:
     Object* getRacine();
 
 
+signals:
+   void viewDirChanged(QVector3D vec);
 public slots:
     void controleMouvements(QKeyEvent *event);
+    void getDirView(QVector3D dirView);
+    void getProjection(QMatrix4x4 proj);
 };
 
 
