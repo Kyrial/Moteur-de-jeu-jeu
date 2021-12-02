@@ -6,12 +6,15 @@ uniform sampler2D textureRock;
 uniform sampler2D textureSnow;
 uniform sampler2D textureEau;
 
+uniform vec3 lumiere;
 
 uniform sampler2D textureScene;
 uniform bool textureSample = false;
 
 in vec2 v_texcoord;
 in vec3 v_position;
+in vec3 v_normal;
+in vec3 FragPos;
 //! [0]
 
 float max(float a, float b){
@@ -36,6 +39,16 @@ float poid(float a, float b, float intervalle){
 vec2 animationEau(){
     return  v_texcoord*cos((animation+(v_position.y)*1000)/10000)/7+(0.5)/7;
 }
+
+vec4 getLumiere(vec3 fragPosition){
+    vec3 lightDir = normalize(lumiere - fragPosition);
+    float diff = max(dot(v_normal, lightDir), 0.0);
+    vec3 diffuse = diff * vec3(1,1,1);
+    return vec4(diffuse.xyz,1.);
+}
+
+
+
 
 vec4  calculTexture(float position,vec2 texcoord ){
     float herbe = 0.15;
@@ -80,10 +93,14 @@ void main()
         //  gl_FragColor = min(1,max(v_position.z*9-4.,0))*texture2D(textureSnow, v_texcoord)+
         //       min(1,max(1-v_position.z*2.6,0))*texture2D(textureGrass, v_texcoord)+
         //      min(1,max(1-distance(v_position.z,0.4)*4.5,0))*texture2D(textureRock, v_texcoord);
-        gl_FragColor =calculTexture(v_position.z,v_texcoord );
+        //gl_FragColor =calculTexture(v_position.z,v_texcoord);
+        gl_FragColor =getLumiere( FragPos.xyz)*calculTexture(v_position.z,v_texcoord);
     }
     else{
-        gl_FragColor = texture2D(textureScene, v_texcoord);
+
+        //gl_FragColor = texture2D(textureScene, v_texcoord);
+
+        gl_FragColor = getLumiere( FragPos.xyz)+texture2D(textureScene, v_texcoord) ;//,texture2D(textureScene, v_texcoord));
     }
     /*gl_FragColor =0*texture2D(textureSnow, v_texcoord)+
             0*texture2D(textureGrass, v_texcoord)+

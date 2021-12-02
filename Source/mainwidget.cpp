@@ -136,10 +136,11 @@ void MainWidget::scene(){
     //Instance INIT GAME OBJECT // NOEUD LUNE
     Transform *t_NLune = new Transform;
     t_NLune->setScale(0.3,0.3,0.3);
-    t_NLune->setTranslate(26,0,0);
+    t_NLune->setTranslate(26,0,10);
     Transform *anim_NLune = new Transform;
     anim_NLune->setRotation(0,0,-5,5);
     Object* noeudLune = addGameObject(noeudTerre,t_NLune,new GeometryEngine, anim_NLune);
+
     //Fin creation
 
     //Instance INIT GAME OBJECT //lune
@@ -151,7 +152,8 @@ void MainWidget::scene(){
     t_Lune->setRotation(1,0,0,6.68);
     Transform *anim_Lune = new Transform;
     anim_Lune->setRotation(0,0,1,0.8);
-    addGameObject(noeudLune,t_Lune , geo_Lune,anim_Lune);
+    Object* Lune = addGameObject(noeudLune,t_Lune , geo_Lune,anim_Lune);
+    Lune->setLumiere();
     //Fin creation
     ////////////
 
@@ -357,7 +359,7 @@ void MainWidget::initializeGL()
 
 
     absoluteTime.start();
-
+    program.setUniformValue("lumiere", QVector3D(0,0,5));
 
     // Use QBasicTimer because its faster than QTimer
     timer.start(1000./FPS, this);
@@ -498,7 +500,8 @@ void MainWidget::paintGL()
 
     program.setUniformValue("animation", (float)absoluteTime.elapsed());
     //qDebug("deltaTime: %f", deltaTime);
-     lastFrame.start();
+    lastFrame.start();
+
     gameObj->updateScene(&program, deltaTime);
     //gameObj->updateBB();
 

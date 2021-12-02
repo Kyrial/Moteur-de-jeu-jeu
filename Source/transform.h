@@ -134,7 +134,9 @@ r.setColumn(3,QVector4D(.0,.0,.0,1.0));
     }
 
 
-
+    QVector3D getTranslate(){
+        return t;
+    }
 
 
 
