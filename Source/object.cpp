@@ -119,20 +119,20 @@ void Object::controleMouvements(QKeyEvent *event){
     qDebug("[Controler] move mobile objet ");
     switch (event->key()) {
     case Qt::Key_O:{  // move Forward
-       // animation.forward();
-        animation.forward( projection * dirView);
+        //animation.forward();
+        animation.forward(dirView);
         break;
     }
     case Qt::Key_L: { //  move Backward
-        animation.backward();
+        animation.backward(dirView);
         break;
     }
     case Qt::Key_K: {//move Right
-        animation.right();
+        t.right2();
         break;
     }
     case Qt::Key_M: {//move Left
-        animation.left();
+        t.left2();
         break;
     }
     case Qt::Key_I: {//jump

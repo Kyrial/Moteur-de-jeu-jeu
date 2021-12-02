@@ -185,11 +185,21 @@ public:
     void backward(){
         t += QVector3D(-0.8,0,0);
     }
+    void backward(QVector3D dirView){
+        t += QVector3D(-dirView.x(),-dirView.y(),0).normalized();
+    }
+
     void left(){
         t += QVector3D(0,0.8,0);
     }
+    void left2(){
+         r =  this->r *QQuaternion::fromAxisAndAngle(QVector3D(0,0,1),0.5);
+    }
     void right(){
         t += QVector3D(0,-0.6,0);
+    }
+    void right2(){
+         r =  this->r *QQuaternion::fromAxisAndAngle(QVector3D(0,0,-1),0.5);
     }
     void jump(){
         t += QVector3D(0,0,2);

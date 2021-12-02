@@ -225,8 +225,8 @@ void MainWidget::scene(){
                      satellite, &Object::controleMouvements);
     QObject::connect(cameraObj, &Object::viewDirChanged,
                          satellite, &Object::getDirView);
-    QObject::connect(this, &MainWidget::projectionChanged,
-                         satellite, &Object::getProjection);
+    /*QObject::connect(this, &MainWidget::projectionChanged,
+                         satellite, &Object::getProjection);*/
 
 
 
