@@ -446,17 +446,22 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
 
 
 
+void GeometryEngine::initMeshObj(std::string filename){
 
+       std::vector< std::vector<unsigned int> >  faces;
 
-
+       OBJIO::open(filename, vertex, faces, true);
+       bindMesh(faces);
+}
 
 void GeometryEngine::initMesh(std::string filename){
 
        std::vector< std::vector<unsigned int> >  faces;
 
        OFFIO::open(filename, vertex, faces, true);
-
-
+       bindMesh(faces);
+}
+void GeometryEngine::bindMesh(std::vector< std::vector<unsigned int> >  faces){
        unsigned int vertexNumber = vertex.size();
        VertexData vertices[vertexNumber];
        unsigned int indexCount = faces.size()*3;
@@ -485,6 +490,9 @@ void GeometryEngine::initMesh(std::string filename){
        indexBuf.allocate(indices,  ((indexCount)* sizeof(GLushort)));
        triangle_strip = true;
 }
+
+
+
 
 void GeometryEngine::initCubeGeometry()
 {
@@ -613,7 +621,7 @@ void GeometryEngine::initPlanegeometry()
     VertexData vertices[x*y];
     unsigned int indexCount = x*y+y*(x-2)+2*(x-2)+2;
     GLushort indices[x*y+y*(x-2)+2*(x-2)+2];
-    subdivisePlan(x,  y,  vertices,  indices,-10,-10,10,10);
+    subdivisePlan(x,  y,  vertices,  indices,-12,-12,12,12);
 
    // qDebug("taille index %i",indexCount);
 //qDebug("taille index tab %i",x*y+y*(x-2)+2*(x-2)+2);
@@ -636,8 +644,20 @@ void GeometryEngine::initPlanegeometry()
     indexBuf.release();
     //! [1]
 }
+double randMToN(double M, double N)
+{
+    return M + (rand() / ( RAND_MAX / (N-M) ) ) ;
+}
 
+void addInstancedGrass(){
+    srand(0);
+    for(int i =0; i<100; i++){
+       float randX = randMToN( -12.0,  12.0);
+       float randY = randMToN( -12.0,  12.0);
+       float hauteurMesh =(perlin2d( randX, randY , 8)-0.3)*2;
+    }
 
+}
 
 
 
@@ -676,5 +696,7 @@ void GeometryEngine::drawCubeGeometry(QOpenGLShaderProgram *program)
     }
     else
         glDrawElements(GL_TRIANGLES, size/2, GL_UNSIGNED_SHORT, 0);
+
+    //glDrawElementsInstanced(GL_TRIANGLES, GLsizei count, GLenum type, const void *indices, GLsizei instancecount);
 }
 //! [2]

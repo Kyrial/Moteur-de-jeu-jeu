@@ -116,7 +116,7 @@ void MainWidget::scene(){
 
     //Instance INIT GAME OBJECT // NOEUD TERRE
     Transform *t_NTerre = new Transform;
-    t_NTerre->setScale(1,1,1);
+    t_NTerre->setScale(3,3,3);
     Transform *anim_NTerre = new Transform;
     //anim_NTerre->setRotation(0,0,0.2,1);
     Object* noeudTerre = addGameObject(NoeudUnivers,t_NTerre,new GeometryEngine, anim_NTerre);
@@ -125,7 +125,7 @@ void MainWidget::scene(){
     //Instance INIT GAME OBJECT //Terre
     GeometryEngine *geo_Terre = new GeometryEngine;
     geo_Terre->initPlanegeometry();
-   // geo_Terre->initMesh(":/sphere.off");
+   // geo_Terre->initMesh(":/Mesh/sphere.off");
     Transform *t_Terre = new Transform;
     //t_Terre->setRotation(-1,0,0,23.44);
     Transform *anim_Terre = new Transform;
@@ -136,7 +136,7 @@ void MainWidget::scene(){
     //Instance INIT GAME OBJECT // NOEUD LUNE
     Transform *t_NLune = new Transform;
     t_NLune->setScale(0.3,0.3,0.3);
-    t_NLune->setTranslate(26,0,20);
+    t_NLune->setTranslate(26,0,30);
     Transform *anim_NLune = new Transform;
     anim_NLune->setRotation(0,0,-5,5);
     Object* noeudLune = addGameObject(noeudTerre,t_NLune,new GeometryEngine, anim_NLune);
@@ -146,8 +146,8 @@ void MainWidget::scene(){
     //Instance INIT GAME OBJECT //lune
     GeometryEngine *geo_Lune = new GeometryEngine;
     //geo_Lune->initCubeGeometry();
-    geo_Lune->initMesh(":/sphere.off");
-    // geo_Lune->initMesh(":/space_station.off");
+    geo_Lune->initMesh(":/Mesh/sphere.off");
+    // geo_Lune->initMesh(":Mesh/space_station.off");
     Transform *t_Lune = new Transform;
     t_Lune->setRotation(1,0,0,6.68);
     Transform *anim_Lune = new Transform;
@@ -172,24 +172,25 @@ void MainWidget::scene(){
 
     //Instance INIT GAME OBJECT //soleil1
     GeometryEngine *geo_Soleil1 = new GeometryEngine;
-    geo_Soleil1->initMesh(":/house.off");
+    geo_Soleil1->initMesh(":/Mesh/house.off");
     Transform *t_Soleil1 = new Transform;
     //t_Soleil1->setRotation(-1,0,0,6.68);
     t_Soleil1->setTranslate(0,2,0);
     Transform *anim_Soleil1 = new Transform;
 //anim_Soleil1->setRotation(1,1,0,1.8);
-    addGameObject(noeudSoleil,t_Soleil1 , geo_Soleil1,anim_Soleil1,new QOpenGLTexture(QImage(":/textureSoleil.png").mirrored()));
+    addGameObject(noeudSoleil,t_Soleil1 , geo_Soleil1,anim_Soleil1,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
     //Fin creation
 
     //Instance INIT GAME OBJECT //soleil2
     GeometryEngine *geo_Soleil2 = new GeometryEngine;
-    geo_Soleil2->initMesh(":/house.off");
+    //geo_Soleil2->initMesh(":/Mesh/house.off");
+    geo_Soleil2->initMeshObj(":/Mesh/grass.obj");
     Transform *t_Soleil2 = new Transform;
     //t_Soleil2->setRotation(1,0,0,6.68);
     t_Soleil2->setTranslate(0,-2,0);
     Transform *anim_Soleil2 = new Transform;
    // anim_Soleil2->setRotation(-1,1,0,1.8);
-    addGameObject(noeudSoleil,t_Soleil2 , geo_Soleil2,anim_Soleil2,new QOpenGLTexture(QImage(":/textureSoleil.png").mirrored()));
+    addGameObject(noeudSoleil,t_Soleil2 , geo_Soleil2,anim_Soleil2,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
     //Fin creation
     ////////////
 
@@ -201,7 +202,7 @@ void MainWidget::scene(){
     //Instance INIT GAME MOBILE //test
     GeometryEngine *geo_mobile = new GeometryEngine;
     //geo_Soleil->initCubeGeometry();
-    geo_mobile->initMesh(":/space_station.off");
+    geo_mobile->initMesh(":/Mesh/space_station.off");
     Transform *t_mobile = new Transform;
     t_mobile->setScale(0.02,0.02,0.02);
     t_mobile->setTranslate(80,0,25);
@@ -213,20 +214,20 @@ void MainWidget::scene(){
 
     //Instance INIT GAME MOBILE //test
    // GeometryEngine *geo_mobile2 = new GeometryEngine;
-    //geo_mobile2->initMesh(":/space_station.off");
+    //geo_mobile2->initMesh(":/Mesh/space_station.off");
     Transform *t_mobile = new Transform;
-    t_mobile->setScale(0.02,0.02,0.02);
+    t_mobile->setScale(0.015,0.015,0.015);
   //  t_mobile->setTranslate(80,0,25);
     Object* NoeudSatellite =addMobileObject(Terre,t_mobile ,  new GeometryEngine, new Transform);
 
 
     //geo_Soleil->initCubeGeometry();
     GeometryEngine *geo_mobile = new GeometryEngine;
-    geo_mobile->initMesh(":/space_station.off");
+    geo_mobile->initMesh(":/Mesh/space_station.off");
     Transform *anim_mobile = new Transform;
     anim_mobile->setTranslate(0,0,0);
     Object* satellite =addGameObject(NoeudSatellite, new Transform ,   geo_mobile, anim_mobile,
-                    new QOpenGLTexture(QImage(":/textureSoleil.png").mirrored())
+                    new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored())
                     );
 
 
@@ -236,18 +237,22 @@ void MainWidget::scene(){
 
 
 
-    QObject::connect(control, &Controler::moveObject,
-                     NoeudSatellite, &Object::controleMouvements);
+  //  QObject::connect(control, &Controler::moveObject,
+ //                    NoeudSatellite, &Object::controleMouvements);
     QObject::connect(cameraObj, &Object::viewDirChanged,
                          NoeudSatellite, &Object::getDirView);
-    QObject::connect(this, &MainWidget::projectionChanged,
-                         NoeudSatellite, &Object::getProjection);
-    QObject::connect(control, &Controler::moveObject,
-                     satellite, &Object::controleRotation);
+  //  QObject::connect(this, &MainWidget::projectionChanged,
+  //                       NoeudSatellite, &Object::getProjection);
+  //  QObject::connect(control, &Controler::moveObject,
+   //                  satellite, &Object::controleRotation);
 
-
-
-
+    QObject::connect(this, &MainWidget::emitFilter,
+                         NoeudSatellite, &Object::keyPressedChangedMove);
+    QObject::connect(this, &MainWidget::emitFilter,
+                         satellite, &Object::keyPressedChangedRotate);
+    //emitFilter
+//    void keyPressedChangedMove(QEvent * event);
+  //  void keyPressedChangedRotate(QEvent * event);
     //Fin creation
 
 
@@ -374,7 +379,7 @@ void MainWidget::initializeGL()
     // gameObj->geo->initPlanegeometry();
 
     scene();
-
+    this->installEventFilter(this);
     QObject::connect(this, &MainWidget::signalKeyPress,
                          control, &Controler::keyPressEvent);
 
@@ -394,11 +399,11 @@ void MainWidget::initializeGL()
 void MainWidget::initShaders()
 {
     // Compile vertex shader
-    if (!program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/vshader.glsl"))
+    if (!program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vshader.glsl"))
         close();
 
     // Compile fragment shader
-    if (!program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/fshader.glsl"))
+    if (!program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fshader.glsl"))
         close();
 
     // Link shader pipeline
@@ -417,13 +422,13 @@ void MainWidget::initTextures()
     // Load cube.png image
     //    texture = new QOpenGLTexture(QImage(":/cube.png").mirrored());
     //texture = new QOpenGLTexture(QImage(":/grass.png").mirrored());
-    texture = new QOpenGLTexture(QImage(":/heightmap-1024x1024.png").mirrored());
+    texture = new QOpenGLTexture(QImage(":/Texture/heightmap-1024x1024.png").mirrored());
     // texture = new QOpenGLTexture(QImage(":/Heightmap_Mountain.png").mirrored());
     //texture = new QOpenGLTexture(QImage(":/Heightmap_Rocky.png").mirrored());
-    textureGrass =new QOpenGLTexture(QImage(":/grass.png").mirrored());
-    textureRock =new QOpenGLTexture(QImage(":/rock.png").mirrored());
-    textureSnow =new QOpenGLTexture(QImage(":/snowrocks.png").mirrored());
-    textureEau =new QOpenGLTexture(QImage(":/textureEau.png").mirrored());
+    textureGrass =new QOpenGLTexture(QImage(":/Texture/grass.png").mirrored());
+    textureRock =new QOpenGLTexture(QImage(":/Texture/rock.png").mirrored());
+    textureSnow =new QOpenGLTexture(QImage(":/Texture/snowrocks.png").mirrored());
+    textureEau =new QOpenGLTexture(QImage(":/Texture/textureEau.png").mirrored());
 
 
 
@@ -536,6 +541,16 @@ void MainWidget::paintGL()
 }
 void MainWidget::keyPressEvent(QKeyEvent *event)
 {emit signalKeyPress(event);
+}
+
+
+
+bool MainWidget::eventFilter(QObject *object, QEvent *event){
+    if(event->type()==QEvent::KeyPress || event->type()==QEvent::KeyRelease) {
+        qDebug("filtre ");
+        emit emitFilter(event);
+    }
+    return false;
 }
 
 void MainWidget::keyPress(QKeyEvent *event)

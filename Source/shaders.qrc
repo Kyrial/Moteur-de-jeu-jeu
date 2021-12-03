@@ -1,8 +1,10 @@
 <RCC>
     <qresource prefix="/">
-        <file>vshader.glsl</file>
-        <file>fshader.glsl</file>
-        <file>controlshader.glsl</file>
-        <file>tesselationshader.fsh</file>
+        <file>Shaders/vshader.glsl</file>
+        <file>Shaders/fshader.glsl</file>
+        <file>Shaders/controlshader.glsl</file>
+        <file>Shaders/tesselationshader.glsl</file>
+		<file>Shaders/HerbeShader/h_vshader.glsl</file>
+        <file>Shaders/HerbeShader/h_fshader.glsl</file>
     </qresource>
 </RCC>

@@ -132,10 +132,12 @@ private:
     qreal angularSpeed;
     QQuaternion rotation;
 
-    void keyPressEvent(QKeyEvent *e);
+    void keyPressEvent(QKeyEvent *e) override;
+    bool eventFilter(QObject *object, QEvent *event) override;
 signals:
     void signalKeyPress(QKeyEvent *e);
     void projectionChanged(QMatrix4x4 val);
+    void emitFilter(QEvent *event);
 public slots :
     void cameraControle();
     void keyPress(QKeyEvent *e);

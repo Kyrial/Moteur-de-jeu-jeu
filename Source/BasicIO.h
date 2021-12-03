@@ -340,22 +340,27 @@ template< class point_t , class int_type_t > bool open(
         bool randomize = false,
         bool convertEdgesToDegenerateTriangles = true)
 {
-    std::ifstream myfile;
-    myfile.open(filename.c_str());
-    if (!myfile.is_open())
+
+     QFile myFile(filename.c_str());
+
+
+    //std::ifstream myfile;
+    //myfile.open(filename.c_str());
+    if (!myFile.open(QIODevice::ReadOnly))//!myfile.is_open())
     {
         std::cout << filename << " cannot be opened" << std::endl;
         return false;
     }
-
+    QTextStream in(&myFile);
     vertices.clear();
     faces.clear();
 
-    while( myfile.good() )
+    while(!myFile.atEnd())// myfile.good() )
     {
-        std::string line;
-        getline (myfile,line);
-        QString QTLine = QString::fromStdString( line );
+        //std::string line;
+        //getline (myfile,line);
+        QString QTLine = myFile.readLine();
+        //QString QTLine = QString::fromStdString( line );
         QRegExp reg("\\s+");
         QStringList lineElements = QTLine.split(reg);
 
@@ -415,7 +420,7 @@ template< class point_t , class int_type_t > bool open(
             }
         }
     }
-    myfile.close();
+    myFile.close();
     return true;
 }
 

@@ -92,7 +92,7 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
                 qDebug("COOOOOOOOOLLLLLLLLLLLIIIIIIIIIIIIISSSSSSSIIIIIIIIIIIOOOOOOOOONNNNNNNNNN");
                 obj->t.addTranslate(hauteur);
                 QVector3D direction =Transform::extracteTranslate(anim);
-              //  qDebug("  %f,   %f    %f   \n ", mesh.x(), mesh.y(),(mesh.z()));
+                //  qDebug("  %f,   %f    %f   \n ", mesh.x(), mesh.y(),(mesh.z()));
 
 
                 direction = (this->geo->gestionCollision(obj->geo, direction, mesh))*0.8;
@@ -159,6 +159,39 @@ void Object::controleRotation(QKeyEvent *event){
     }
 }
 
+void Object::keyPressedChangedMove(QEvent * event){
+    if(event->type()==QEvent::KeyPress) {
+        pressedKeys += ((QKeyEvent*)event)->key();
+        if( pressedKeys.contains(Qt::Key_O))
+            animation.forward(dirView);
+        if( pressedKeys.contains(Qt::Key_L))
+            animation.backward(dirView);
+        if( pressedKeys.contains(Qt::Key_I))
+        if (canJump){
+            animation.jump();
+            canJump=false;
+        }
+
+    }
+    else if(event->type()==QEvent::KeyRelease)
+    {
+        pressedKeys -= ((QKeyEvent*)event)->key();
+    }
+}
+void Object::keyPressedChangedRotate(QEvent * event){
+    if(event->type()==QEvent::KeyPress) {
+        pressedKeys += ((QKeyEvent*)event)->key();
+        if( pressedKeys.contains(Qt::Key_K))
+            t.right2();
+        if( pressedKeys.contains(Qt::Key_M))
+            t.left2();
+
+    }
+    else if(event->type()==QEvent::KeyRelease)
+    {
+        pressedKeys -= ((QKeyEvent*)event)->key();
+    }
+}
 
 void Object::getDirView(QVector3D newDirView)
 {

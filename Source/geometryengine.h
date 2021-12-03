@@ -76,6 +76,7 @@ public:
     virtual ~GeometryEngine();
 
     void initMesh(std::string filename);
+    void initMeshObj(std::string filename);
     void drawCubeGeometry(QOpenGLShaderProgram *program);
     QOpenGLBuffer arrayBuf;
     QOpenGLBuffer indexBuf;
@@ -91,6 +92,7 @@ public:
     QVector3D internBBMax = QVector3D(0,0,0);
  bool heightMap = false;
 private:
+ void bindMesh(std::vector< std::vector<unsigned int> >  faces);
     QImage img;
     std::vector<QVector3D>  vertex;
     //void initPlanegeometry();

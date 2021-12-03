@@ -1,9 +1,10 @@
 <RCC>
     <qresource prefix="/">
-        <file>sphere.obj</file>
-        <file>sphere.off</file>
-        <file>dragon.off</file>
-        <file>house.off</file>
-		<file>space_station.off</file>
+        <file>Mesh/sphere.obj</file>
+        <file>Mesh/sphere.off</file>
+        <file>Mesh/dragon.off</file>
+        <file>Mesh/house.off</file>
+        <file>Mesh/space_station.off</file>
+        <file>Mesh/grass.obj</file>
     </qresource>
 </RCC>

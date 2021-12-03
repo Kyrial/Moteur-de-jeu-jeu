@@ -33,6 +33,7 @@ protected:
     bool lumiere = false;
     QVector3D dirView = QVector3D(0,1,0);
     QMatrix4x4 projection = QMatrix4x4();
+    QSet<int> pressedKeys;
 
     ///Constructeur
 public:
@@ -139,6 +140,8 @@ public slots:
     void getDirView(QVector3D dirView);
     void getProjection(QMatrix4x4 proj);
     void controleRotation(QKeyEvent *event);
+    void keyPressedChangedMove(QEvent * event);
+    void keyPressedChangedRotate(QEvent * event);
 };
 
 
