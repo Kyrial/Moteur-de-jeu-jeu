@@ -196,10 +196,16 @@ QVector3D GeometryEngine::getNormal(){
 
 }
 
-
+QVector3D getNormal(QVector3D pt){
+   QVector3D A = QVector3D(pt.x(),pt.y(),perlin2d(pt.x(),pt.y()  , 8)-.3)*2;
+   QVector3D B = QVector3D(pt.x()+0.1,pt.y(),perlin2d(pt.x()+0.1,pt.y()  , 8)-.3)*2;
+   QVector3D C = QVector3D(pt.x(),pt.y()+0.1,perlin2d(pt.x(),pt.y()+0.1  , 8)-.3)*2;
+   return QVector3D::normal(A,B,C);
+}
 
 //geo en déplacement
-QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB, QVector3D vec){
+QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB, QVector3D vec, QVector3D mesh){
+    if(mesh == QVector3D(0,0,0)){
     QVector3D milieuA = BBMin + (BBMax - BBMin)/2;
     QVector3D milieuB = geoB->BBMin +(geoB->BBMax - geoB->BBMin)/2;
 
@@ -209,6 +215,10 @@ QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB, QVector3D vec){
 
   //  return vec - 2* QVector3D::dotProduct(vec, vecAB) * vecAB;
     return vec - 2* QVector3D::dotProduct(vec, getNormal()) * getNormal();
+    }
+    else{
+       // vec - 2* QVector3D::dotProduct(vec, getNormal(mesh)) * getNormal(mesh);
+    }
 
 }
 
@@ -364,7 +374,7 @@ float GeometryEngine::getHauteur(QVector2D coordText){
     return (qRed(rgb)/ 255.0);
 }
 
-QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM, bool &collision){
+QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM, bool &collision, QVector3D &normal){
     QMatrix4x4 invObjM = Transform::inverse(objM);
     QMatrix4x4 invOurM = Transform::inverse(ourM);
 
@@ -404,8 +414,8 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     //float hauteurMesh = colorx*0.7 +k[2];
     float hauteurMesh = (perlin2d( k.x(), k.y() , 8)-0.3)*2;
     //float hauteurTexture = std::max(-0.5, std::min((float)1.25,colorx*2)-0.25);
-    if(hauteurMesh<-0.1){
-        hauteurMesh = -0.1;//+cos((animation+(a_position.y)*300)/100)/150;
+    if(hauteurMesh<-0.5){
+        hauteurMesh = -0.5;//+cos((animation+(a_position.y)*300)/100)/150;
     }
     QVector3D vecTranslate;
     if(hauteurMesh < a[2])
@@ -414,7 +424,7 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     newCoord[2]= hauteurMesh;
     newCoord  = objM*newCoord;
     vecTranslate = newCoord - geo->BBMin;
-
+    normal == k;
     int i=0;
     return vecTranslate;
 }
