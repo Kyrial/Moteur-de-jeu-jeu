@@ -14,8 +14,8 @@ public:
 //    CameraObject(Object par,QVector<Object*> enf):Object(par,enf){}
 
 
-    QVector3D rotation_camera  = QVector3D(1.0f, 1.0f, 1.0f);
-    QVector3D camera_position = QVector3D(0.0f, 1.2f, 1.0f);
+    QVector3D rotation_camera  = QVector3D(1.0f, 1.0f, 3.0f);
+    QVector3D camera_position = QVector3D(0.0f, 1.2f, 0.5f);
     QVector3D camera_target = QVector3D(0.0f, 0.1f, 1.0f);
     QVector3D camera_up = QVector3D(0.0f, 0.0f, 0.5f);
 

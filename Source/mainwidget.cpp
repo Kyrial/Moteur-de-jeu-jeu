@@ -487,7 +487,7 @@ void MainWidget::paintGL()
     //! [6]
     // Calculate model view transformation
     QMatrix4x4 matrix;
-    matrix.translate(0.0, 0.0, -2);
+    matrix.translate(0.0, 0.0, -6);
     matrix.rotate(rotation);
 
     //QMatrix4x4 view;

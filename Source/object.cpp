@@ -69,7 +69,8 @@ Object* Object::getRacine(){
 
 void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
     // QMatrix4x4 m= chargeMatriceForShader(program, deltaTime,lastM);
-
+ //   if (this != obj)
+  //      return;
     foreach (Object* go, enfants){
         if(go->geo->intersect(obj->geo)){
             go->findCollision(obj, anim, t);
@@ -79,13 +80,14 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
 
         if(geo->heightMap){
             bool collision = true;
-            QVector3D hauteur = geo->findCoordmesh( obj->geo,  t, this->getTransf(),collision);
+            QVector3D mesh = QVector3D();
+            QVector3D hauteur = geo->findCoordmesh( obj->geo,  t, this->getTransf(),collision, mesh);
             if(collision){
                 obj->canJump=true;
                 qDebug("COOOOOOOOOLLLLLLLLLLLIIIIIIIIIIIIISSSSSSSIIIIIIIIIIIOOOOOOOOONNNNNNNNNN");
                 obj->t.addTranslate(hauteur);
                 QVector3D direction =Transform::extracteTranslate(anim);
-                direction = (this->geo->gestionCollision(obj->geo, direction))*0.8;
+                direction = (this->geo->gestionCollision(obj->geo, direction, mesh))*0.8;
                 //direction = Transform::convergeZero(direction);
                 obj->animation.setTranslate(direction);
                 //obj->animation.setTranslate(QVector3D(0,0,0));

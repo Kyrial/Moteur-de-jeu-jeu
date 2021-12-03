@@ -112,8 +112,9 @@ std::vector<QVector3D> getVertex();
     float getHauteur(QVector2D coordText);
 public:
 
-    QVector3D findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM,  bool &collision);
+    QVector3D findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM,  bool &collision, QVector3D & mesh);
     QVector3D getNormal();
+    QVector3D getNormal(QVector3D& mesh);
     QVector3D recallageCollision(GeometryEngine *geoB);
     void resetBB();
     bool ifNoeudVide();
@@ -126,7 +127,7 @@ public:
        static QVector3D  calcBBMax(QVector3D const & last, QVector3D const & max);
 bool intersect(GeometryEngine *geo);
 bool internintersect(GeometryEngine *geo);
-QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec);
+QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec, QVector3D mesh = QVector3D(0,0,0));
 };
 
 #endif // GEOMETRYENGINE_H
