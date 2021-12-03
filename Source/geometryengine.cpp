@@ -196,7 +196,7 @@ QVector3D GeometryEngine::getNormal(){
 
 }
 
-QVector3D getNormal(QVector3D pt){
+QVector3D GeometryEngine::getNormal(QVector3D pt){
    QVector3D A = QVector3D(pt.x(),pt.y(),perlin2d(pt.x(),pt.y()  , 8)-.3)*2;
    QVector3D B = QVector3D(pt.x()+0.1,pt.y(),perlin2d(pt.x()+0.1,pt.y()  , 8)-.3)*2;
    QVector3D C = QVector3D(pt.x(),pt.y()+0.1,perlin2d(pt.x(),pt.y()+0.1  , 8)-.3)*2;
@@ -205,10 +205,11 @@ QVector3D getNormal(QVector3D pt){
 
 //geo en déplacement
 QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB, QVector3D vec, QVector3D mesh){
+   // qDebug("  %f,   %f    %f   \n ", mesh.x(), mesh.y(),(mesh.z()));
     if(mesh == QVector3D(0,0,0)){
     QVector3D milieuA = BBMin + (BBMax - BBMin)/2;
     QVector3D milieuB = geoB->BBMin +(geoB->BBMax - geoB->BBMin)/2;
-
+   // qDebug("\n\nAAAAAAAAAAAAAAAAAAAAA\n\n");
     QVector3D vecAB = milieuB -milieuA;
 
     //V = V - 2(V.N)*N
@@ -217,7 +218,7 @@ QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB, QVector3D vec, 
     return vec - 2* QVector3D::dotProduct(vec, getNormal()) * getNormal();
     }
     else{
-       // vec - 2* QVector3D::dotProduct(vec, getNormal(mesh)) * getNormal(mesh);
+        return vec - 2* QVector3D::dotProduct(vec, getNormal(mesh)) * getNormal(mesh);
     }
 
 }
@@ -392,7 +393,8 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     int caseX = (a.x()- Min[0])/interval;
     int caseY = (a.y()- Min[1])/interval;
     float interval_Texture=2/(float)(precisionX-1);
-    QVector3D k = vertex[caseX*precisionX+caseY];
+   // QVector3D k
+            normal= vertex[caseX*precisionX+caseY];
     /*VertexData vertices[precisionX*precisionY];
 
    for(int i=0; i<precisionX; i++){
@@ -412,10 +414,11 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     QVector3D newCoord = inv_BBMin;
    // float colorx = getHauteur( coordText);
     //float hauteurMesh = colorx*0.7 +k[2];
-    float hauteurMesh = (perlin2d( k.x(), k.y() , 8)-0.3)*2;
+    float hauteurMesh =(perlin2d( normal.x(), normal.y() , 8)-0.3)*2; // (perlin2d( k.x(), k.y() , 8)-0.3)*2;
     //float hauteurTexture = std::max(-0.5, std::min((float)1.25,colorx*2)-0.25);
     if(hauteurMesh<-0.5){
         hauteurMesh = -0.5;//+cos((animation+(a_position.y)*300)/100)/150;
+        normal= QVector3D(0,0,0);
     }
     QVector3D vecTranslate;
     if(hauteurMesh < a[2])
@@ -424,7 +427,7 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     newCoord[2]= hauteurMesh;
     newCoord  = objM*newCoord;
     vecTranslate = newCoord - geo->BBMin;
-    normal == k;
+    //normal = k;
     int i=0;
     return vecTranslate;
 }

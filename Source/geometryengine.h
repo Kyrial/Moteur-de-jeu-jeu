@@ -114,7 +114,7 @@ public:
 
     QVector3D findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM,  bool &collision, QVector3D & mesh);
     QVector3D getNormal();
-    QVector3D getNormal(QVector3D& mesh);
+    QVector3D getNormal(QVector3D mesh);
     QVector3D recallageCollision(GeometryEngine *geoB);
     void resetBB();
     bool ifNoeudVide();

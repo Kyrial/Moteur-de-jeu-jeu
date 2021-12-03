@@ -69,24 +69,32 @@ Object* Object::getRacine(){
 
 void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
     // QMatrix4x4 m= chargeMatriceForShader(program, deltaTime,lastM);
- //   if (this != obj)
-  //      return;
+    if (this/*->parent*/ == obj){
+        return;
+    }
     foreach (Object* go, enfants){
         if(go->geo->intersect(obj->geo)){
             go->findCollision(obj, anim, t);
         }
     }
+
+
+
     if(!geo->ifNoeudVide() && this != obj &&this->geo->internintersect(obj->geo)){
 
         if(geo->heightMap){
             bool collision = true;
             QVector3D mesh = QVector3D();
             QVector3D hauteur = geo->findCoordmesh( obj->geo,  t, this->getTransf(),collision, mesh);
+            hauteur.setZ(hauteur.z()+0.01);
             if(collision){
                 obj->canJump=true;
                 qDebug("COOOOOOOOOLLLLLLLLLLLIIIIIIIIIIIIISSSSSSSIIIIIIIIIIIOOOOOOOOONNNNNNNNNN");
                 obj->t.addTranslate(hauteur);
                 QVector3D direction =Transform::extracteTranslate(anim);
+              //  qDebug("  %f,   %f    %f   \n ", mesh.x(), mesh.y(),(mesh.z()));
+
+
                 direction = (this->geo->gestionCollision(obj->geo, direction, mesh))*0.8;
                 //direction = Transform::convergeZero(direction);
                 obj->animation.setTranslate(direction);
@@ -129,14 +137,6 @@ void Object::controleMouvements(QKeyEvent *event){
         animation.backward(dirView);
         break;
     }
-    case Qt::Key_K: {//move Right
-        t.right2();
-        break;
-    }
-    case Qt::Key_M: {//move Left
-        t.left2();
-        break;
-    }
     case Qt::Key_I: {//jump
         if (canJump){
             animation.jump();
@@ -145,13 +145,28 @@ void Object::controleMouvements(QKeyEvent *event){
     }
     }
 }
- void Object::getDirView(QVector3D newDirView)
- {
-     dirView =newDirView;
- };
- void Object::getProjection(QMatrix4x4 proj){
-     projection =proj;
- }
+void Object::controleRotation(QKeyEvent *event){
+    qDebug("[Controler] rotation mobile objet ");
+    switch (event->key()) {
+    case Qt::Key_K: {//move Right
+        t.right2();
+        break;
+    }
+    case Qt::Key_M: {//move Left
+        t.left2();
+        break;
+    }
+    }
+}
+
+
+void Object::getDirView(QVector3D newDirView)
+{
+    dirView =newDirView;
+};
+void Object::getProjection(QMatrix4x4 proj){
+    projection =proj;
+}
 
 
 

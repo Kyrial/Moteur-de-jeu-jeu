@@ -138,6 +138,7 @@ public slots:
     void controleMouvements(QKeyEvent *event);
     void getDirView(QVector3D dirView);
     void getProjection(QMatrix4x4 proj);
+    void controleRotation(QKeyEvent *event);
 };
 
 
