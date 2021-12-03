@@ -34,9 +34,10 @@ protected:
     QVector3D dirView = QVector3D(0,1,0);
     QMatrix4x4 projection = QMatrix4x4();
     QSet<int> pressedKeys;
-
+    QOpenGLShaderProgram *shader;
     ///Constructeur
 public:
+
 
     Object();
     Object(Transform tt,Transform anim):t(tt),animation(anim){}
@@ -64,6 +65,9 @@ public:
         else{
             ifTexture =false;
         }}
+    void setShader(QOpenGLShaderProgram * shad){
+        shader = shad;
+    }
     void addChild(Object * enfant){
         enfants.append(enfant);
         enfant->SetParent(this);
@@ -87,16 +91,16 @@ public:
 
     ///Methode
 protected:
-    void chargerTextureForShader(QOpenGLShaderProgram * program){
+    void chargerTextureForShader(){
         if(ifTexture){
             texture->bind(5);
-            program->setUniformValue("textureScene", 5);
+            shader->setUniformValue("textureScene", 5);
         }
         //ifTexture.bind(5);
-        program->setUniformValue("textureSample", ifTexture);
+        shader->setUniformValue("textureSample", ifTexture);
     }
 
-    QMatrix4x4 calculMatrice(QOpenGLShaderProgram * program, double deltaTime){
+    QMatrix4x4 calculMatrice(double deltaTime){
         QMatrix4x4 a;
         if(animate)
             a = t.doAnimation(&animation, deltaTime);
@@ -104,34 +108,35 @@ protected:
             a = t.doTransformation();
         return a;
     }
-    virtual QMatrix4x4 ApplyMatriceForShader(QOpenGLShaderProgram * program, double deltaTime, QMatrix4x4 m){
-        QMatrix4x4 anim= calculMatrice(program,  deltaTime);
-        program->setUniformValue("transform_Matrix", m*anim);
+    virtual QMatrix4x4 ApplyMatriceForShader( double deltaTime, QMatrix4x4 m){
+        QMatrix4x4 anim= calculMatrice( deltaTime);
+        shader->setUniformValue("transform_Matrix", m*anim);
         return m*anim;
     }
 
 
-    virtual QMatrix4x4 chargeMatriceForShader(QOpenGLShaderProgram * program, double deltaTime){
+    virtual QMatrix4x4 chargeMatriceForShader( double deltaTime){
 
-        QMatrix4x4 a =  calculMatrice(program,  deltaTime);
+        QMatrix4x4 a =  calculMatrice(deltaTime);
 
-        program->setUniformValue("transform_Matrix", a);
+        shader->setUniformValue("transform_Matrix", a);
         return a;
     }
 
-    virtual QMatrix4x4 chargeMatriceForShader(QOpenGLShaderProgram * program, double deltaTime, QMatrix4x4 m){
-        QMatrix4x4 anim= calculMatrice(program,  deltaTime);
-        program->setUniformValue("transform_Matrix", m*anim);
+    virtual QMatrix4x4 chargeMatriceForShader( double deltaTime, QMatrix4x4 m){
+        QMatrix4x4 anim= calculMatrice(deltaTime);
+        shader->setUniformValue("transform_Matrix", m*anim);
         return m*anim;
     }
 
 public:
-    virtual void  updateScene(QOpenGLShaderProgram * program, double deltaTime =1, QMatrix4x4 m= QMatrix4x4());
+    virtual void  updateScene( double deltaTime =1, QMatrix4x4 m= QMatrix4x4());
     void findCollision( Object *obj,QMatrix4x4 anim,  QMatrix4x4 t);
     void updateBB();
 
     Object* getRacine();
 
+    virtual void addShader(QOpenGLShaderProgram * shader);
 
 signals:
    void viewDirChanged(QVector3D vec);

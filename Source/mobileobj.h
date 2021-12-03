@@ -46,24 +46,24 @@ public:
     }
 
 
-    void  updateScene(QOpenGLShaderProgram * program, double deltaTime){
+    void  updateScene( double deltaTime){
         if(animate){
             addGravite( deltaTime);
             testCollision();
         }
-        QMatrix4x4 m= chargeMatriceForShader(program, deltaTime);
+        QMatrix4x4 m= chargeMatriceForShader(deltaTime);
 
-        Object::updateScene(program, deltaTime, m);
+        Object::updateScene(deltaTime, m);
 
     }
-    void  updateScene(QOpenGLShaderProgram * program, double deltaTime,QMatrix4x4 lastM){
+    void  updateScene(double deltaTime,QMatrix4x4 lastM){
         if(animate){
             addGravite( deltaTime);
             testCollision(lastM);
         }
-        QMatrix4x4 m= chargeMatriceForShader(program, deltaTime,lastM);
+        QMatrix4x4 m= chargeMatriceForShader(deltaTime,lastM);
 
-        Object::updateScene(program, deltaTime, m);
+        Object::updateScene(deltaTime, m);
 
     }
 

@@ -101,8 +101,8 @@ protected:
   //  void keyPressEvent(QKeyEvent *e) override;
 
 
-    Object* addGameObject(Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *txtr);
-    Object* addMobileObject(Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *texture);
+    Object* addGameObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *txtr);
+    Object* addMobileObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *texture);
 
 
     void initMonde();
@@ -112,6 +112,8 @@ private:
     QBasicTimer timer;
 
     QOpenGLShaderProgram program;
+    QVector<QOpenGLShaderProgram*> allShaders;
+
     GeometryEngine *geometries;
     GameObject *gameObj;
     Controler *control = new Controler();

@@ -51,8 +51,8 @@ public:
     ///Methode
 
 
-    void   updateScene(QOpenGLShaderProgram * program, double deltaTime);
-    void  updateScene(QOpenGLShaderProgram * program, double deltaTime, QMatrix4x4 lastM) override;
+    void   updateScene( double deltaTime);
+    void  updateScene( double deltaTime, QMatrix4x4 lastM) override;
 
 
 };

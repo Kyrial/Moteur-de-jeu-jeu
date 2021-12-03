@@ -19,12 +19,17 @@ public:
     QVector3D camera_target = QVector3D(0.0f, 0.1f, 1.0f);
     QVector3D camera_up = QVector3D(0.0f, 0.0f, 0.5f);
 
+    QVector<QOpenGLShaderProgram*> allShader;
+
+    void addShader( QOpenGLShaderProgram * shad){
+        allShader.push_back(shad);
+    }
 
    void rotationScene(double deltaTime){
     camera_position = QQuaternion::fromAxisAndAngle(QVector3D(0.0f, 0.0f, 2.0f), 0.03*(deltaTime)) * camera_position;
 }
 
-   void  updateScene(QOpenGLShaderProgram * program, double deltaTime =1, QMatrix4x4 m= QMatrix4x4());
+   void  updateScene( double deltaTime =1, QMatrix4x4 m= QMatrix4x4());
 
    void keyPress(QKeyEvent *event);
 

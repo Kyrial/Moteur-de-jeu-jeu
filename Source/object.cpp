@@ -9,24 +9,27 @@ Object::Object():t(Transform())
 
 }
 
+void Object::addShader(QOpenGLShaderProgram * shader){}
 
 
 
-void  Object::updateScene(QOpenGLShaderProgram * program, double deltaTime, QMatrix4x4 m){
+void  Object::updateScene(double deltaTime, QMatrix4x4 m){
     setTransf(m);
     if(lumiere){
         QVector3D a = t.extracteTranslate(m);
-        program->setUniformValue("lumiere", t.extracteTranslate(m));
+        shader->setUniformValue("lumiere", t.extracteTranslate(m));
+        //todo
     }
 
-    chargerTextureForShader(program);
-    geo->drawCubeGeometry(program);
+    chargerTextureForShader();
+    shader->bind();
+    geo->drawCubeGeometry(shader);
     QVector3D newBBMin =QVector3D();
     QVector3D newBBMax =QVector3D();
     bool firstPassage = true;
     foreach (Object* go, enfants) {
         //  qDebug("foreach %i \n",enfants.size());
-        go->updateScene(program,deltaTime, m);
+        go->updateScene(deltaTime, m);
 
 
         if( firstPassage){

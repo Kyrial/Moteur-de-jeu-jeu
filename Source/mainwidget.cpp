@@ -84,16 +84,17 @@ void MainWidget::initMonde(){
     gameObj = new GameObject();// tt, geo);
 }
 
-Object* MainWidget::addGameObject(Object *parent, Transform *t, GeometryEngine *mesh=new GeometryEngine(), Transform *anim = new Transform(),QOpenGLTexture *texture=NULL){
+Object* MainWidget::addGameObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh=new GeometryEngine(), Transform *anim = new Transform(),QOpenGLTexture *texture=NULL){
     //setTexture(QOpenGLTexture *txtr)
     Object *gameObj2 = new GameObject(*t, *anim);
     gameObj2->updateMesh(mesh);
     gameObj2->setTexture(texture);
     parent->addChild(gameObj2);
     gameObj2->Monde = gameObj;
+    gameObj2->setShader(shad);
     return gameObj2;
 }
-Object* MainWidget::addMobileObject(Object *parent, Transform *t, GeometryEngine *mesh=new GeometryEngine(), Transform *anim = new Transform(),QOpenGLTexture *texture=NULL){
+Object* MainWidget::addMobileObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh=new GeometryEngine(), Transform *anim = new Transform(),QOpenGLTexture *texture=NULL ){
     //setTexture(QOpenGLTexture *txtr)
     //MobileObj *Obj2
     Object *mobileobj= new MobileObj(*t, *anim);
@@ -101,13 +102,16 @@ Object* MainWidget::addMobileObject(Object *parent, Transform *t, GeometryEngine
     mobileobj->setTexture(texture);
     parent->addChild(mobileobj);
     mobileobj->Monde = gameObj;
+    mobileobj->setShader(shad);
     return mobileobj;
 }
 
 
 void MainWidget::scene(){
+    gameObj->setShader(allShaders[0]);
+
     //Instance INIT GAME OBJECT //NOEUD SOLEIL
-    Object* NoeudUnivers = addGameObject(gameObj,new Transform);
+    Object* NoeudUnivers = addGameObject(allShaders[0],gameObj,new Transform);
    // noeudSoleil->Monde = noeudSoleil;
     //noeudSoleil->setMonde();
     //Fin creation
@@ -119,7 +123,7 @@ void MainWidget::scene(){
     t_NTerre->setScale(3,3,3);
     Transform *anim_NTerre = new Transform;
     //anim_NTerre->setRotation(0,0,0.2,1);
-    Object* noeudTerre = addGameObject(NoeudUnivers,t_NTerre,new GeometryEngine, anim_NTerre);
+    Object* noeudTerre = addGameObject(&program,NoeudUnivers,t_NTerre,new GeometryEngine, anim_NTerre);
     //Fin creation
 
     //Instance INIT GAME OBJECT //Terre
@@ -130,7 +134,7 @@ void MainWidget::scene(){
     //t_Terre->setRotation(-1,0,0,23.44);
     Transform *anim_Terre = new Transform;
     //anim_Terre->setRotation(0,0,1,1);
-    Object* Terre = addGameObject(noeudTerre,t_Terre , geo_Terre,anim_Terre);
+    Object* Terre = addGameObject(&program,noeudTerre,t_Terre , geo_Terre,anim_Terre);
     //Fin creation
 
     //Instance INIT GAME OBJECT // NOEUD LUNE
@@ -139,7 +143,7 @@ void MainWidget::scene(){
     t_NLune->setTranslate(26,0,30);
     Transform *anim_NLune = new Transform;
     anim_NLune->setRotation(0,0,-5,5);
-    Object* noeudLune = addGameObject(noeudTerre,t_NLune,new GeometryEngine, anim_NLune);
+    Object* noeudLune = addGameObject(&program,noeudTerre,t_NLune,new GeometryEngine, anim_NLune);
 
     //Fin creation
 
@@ -152,7 +156,7 @@ void MainWidget::scene(){
     t_Lune->setRotation(1,0,0,6.68);
     Transform *anim_Lune = new Transform;
     anim_Lune->setRotation(0,0,1,0.8);
-    Object* Lune = addGameObject(noeudLune,t_Lune , geo_Lune,anim_Lune);
+    Object* Lune = addGameObject(&program,noeudLune,t_Lune , geo_Lune,anim_Lune);
     Lune->setLumiere();
     //Fin creation
     ////////////
@@ -165,7 +169,7 @@ void MainWidget::scene(){
     //anim_NTerre->setRotation(0,0,0.2,1);
     Transform *anim_Soleil = new Transform;
     anim_Soleil->setRotation(0,0,1,2.8);
-    Object* noeudSoleil = addGameObject(NoeudUnivers,tSoleil,new GeometryEngine,anim_Soleil);
+    Object* noeudSoleil = addGameObject(&program,NoeudUnivers,tSoleil,new GeometryEngine,anim_Soleil);
     //Fin creation
 
 
@@ -178,7 +182,7 @@ void MainWidget::scene(){
     t_Soleil1->setTranslate(0,2,0);
     Transform *anim_Soleil1 = new Transform;
 //anim_Soleil1->setRotation(1,1,0,1.8);
-    addGameObject(noeudSoleil,t_Soleil1 , geo_Soleil1,anim_Soleil1,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
+    addGameObject(&program,noeudSoleil,t_Soleil1 , geo_Soleil1,anim_Soleil1,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
     //Fin creation
 
     //Instance INIT GAME OBJECT //soleil2
@@ -190,7 +194,7 @@ void MainWidget::scene(){
     t_Soleil2->setTranslate(0,-2,0);
     Transform *anim_Soleil2 = new Transform;
    // anim_Soleil2->setRotation(-1,1,0,1.8);
-    addGameObject(noeudSoleil,t_Soleil2 , geo_Soleil2,anim_Soleil2,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
+    addGameObject(&program,noeudSoleil,t_Soleil2 , geo_Soleil2,anim_Soleil2,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
     //Fin creation
     ////////////
 
@@ -218,7 +222,7 @@ void MainWidget::scene(){
     Transform *t_mobile = new Transform;
     t_mobile->setScale(0.015,0.015,0.015);
   //  t_mobile->setTranslate(80,0,25);
-    Object* NoeudSatellite =addMobileObject(Terre,t_mobile ,  new GeometryEngine, new Transform);
+    Object* NoeudSatellite =addMobileObject(&program,Terre,t_mobile ,  new GeometryEngine, new Transform);
 
 
     //geo_Soleil->initCubeGeometry();
@@ -226,14 +230,16 @@ void MainWidget::scene(){
     geo_mobile->initMesh(":/Mesh/space_station.off");
     Transform *anim_mobile = new Transform;
     anim_mobile->setTranslate(0,0,0);
-    Object* satellite =addGameObject(NoeudSatellite, new Transform ,   geo_mobile, anim_mobile,
+    Object* satellite =addGameObject(&program,NoeudSatellite, new Transform ,   geo_mobile, anim_mobile,
                     new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored())
                     );
 
 
     Object *cameraObj= new CameraObject();
     satellite->addChild(cameraObj);
-
+    cameraObj->setShader(&program);
+    for(int i =0 ;i < allShaders.size(); i++)
+        cameraObj->addShader(allShaders[i]);
 
 
 
@@ -389,11 +395,13 @@ void MainWidget::initializeGL()
 
 
     absoluteTime.start();
-    program.setUniformValue("lumiere", QVector3D(0,0,5));
-
+    for(int i=0; i < allShaders.size();i++){
+       allShaders[i]->setUniformValue("lumiere", QVector3D(0,0,5));
+}
     // Use QBasicTimer because its faster than QTimer
     timer.start(1000./FPS, this);
 }
+
 
 //! [3]
 void MainWidget::initShaders()
@@ -413,7 +421,29 @@ void MainWidget::initShaders()
     // Bind shader pipeline for use
     if (!program.bind())
         close();
+
+    allShaders.push_back(&program);
+    // Compile vertex shader QOpenGLShaderProgram
+    QOpenGLShaderProgram *herbeShader = new QOpenGLShaderProgram;
+    if(!herbeShader->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/HerbeShader/h_vshader.glsl"))
+        close();
+
+    // Compile fragment shader
+    if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/HerbeShader/h_fshader.glsl"))
+        close();
+
+    // Link shader pipeline
+    if (!herbeShader->link())
+        close();
+    allShaders.push_back(herbeShader);
+
+
+
+
+
 }
+
+
 //! [3]
 
 //! [4]
@@ -502,17 +532,21 @@ void MainWidget::paintGL()
     //view.lookAt((camera_position), QVector3D(0, 0, 0), camera_up);
 
     // Set modelview-projection matrix
-    program.setUniformValue("mvp_matrix",  projection *  matrix /** view*/);
+    for(int i=0; i < allShaders.size();i++){
+        //program.setUniformValue("mvp_matrix",  projection *  matrix /** view*/);
+        allShaders[i]->setUniformValue("mvp_matrix",  projection *  matrix /** view*/);
+        allShaders[i]->setUniformValue("texture", 0);
+    }
     // program.setUniformValue("mvp_matrix",  matrix * view * projection);
     //! [6]
     emit projectionChanged(projection*matrix);
     // Use texture unit 0 which contains cube.png
 
-    program.setUniformValue("texture", 0);
+
     program.setUniformValue("textureGrass", 1);
     program.setUniformValue("textureRock", 2);
     program.setUniformValue("textureSnow", 3);
-        program.setUniformValue("textureEau", 4);
+    program.setUniformValue("textureEau", 4);
     // Draw cube geometry
     // geometries->drawCubeGeometry(&program);
 
@@ -528,7 +562,7 @@ void MainWidget::paintGL()
     //qDebug("deltaTime: %f", deltaTime);
     lastFrame.start();
 
-    gameObj->updateScene(&program, deltaTime);
+    gameObj->updateScene(deltaTime);
     //gameObj->updateBB();
 
 
