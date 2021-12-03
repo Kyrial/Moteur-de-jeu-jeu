@@ -197,13 +197,7 @@ void MainWidget::scene(){
 
 
 
-
-
-
-
-
-
-
+/*
     //Instance INIT GAME MOBILE //test
     GeometryEngine *geo_mobile = new GeometryEngine;
     //geo_Soleil->initCubeGeometry();
@@ -215,18 +209,39 @@ void MainWidget::scene(){
     anim_mobile->setTranslate(0,0,0);
     Object* satellite =addMobileObject(Terre,t_mobile , geo_mobile, anim_mobile,
                     new QOpenGLTexture(QImage(":/textureSoleil.png").mirrored())
+                    );*/
+
+    //Instance INIT GAME MOBILE //test
+    GeometryEngine *geo_mobile2 = new GeometryEngine;
+    geo_mobile2->initMesh(":/space_station.off");
+    Transform *t_mobile = new Transform;
+    t_mobile->setScale(0.02,0.02,0.02);
+  //  t_mobile->setTranslate(80,0,25);
+    Object* satellite =addMobileObject(Terre,t_mobile ,  geo_mobile2, new Transform);
+
+
+    //geo_Soleil->initCubeGeometry();
+    GeometryEngine *geo_mobile = new GeometryEngine;
+    geo_mobile->initMesh(":/space_station.off");
+    Transform *anim_mobile = new Transform;
+  //  anim_mobile->setTranslate(0,0,0);
+    Object* satellite2 =addGameObject(satellite, new Transform ,   geo_mobile, anim_mobile,
+                    new QOpenGLTexture(QImage(":/textureSoleil.png").mirrored())
                     );
+
 
     Object *cameraObj= new CameraObject();
     satellite->addChild(cameraObj);
+
+
 
 
     QObject::connect(control, &Controler::moveObject,
                      satellite, &Object::controleMouvements);
     QObject::connect(cameraObj, &Object::viewDirChanged,
                          satellite, &Object::getDirView);
-    /*QObject::connect(this, &MainWidget::projectionChanged,
-                         satellite, &Object::getProjection);*/
+    QObject::connect(this, &MainWidget::projectionChanged,
+                         satellite, &Object::getProjection);
 
 
 
