@@ -52,6 +52,7 @@
 #define MAINWIDGET_H
 
 #include "geometryengine.h"
+#include "geometrymeshengine.h"
 #include "gameobject.h"
 //#include "meshobject.h"
 #include "controler.h"
@@ -98,7 +99,7 @@ protected:
     void initShaders();
     void initTextures();
 
-  //  void keyPressEvent(QKeyEvent *e) override;
+    //  void keyPressEvent(QKeyEvent *e) override;
 
 
     Object* addGameObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *txtr);
@@ -110,7 +111,7 @@ protected:
 
 private:
     QBasicTimer timer;
-
+    void addAttributeToTexture(QOpenGLTexture* texture);
     QOpenGLShaderProgram program;
     QVector<QOpenGLShaderProgram*> allShaders;
 
@@ -125,6 +126,7 @@ private:
     QOpenGLTexture * textureRock;
     QOpenGLTexture * textureSnow;
     QOpenGLTexture * textureEau;
+    QOpenGLTexture * textureBois;
 
 
     QMatrix4x4 projection;

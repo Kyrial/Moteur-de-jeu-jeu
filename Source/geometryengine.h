@@ -67,20 +67,27 @@ struct VertexData
     QVector2D texCoord;
 };
 
+
 class GeometryEngine : protected QOpenGLFunctions_4_1_Core
 {
 public:
     GeometryEngine();
-
+    QVector3D coordLastCollision = QVector3D(999,999,999);
+    bool withNormal = false;
 
     virtual ~GeometryEngine();
 
-    void initMesh(std::string filename);
-    void initMeshObj(std::string filename);
-    void drawCubeGeometry(QOpenGLShaderProgram *program);
+
+    virtual void drawCubeGeometry(QOpenGLShaderProgram *program);
+    virtual void initMesh(std::string filename){}
+    virtual void initMeshObj(std::string filename){}
+    virtual void bindMesh(std::vector< std::vector<unsigned int> >  faces){}
+
     QOpenGLBuffer arrayBuf;
     QOpenGLBuffer indexBuf;
 
+
+    QVector<QMatrix4x4> modelMatrices;
 
     void initCubeGeometry();
     void initPlanegeometry();
@@ -91,8 +98,7 @@ public:
     QVector3D internBBMin = QVector3D(0,0,0);
     QVector3D internBBMax = QVector3D(0,0,0);
  bool heightMap = false;
-private:
- void bindMesh(std::vector< std::vector<unsigned int> >  faces);
+protected:
     QImage img;
     std::vector<QVector3D>  vertex;
     //void initPlanegeometry();
@@ -114,6 +120,7 @@ std::vector<QVector3D> getVertex();
     float getHauteur(QVector2D coordText);
 public:
 
+    void addInstancedGrass(int nb);
     QVector3D findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM,  bool &collision, QVector3D & mesh);
     QVector3D getNormal();
     QVector3D getNormal(QVector3D mesh);

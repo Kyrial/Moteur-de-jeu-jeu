@@ -21,6 +21,10 @@ public:
     GeometryEngine *geo = new GeometryEngine();
     static bool  animate;
     Object *Monde;
+ QVector<QOpenGLShaderProgram*> allShader;
+    boolean instanced = false;
+
+
 protected:
     Transform t = Transform();
     Transform animation = Transform();
@@ -35,23 +39,14 @@ protected:
     QMatrix4x4 projection = QMatrix4x4();
     QSet<int> pressedKeys;
     QOpenGLShaderProgram *shader;
+
     ///Constructeur
 public:
 
 
     Object();
     Object(Transform tt,Transform anim):t(tt),animation(anim){}
-    /*  Object(Transform tt, Object par, QObject *parent = 0):t(tt){
-        parent = &par;
-    }
-    Object(Transform tt, Object par, QVector<Object*> enf, QObject *parent = 0)
-        :t(tt),enfants(enf){
-        parent = &par;
-    }
-    Object( Object par, QVector<Object*> enf, QObject *parent = 0)
-        :t(Transform()),enfants(enf){
-        parent = &par;
-    }*/
+
 
     ///Getter/Setter
     void updateMesh(GeometryEngine *ge){
@@ -61,6 +56,9 @@ public:
         if(txtr !=NULL){
             texture = txtr;
             ifTexture =true;
+            txtr->setMinificationFilter(QOpenGLTexture::Nearest);
+            txtr->setMagnificationFilter(QOpenGLTexture::Linear);
+            txtr->setWrapMode(QOpenGLTexture::Repeat);
         }
         else{
             ifTexture =false;
@@ -90,15 +88,21 @@ public:
     }
 
     ///Methode
+    void calculsInstanced(double deltaTime,QMatrix4x4 m);
 protected:
     void chargerTextureForShader(){
         if(ifTexture){
-            texture->bind(5);
-            shader->setUniformValue("textureScene", 5);
+            texture->bind(10);
+            shader->setUniformValue("textureScene",10);
         }
         //ifTexture.bind(5);
         shader->setUniformValue("textureSample", ifTexture);
+
+//        glDrawArraysInstanced
     }
+
+
+
 
     QMatrix4x4 calculMatrice(double deltaTime){
         QMatrix4x4 a;

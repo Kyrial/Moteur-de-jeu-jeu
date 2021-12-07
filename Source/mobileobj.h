@@ -12,6 +12,7 @@ Q_OBJECT
 
 public:
 
+
     MobileObj():Object(){}
 
 
@@ -23,17 +24,25 @@ public:
     float facteurCynetique = 25;
 
 
-
+//QVector3D coordLastCollision = QVector3D(999,999,999);
+    float dist2Points(QVector3D pt1, QVector3D pt2){
+        return
+                pt1.distanceToPoint(pt2);
+    };
 
 
     void addGravite(double deltaTime){
         Transform G = Transform();
+
+        float dist = dist2Points(geo->coordLastCollision, Transform::extracteTranslate(t.doTransformation()));
+        if(dist >1.1){
 
 
         //l'objet subit la gravité
         G.setTranslate(0,0,-(pow(1.1,(deltaTime/facteurGravite)))/10);
         animation = animation.combine_with(G, deltaTime);
         animation.convergeZero();
+        }
         //l'objet est freiner
 
         animation.setTranslate(pow(0.9,deltaTime/facteurCynetique));
@@ -61,9 +70,9 @@ public:
             addGravite( deltaTime);
             testCollision(lastM);
         }
-        QMatrix4x4 m= chargeMatriceForShader(deltaTime,lastM);
 
-        Object::updateScene(deltaTime, m);
+
+        Object::updateScene(deltaTime, lastM);
 
     }
 

@@ -9,21 +9,31 @@ Object::Object():t(Transform())
 
 }
 
-void Object::addShader(QOpenGLShaderProgram * shader){}
+void Object::addShader(QOpenGLShaderProgram * shad){
+     allShader.push_back(shad);
+}
 
 
 
-void  Object::updateScene(double deltaTime, QMatrix4x4 m){
-    setTransf(m);
+void  Object::updateScene(double deltaTime, QMatrix4x4 lastM){
+ shader->bind();
+    QMatrix4x4 m= chargeMatriceForShader(deltaTime,lastM);
+
+    //setTransf(m);
     if(lumiere){
-        QVector3D a = t.extracteTranslate(m);
-        shader->setUniformValue("lumiere", t.extracteTranslate(m));
-        //todo
+        //QVector3D a = t.extracteTranslate(m);
+        for(int i = 0; i< allShader.size(); i++){
+            allShader[i]->bind();
+            allShader[i]->setUniformValue("lumiere", t.extracteTranslate(m));
+        }
     }
-
-    chargerTextureForShader();
     shader->bind();
-    geo->drawCubeGeometry(shader);
+    chargerTextureForShader();
+
+    if(instanced)
+        calculsInstanced(deltaTime, lastM);
+    else
+        geo->drawCubeGeometry(shader);
     QVector3D newBBMin =QVector3D();
     QVector3D newBBMax =QVector3D();
     bool firstPassage = true;
@@ -170,10 +180,10 @@ void Object::keyPressedChangedMove(QEvent * event){
         if( pressedKeys.contains(Qt::Key_L))
             animation.backward(dirView);
         if( pressedKeys.contains(Qt::Key_I))
-        if (canJump){
-            animation.jump();
-            canJump=false;
-        }
+            if (canJump){
+                animation.jump();
+                canJump=false;
+            }
 
     }
     else if(event->type()==QEvent::KeyRelease)
@@ -203,6 +213,27 @@ void Object::getDirView(QVector3D newDirView)
 void Object::getProjection(QMatrix4x4 proj){
     projection =proj;
 }
+
+
+void Object::calculsInstanced(double deltaTime,QMatrix4x4 m){
+
+ //   QOpenGLBuffer arrayBuf;
+   // QVector<QMatrix4x4> modelMatrices;// = QMatrix4x4();
+    //bind buffer
+  //  arrayBuf.bind();
+  //  arrayBuf.allocate(&modelMatrices, instanced * sizeof(QMatrix4x4));
+  //  arrayBuf.release();
+    QMatrix4x4 courant= calculMatrice(deltaTime);
+    //shader->setUniformValue("transform_Matrix", m*anim);
+
+    for(int i=0; i< geo->modelMatrices.size(); i++){
+        shader->setUniformValue("transform_Matrix", m*geo->modelMatrices[i]*courant);
+       // geo->drawCubeGeometry(shader);
+        geo->drawCubeGeometry(shader);
+    }
+
+}
+
 
 
 

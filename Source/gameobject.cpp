@@ -17,24 +17,25 @@ GameObject::~GameObject(){
 void  GameObject::updateScene( double deltaTime){
     QMatrix4x4 m= chargeMatriceForShader(deltaTime);
 
-     Object::updateScene( deltaTime, m);
+    Object::updateScene( deltaTime, m);
 
-  //  foreach (Object* go, enfants) {
-        //   qDebug("foreach %i \n",enfants.size());
- //       go->updateScene(program,deltaTime, m);
- //   }
+    //  foreach (Object* go, enfants) {
+    //   qDebug("foreach %i \n",enfants.size());
+    //       go->updateScene(program,deltaTime, m);
+    //   }
 }
 void  GameObject::updateScene( double deltaTime, QMatrix4x4 lastM){
-    QMatrix4x4 m= chargeMatriceForShader(deltaTime,lastM);
 
 
 
-    Object::updateScene( deltaTime, m);
+
+    Object::updateScene( deltaTime, lastM);
+
     //     qDebug("boucle ");
- //   foreach (Object* go, enfants) {
-        //  qDebug("foreach %i \n",enfants.size());
- //       go->updateScene(program,deltaTime, m);
-    }
+    //   foreach (Object* go, enfants) {
+    //  qDebug("foreach %i \n",enfants.size());
+    //       go->updateScene(program,deltaTime, m);
+}
 
 
 

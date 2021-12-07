@@ -10,5 +10,6 @@
         <file>Texture/textureSoleil.png</file>
         <file>Texture/textureEau.png</file>
         <file>Texture/Textureciel1.jpg</file>
+		<file>Texture/textureBois.png</file>
     </qresource>
 </RCC>

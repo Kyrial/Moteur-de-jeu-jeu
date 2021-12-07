@@ -123,7 +123,7 @@ void MainWidget::scene(){
     t_NTerre->setScale(3,3,3);
     Transform *anim_NTerre = new Transform;
     //anim_NTerre->setRotation(0,0,0.2,1);
-    Object* noeudTerre = addGameObject(&program,NoeudUnivers,t_NTerre,new GeometryEngine, anim_NTerre);
+    Object* noeudTerre = addGameObject(allShaders[0],NoeudUnivers,t_NTerre,new GeometryEngine, anim_NTerre);
     //Fin creation
 
     //Instance INIT GAME OBJECT //Terre
@@ -134,7 +134,7 @@ void MainWidget::scene(){
     //t_Terre->setRotation(-1,0,0,23.44);
     Transform *anim_Terre = new Transform;
     //anim_Terre->setRotation(0,0,1,1);
-    Object* Terre = addGameObject(&program,noeudTerre,t_Terre , geo_Terre,anim_Terre);
+    Object* Terre = addGameObject(allShaders[0],noeudTerre,t_Terre , geo_Terre,anim_Terre);
     //Fin creation
 
     //Instance INIT GAME OBJECT // NOEUD LUNE
@@ -148,7 +148,7 @@ void MainWidget::scene(){
     //Fin creation
 
     //Instance INIT GAME OBJECT //lune
-    GeometryEngine *geo_Lune = new GeometryEngine;
+    GeometryEngine *geo_Lune = new GeometryMeshEngine;
     //geo_Lune->initCubeGeometry();
     geo_Lune->initMesh(":/Mesh/sphere.off");
     // geo_Lune->initMesh(":Mesh/space_station.off");
@@ -158,6 +158,8 @@ void MainWidget::scene(){
     anim_Lune->setRotation(0,0,1,0.8);
     Object* Lune = addGameObject(&program,noeudLune,t_Lune , geo_Lune,anim_Lune);
     Lune->setLumiere();
+    for(int i =0 ;i < allShaders.size(); i++)
+        Lune->addShader(allShaders[i]);
     //Fin creation
     ////////////
 
@@ -175,26 +177,28 @@ void MainWidget::scene(){
 
 
     //Instance INIT GAME OBJECT //soleil1
-    GeometryEngine *geo_Soleil1 = new GeometryEngine;
+    GeometryEngine *geo_Soleil1 = new GeometryMeshEngine;
     geo_Soleil1->initMesh(":/Mesh/house.off");
     Transform *t_Soleil1 = new Transform;
     //t_Soleil1->setRotation(-1,0,0,6.68);
     t_Soleil1->setTranslate(0,2,0);
     Transform *anim_Soleil1 = new Transform;
 //anim_Soleil1->setRotation(1,1,0,1.8);
-    addGameObject(&program,noeudSoleil,t_Soleil1 , geo_Soleil1,anim_Soleil1,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
+    addGameObject(allShaders[0],noeudSoleil,t_Soleil1 , geo_Soleil1,anim_Soleil1,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
     //Fin creation
 
     //Instance INIT GAME OBJECT //soleil2
-    GeometryEngine *geo_Soleil2 = new GeometryEngine;
-    //geo_Soleil2->initMesh(":/Mesh/house.off");
-    geo_Soleil2->initMeshObj(":/Mesh/grass.obj");
-    Transform *t_Soleil2 = new Transform;
-    //t_Soleil2->setRotation(1,0,0,6.68);
-    t_Soleil2->setTranslate(0,-2,0);
-    Transform *anim_Soleil2 = new Transform;
-   // anim_Soleil2->setRotation(-1,1,0,1.8);
-    addGameObject(&program,noeudSoleil,t_Soleil2 , geo_Soleil2,anim_Soleil2,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
+    GeometryEngine *geo_herbe = new GeometryMeshEngine;
+    geo_herbe->withNormal = true;
+    geo_herbe->initMeshObj(":/Mesh/tree.obj");
+    geo_herbe->addInstancedGrass(300);
+    Transform *tHerbe = new Transform;
+    tHerbe->setScale(0.05,0.05,0.05);
+    tHerbe->setRotation(1,0,0,90);
+    Object* herbe= addGameObject(allShaders[1],Terre,tHerbe , geo_herbe,new Transform);
+    herbe->instanced=true;
+    herbe->geo->withNormal = true;
+
     //Fin creation
     ////////////
 
@@ -226,7 +230,7 @@ void MainWidget::scene(){
 
 
     //geo_Soleil->initCubeGeometry();
-    GeometryEngine *geo_mobile = new GeometryEngine;
+    GeometryEngine *geo_mobile = new GeometryMeshEngine;
     geo_mobile->initMesh(":/Mesh/space_station.off");
     Transform *anim_mobile = new Transform;
     anim_mobile->setTranslate(0,0,0);
@@ -359,7 +363,7 @@ void MainWidget::initializeGL()
 {
     initializeOpenGLFunctions();
 
-    glClearColor(0, 0, 0, 1);
+    glClearColor(0.1, 0.1, 0.1, 1);
 
     initShaders();
     initTextures();
@@ -396,6 +400,7 @@ void MainWidget::initializeGL()
 
     absoluteTime.start();
     for(int i=0; i < allShaders.size();i++){
+        allShaders[i]->bind();
        allShaders[i]->setUniformValue("lumiere", QVector3D(0,0,5));
 }
     // Use QBasicTimer because its faster than QTimer
@@ -447,6 +452,12 @@ void MainWidget::initShaders()
 //! [3]
 
 //! [4]
+void MainWidget::addAttributeToTexture(QOpenGLTexture* texture){
+    texture->setMinificationFilter(QOpenGLTexture::Nearest);
+    texture->setMagnificationFilter(QOpenGLTexture::Linear);
+    texture->setWrapMode(QOpenGLTexture::Repeat);
+}
+
 void MainWidget::initTextures()
 {
     // Load cube.png image
@@ -459,6 +470,7 @@ void MainWidget::initTextures()
     textureRock =new QOpenGLTexture(QImage(":/Texture/rock.png").mirrored());
     textureSnow =new QOpenGLTexture(QImage(":/Texture/snowrocks.png").mirrored());
     textureEau =new QOpenGLTexture(QImage(":/Texture/textureEau.png").mirrored());
+    textureBois =new QOpenGLTexture(QImage(":/Texture/textureBois.png").mirrored());
 
 
 
@@ -472,22 +484,11 @@ void MainWidget::initTextures()
     // f.ex. texture coordinate (1.1, 1.2) is same as (0.1, 0.2)
     texture->setWrapMode(QOpenGLTexture::Repeat);
 
-
-    textureGrass->setMinificationFilter(QOpenGLTexture::Nearest);
-    textureGrass->setMagnificationFilter(QOpenGLTexture::Linear);
-    textureGrass->setWrapMode(QOpenGLTexture::Repeat);
-
-    textureRock->setMinificationFilter(QOpenGLTexture::Nearest);
-    textureRock->setMagnificationFilter(QOpenGLTexture::Linear);
-    textureRock->setWrapMode(QOpenGLTexture::Repeat);
-
-    textureSnow->setMinificationFilter(QOpenGLTexture::Nearest);
-    textureSnow->setMagnificationFilter(QOpenGLTexture::Linear);
-    textureSnow->setWrapMode(QOpenGLTexture::Repeat);
-
-    textureEau->setMinificationFilter(QOpenGLTexture::Nearest);
-    textureEau->setMagnificationFilter(QOpenGLTexture::Linear);
-    textureEau->setWrapMode(QOpenGLTexture::Repeat);
+    addAttributeToTexture(textureGrass);
+    addAttributeToTexture(textureRock);
+    addAttributeToTexture(textureSnow);
+    addAttributeToTexture(textureEau);
+    addAttributeToTexture(textureBois);
 
 }
 //! [4]
@@ -522,6 +523,7 @@ void MainWidget::paintGL()
     textureRock->bind(2);
     textureSnow->bind(3);
     textureEau->bind(4);
+    textureBois->bind(5);
     //! [6]
     // Calculate model view transformation
     QMatrix4x4 matrix;
@@ -533,16 +535,22 @@ void MainWidget::paintGL()
 
     // Set modelview-projection matrix
     for(int i=0; i < allShaders.size();i++){
+         allShaders[i]->bind();
         //program.setUniformValue("mvp_matrix",  projection *  matrix /** view*/);
         allShaders[i]->setUniformValue("mvp_matrix",  projection *  matrix /** view*/);
         allShaders[i]->setUniformValue("texture", 0);
+        allShaders[i]->setUniformValue("animation", (float)absoluteTime.elapsed());
+
     }
+    allShaders[1]->setUniformValue("textureFeuille", 1); //changer texture
+    allShaders[1]->setUniformValue("textureBois", 5);
+
     // program.setUniformValue("mvp_matrix",  matrix * view * projection);
     //! [6]
     emit projectionChanged(projection*matrix);
     // Use texture unit 0 which contains cube.png
 
-
+    allShaders[0]->bind();
     program.setUniformValue("textureGrass", 1);
     program.setUniformValue("textureRock", 2);
     program.setUniformValue("textureSnow", 3);
@@ -558,8 +566,7 @@ void MainWidget::paintGL()
 //    deltaTime =0.99;// lastFrame.elapsed();
     deltaTime = lastFrame.elapsed();
 
-    program.setUniformValue("animation", (float)absoluteTime.elapsed());
-    //qDebug("deltaTime: %f", deltaTime);
+   //qDebug("deltaTime: %f", deltaTime);
     lastFrame.start();
 
     gameObj->updateScene(deltaTime);
