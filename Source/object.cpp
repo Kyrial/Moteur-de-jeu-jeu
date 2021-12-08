@@ -10,14 +10,17 @@ Object::Object():t(Transform())
 }
 
 void Object::addShader(QOpenGLShaderProgram * shad){
-     allShader.push_back(shad);
+    allShader.push_back(shad);
 }
 
 
 
 void  Object::updateScene(double deltaTime, QMatrix4x4 lastM){
- shader->bind();
+    shader->bind();
+
     QMatrix4x4 m= chargeMatriceForShader(deltaTime,lastM);
+    saveAlltransform.setTransform(m);
+    emit emitPosition(Transform::extracteTranslate(lastM), m);
 
     //setTransf(m);
     if(lumiere){
@@ -81,6 +84,7 @@ Object* Object::getRacine(){
 
 
 void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
+
     // QMatrix4x4 m= chargeMatriceForShader(program, deltaTime,lastM);
     if (this/*->parent*/ == obj){
         return;
@@ -175,35 +179,37 @@ void Object::controleRotation(QKeyEvent *event){
 void Object::keyPressedChangedMove(QEvent * event){
     if(event->type()==QEvent::KeyPress) {
         pressedKeys += ((QKeyEvent*)event)->key();
-        if( pressedKeys.contains(Qt::Key_O))
-            animation.forward(dirView);
-        if( pressedKeys.contains(Qt::Key_L))
-            animation.backward(dirView);
-        if( pressedKeys.contains(Qt::Key_I))
-            if (canJump){
-                animation.jump();
-                canJump=false;
-            }
-
     }
     else if(event->type()==QEvent::KeyRelease)
     {
         pressedKeys -= ((QKeyEvent*)event)->key();
     }
+
+    if( pressedKeys.contains(Qt::Key_O))
+        animation.forward(dirView);
+    if( pressedKeys.contains(Qt::Key_L))
+        animation.backward(dirView);
+    if( pressedKeys.contains(Qt::Key_I))
+        if (canJump){
+            animation.jump();
+            canJump=false;
+        }
+
+
 }
 void Object::keyPressedChangedRotate(QEvent * event){
     if(event->type()==QEvent::KeyPress) {
         pressedKeys += ((QKeyEvent*)event)->key();
-        if( pressedKeys.contains(Qt::Key_K))
-            t.right2();
-        if( pressedKeys.contains(Qt::Key_M))
-            t.left2();
-
     }
     else if(event->type()==QEvent::KeyRelease)
     {
         pressedKeys -= ((QKeyEvent*)event)->key();
     }
+    if( pressedKeys.contains(Qt::Key_K))
+        t.right2();
+    if( pressedKeys.contains(Qt::Key_M))
+        t.left2();
+
 }
 
 void Object::getDirView(QVector3D newDirView)
@@ -217,22 +223,25 @@ void Object::getProjection(QMatrix4x4 proj){
 
 void Object::calculsInstanced(double deltaTime,QMatrix4x4 m){
 
- //   QOpenGLBuffer arrayBuf;
-   // QVector<QMatrix4x4> modelMatrices;// = QMatrix4x4();
+    //   QOpenGLBuffer arrayBuf;
+    // QVector<QMatrix4x4> modelMatrices;// = QMatrix4x4();
     //bind buffer
-  //  arrayBuf.bind();
-  //  arrayBuf.allocate(&modelMatrices, instanced * sizeof(QMatrix4x4));
-  //  arrayBuf.release();
+    //  arrayBuf.bind();
+    //  arrayBuf.allocate(&modelMatrices, instanced * sizeof(QMatrix4x4));
+    //  arrayBuf.release();
     QMatrix4x4 courant= calculMatrice(deltaTime);
     //shader->setUniformValue("transform_Matrix", m*anim);
 
     for(int i=0; i< geo->modelMatrices.size(); i++){
         shader->setUniformValue("transform_Matrix", m*geo->modelMatrices[i]*courant);
-       // geo->drawCubeGeometry(shader);
+        // geo->drawCubeGeometry(shader);
         geo->drawCubeGeometry(shader);
     }
-
 }
+void Object::mapCoordChanged(QVector3D coordCharacter, QMatrix4x4 objM){
+    geo->mapCoordChanged(coordCharacter,  objM, saveAlltransform.doTransformation());
+}
+
 
 
 

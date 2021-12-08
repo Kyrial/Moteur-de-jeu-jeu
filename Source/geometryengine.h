@@ -70,7 +70,9 @@ struct VertexData
 
 class GeometryEngine : protected QOpenGLFunctions_4_1_Core
 {
+
 public:
+
     GeometryEngine();
     QVector3D coordLastCollision = QVector3D(999,999,999);
     bool withNormal = false;
@@ -90,21 +92,21 @@ public:
     QVector<QMatrix4x4> modelMatrices;
 
     void initCubeGeometry();
-    void initPlanegeometry();
+    void initPlanegeometry(float Xmin=-1,float Ymin=-1,float Xmax=1,float Ymax=1,float centreX =0, float centreY=0);
 
     bool triangle_strip = true;
     QVector3D BBMin = QVector3D(0,0,0);
     QVector3D BBMax = QVector3D(0,0,0);
     QVector3D internBBMin = QVector3D(0,0,0);
     QVector3D internBBMax = QVector3D(0,0,0);
- bool heightMap = false;
+    bool heightMap = false;
 protected:
     QImage img;
     std::vector<QVector3D>  vertex;
     //void initPlanegeometry();
-    void subdivisePlan(int x, int y,  VertexData vertices[], GLushort indices[],float Xmin,float Ymin,float Xmax,float Ymax);//,std::string nameWeightMap );
+    void subdivisePlan(int x, int y,  VertexData vertices[], GLushort indices[],float Xmin,float Ymin,float Xmax,float Ymax,float centreX =0, float centreY=0);//,std::string nameWeightMap );
 
-std::vector<QVector3D> getVertex();
+    std::vector<QVector3D> getVertex();
 
     int precisionX = 255;
     int precisionY= 255;
@@ -120,7 +122,7 @@ std::vector<QVector3D> getVertex();
     float getHauteur(QVector2D coordText);
 public:
 
-    void addInstancedGrass(int nb);
+    void addInstancedGrass(int nb, QVector3D min=QVector3D(-13,-13,0), QVector3D max=QVector3D(13,13,0));
     QVector3D findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM,  bool &collision, QVector3D & mesh);
     QVector3D getNormal();
     QVector3D getNormal(QVector3D mesh);
@@ -132,11 +134,14 @@ public:
     void updateBB(QMatrix4x4 m);
     void ajustBB(GeometryEngine *geo);
     void ajustBB(QVector3D min, QVector3D max);
-   static QVector3D  calcBBMin(QVector3D const & last, QVector3D const & min);
-       static QVector3D  calcBBMax(QVector3D const & last, QVector3D const & max);
-bool intersect(GeometryEngine *geo);
-bool internintersect(GeometryEngine *geo);
-QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec, QVector3D mesh = QVector3D(0,0,0));
+    static QVector3D  calcBBMin(QVector3D const & last, QVector3D const & min);
+    static QVector3D  calcBBMax(QVector3D const & last, QVector3D const & max);
+    bool intersect(GeometryEngine *geo);
+    bool internintersect(GeometryEngine *geo);
+    QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec, QVector3D mesh = QVector3D(0,0,0));
+
+
+    void mapCoordChanged(QVector3D vec,QMatrix4x4 objM,QMatrix4x4 ourM);
 };
 
 #endif // GEOMETRYENGINE_H

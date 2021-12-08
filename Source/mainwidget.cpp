@@ -112,7 +112,7 @@ void MainWidget::scene(){
 
     //Instance INIT GAME OBJECT //NOEUD SOLEIL
     Object* NoeudUnivers = addGameObject(allShaders[0],gameObj,new Transform);
-   // noeudSoleil->Monde = noeudSoleil;
+    // noeudSoleil->Monde = noeudSoleil;
     //noeudSoleil->setMonde();
     //Fin creation
 
@@ -128,14 +128,16 @@ void MainWidget::scene(){
 
     //Instance INIT GAME OBJECT //Terre
     GeometryEngine *geo_Terre = new GeometryEngine;
-    geo_Terre->initPlanegeometry();
-   // geo_Terre->initMesh(":/Mesh/sphere.off");
+    geo_Terre->initPlanegeometry(-12,-12,12,12);
+    // geo_Terre->initMesh(":/Mesh/sphere.off");
     Transform *t_Terre = new Transform;
     //t_Terre->setRotation(-1,0,0,23.44);
     Transform *anim_Terre = new Transform;
     //anim_Terre->setRotation(0,0,1,1);
     Object* Terre = addGameObject(allShaders[0],noeudTerre,t_Terre , geo_Terre,anim_Terre);
     //Fin creation
+
+    // Terre->geo->initPlanegeometry(-1,-1,11,11);
 
     //Instance INIT GAME OBJECT // NOEUD LUNE
     Transform *t_NLune = new Transform;
@@ -175,7 +177,7 @@ void MainWidget::scene(){
     //Fin creation
 
 
-
+    /*
     //Instance INIT GAME OBJECT //soleil1
     GeometryEngine *geo_Soleil1 = new GeometryMeshEngine;
     geo_Soleil1->initMesh(":/Mesh/house.off");
@@ -186,7 +188,7 @@ void MainWidget::scene(){
 //anim_Soleil1->setRotation(1,1,0,1.8);
     addGameObject(allShaders[0],noeudSoleil,t_Soleil1 , geo_Soleil1,anim_Soleil1,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
     //Fin creation
-
+*/
     //Instance INIT GAME OBJECT //soleil2
     GeometryEngine *geo_herbe = new GeometryMeshEngine;
     geo_herbe->withNormal = true;
@@ -206,7 +208,7 @@ void MainWidget::scene(){
 
 
 
-/*
+    /*
     //Instance INIT GAME MOBILE //test
     GeometryEngine *geo_mobile = new GeometryEngine;
     //geo_Soleil->initCubeGeometry();
@@ -221,11 +223,11 @@ void MainWidget::scene(){
                     );*/
 
     //Instance INIT GAME MOBILE //test
-   // GeometryEngine *geo_mobile2 = new GeometryEngine;
+    // GeometryEngine *geo_mobile2 = new GeometryEngine;
     //geo_mobile2->initMesh(":/Mesh/space_station.off");
     Transform *t_mobile = new Transform;
     t_mobile->setScale(0.015,0.015,0.015);
-  //  t_mobile->setTranslate(80,0,25);
+    //  t_mobile->setTranslate(80,0,25);
     Object* NoeudSatellite =addMobileObject(&program,Terre,t_mobile ,  new GeometryEngine, new Transform);
 
 
@@ -235,8 +237,8 @@ void MainWidget::scene(){
     Transform *anim_mobile = new Transform;
     anim_mobile->setTranslate(0,0,0);
     Object* satellite =addGameObject(&program,NoeudSatellite, new Transform ,   geo_mobile, anim_mobile,
-                    new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored())
-                    );
+                                     new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored())
+                                     );
 
 
     Object *cameraObj= new CameraObject();
@@ -247,25 +249,27 @@ void MainWidget::scene(){
 
 
 
-  //  QObject::connect(control, &Controler::moveObject,
- //                    NoeudSatellite, &Object::controleMouvements);
+    //  QObject::connect(control, &Controler::moveObject,
+    //                    NoeudSatellite, &Object::controleMouvements);
     QObject::connect(cameraObj, &Object::viewDirChanged,
-                         NoeudSatellite, &Object::getDirView);
-  //  QObject::connect(this, &MainWidget::projectionChanged,
-  //                       NoeudSatellite, &Object::getProjection);
-  //  QObject::connect(control, &Controler::moveObject,
-   //                  satellite, &Object::controleRotation);
+                     NoeudSatellite, &Object::getDirView);
+    //  QObject::connect(this, &MainWidget::projectionChanged,
+    //                       NoeudSatellite, &Object::getProjection);
+    //  QObject::connect(control, &Controler::moveObject,
+    //                  satellite, &Object::controleRotation);
 
     QObject::connect(this, &MainWidget::emitFilter,
-                         NoeudSatellite, &Object::keyPressedChangedMove);
+                     NoeudSatellite, &Object::keyPressedChangedMove);
     QObject::connect(this, &MainWidget::emitFilter,
-                         satellite, &Object::keyPressedChangedRotate);
+                     satellite, &Object::keyPressedChangedRotate);
     //emitFilter
-//    void keyPressedChangedMove(QEvent * event);
-  //  void keyPressedChangedRotate(QEvent * event);
+    //    void keyPressedChangedMove(QEvent * event);
+    //  void keyPressedChangedRotate(QEvent * event);
     //Fin creation
 
 
+    QObject::connect(satellite, &Object::emitPosition,
+                     Terre, &Object::mapCoordChanged);
     ///
 
 
@@ -350,11 +354,11 @@ void MainWidget::timerEvent(QTimerEvent *)
         //update();
 
     }
-//    deltaTime = lastFrame.elapsed();
-//    qDebug("deltaTime: %f", deltaTime);
+    //    deltaTime = lastFrame.elapsed();
+    //    qDebug("deltaTime: %f", deltaTime);
     update();
 
-   // lastFrame.start();
+    // lastFrame.start();
 
 }
 //! [1]
@@ -391,18 +395,18 @@ void MainWidget::initializeGL()
     scene();
     this->installEventFilter(this);
     QObject::connect(this, &MainWidget::signalKeyPress,
-                         control, &Controler::keyPressEvent);
+                     control, &Controler::keyPressEvent);
 
     QObject::connect(control, &Controler::viewChanged,
-                         this, &MainWidget::keyPress);
+                     this, &MainWidget::keyPress);
 
 
 
     absoluteTime.start();
     for(int i=0; i < allShaders.size();i++){
         allShaders[i]->bind();
-       allShaders[i]->setUniformValue("lumiere", QVector3D(0,0,5));
-}
+        allShaders[i]->setUniformValue("lumiere", QVector3D(0,0,5));
+    }
     // Use QBasicTimer because its faster than QTimer
     timer.start(1000./FPS, this);
 }
@@ -535,7 +539,7 @@ void MainWidget::paintGL()
 
     // Set modelview-projection matrix
     for(int i=0; i < allShaders.size();i++){
-         allShaders[i]->bind();
+        allShaders[i]->bind();
         //program.setUniformValue("mvp_matrix",  projection *  matrix /** view*/);
         allShaders[i]->setUniformValue("mvp_matrix",  projection *  matrix /** view*/);
         allShaders[i]->setUniformValue("texture", 0);
@@ -563,11 +567,12 @@ void MainWidget::paintGL()
 
 
 
-//    deltaTime =0.99;// lastFrame.elapsed();
+    //    deltaTime =0.99;// lastFrame.elapsed();
     deltaTime = lastFrame.elapsed();
 
-   //qDebug("deltaTime: %f", deltaTime);
+    //qDebug("deltaTime: %f", deltaTime);
     lastFrame.start();
+
 
     gameObj->updateScene(deltaTime);
     //gameObj->updateBB();
@@ -576,7 +581,7 @@ void MainWidget::paintGL()
 
 
     //TODO
- //   mobileobj->updateScene(&program,deltaTime);
+    //   mobileobj->updateScene(&program,deltaTime);
     //lastFrame.start();
     //geometries->drawCubeGeometry(&program);
 }
@@ -587,12 +592,13 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
 
 
 bool MainWidget::eventFilter(QObject *object, QEvent *event){
-    if(event->type()==QEvent::KeyPress || event->type()==QEvent::KeyRelease) {
+    if(true ||(event->type()==QEvent::KeyPress || event->type()==QEvent::KeyRelease)) {
         qDebug("filtre ");
         emit emitFilter(event);
     }
     return false;
 }
+
 
 void MainWidget::keyPress(QKeyEvent *event)
 {
@@ -642,7 +648,7 @@ void MainWidget::keyPress(QKeyEvent *event)
 
 
 void MainWidget::cameraControle(){
-        gameObj->animate = gameObj->animate == true ? false: true;
+    gameObj->animate = gameObj->animate == true ? false: true;
 }
 
 

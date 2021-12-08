@@ -110,6 +110,7 @@ protected:
     void scene();
 
 private:
+
     QBasicTimer timer;
     void addAttributeToTexture(QOpenGLTexture* texture);
     QOpenGLShaderProgram program;
@@ -145,6 +146,7 @@ signals:
 public slots :
     void cameraControle();
     void keyPress(QKeyEvent *e);
+
 };
 
 #endif // MAINWIDGET_H

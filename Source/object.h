@@ -39,7 +39,7 @@ protected:
     QMatrix4x4 projection = QMatrix4x4();
     QSet<int> pressedKeys;
     QOpenGLShaderProgram *shader;
-
+    Transform saveAlltransform = Transform();
     ///Constructeur
 public:
 
@@ -144,6 +144,7 @@ public:
 
 signals:
    void viewDirChanged(QVector3D vec);
+   void emitPosition(QVector3D vec,QMatrix4x4 objM);
 public slots:
     void controleMouvements(QKeyEvent *event);
     void getDirView(QVector3D dirView);
@@ -151,6 +152,8 @@ public slots:
     void controleRotation(QKeyEvent *event);
     void keyPressedChangedMove(QEvent * event);
     void keyPressedChangedRotate(QEvent * event);
+
+    void mapCoordChanged(QVector3D vec,  QMatrix4x4 objM);
 };
 
 

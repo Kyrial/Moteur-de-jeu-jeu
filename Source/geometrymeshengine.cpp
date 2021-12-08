@@ -54,7 +54,7 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
         else
             face--;*/
         //vertices[i]= {vertex[i], QVector2D(i/(float)vertexNumber, i/(float)vertexNumber)};
-        vertices[i]= {vertex[i], QVector2D(vertex[i][0]+vertex[i][1], vertex[i][0]+vertex[i][2]),normals[i]};
+        vertices[i]= {vertex[i], QVector2D((vertex[i][0]+vertex[i][2])/3, (vertex[i][1]))/3,normals[i]};
         vertices2[i]= {vertex[i], QVector2D(vertex[i][0]+vertex[i][1], vertex[i][0]+vertex[i][2])};
     }
 

@@ -71,7 +71,6 @@ public:
             testCollision(lastM);
         }
 
-
         Object::updateScene(deltaTime, lastM);
 
     }
