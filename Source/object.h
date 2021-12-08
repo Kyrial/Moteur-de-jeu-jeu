@@ -145,6 +145,7 @@ public:
 signals:
    void viewDirChanged(QVector3D vec);
    void emitPosition(QVector3D vec,QMatrix4x4 objM);
+   void emitTree(QVector3D);
 public slots:
     void controleMouvements(QKeyEvent *event);
     void getDirView(QVector3D dirView);
@@ -154,6 +155,9 @@ public slots:
     void keyPressedChangedRotate(QEvent * event);
 
     void mapCoordChanged(QVector3D vec,  QMatrix4x4 objM);
+
+    void updateTree(QVector3D vec);
+
 };
 
 

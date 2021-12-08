@@ -530,18 +530,22 @@ void GeometryEngine::initCubeGeometry()
     //! [1]
 }
 
-void GeometryEngine::mapCoordChanged(QVector3D coordCharacter, QMatrix4x4 objM, QMatrix4x4 ourM){
-   //QMatrix4x4 invObjM = Transform::inverse(objM);
-   QMatrix4x4 invOurM = Transform::inverse(ourM);
-   //QVector3D coordCharacter1 = invObjM*coordCharacter;
-   QVector3D coordCharacter2 = invOurM*coordCharacter;
-   float centreX = floor(coordCharacter2[0]);
-   float centreY = floor(coordCharacter2[1]);
-   // qDebug("maoww :%f, et coordperso = %f \n ",centreX, centreY );
-    //qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter1[0], coordCharacter1[1] );
-    qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter2[0], coordCharacter2[1] );
-   initPlanegeometry((centreX)-12,(centreY)-12,(centreX)+12,(centreY)+12, (centreX), (centreY));
-   //addInstancedGrass(300,QVector3D((centreX)-12,(centreY)-12,0),QVector3D((centreX)+12,(centreY)+12,0) );
+QVector3D GeometryEngine::mapCoordChanged(QVector3D coordCharacter, QMatrix4x4 objM, QMatrix4x4 ourM){
+    //QMatrix4x4 invObjM = Transform::inverse(objM);
+    QMatrix4x4 invOurM = Transform::inverse(ourM);
+    //QVector3D coordCharacter1 = invObjM*coordCharacter;
+    QVector3D coordCharacter2 = invOurM*coordCharacter;
+    float centreX = floor(coordCharacter2[0]);
+    float centreY = floor(coordCharacter2[1]);
+    if (lastCentre != QVector2D(centreX,centreY)){
+        lastCentre = QVector2D(centreX,centreY);
+        // qDebug("maoww :%f, et coordperso = %f \n ",centreX, centreY );
+        //qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter1[0], coordCharacter1[1] );
+        qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter2[0], coordCharacter2[1] );
+        initPlanegeometry((centreX)-12,(centreY)-12,(centreX)+12,(centreY)+12, (centreX), (centreY));
+    }
+    return coordCharacter2;
+    //   addInstancedGrass(300,QVector3D((centreX)-12,(centreY)-12,0),QVector3D((centreX)+12,(centreY)+12,0) );
 }
 
 
@@ -556,8 +560,8 @@ void GeometryEngine::subdivisePlan(int x, int y, VertexData vertices[],GLushort 
     for(int i=0; i<x; i++){
         for(int j=0;j<y; j++){
             //   qDebug("%f %f",Xmin+intervalX*i, Ymin+intervalY*j);
-            //  vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j, static_cast<float> (rand()) / static_cast<float> (RAND_MAX) ), QVector2D((intervalX_Texture*i)/2, (intervalY_Texture*j)/2)};           
-//            vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f ), QVector2D((intervalX_Texture*(i))*2+centreX*((Xmax-Xmin)/(float)(x-1))*2, (intervalY_Texture*(j))*2+centreY*((Ymax-Ymin)/(float)(y-1))*2)};
+            //  vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j, static_cast<float> (rand()) / static_cast<float> (RAND_MAX) ), QVector2D((intervalX_Texture*i)/2, (intervalY_Texture*j)/2)};
+            //            vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f ), QVector2D((intervalX_Texture*(i))*2+centreX*((Xmax-Xmin)/(float)(x-1))*2, (intervalY_Texture*(j))*2+centreY*((Ymax-Ymin)/(float)(y-1))*2)};
             vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f ), QVector2D((intervalX_Texture*(i))*2+(centreX/(Xmax-Xmin))*4, (intervalY_Texture*(j))*2+(centreY/(Ymax-Ymin))*4)};
             vertex[i*y+j] =QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f );
         }
@@ -623,7 +627,35 @@ double randMToN(double M, double N)
 }
 
 void GeometryEngine::addInstancedGrass(int nb, QVector3D min, QVector3D max){
+
     modelMatrices.clear();
+    float nbMaxArbre =0.5;
+    float ratioArbre=0.4;
+    // float intervalX=( max[0]-min[0])/(float)(nbMaxArbre-1);
+    // float intervalY=( max[1]-min[1])/(float)(nbMaxArbre-1);
+    for(float i=min[0]; i<max[0]; i+=nbMaxArbre){
+        for(float j=min[1];j<max[1]; j+=nbMaxArbre){
+            float hauteurMesh =(perlin2d( i, j , 8)-0.3)*2;
+            float arbreChance =(perlin2d( i*2, j*2 , 1));
+            if(hauteurMesh>0 && ratioArbre> arbreChance){
+                Transform t;
+                t.setTranslate(i,j,hauteurMesh);
+
+                Transform t_2;
+
+                float randRotation = perlin2d( i*20, j*20 , 1)*90;
+                float randScale = perlin2d( i*15, j*15 , 1)*0.5+0.9;
+                t_2.setScale(QVector3D(randScale,randScale,randScale));
+
+                t_2.setRotation(0,0,1,randRotation);
+                modelMatrices.push_back(t.doTransformation()*t_2.doTransformation()); //t.doAnimation(&t_2,1));
+
+            }
+        }
+    }
+
+
+    /*
     srand(0);
     for(int i =0; i<nb; i++){
         float randX = randMToN( min[0],   max[0]);//randMToN( -12.0,  12.0);
@@ -641,7 +673,7 @@ void GeometryEngine::addInstancedGrass(int nb, QVector3D min, QVector3D max){
             t_2.setRotation(0,0,1,randRotation);
             modelMatrices.push_back(t.doTransformation()*t_2.doTransformation()); //t.doAnimation(&t_2,1));
         }
-    }
+    }*/
 
 }
 

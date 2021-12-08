@@ -76,7 +76,7 @@ public:
     GeometryEngine();
     QVector3D coordLastCollision = QVector3D(999,999,999);
     bool withNormal = false;
-
+    QVector2D lastCentre = QVector2D(0,0);
     virtual ~GeometryEngine();
 
 
@@ -122,7 +122,7 @@ protected:
     float getHauteur(QVector2D coordText);
 public:
 
-    void addInstancedGrass(int nb, QVector3D min=QVector3D(-13,-13,0), QVector3D max=QVector3D(13,13,0));
+
     QVector3D findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM,  bool &collision, QVector3D & mesh);
     QVector3D getNormal();
     QVector3D getNormal(QVector3D mesh);
@@ -141,7 +141,9 @@ public:
     QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec, QVector3D mesh = QVector3D(0,0,0));
 
 
-    void mapCoordChanged(QVector3D vec,QMatrix4x4 objM,QMatrix4x4 ourM);
+    QVector3D mapCoordChanged(QVector3D vec,QMatrix4x4 objM,QMatrix4x4 ourM);
+
+    void addInstancedGrass(int nb, QVector3D min=QVector3D(-13,-13,0), QVector3D max=QVector3D(13,13,0));
 };
 
 #endif // GEOMETRYENGINE_H

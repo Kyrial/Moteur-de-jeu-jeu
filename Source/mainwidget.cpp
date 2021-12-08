@@ -270,6 +270,8 @@ void MainWidget::scene(){
 
     QObject::connect(satellite, &Object::emitPosition,
                      Terre, &Object::mapCoordChanged);
+    QObject::connect(Terre, &Object::emitTree,
+                     herbe, &Object::updateTree);
     ///
 
 

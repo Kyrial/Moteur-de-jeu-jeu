@@ -239,8 +239,18 @@ void Object::calculsInstanced(double deltaTime,QMatrix4x4 m){
     }
 }
 void Object::mapCoordChanged(QVector3D coordCharacter, QMatrix4x4 objM){
-    geo->mapCoordChanged(coordCharacter,  objM, saveAlltransform.doTransformation());
+    emit emitTree(geo->mapCoordChanged(coordCharacter,  objM, saveAlltransform.doTransformation()));
 }
+
+void Object::updateTree(QVector3D coordCharacter2){
+    float centreX = floor(coordCharacter2[0]);
+    float centreY = floor(coordCharacter2[1]);
+    if (geo->lastCentre != QVector2D(centreX,centreY)){
+        geo->lastCentre = QVector2D(centreX,centreY);
+        geo->addInstancedGrass(300,QVector3D((centreX)-12,(centreY)-12,0),QVector3D((centreX)+12,(centreY)+12,0) );
+    }
+}
+
 
 
 
