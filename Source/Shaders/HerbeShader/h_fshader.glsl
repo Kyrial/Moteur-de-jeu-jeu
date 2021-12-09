@@ -39,15 +39,20 @@ vec2 animationEau(){
     return  v_texcoord*cos((animation+(v_position.y)*1000)/10000)/7+(0.5)/7;
 }
 
-vec4 getLumiere(vec3 fragPosition){
+vec4 getLumiere(vec3 fragPosition, float specularStrength=1.,float minDiffusion=0.4){
     vec3 lightDir = normalize(lumiere - fragPosition);
-    float diff = max(dot(v_normal, lightDir), 0.35);
+    float diff = max(dot(v_normal, lightDir), minDiffusion);
     vec3 diffuse = diff * vec3(1,1,1);
-
-    float specularStrength = 0.5;
     vec3 viewDir = normalize(vec4(mvp_matrix * vec4(viewPosition.xyz,1)).xyz - fragPosition);
+
+
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+
+
+
     vec3 reflectDir = reflect(-lightDir, v_normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 256);
+    //   float spec = pow(max(dot(viewDir, halfwayDir), 0.0), 256);
     vec3 specular = specularStrength * spec * vec3(1,1,1);
 
     return vec4(diffuse.xyz + specular.xyz,1);
@@ -57,11 +62,11 @@ vec4 getLumiere(vec3 fragPosition){
 
 
 vec4  calculTexture(float position,vec2 texcoord ){
-    float bois = 5.15;
-    float feuille = 10.5;
+    float bois = 0;
+    float feuille = 15;
 
-    float gapfeuille = 5.5;
-    float gapBois = 5.5;
+    float gapfeuille = 7;
+    float gapBois = 9;
 
     float poids = poid(position, bois,gapBois)+ poid(position, feuille,gapfeuille);
 
@@ -69,8 +74,8 @@ vec4  calculTexture(float position,vec2 texcoord ){
         return texture2D(textureFeuille, texcoord);
     if(position <bois-gapBois)
         return texture2D(textureBois, texcoord);
-    return (poid(position, bois,gapBois)/poids)*texture2D(textureBois, texcoord)+
-            (poid(position, feuille,gapfeuille)/poids)*texture2D(textureFeuille, texcoord);
+    return (poid(position, bois,gapBois)/poids)*texture2D(textureBois, texcoord)+//*getLumiere( FragPos.xyz)+
+            (poid(position, feuille,gapfeuille)/poids)*texture2D(textureFeuille, texcoord)*getLumiere( FragPos.xyz);//*getLumiere( FragPos.xyz,.5);
 
 }
 
@@ -78,6 +83,8 @@ void main()
 {
     if(textureSample==false){
         gl_FragColor =getLumiere( FragPos.xyz)*calculTexture(v_position.y,v_texcoord);
+       // gl_FragColor =calculTexture(v_position.y,v_texcoord);
+
 
     }
     else{

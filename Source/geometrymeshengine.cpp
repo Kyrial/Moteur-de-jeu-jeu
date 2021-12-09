@@ -39,9 +39,12 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
         indices[i+2]= faces[i/3][2];
 
         normal = QVector3D::normal(vertex[faces[i/3][0]],vertex[faces[i/3][1]],vertex[faces[i/3][2]]);
-      normals[faces[i/3][0]]= normal;
-      normals[faces[i/3][1]]= normal;
-      normals[faces[i/3][2]]= normal;
+        for(int k = 0; k<3;k++){
+        if(normals[faces[i/3][k]] != QVector3D())
+            normals[faces[i/3][k]]= (normals[faces[i/3][k]]+normal).normalized();
+        else
+        normals[faces[i/3][k]]= normal;
+}
 
     }
 
@@ -114,7 +117,7 @@ void GeometryMeshEngine::drawWithNormal(QOpenGLShaderProgram *program)
 
 
     offset += sizeof(QVector2D);
-   // offset = 0;
+    // offset = 0;
 
     int texNormalLocation = program->attributeLocation("a_normal");
     program->enableAttributeArray(texNormalLocation);

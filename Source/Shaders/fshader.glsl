@@ -41,15 +41,20 @@ vec2 animationEau(){
     return  v_texcoord*cos((animation+(v_position.y)*1000)/10000)/7+(0.5)/7;
 }
 
-vec4 getLumiere(vec3 fragPosition){
+vec4 getLumiere(vec3 fragPosition, float specularStrength=1.,float minDiffusion=0.16){
     vec3 lightDir = normalize(lumiere - fragPosition);
-    float diff = max(dot(v_normal, lightDir), 0.15);
+    float diff = max(dot(v_normal, lightDir), minDiffusion);
     vec3 diffuse = diff * vec3(1,1,1);
-
-    float specularStrength = 0.5;
     vec3 viewDir = normalize(vec4(mvp_matrix * vec4(viewPosition.xyz,1)).xyz - fragPosition);
+
+
+    vec3 halfwayDir = normalize(lightDir + viewDir);
+
+
+
     vec3 reflectDir = reflect(-lightDir, v_normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 256);
+    //   float spec = pow(max(dot(viewDir, halfwayDir), 0.0), 256);
     vec3 specular = specularStrength * spec * vec3(1,1,1);
 
     return vec4(diffuse.xyz + specular.xyz,1);
@@ -76,10 +81,10 @@ vec4  calculTexture(float position,vec2 texcoord ){
         return texture2D(textureSnow, texcoord);
     if(position <eau-gapEau)
         return texture2D(textureEau, texcoord);
-    return (poid(position, eau,gapEau)/poids)*texture2D(textureEau, animationEau())+
-            (poid(position, herbe,gapHerbe)/poids)*texture2D(textureGrass, texcoord)+
-            (poid(position, pierre,gapPierre)/poids)*texture2D(textureRock, texcoord)+
-            (poid(position, neige,gapNeige)/poids)*texture2D(textureSnow, texcoord);
+    return (poid(position, eau,gapEau)/poids)*texture2D(textureEau, animationEau())*getLumiere( FragPos.xyz,5.)+
+            (poid(position, herbe,gapHerbe)/poids)*texture2D(textureGrass, texcoord)*getLumiere( FragPos.xyz,0.5)+
+            (poid(position, pierre,gapPierre)/poids)*texture2D(textureRock, texcoord)*getLumiere( FragPos.xyz,2.)+
+            (poid(position, neige,gapNeige)/poids)*texture2D(textureSnow, texcoord)*getLumiere( FragPos.xyz,5.);
 
 }
 
@@ -102,7 +107,8 @@ void main()
         //       min(1,max(1-v_position.z*2.6,0))*texture2D(textureGrass, v_texcoord)+
         //      min(1,max(1-distance(v_position.z,0.4)*4.5,0))*texture2D(textureRock, v_texcoord);
         //gl_FragColor =calculTexture(v_position.z,v_texcoord);
-        gl_FragColor =getLumiere( FragPos.xyz)*calculTexture(v_position.z,v_texcoord);
+        //gl_FragColor =getLumiere( FragPos.xyz)*calculTexture(v_position.z,v_texcoord);
+        gl_FragColor =calculTexture(v_position.z,v_texcoord);
     }
     else{
 
