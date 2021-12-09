@@ -15,6 +15,7 @@ in vec2 v_texcoord;
 in vec3 v_position;
 in vec3 v_normal;
 in vec3 FragPos;
+
 //! [0]
 
 float max(float a, float b){
@@ -63,10 +64,10 @@ vec4 getLumiere(vec3 fragPosition, float specularStrength=1.,float minDiffusion=
 
 vec4  calculTexture(float position,vec2 texcoord ){
     float bois = 0;
-    float feuille = 15;
+    float feuille = 20;
 
-    float gapfeuille = 7;
-    float gapBois = 9;
+    float gapfeuille = 10;
+    float gapBois = 12;
 
     float poids = poid(position, bois,gapBois)+ poid(position, feuille,gapfeuille);
 
@@ -82,7 +83,7 @@ vec4  calculTexture(float position,vec2 texcoord ){
 void main()
 {
     if(textureSample==false){
-        gl_FragColor =getLumiere( FragPos.xyz)*calculTexture(v_position.y,v_texcoord);
+        gl_FragColor =getLumiere( FragPos.xyz)*calculTexture(v_position.y+(abs(v_position.x)+abs(v_position.z)),v_texcoord);
        // gl_FragColor =calculTexture(v_position.y,v_texcoord);
 
 

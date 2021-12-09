@@ -21,7 +21,7 @@ public:
 
 
     float facteurGravite =300;
-    float facteurCynetique = 25;
+    float facteurCynetique = 50;
 
 
 //QVector3D coordLastCollision = QVector3D(999,999,999);
@@ -41,11 +41,12 @@ public:
         //l'objet subit la gravité
         G.setTranslate(0,0,-(pow(1.1,(deltaTime/facteurGravite)))/10);
         animation = animation.combine_with(G, deltaTime);
-        animation.convergeZero();
+
         }
         //l'objet est freiner
 
         animation.setTranslate(pow(0.9,deltaTime/facteurCynetique));
+        animation.convergeZero();
 
     }
 

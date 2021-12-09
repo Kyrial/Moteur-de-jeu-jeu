@@ -14,6 +14,7 @@ out vec2 v_texcoord;
 out vec3 v_position;
 out vec3 v_normal;
 out vec3 FragPos;
+
 uniform sampler2D texture;
 
 
@@ -138,10 +139,10 @@ void main()
     float hauteurTexture = hauteurMesh;//max(-0.5, min(1.25,color.x*2)-0.25);
 
     // Calculate vertex position in screen space
-
+    float hauteurEau =-0.1+cos((animation+(a_position.y)*300)/100)/65;
     if(a_position.z==0){
-        if(hauteurMesh<-0.1){//if(hauteurTexture<-0.1){
-            hauteurMesh = -0.1+cos((animation+(a_position.y)*300)/100)/70;//+(0.5)/8;
+        if(hauteurMesh<hauteurEau){//if(hauteurTexture<-0.1){
+            hauteurMesh = hauteurEau;//+(0.5)/8;
             //v_texcoord = a_texcoord*cos((animation+(a_position.y)*1000)/10000)/7+(0.5)/7;
             v_normal = vec3(0,0,1);
         }

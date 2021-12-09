@@ -128,7 +128,7 @@ void MainWidget::scene(){
 
     //Instance INIT GAME OBJECT //Terre
     GeometryEngine *geo_Terre = new GeometryEngine;
-    geo_Terre->initPlanegeometry(-12,-12,12,12);
+    geo_Terre->initPlanegeometry(-11,-11,11,11);
     // geo_Terre->initMesh(":/Mesh/sphere.off");
     Transform *t_Terre = new Transform;
     //t_Terre->setRotation(-1,0,0,23.44);
@@ -139,31 +139,9 @@ void MainWidget::scene(){
 
     // Terre->geo->initPlanegeometry(-1,-1,11,11);
 
-    //Instance INIT GAME OBJECT // NOEUD LUNE
-    Transform *t_NLune = new Transform;
-    t_NLune->setScale(0.3,0.3,0.3);
-    t_NLune->setTranslate(26,0,30);
-    Transform *anim_NLune = new Transform;
-    anim_NLune->setRotation(0,0,-5,5);
-    Object* noeudLune = addGameObject(&program,noeudTerre,t_NLune,new GeometryEngine, anim_NLune);
 
-    //Fin creation
 
-    //Instance INIT GAME OBJECT //lune
-    GeometryEngine *geo_Lune = new GeometryMeshEngine;
-    //geo_Lune->initCubeGeometry();
-    geo_Lune->initMesh(":/Mesh/sphere.off");
-    // geo_Lune->initMesh(":Mesh/space_station.off");
-    Transform *t_Lune = new Transform;
-    t_Lune->setRotation(1,0,0,6.68);
-    Transform *anim_Lune = new Transform;
-    anim_Lune->setRotation(0,0,1,0.8);
-    Object* Lune = addGameObject(&program,noeudLune,t_Lune , geo_Lune,anim_Lune);
-    Lune->setLumiere();
-    for(int i =0 ;i < allShaders.size(); i++)
-        Lune->addShader(allShaders[i]);
-    //Fin creation
-    ////////////
+
 
 
     //Instance INIT GAME OBJECT // NOEUD noeud soleil
@@ -237,8 +215,7 @@ void MainWidget::scene(){
     Transform *anim_mobile = new Transform;
     anim_mobile->setTranslate(0,0,0);
     Object* satellite =addGameObject(&program,NoeudSatellite, new Transform ,   geo_mobile, anim_mobile,
-                                     new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored())
-                                     );
+                                     new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
 
 
     Object *cameraObj= new CameraObject();
@@ -246,6 +223,37 @@ void MainWidget::scene(){
     cameraObj->setShader(&program);
     for(int i =0 ;i < allShaders.size(); i++)
         cameraObj->addShader(allShaders[i]);
+
+
+
+    //Instance INIT GAME OBJECT // NOEUD LUNE
+    Transform *t_NLune = new Transform;
+//    t_NLune->setScale(0.3,0.3,0.3);
+    t_NLune->setScale(15.3,15.3,15.3);
+    t_NLune->setTranslate(40,0,35);
+    Transform *anim_NLune = new Transform;
+    anim_NLune->setRotation(0,0,-2,5);
+    Object* noeudLune = addGameObject(&program,Terre,t_NLune,new GeometryEngine, anim_NLune);
+    //Fin creation
+    //Instance INIT GAME OBJECT //lune
+    GeometryEngine *geo_Lune = new GeometryMeshEngine;
+    //geo_Lune->initCubeGeometry();
+    geo_Lune->initMesh(":/Mesh/sphere.off");
+    // geo_Lune->initMesh(":Mesh/space_station.off");
+    Transform *t_Lune = new Transform;
+    t_Lune->setScale(2,2,2);
+    t_Lune->setRotation(1,0,0,6.68);
+    Transform *anim_Lune = new Transform;
+    anim_Lune->setRotation(0,0,1,0.8);
+    Object* Lune = addGameObject(&program,noeudLune,t_Lune , geo_Lune,anim_Lune);
+    Lune->setLumiere();
+    for(int i =0 ;i < allShaders.size(); i++)
+        Lune->addShader(allShaders[i]);
+    //Fin creation
+    ////////////
+
+
+
 
 
 
@@ -595,7 +603,7 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
 
 bool MainWidget::eventFilter(QObject *object, QEvent *event){
     if(true ||(event->type()==QEvent::KeyPress || event->type()==QEvent::KeyRelease)) {
-        qDebug("filtre ");
+        //qDebug("filtre ");
         emit emitFilter(event);
     }
     return false;

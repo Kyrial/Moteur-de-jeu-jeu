@@ -16,6 +16,7 @@ in vec2 v_texcoord;
 in vec3 v_position;
 in vec3 v_normal;
 in vec3 FragPos;
+
 //! [0]
 
 float max(float a, float b){
@@ -68,6 +69,7 @@ vec4  calculTexture(float position,vec2 texcoord ){
     float pierre = 0.5;
     float neige = 1.1;
     float eau = -0.5;
+
 
     float gapHerbe = 0.25;
     float gapPierre = 0.35;

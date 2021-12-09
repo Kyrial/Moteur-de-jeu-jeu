@@ -416,8 +416,8 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     //float hauteurMesh = colorx*0.7 +k[2];
     float hauteurMesh =(perlin2d( normal.x(), normal.y() , 8)-0.3)*2; // (perlin2d( k.x(), k.y() , 8)-0.3)*2;
     //float hauteurTexture = std::max(-0.5, std::min((float)1.25,colorx*2)-0.25);
-    if(hauteurMesh<-0.5){
-        hauteurMesh = -0.5;//+cos((animation+(a_position.y)*300)/100)/150;
+    if(hauteurMesh<-0.2){
+        hauteurMesh = -0.2;//+cos((animation+(a_position.y)*300)/100)/150;
         normal= QVector3D(0,0,0);
     }
     QVector3D vecTranslate;
@@ -429,7 +429,6 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     newCoord  = objM*newCoord;
     vecTranslate = newCoord - geo->BBMin;
     //normal = k;
-    int i=0;
     return vecTranslate;
 }
 
@@ -542,7 +541,7 @@ QVector3D GeometryEngine::mapCoordChanged(QVector3D coordCharacter, QMatrix4x4 o
         // qDebug("maoww :%f, et coordperso = %f \n ",centreX, centreY );
         //qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter1[0], coordCharacter1[1] );
         qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter2[0], coordCharacter2[1] );
-        initPlanegeometry((centreX)-12,(centreY)-12,(centreX)+12,(centreY)+12, (centreX), (centreY));
+        initPlanegeometry((centreX)-11,(centreY)-11,(centreX)+11,(centreY)+11, (centreX), (centreY));
     }
     return coordCharacter2;
     //   addInstancedGrass(300,QVector3D((centreX)-12,(centreY)-12,0),QVector3D((centreX)+12,(centreY)+12,0) );
@@ -630,12 +629,12 @@ void GeometryEngine::addInstancedGrass(int nb, QVector3D min, QVector3D max){
 
     modelMatrices.clear();
     float nbMaxArbre =0.5;
-    float ratioArbre=0.4;
+    float ratioArbre=0.42;
     // float intervalX=( max[0]-min[0])/(float)(nbMaxArbre-1);
     // float intervalY=( max[1]-min[1])/(float)(nbMaxArbre-1);
-    for(float i=min[0]; i<max[0]; i+=nbMaxArbre){
-        for(float j=min[1];j<max[1]; j+=nbMaxArbre){
-            float hauteurMesh =(perlin2d( i, j , 8)-0.3)*2;
+    for(float i=min[0]+2.5; i<max[0]-2.5; i+=nbMaxArbre){
+        for(float j=min[1]+2.5;j<max[1]-2.5; j+=nbMaxArbre){
+            float hauteurMesh =(perlin2d( i, j , 5)-0.3)*2;
             float arbreChance =(perlin2d( i*2, j*2 , 1));
             if(hauteurMesh>0 && ratioArbre> arbreChance){
                 Transform t;

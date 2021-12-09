@@ -41,12 +41,16 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
         normal = QVector3D::normal(vertex[faces[i/3][0]],vertex[faces[i/3][1]],vertex[faces[i/3][2]]);
         for(int k = 0; k<3;k++){
         if(normals[faces[i/3][k]] != QVector3D())
-            normals[faces[i/3][k]]= (normals[faces[i/3][k]]+normal).normalized();
+            normals[faces[i/3][k]]= (normals[faces[i/3][k]]+normal);
         else
         normals[faces[i/3][k]]= normal;
 }
-
+//.normalized()
     }
+
+   /* for(int i =0; i< indexCount;i++){
+        normals[i] = normals[i].normalized();
+    }*/
 
     for(int i=0; i<vertexNumber;i++) {
         /*if(face ==0){
@@ -57,7 +61,7 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
         else
             face--;*/
         //vertices[i]= {vertex[i], QVector2D(i/(float)vertexNumber, i/(float)vertexNumber)};
-        vertices[i]= {vertex[i], QVector2D((vertex[i][0]+vertex[i][2])/3, (vertex[i][1]))/3,normals[i]};
+        vertices[i]= {vertex[i], QVector2D((vertex[i][0]+vertex[i][2])/3, (vertex[i][1]))/3,normals[i].normalized()};
         vertices2[i]= {vertex[i], QVector2D(vertex[i][0]+vertex[i][1], vertex[i][0]+vertex[i][2])};
     }
 

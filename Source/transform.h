@@ -85,6 +85,8 @@ public:
     void setTranslate(float vit){
         t[0] = t[0]*vit;
         t[1] = t[1]*vit;
+        if (t[2]>0)
+            t[2] = t[2]*vit;
     }
     void addTranslate(QVector3D val){
         t = t+val;
@@ -151,11 +153,11 @@ r.setColumn(3,QVector4D(.0,.0,.0,1.0));
 
 
     void convergeZero(){
-        if (abs(t[0]) < 0.001)
+        if (abs(t[0]) < 0.01)
             t[0]= 0;
-        if (abs(t[1]) < 0.001)
+        if (abs(t[1]) < 0.01)
             t[1]= 0;
-        if (abs(t[2]) < 0.001)
+        if (abs(t[2]) < 0.01)
             t[2]= 0;
     }
 
