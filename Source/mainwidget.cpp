@@ -105,7 +105,17 @@ Object* MainWidget::addMobileObject(QOpenGLShaderProgram* shad,Object *parent, T
     mobileobj->setShader(shad);
     return mobileobj;
 }
-
+Object* MainWidget::addBillboardObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh=new GeometryEngine(), Transform *anim = new Transform(),QOpenGLTexture *texture=NULL ){
+    //setTexture(QOpenGLTexture *txtr)
+    //MobileObj *Obj2
+    Object *billboardobj= new billboardObject(*t, *anim);
+    billboardobj->updateMesh(mesh);
+    billboardobj->setTexture(texture);
+    parent->addChild(billboardobj);
+    billboardobj->Monde = gameObj;
+    billboardobj->setShader(shad);
+    return billboardobj;
+}
 
 void MainWidget::scene(){
     gameObj->setShader(allShaders[0]);
@@ -251,6 +261,15 @@ void MainWidget::scene(){
         Lune->addShader(allShaders[i]);
     //Fin creation
     ////////////
+
+
+
+
+
+
+
+
+
 
 
 

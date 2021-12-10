@@ -22,7 +22,7 @@ public:
     static bool  animate;
     Object *Monde;
  QVector<QOpenGLShaderProgram*> allShader;
-    boolean instanced = false;
+    bool instanced = false;
 
 
 protected:
