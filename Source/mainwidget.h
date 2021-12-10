@@ -54,6 +54,8 @@
 #include "geometryengine.h"
 #include "geometrymeshengine.h"
 #include "gameobject.h"
+#include "billboardobject.h"
+
 //#include "meshobject.h"
 #include "controler.h"
 #include "mobileobj.h"
@@ -104,6 +106,7 @@ protected:
 
     Object* addGameObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *txtr);
     Object* addMobileObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *texture);
+    Object* addBillboardObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *txtr);
 
 
     void initMonde();
