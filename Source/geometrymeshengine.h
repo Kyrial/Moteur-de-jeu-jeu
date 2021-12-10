@@ -15,9 +15,9 @@ class GeometryMeshEngine : public GeometryEngine
 public:
     GeometryMeshEngine();
 
-    void initMesh(std::string filename);
-    void initMeshObj(std::string filename);
-    void bindMesh(std::vector< std::vector<unsigned int> >  faces);
+    void initMesh(std::string filenamen, bool collisionActivated= true);
+    void initMeshObj(std::string filename, bool collisionActivated= true);
+    void bindMesh(std::vector< std::vector<unsigned int> >  faces, bool a = true);
 
 //        QOpenGLBuffer normalBuf;
 

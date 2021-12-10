@@ -233,12 +233,12 @@ void MainWidget::scene(){
     t_NLune->setTranslate(40,0,35);
     Transform *anim_NLune = new Transform;
     anim_NLune->setRotation(0,0,-2,5);
-    Object* noeudLune = addGameObject(&program,Terre,t_NLune,new GeometryEngine, anim_NLune);
+    Object* noeudLune = addGameObject(&program,NoeudSatellite,t_NLune,new GeometryEngine, anim_NLune);
     //Fin creation
     //Instance INIT GAME OBJECT //lune
     GeometryEngine *geo_Lune = new GeometryMeshEngine;
     //geo_Lune->initCubeGeometry();
-    geo_Lune->initMesh(":/Mesh/sphere.off");
+    geo_Lune->initMesh(":/Mesh/sphere.off", false);
     // geo_Lune->initMesh(":Mesh/space_station.off");
     Transform *t_Lune = new Transform;
     t_Lune->setScale(2,2,2);

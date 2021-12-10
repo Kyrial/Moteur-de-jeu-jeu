@@ -318,49 +318,53 @@ void GeometryEngine::remplaceBB(QVector3D m,QVector3D M){
 }
 
 void GeometryEngine::initBB(VertexData vertices[],int max){
-    Min= vertices[0].position;
-    Max= vertices[0].position;
 
-    for(int i=0;i<max; i++){
-        if(vertices[i].position[0]< Min[0])
-            Min[0]= vertices[i].position[0];
-        if(vertices[i].position[1]< Min[1])
-            Min[1]= vertices[i].position[1];
-        if(vertices[i].position[2]< Min[2])
-            Min[2]= vertices[i].position[2];
+        Min= vertices[0].position;
+        Max= vertices[0].position;
 
-        if(vertices[i].position[0]> Max[0])
-            Max[0]= vertices[i].position[0];
-        if(vertices[i].position[1]> Max[1])
-            Max[1]= vertices[i].position[1];
-        if(vertices[i].position[2]> Max[2])
-            Max[2]= vertices[i].position[2];
+        for(int i=0;i<max; i++){
+            if(vertices[i].position[0]< Min[0])
+                Min[0]= vertices[i].position[0];
+            if(vertices[i].position[1]< Min[1])
+                Min[1]= vertices[i].position[1];
+            if(vertices[i].position[2]< Min[2])
+                Min[2]= vertices[i].position[2];
+
+            if(vertices[i].position[0]> Max[0])
+                Max[0]= vertices[i].position[0];
+            if(vertices[i].position[1]> Max[1])
+                Max[1]= vertices[i].position[1];
+            if(vertices[i].position[2]> Max[2])
+                Max[2]= vertices[i].position[2];
+        }
+        BBMin = Min;
+        BBMax = Max;
     }
-    BBMin = Min;
-    BBMax = Max;
-}
+
 
 void GeometryEngine::initBB(std::vector<QVector3D> vertex){
-    Min= this->vertex[0];
-    Max= this->vertex[0];
 
-    foreach(QVector3D val , vertex){
-        if(val[0]< Min[0])
-            Min[0]= val[0];
-        if(val[1]< Min[1])
-            Min[1]= val[1];
-        if(val[2]< Min[2])
-            Min[2]= val[2];
+        Min= this->vertex[0];
+        Max= this->vertex[0];
 
-        if(val[0]> Max[0])
-            Max[0]= val[0];
-        if(val[1]> Max[1])
-            Max[1]= val[1];
-        if(val[2]> Max[2])
-            Max[2]= val[2];
-    }
-    BBMin = Min;
-    BBMax = Max;
+        foreach(QVector3D val , vertex){
+            if(val[0]< Min[0])
+                Min[0]= val[0];
+            if(val[1]< Min[1])
+                Min[1]= val[1];
+            if(val[2]< Min[2])
+                Min[2]= val[2];
+
+            if(val[0]> Max[0])
+                Max[0]= val[0];
+            if(val[1]> Max[1])
+                Max[1]= val[1];
+            if(val[2]> Max[2])
+                Max[2]= val[2];
+        }
+        BBMin = Min;
+        BBMax = Max;
+
 }
 
 float GeometryEngine::getHauteur(QVector2D coordText){

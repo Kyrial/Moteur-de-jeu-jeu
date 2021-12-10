@@ -81,8 +81,8 @@ public:
 
 
     virtual void drawCubeGeometry(QOpenGLShaderProgram *program);
-    virtual void initMesh(std::string filename){}
-    virtual void initMeshObj(std::string filename){}
+    virtual void initMesh(std::string filename, bool a= true){}
+    virtual void initMeshObj(std::string filename,bool a= true){}
     virtual void bindMesh(std::vector< std::vector<unsigned int> >  faces){}
 
     QOpenGLBuffer arrayBuf;
@@ -144,6 +144,10 @@ public:
     QVector3D mapCoordChanged(QVector3D vec,QMatrix4x4 objM,QMatrix4x4 ourM);
 
     void addInstancedGrass(int nb, QVector3D min=QVector3D(-13,-13,0), QVector3D max=QVector3D(13,13,0));
+
+
+
+
 };
 
 #endif // GEOMETRYENGINE_H

@@ -6,22 +6,22 @@ GeometryMeshEngine::GeometryMeshEngine()
 }
 
 
-void GeometryMeshEngine::initMeshObj(std::string filename){
+void GeometryMeshEngine::initMeshObj(std::string filename, bool collisionActivated){
 
     std::vector< std::vector<unsigned int> >  faces;
 
     OBJIO::open(filename, vertex, faces, true);
-    bindMesh(faces);
+    bindMesh(faces,collisionActivated);
 }
 
-void GeometryMeshEngine::initMesh(std::string filename){
+void GeometryMeshEngine::initMesh(std::string filename,  bool collisionActivated ){
 
     std::vector< std::vector<unsigned int> >  faces;
 
     OFFIO::open(filename, vertex, faces, true);
-    bindMesh(faces);
+    bindMesh(faces,collisionActivated);
 }
-void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  faces){
+void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  faces, bool collisionActivated){
     unsigned int vertexNumber = vertex.size();
     VertexDataWithNormal vertices[vertexNumber];
     VertexData vertices2[vertexNumber];
@@ -69,7 +69,12 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
 
 
     qDebug("vertexNumber :%i, et indexCount = %i \n ",vertexNumber, indexCount );
-    initBB(vertex);
+    if(collisionActivated)
+        initBB(vertex);
+    else{
+        QVector3D Min = QVector3D(0,0,0);
+        QVector3D Max = QVector3D(0,0,0);
+    }
     // Transfer vertex data to VBO 0
     arrayBuf.bind();
     if (withNormal)
