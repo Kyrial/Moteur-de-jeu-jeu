@@ -23,6 +23,7 @@ public:
 
     void drawWithNormal(QOpenGLShaderProgram *program);
     void drawCubeGeometry(QOpenGLShaderProgram *program) override;
+
 };
 
 #endif // GEOMETRYMESHENGINE_H

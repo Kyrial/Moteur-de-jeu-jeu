@@ -82,6 +82,7 @@ MainWidget::MainWidget(QWidget *parent) :
 void MainWidget::initMonde(){
     //Transform tt = Transform();
     gameObj = new GameObject();// tt, geo);
+    gameObj->setName("racine");
 }
 
 Object* MainWidget::addGameObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh=new GeometryEngine(), Transform *anim = new Transform(),QOpenGLTexture *texture=NULL){
@@ -134,6 +135,7 @@ void MainWidget::scene(){
     Transform *anim_NTerre = new Transform;
     //anim_NTerre->setRotation(0,0,0.2,1);
     Object* noeudTerre = addGameObject(allShaders[0],NoeudUnivers,t_NTerre,new GeometryEngine, anim_NTerre);
+    noeudTerre->setName("noeudTerre");
     //Fin creation
 
     //Instance INIT GAME OBJECT //Terre
@@ -145,6 +147,7 @@ void MainWidget::scene(){
     Transform *anim_Terre = new Transform;
     //anim_Terre->setRotation(0,0,1,1);
     Object* Terre = addGameObject(allShaders[0],noeudTerre,t_Terre , geo_Terre,anim_Terre);
+    Terre->setName("terre");
     //Fin creation
 
     // Terre->geo->initPlanegeometry(-1,-1,11,11);
@@ -242,13 +245,16 @@ void MainWidget::scene(){
     t_NLune->setScale(15.3,15.3,15.3);
     t_NLune->setTranslate(40,0,35);
     Transform *anim_NLune = new Transform;
-    anim_NLune->setRotation(0,0,-2,5);
+    //anim_NLune->setRotation(0,0,-2,5);
+    anim_NLune->setRotation(0,1,0,2);
     Object* noeudLune = addGameObject(&program,NoeudSatellite,t_NLune,new GeometryEngine, anim_NLune);
+    noeudLune->setName("noeudLune");
+    noeudLune->geo->noCollision = true;
     //Fin creation
     //Instance INIT GAME OBJECT //lune
     GeometryEngine *geo_Lune = new GeometryMeshEngine;
     //geo_Lune->initCubeGeometry();
-    geo_Lune->initMesh(":/Mesh/sphere.off", false);
+   geo_Lune->initMesh(":/Mesh/sphere.off", false);
     // geo_Lune->initMesh(":Mesh/space_station.off");
     Transform *t_Lune = new Transform;
     t_Lune->setScale(2,2,2);
@@ -257,6 +263,7 @@ void MainWidget::scene(){
     anim_Lune->setRotation(0,0,1,0.8);
     Object* Lune = addGameObject(&program,noeudLune,t_Lune , geo_Lune,anim_Lune);
     Lune->setLumiere();
+    Lune->setName("Lune");
     for(int i =0 ;i < allShaders.size(); i++)
         Lune->addShader(allShaders[i]);
     //Fin creation
@@ -265,7 +272,16 @@ void MainWidget::scene(){
 
 
 
-
+    //Instance INIT GAME OBJECT // BILLBOARD
+    GeometryEngine *geo_bill = new geometryUI;
+  // geo_bill->initMesh(":/Mesh/sphere.off", false);
+    geo_bill->initLifeBar();
+    Transform *tbill = new Transform;
+    tbill->setScale(10,10,10);
+    tbill->setTranslate(0,0,2);
+    Transform *anim_tbill = new Transform;
+    Object* noeudBill = addBillboardObject(&program,satellite,tbill, geo_bill,anim_tbill,new QOpenGLTexture(QImage(":/Texture/lifeBar.png").mirrored()));
+    //Fin creation
 
 
 
@@ -438,6 +454,7 @@ void MainWidget::initializeGL()
     }
     // Use QBasicTimer because its faster than QTimer
     timer.start(1000./FPS, this);
+    lastFrame.start();
 }
 
 
@@ -551,6 +568,25 @@ void MainWidget::paintGL()
     // Clear color and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+   /* QPainter painter(this);
+    QLinearGradient gradient(QPointF(50, -20), QPointF(80, 20));
+    gradient.setColorAt(0.0, Qt::white);
+    gradient.setColorAt(1.0, QColor(0xa6, 0xce, 0x39));
+
+    painter.setBackground(QBrush(QColor(64, 32, 64)));
+    painter.setBrush(QBrush(gradient));
+    painter.setPen(QPen(Qt::black));
+    painter.setPen(1);
+    painter.setPen(QPen(Qt::white));
+    painter.setFont(QFont());
+    painter.drawText(QRect(-50, -50, 100, 100), Qt::AlignCenter, QStringLiteral("MIAOU"));
+    */
+    /*
+    painter.setPen(Qt::red);
+    painter.drawLine(rect().topLeft(), rect().bottomRight());
+    painter.beginNativePainting();*/
+
+
     texture->bind(0);
     textureGrass->bind(1);
     textureRock->bind(2);
@@ -605,9 +641,11 @@ void MainWidget::paintGL()
 
     gameObj->updateScene(deltaTime);
     //gameObj->updateBB();
+    QToolTip::showText(QPoint(50,50), "meow",this);
 
-
-
+  /*  //Opengl api
+    painter.endNativePainting();
+    painter.end();*/
 
     //TODO
     //   mobileobj->updateScene(&program,deltaTime);

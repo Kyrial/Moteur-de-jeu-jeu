@@ -74,6 +74,7 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
     else{
         QVector3D Min = QVector3D(0,0,0);
         QVector3D Max = QVector3D(0,0,0);
+        noCollision = true;
     }
     // Transfer vertex data to VBO 0
     arrayBuf.bind();

@@ -40,7 +40,7 @@ protected:
     QSet<int> pressedKeys;
     QOpenGLShaderProgram *shader;
     Transform saveAlltransform = Transform();
-
+    QString Name= "";
     ///Constructeur
 
 public:
@@ -92,7 +92,12 @@ public:
 
     ///Methode
     void calculsInstanced(double deltaTime,QMatrix4x4 m);
-protected:
+    void setName( QString n){
+    Name=n;
+}
+
+
+            protected:
     void chargerTextureForShader(){
         if(ifTexture){
             texture->bind(10);

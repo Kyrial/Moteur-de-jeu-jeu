@@ -256,7 +256,7 @@ bool GeometryEngine::intersect(GeometryEngine *geo){
 
 //matrice avec coefficiant négatif -> inverse le min et le max !
 void GeometryEngine::updateBB(QMatrix4x4 m){
-
+   // if (noCollision) return;
     QVector3D tempMin = calcBBMin( m*Min,m*Max);
     QVector3D tempMax = calcBBMax( m*Min,m*Max);
 

@@ -84,6 +84,8 @@ public:
     virtual void initMesh(std::string filename, bool a= true){}
     virtual void initMeshObj(std::string filename,bool a= true){}
     virtual void bindMesh(std::vector< std::vector<unsigned int> >  faces){}
+    virtual void initLifeBar(){}
+    virtual bool updateLifeBar(double deltaTime){}
 
     QOpenGLBuffer arrayBuf;
     QOpenGLBuffer indexBuf;
@@ -100,6 +102,7 @@ public:
     QVector3D internBBMin = QVector3D(0,0,0);
     QVector3D internBBMax = QVector3D(0,0,0);
     bool heightMap = false;
+    bool noCollision = false;
 protected:
     QImage img;
     std::vector<QVector3D>  vertex;
@@ -146,7 +149,13 @@ public:
     void addInstancedGrass(int nb, QVector3D min=QVector3D(-13,-13,0), QVector3D max=QVector3D(13,13,0));
 
 
-
+    void test(){
+         /*  glPushMatrix();
+           glRotatef(90, 0, 0, 1);
+           QString qStr = QString("Here's a very long string which doesn't mean anything at all but had some rendering problems");
+           renderText(0.0, 0.0, 0.0, qStr);
+           glPopMatrix();*/
+    }
 
 };
 

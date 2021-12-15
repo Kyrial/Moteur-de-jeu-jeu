@@ -10,6 +10,7 @@
         <file>Texture/textureSoleil.png</file>
         <file>Texture/textureEau.png</file>
         <file>Texture/Textureciel1.jpg</file>
-		<file>Texture/textureBois.png</file>
+        <file>Texture/textureBois.png</file>
+        <file>Texture/lifeBar.png</file>
     </qresource>
 </RCC>

@@ -9,6 +9,7 @@ SOURCES += main.cpp \
     controler.cpp \
     gameobject.cpp \
     geometrymeshengine.cpp \
+    geometryui.cpp \
     mobileobj.cpp \
     object.cpp \
     transform.cpp
@@ -24,6 +25,7 @@ HEADERS += \
     controler.h \
     gameobject.h \
     geometrymeshengine.h \
+    geometryui.h \
     mainwidget.h \
     geometryengine.h \
     mobileobj.h \

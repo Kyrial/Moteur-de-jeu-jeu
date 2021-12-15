@@ -53,6 +53,7 @@
 
 #include "geometryengine.h"
 #include "geometrymeshengine.h"
+#include "geometryui.h"
 #include "gameobject.h"
 #include "billboardobject.h"
 
@@ -69,6 +70,8 @@
 #include <QOpenGLShaderProgram>
 #include <QOpenGLTexture>
 #include <QElapsedTimer>
+#include <QPainter>
+#include <QToolTip>
 class GeometryEngine;
 
 class MainWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core

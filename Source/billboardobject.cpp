@@ -17,6 +17,14 @@ void billboardObject::updateScene(double deltaTime, QMatrix4x4 m){
      -0.5f, 0.5f, 0.0f,
      0.5f, 0.5f, 0.0f,
      };*/
-
+   // geo->test();
+    UpdatebarreDeVie( deltaTime);
      Object::updateScene(deltaTime, m);
+}
+
+
+bool billboardObject::UpdatebarreDeVie(double deltaTime){
+    geo->updateLifeBar(deltaTime);
+
+    return vie >0;
 }

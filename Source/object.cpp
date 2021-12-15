@@ -40,24 +40,31 @@ void  Object::updateScene(double deltaTime, QMatrix4x4 lastM){
     QVector3D newBBMin =QVector3D();
     QVector3D newBBMax =QVector3D();
     bool firstPassage = true;
+    int enfant_without_collision = 0;
     foreach (Object* go, enfants) {
+
         //  qDebug("foreach %i \n",enfants.size());
         go->updateScene(deltaTime, m);
 
+        if(!go->geo->noCollision){
+            if( firstPassage){
+                newBBMax = go->geo->BBMax;
+                newBBMin = go->geo->BBMin;
+                //  geo->remplaceBB(go->geo);
+                firstPassage = false;
+            }
 
-        if( firstPassage){
-            newBBMax = go->geo->BBMax;
-            newBBMin = go->geo->BBMin;
-            //  geo->remplaceBB(go->geo);
-            firstPassage = false;
+            newBBMin = GeometryEngine::calcBBMin(newBBMin,go->geo->BBMin);
+            newBBMax= GeometryEngine::calcBBMax(newBBMax,go->geo->BBMax);
+            //geo->ajustBB(go->geo);
         }
-
-        newBBMin = GeometryEngine::calcBBMin(newBBMin,go->geo->BBMin);
-        newBBMax= GeometryEngine::calcBBMax(newBBMax,go->geo->BBMax);
-        //geo->ajustBB(go->geo);
-
+        else
+            enfant_without_collision++;
     }
-    if(enfants.size()==0)
+
+
+
+    if(enfants.size()<=0+ enfant_without_collision)
         geo->updateBB(m);
     else{
         if(geo->ifNoeudVide())
@@ -67,11 +74,8 @@ void  Object::updateScene(double deltaTime, QMatrix4x4 lastM){
             geo->resetBB();
             geo->updateBB(m);
             geo->ajustBB(newBBMin,newBBMax);
-
         }
-
     }
-
 }
 
 Object* Object::getRacine(){
