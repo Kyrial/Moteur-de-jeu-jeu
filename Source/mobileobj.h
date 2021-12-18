@@ -46,6 +46,7 @@ public:
         //l'objet est freiner
 
         animation.setTranslate(pow(0.9,deltaTime/facteurCynetique));
+        //animation.setRotation(0.75);
         animation.convergeZero();
 
     }

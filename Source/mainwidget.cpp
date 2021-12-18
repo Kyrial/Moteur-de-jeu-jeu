@@ -182,14 +182,14 @@ void MainWidget::scene(){
 */
     //Instance INIT GAME OBJECT //soleil2
     GeometryEngine *geo_herbe = new GeometryMeshEngine;
-    geo_herbe->withNormal = true;
-    geo_herbe->initMeshObj(":/Mesh/tree.obj");
-    geo_herbe->addInstancedGrass(300);
+   // geo_herbe->withNormal = true;
+   // geo_herbe->initMeshObj(":/Mesh/tree.obj");
+  //  geo_herbe->addInstancedGrass(300);
     Transform *tHerbe = new Transform;
     tHerbe->setScale(0.05,0.05,0.05);
     tHerbe->setRotation(1,0,0,90);
     Object* herbe= addGameObject(allShaders[1],Terre,tHerbe , geo_herbe,new Transform);
-    herbe->instanced=true;
+  //  herbe->instanced=true;
     herbe->geo->withNormal = true;
 
     //Fin creation

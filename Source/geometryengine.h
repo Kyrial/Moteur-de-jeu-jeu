@@ -107,7 +107,9 @@ protected:
     QImage img;
     std::vector<QVector3D>  vertex;
     //void initPlanegeometry();
-    void subdivisePlan(int x, int y,  VertexData vertices[], GLushort indices[],float Xmin,float Ymin,float Xmax,float Ymax,float centreX =0, float centreY=0);//,std::string nameWeightMap );
+    void subdivisePlan(int x, int y,  VertexData vertices[],float Xmin,float Ymin,float Xmax,float Ymax,float centreX =0, float centreY=0);//,std::string nameWeightMap );
+    void TriangleForPlan(int x, int y,GLushort indices[]);
+    void updatePlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax, float centreX =0, float centreY=0);
 
     std::vector<QVector3D> getVertex();
 

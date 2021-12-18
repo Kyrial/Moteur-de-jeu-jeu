@@ -396,7 +396,7 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     //(val+min)/ interval = case
     int caseX = (a.x()- Min[0])/interval;
     int caseY = (a.y()- Min[1])/interval;
-    float interval_Texture=2/(float)(precisionX-1);
+    //float interval_Texture=2/(float)(precisionX-1);
     // QVector3D k
     normal= vertex[caseX*precisionX+caseY];
     /*VertexData vertices[precisionX*precisionY];
@@ -418,7 +418,7 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     QVector3D newCoord = inv_BBMin;
     // float colorx = getHauteur( coordText);
     //float hauteurMesh = colorx*0.7 +k[2];
-    float hauteurMesh =(perlin2d( normal.x(), normal.y() , 8)-0.3)*2; // (perlin2d( k.x(), k.y() , 8)-0.3)*2;
+    float hauteurMesh =(perlin2d( normal.x(), normal.y() , 6)-0.3)*2; // (perlin2d( k.x(), k.y() , 8)-0.3)*2;
     //float hauteurTexture = std::max(-0.5, std::min((float)1.25,colorx*2)-0.25);
     if(hauteurMesh<-0.2){
         hauteurMesh = -0.2;//+cos((animation+(a_position.y)*300)/100)/150;
@@ -545,14 +545,14 @@ QVector3D GeometryEngine::mapCoordChanged(QVector3D coordCharacter, QMatrix4x4 o
         // qDebug("maoww :%f, et coordperso = %f \n ",centreX, centreY );
         //qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter1[0], coordCharacter1[1] );
         qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter2[0], coordCharacter2[1] );
-        initPlanegeometry((centreX)-11,(centreY)-11,(centreX)+11,(centreY)+11, (centreX), (centreY));
+        updatePlanegeometry((centreX)-11,(centreY)-11,(centreX)+11,(centreY)+11, (centreX), (centreY));
     }
     return coordCharacter2;
     //   addInstancedGrass(300,QVector3D((centreX)-12,(centreY)-12,0),QVector3D((centreX)+12,(centreY)+12,0) );
 }
 
 
-void GeometryEngine::subdivisePlan(int x, int y, VertexData vertices[],GLushort indices[], float Xmin=-1,float Ymin=-1,float Xmax=1,float Ymax=1, float centreX, float centreY)//, std::string  nameWeightMap = "")
+void GeometryEngine::subdivisePlan(int x, int y, VertexData vertices[], float Xmin=-1,float Ymin=-1,float Xmax=1,float Ymax=1, float centreX, float centreY)//, std::string  nameWeightMap = "")
 {
     vertex.resize(x*y);
     float intervalX_Texture=2/(float)(x-1);
@@ -569,26 +569,46 @@ void GeometryEngine::subdivisePlan(int x, int y, VertexData vertices[],GLushort 
             vertex[i*y+j] =QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f );
         }
     }
-    int count =0;
-    for(int i=0; i<x-1; i++){
-        for(int j=0;j<y; j++){
-            //count+=2;
-            //      qDebug("indices %i, %i",2*i+i*(y*2)+j*2,2*i+i*(y*2)+j*2+1 );
-            //   indices[2*i+i*(y*2)+j*2] = i*y+j;
-            //    indices[2*i+i*(y*2)+j*2+1] = (i+1)*y+j;
-            indices[count++] = i*y+j;
-            indices[count++] = (i+1)*y+j;
-        }
-        if(i!=x-2){
-            //count +=2;
-            //   qDebug("indices degenerer %i, %i",2*i+i*(y*2)+y*2,2*i+i*(y*2)+y*2+1 );
-            //    indices[2*i+i*(y*2)+y*2]=(i+1)*y+y-1;
-            //    indices[2*i+i*(y*2)+y*2+1]=(i+1)*y;
-            indices[count++]=(i+1)*y+y-1;
-            indices[count++]=(i+1)*y;
-        }
+}
+
+void GeometryEngine::TriangleForPlan(int x, int y,GLushort indices[])
+{    int count =0;
+     for(int i=0; i<x-1; i++){
+         for(int j=0;j<y; j++){
+             //count+=2;
+             //      qDebug("indices %i, %i",2*i+i*(y*2)+j*2,2*i+i*(y*2)+j*2+1 );
+             //   indices[2*i+i*(y*2)+j*2] = i*y+j;
+             //    indices[2*i+i*(y*2)+j*2+1] = (i+1)*y+j;
+             indices[count++] = i*y+j;
+             indices[count++] = (i+1)*y+j;
+         }
+         if(i!=x-2){
+             //count +=2;
+             //   qDebug("indices degenerer %i, %i",2*i+i*(y*2)+y*2,2*i+i*(y*2)+y*2+1 );
+             //    indices[2*i+i*(y*2)+y*2]=(i+1)*y+y-1;
+             //    indices[2*i+i*(y*2)+y*2+1]=(i+1)*y;
+             indices[count++]=(i+1)*y+y-1;
+             indices[count++]=(i+1)*y;
+         }
+     }
+     indices[count]=indices[count-1];
+}
+
+void GeometryEngine::updatePlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax, float centreX, float centreY){
+    int x=precisionX;
+    int y=precisionY;
+    unsigned int vertexNumber = x*y ;
+    VertexData vertices[x*y];
+    subdivisePlan(x,  y,  vertices, Xmin, Ymin, Xmax, Ymax, centreX,  centreY);
+
+    initBB(vertices, vertexNumber);
+    if(Min[2]==0 && Max[2]==0){
+        Max[2] = 1.5;
+        Min[2] = -3.0;
     }
-    indices[count]=indices[count-1];
+    arrayBuf.bind();
+    arrayBuf.allocate(vertices, vertexNumber * sizeof(VertexData));
+    arrayBuf.release();
 }
 
 void GeometryEngine::initPlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax, float centreX, float centreY)
@@ -601,8 +621,8 @@ void GeometryEngine::initPlanegeometry(float Xmin,float Ymin,float Xmax,float Ym
     VertexData vertices[x*y];
     unsigned int indexCount = x*y+y*(x-2)+2*(x-2)+2;
     GLushort indices[x*y+y*(x-2)+2*(x-2)+2];
-    subdivisePlan(x,  y,  vertices,  indices, Xmin, Ymin, Xmax, Ymax, centreX,  centreY);
-
+    subdivisePlan(x,  y,  vertices, Xmin, Ymin, Xmax, Ymax, centreX,  centreY);
+    TriangleForPlan(x,  y, indices);
     // qDebug("taille index %i",indexCount);
     //qDebug("taille index tab %i",x*y+y*(x-2)+2*(x-2)+2);
 

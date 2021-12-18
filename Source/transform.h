@@ -64,6 +64,14 @@ public:
         r = QQuaternion::fromAxisAndAngle(QVector3D(x,y,z),f);
 
     }
+    void setRotation(float facteur){
+        borneRotation();
+        QVector3D vec = QVector3D();
+        float angle = 1;
+        r.getAxisAndAngle(&vec,&angle);
+        r = QQuaternion::fromAxisAndAngle(vec,angle*facteur);
+
+    }
     void setRotation(QQuaternion q){
         r = q;
     }
@@ -204,12 +212,15 @@ public:
         t += QVector3D(0,0.8,0);
     }
     void left2(){
+       // borneRotation();
          r =  this->r *QQuaternion::fromAxisAndAngle(QVector3D(0,0,1),1);
     }
     void right(){
         t += QVector3D(0,-0.6,0);
     }
     void right2(){
+         //borneRotation();
+
          r =  this->r *QQuaternion::fromAxisAndAngle(QVector3D(0,0,-1),1);
     }
     void jump(){
@@ -217,6 +228,20 @@ public:
     }
 
 
+    void borneRotation(){
+        QVector3D vec = QVector3D();
+        float angle = 1;
+        r.getAxisAndAngle(&vec,&angle);
+        if (angle < 0.01)
+            angle = 0.0;
+        if (angle > 5)
+            angle = 5;
+
+        vec[0] = abs(vec.x())<0.01? 0 : abs(vec.x()) > 100 ? 100 : vec.x();
+        vec[1] = abs(vec.y())<0.01? 0 : abs(vec.y()) > 100 ? 100 : vec.y();
+        vec[2] = abs(vec.z())<0.01? 0 : abs(vec.z()) > 100 ? 100 : vec.z();
+        r = QQuaternion::fromAxisAndAngle(vec,angle);
+    }
 
 
 
