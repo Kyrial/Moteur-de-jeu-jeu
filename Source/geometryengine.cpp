@@ -550,8 +550,22 @@ QVector3D GeometryEngine::mapCoordChanged(QVector3D coordCharacter, QMatrix4x4 o
     return coordCharacter2;
     //   addInstancedGrass(300,QVector3D((centreX)-12,(centreY)-12,0),QVector3D((centreX)+12,(centreY)+12,0) );
 }
+/*
+void GeometryEngine::reajustePlan(int x, int y, VertexData vertices[], float Xmin=-1,float Ymin=-1,float Xmax=1,float Ymax=1, float centreX, float centreY)//, std::string  nameWeightMap = "")
+{
+    vertex.resize(x*y);
+    float intervalX_Texture=2/(float)(x-1);
+    float intervalY_Texture=2/(float)(y-1);
 
-
+    float intervalX=(Xmax-Xmin)/(float)(x-1);
+    float intervalY=(Ymax-Ymin)/(float)(y-1);
+    for(int i=0; i<x; i++){
+        for(int j=0;j<y; j++){
+            vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f ), QVector2D((intervalX_Texture*(i))*2+(centreX/(Xmax-Xmin))*4, (intervalY_Texture*(j))*2+(centreY/(Ymax-Ymin))*4)};
+            vertex[i*y+j] =QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f );
+        }
+    }
+}*/
 void GeometryEngine::subdivisePlan(int x, int y, VertexData vertices[], float Xmin=-1,float Ymin=-1,float Xmax=1,float Ymax=1, float centreX, float centreY)//, std::string  nameWeightMap = "")
 {
     vertex.resize(x*y);
