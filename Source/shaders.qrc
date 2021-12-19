@@ -4,6 +4,7 @@
         <file>Shaders/fshader.glsl</file>
         <file>Shaders/controlshader.glsl</file>
         <file>Shaders/tesselationshader.glsl</file>
+		<file>Shaders/HerbeShader/h_tesselationshader.glsl</file>
 		<file>Shaders/HerbeShader/h_vshader.glsl</file>
         <file>Shaders/HerbeShader/h_fshader.glsl</file>
     </qresource>

@@ -182,14 +182,14 @@ void MainWidget::scene(){
 */
     //Instance INIT GAME OBJECT //soleil2
     GeometryEngine *geo_herbe = new GeometryMeshEngine;
-   // geo_herbe->withNormal = true;
-   // geo_herbe->initMeshObj(":/Mesh/tree.obj");
-  //  geo_herbe->addInstancedGrass(300);
+    geo_herbe->withNormal = true;
+    geo_herbe->initMeshObj(":/Mesh/tree.obj");
+    geo_herbe->addInstancedGrass(300);
     Transform *tHerbe = new Transform;
     tHerbe->setScale(0.05,0.05,0.05);
     tHerbe->setRotation(1,0,0,90);
     Object* herbe= addGameObject(allShaders[1],Terre,tHerbe , geo_herbe,new Transform);
-  //  herbe->instanced=true;
+    herbe->instanced=true;
     herbe->geo->withNormal = true;
 
     //Fin creation
@@ -227,7 +227,7 @@ void MainWidget::scene(){
     geo_mobile->initMesh(":/Mesh/space_station.off");
     Transform *anim_mobile = new Transform;
     anim_mobile->setTranslate(0,0,0);
-    Object* satellite =addGameObject(&program,NoeudSatellite, new Transform ,   geo_mobile, anim_mobile,
+    Object* satellite =addGameObject(allShaders[1],NoeudSatellite, new Transform ,   geo_mobile, anim_mobile,
                                      new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
 
 
@@ -246,7 +246,7 @@ void MainWidget::scene(){
     t_NLune->setTranslate(40,0,35);
     Transform *anim_NLune = new Transform;
     //anim_NLune->setRotation(0,0,-2,5);
-    anim_NLune->setRotation(0,1,0,2);
+    //anim_NLune->setRotation(0,1,0,2);
     Object* noeudLune = addGameObject(&program,NoeudSatellite,t_NLune,new GeometryEngine, anim_NLune);
     noeudLune->setName("noeudLune");
     noeudLune->geo->noCollision = true;
@@ -261,7 +261,7 @@ void MainWidget::scene(){
     t_Lune->setRotation(1,0,0,6.68);
     Transform *anim_Lune = new Transform;
     anim_Lune->setRotation(0,0,1,0.8);
-    Object* Lune = addGameObject(&program,noeudLune,t_Lune , geo_Lune,anim_Lune);
+    Object* Lune = addGameObject(allShaders[1],noeudLune,t_Lune , geo_Lune,anim_Lune);
     Lune->setLumiere();
     Lune->setName("Lune");
     for(int i =0 ;i < allShaders.size(); i++)
@@ -280,7 +280,7 @@ void MainWidget::scene(){
     tbill->setScale(10,10,10);
     tbill->setTranslate(0,0,2);
     Transform *anim_tbill = new Transform;
-    Object* noeudBill = addBillboardObject(&program,satellite,tbill, geo_bill,anim_tbill,new QOpenGLTexture(QImage(":/Texture/lifeBar.png").mirrored()));
+    Object* noeudBill = addBillboardObject(allShaders[1],satellite,tbill, geo_bill,anim_tbill,new QOpenGLTexture(QImage(":/Texture/lifeBar.png").mirrored()));
     //Fin creation
 
 
@@ -422,7 +422,8 @@ void MainWidget::initializeGL()
     glEnable(GL_DEPTH_TEST);
 
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
-    // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
+   //  glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
+     glLineWidth(3);
     // Enable back face culling
     //  glEnable(GL_CULL_FACE);
     //! [2]
@@ -468,6 +469,13 @@ void MainWidget::initShaders()
     // Compile fragment shader
     if (!program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fshader.glsl"))
         close();
+    //compile control shader
+    if (!program.addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/controlshader.glsl"))
+        close();
+    //compile control shader
+    if (!program.addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/tesselationshader.glsl"))
+        close();
+
 
     // Link shader pipeline
     if (!program.link())
@@ -486,6 +494,13 @@ void MainWidget::initShaders()
     // Compile fragment shader
     if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/HerbeShader/h_fshader.glsl"))
         close();
+    //compile control shader
+    if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/controlshader.glsl"))
+        close();
+    //compile control shader
+    if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/HerbeShader/h_tesselationshader.glsl"))
+        close();
+
 
     // Link shader pipeline
     if (!herbeShader->link())

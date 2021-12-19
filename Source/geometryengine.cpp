@@ -256,7 +256,7 @@ bool GeometryEngine::intersect(GeometryEngine *geo){
 
 //matrice avec coefficiant négatif -> inverse le min et le max !
 void GeometryEngine::updateBB(QMatrix4x4 m){
-   // if (noCollision) return;
+    // if (noCollision) return;
     QVector3D tempMin = calcBBMin( m*Min,m*Max);
     QVector3D tempMax = calcBBMax( m*Min,m*Max);
 
@@ -319,51 +319,51 @@ void GeometryEngine::remplaceBB(QVector3D m,QVector3D M){
 
 void GeometryEngine::initBB(VertexData vertices[],int max){
 
-        Min= vertices[0].position;
-        Max= vertices[0].position;
+    Min= vertices[0].position;
+    Max= vertices[0].position;
 
-        for(int i=0;i<max; i++){
-            if(vertices[i].position[0]< Min[0])
-                Min[0]= vertices[i].position[0];
-            if(vertices[i].position[1]< Min[1])
-                Min[1]= vertices[i].position[1];
-            if(vertices[i].position[2]< Min[2])
-                Min[2]= vertices[i].position[2];
+    for(int i=0;i<max; i++){
+        if(vertices[i].position[0]< Min[0])
+            Min[0]= vertices[i].position[0];
+        if(vertices[i].position[1]< Min[1])
+            Min[1]= vertices[i].position[1];
+        if(vertices[i].position[2]< Min[2])
+            Min[2]= vertices[i].position[2];
 
-            if(vertices[i].position[0]> Max[0])
-                Max[0]= vertices[i].position[0];
-            if(vertices[i].position[1]> Max[1])
-                Max[1]= vertices[i].position[1];
-            if(vertices[i].position[2]> Max[2])
-                Max[2]= vertices[i].position[2];
-        }
-        BBMin = Min;
-        BBMax = Max;
+        if(vertices[i].position[0]> Max[0])
+            Max[0]= vertices[i].position[0];
+        if(vertices[i].position[1]> Max[1])
+            Max[1]= vertices[i].position[1];
+        if(vertices[i].position[2]> Max[2])
+            Max[2]= vertices[i].position[2];
     }
+    BBMin = Min;
+    BBMax = Max;
+}
 
 
 void GeometryEngine::initBB(std::vector<QVector3D> vertex){
 
-        Min= this->vertex[0];
-        Max= this->vertex[0];
+    Min= this->vertex[0];
+    Max= this->vertex[0];
 
-        foreach(QVector3D val , vertex){
-            if(val[0]< Min[0])
-                Min[0]= val[0];
-            if(val[1]< Min[1])
-                Min[1]= val[1];
-            if(val[2]< Min[2])
-                Min[2]= val[2];
+    foreach(QVector3D val , vertex){
+        if(val[0]< Min[0])
+            Min[0]= val[0];
+        if(val[1]< Min[1])
+            Min[1]= val[1];
+        if(val[2]< Min[2])
+            Min[2]= val[2];
 
-            if(val[0]> Max[0])
-                Max[0]= val[0];
-            if(val[1]> Max[1])
-                Max[1]= val[1];
-            if(val[2]> Max[2])
-                Max[2]= val[2];
-        }
-        BBMin = Min;
-        BBMax = Max;
+        if(val[0]> Max[0])
+            Max[0]= val[0];
+        if(val[1]> Max[1])
+            Max[1]= val[1];
+        if(val[2]> Max[2])
+            Max[2]= val[2];
+    }
+    BBMin = Min;
+    BBMax = Max;
 
 }
 
@@ -585,7 +585,7 @@ void GeometryEngine::subdivisePlan(int x, int y, VertexData vertices[], float Xm
     }
 }
 
-void GeometryEngine::TriangleForPlan(int x, int y,GLushort indices[])
+void GeometryEngine::TriangleStripForPlan(int x, int y,GLushort indices[])
 {    int count =0;
      for(int i=0; i<x-1; i++){
          for(int j=0;j<y; j++){
@@ -605,8 +605,50 @@ void GeometryEngine::TriangleForPlan(int x, int y,GLushort indices[])
              indices[count++]=(i+1)*y;
          }
      }
-     indices[count]=indices[count-1];
+      indices[count]=indices[count-1];
 }
+void GeometryEngine::TriangleListForPlan(int x, int y,GLushort indices[]){
+    int count =0;
+    for(int i=0; i<x-1; i++){
+        for(int j=0;j<y-1; j++){
+            indices[count++] = i*y+j;
+            indices[count++] = (i+1)*y+j;
+            indices[count++] = (i+1)*(y+1)+j;
+        }
+    }
+    for(int i=0; i<x-1; i++){
+        for(int j=1;j<y; j++){
+            indices[count++] = i*y+j;
+            indices[count++] = (i+1)*(y-1)+j;
+            indices[count++] = (i+1)*y+j;
+
+        }
+    }
+}
+
+void GeometryEngine::convertStripToTriangle(GLushort indicesIn[], GLushort indicesOut[], int size){
+    short a, b, c;
+    unsigned int count =0;
+    for( int i=0; i<size -2; i++ )
+    {
+        if( i%2 == 0 )
+        {
+            a = indicesIn[i+0];
+            b = indicesIn[i+1];
+            c = indicesIn[i+2];
+        }
+        else
+        {
+            a = indicesIn[i+2];
+            b = indicesIn[i+1];
+            c = indicesIn[i+0];
+        }
+        indicesOut[count++]=a;
+        indicesOut[count++]=b;
+        indicesOut[count++]=c;
+    }
+}
+
 
 void GeometryEngine::updatePlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax, float centreX, float centreY){
     int x=precisionX;
@@ -634,11 +676,15 @@ void GeometryEngine::initPlanegeometry(float Xmin,float Ymin,float Xmax,float Ym
     unsigned int vertexNumber = x*y ;
     VertexData vertices[x*y];
     unsigned int indexCount = x*y+y*(x-2)+2*(x-2)+2;
-    GLushort indices[x*y+y*(x-2)+2*(x-2)+2];
+//     unsigned int indexCount = (x*y)*3;
+    GLushort indicesIn[indexCount];
     subdivisePlan(x,  y,  vertices, Xmin, Ymin, Xmax, Ymax, centreX,  centreY);
-    TriangleForPlan(x,  y, indices);
+    TriangleStripForPlan(x,  y, indicesIn);
+  //  TriangleListForPlan(x,  y, indicesIn);
     // qDebug("taille index %i",indexCount);
     //qDebug("taille index tab %i",x*y+y*(x-2)+2*(x-2)+2);
+    GLushort indicesOut[indexCount*3];
+    convertStripToTriangle(indicesIn, indicesOut, indexCount);
 
 
     initBB(vertices, vertexNumber);
@@ -653,7 +699,7 @@ void GeometryEngine::initPlanegeometry(float Xmin,float Ymin,float Xmax,float Ym
     arrayBuf.release();
     // Transfer index data to VBO 1
     indexBuf.bind();
-    indexBuf.allocate(indices,  ((indexCount)* sizeof(GLushort)));
+    indexBuf.allocate(indicesOut,  ((indexCount*3-1)* sizeof(GLushort)));
     //  std::cout << indexBuf.size() << " index count " << indexCount <<"sizeof" <<  sizeof(GLushort) << std::endl;
     indexBuf.release();
     //! [1]
@@ -744,13 +790,23 @@ void GeometryEngine::drawCubeGeometry(QOpenGLShaderProgram *program)
     int size = (int)indexBuf.size();
     // std::cout << indexBuf.size() << " , meow " <<  size << std::endl;
 
-    if(triangle_strip){
-        glDrawElements(GL_TRIANGLE_STRIP, size/2, GL_UNSIGNED_SHORT, 0); //Careful update indicesNumber when creating new geometry
-        //glDrawElements(GL_PATCHES, size/2, GL_UNSIGNED_SHORT, 0);
+    int MaxPatchVertices = 0;
+    glGetIntegerv(GL_MAX_PATCH_VERTICES, &MaxPatchVertices);
+    // printf("Max supported patch vertices %d\n", MaxPatchVertices);
+    glPatchParameteri(GL_PATCH_VERTICES, 3);
+
+
+    if(triangle_strip == 0){
+        //glDrawElements(GL_TRIANGLE_STRIP, size/2, GL_UNSIGNED_SHORT, 0); //Careful update indicesNumber when creating new geometry
+        glDrawElements(GL_PATCHES, size/2, GL_UNSIGNED_SHORT, 0);
         //glDrawArrays( GL_PATCHES, 0, size/2 );
     }
-    else
-        glDrawElements(GL_TRIANGLES, size/2, GL_UNSIGNED_SHORT, 0);
+    if(triangle_strip == 1)
+        //        glDrawElements(GL_TRIANGLES, size/2, GL_UNSIGNED_SHORT, 0);
+        glDrawElements(GL_PATCHES, size/2, GL_UNSIGNED_SHORT, 0);
+    if(triangle_strip == 2)
+        glDrawElements(GL_PATCHES, size/2, GL_UNSIGNED_SHORT, 0);
+
 
     //glDrawElementsInstanced(GL_TRIANGLES, GLsizei count, GLenum type, const void *indices, GLsizei instancecount);
 }

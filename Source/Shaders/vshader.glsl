@@ -123,9 +123,9 @@ float perlin2d(float x, float y , int depth)
 
 
 vec3 getNormal(vec3 pt){
-   vec3 A = vec3(pt.xy,perlin2d(a_position.x,a_position.y  , 8)-.3)*2;
-   vec3 B = vec3(pt.x+0.1,pt.y,perlin2d(a_position.x+0.1,a_position.y  , 8)-.3)*2;
-   vec3 C = vec3(pt.x,pt.y+0.1,perlin2d(a_position.x,a_position.y+0.1  , 8)-.3)*2;
+   vec3 A = vec3(pt.xy,perlin2d(pt.x,pt.y  , 8)-.3)*2;
+   vec3 B = vec3(pt.x+0.1,pt.y,perlin2d(pt.x+0.1,pt.y  , 8)-.3)*2;
+   vec3 C = vec3(pt.x,pt.y+0.1,perlin2d(pt.x,pt.y+0.1  , 8)-.3)*2;
    return normalize(cross(B - A, C - A));
 }
 
@@ -133,7 +133,8 @@ vec3 getNormal(vec3 pt){
 //! [0]
 void main()
 {
-    vec4 color = texture2D(texture, a_texcoord);
+    float hauteurTexture;
+ /*z   vec4 color = texture2D(texture, a_texcoord);
 
     float hauteurMesh = (perlin2d(a_position.x,a_position.y  , 8)-.3)*2;//+a_position.z;//color.x*0.7+a_position.z;
     float hauteurTexture = hauteurMesh;//max(-0.5, min(1.25,color.x*2)-0.25);
@@ -150,22 +151,23 @@ void main()
             v_normal = getNormal(a_position.xyz); // normalize(vec3(gl_NormalMatrix * gl_Normal));
 
 
-        gl_Position = mvp_matrix*camera_matrix* transform_Matrix * vec4(a_position.xy , hauteurMesh,1.);
+        //gl_Position = mvp_matrix*camera_matrix* transform_Matrix * vec4(a_position.xy , hauteurMesh,1.);
 
         FragPos = vec3(transform_Matrix * vec4(a_position.xy,hauteurMesh, 1.0));
         //        gl_Position = mvp_matrix*camera_matrix* transform_Matrix * vec4(a_position.xy, Mandelbrot( sin(a_position.x/10), sin(a_position.y/10))/50,1.);
-        ///**cos(animation/200)*/
+
 
 
     }
-    else{
-        gl_Position = mvp_matrix *camera_matrix* transform_Matrix * a_position;
+    else{*/
+        //gl_Position = mvp_matrix *camera_matrix* transform_Matrix * a_position;
         hauteurTexture = a_position.z;
         v_normal = getNormal(a_position.xyz);// normalize(vec3(gl_NormalMatrix * gl_Normal));
         FragPos = vec3(transform_Matrix * vec4(a_position.xyz, 1.0));
-    }
+    //}
     // Pass texture coordinate to fragment shader
     // Value will be automatically interpolated to fragments inside polygon faces
+
 
     v_texcoord = a_texcoord;
     v_position = vec3(a_position.xy, hauteurTexture);

@@ -54,9 +54,13 @@ bool geometryUI::updateLifeBar(double deltaTime){
 
 
 
-        unsigned int indexCount = 7; //Careful update indicesNumber when creating new geometry
+      /*  unsigned int indexCount = 7; //Careful update indicesNumber when creating new geometry
         GLushort indices[] = {
             0,  1,  2,  3,  4,  5, 5     // Face 0 - triangle strip ( v0,  v1,  v2,  v3)
+        };*/
+        unsigned int indexCount = 12; //Careful update indicesNumber when creating new geometry
+        GLushort indices[] = {
+            0,  1,  2,  1,  2,  3, 2,3,4,3,4,5     // Face 0 - triangle strip ( v0,  v1,  v2,  v3)
         };
 
         arrayBuf.bind();

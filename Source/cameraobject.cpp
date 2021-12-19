@@ -22,7 +22,7 @@ void  CameraObject::updateScene( double deltaTime, QMatrix4x4 m){
     for(int i = 0; i< allShader.size(); i++){
         allShader[i]->bind();
         allShader[i]->setUniformValue("camera_matrix", view);
-        allShader[i]->setAttributeValue("viewPosition",m*camera_position);
+        allShader[i]->setUniformValue("viewPosition",m*camera_position);
     }
     emit viewDirChanged(m*QVector3D(0, 0, 0)-(m*camera_position));
     Object::updateScene(deltaTime, m);

@@ -96,7 +96,7 @@ public:
     void initCubeGeometry();
     void initPlanegeometry(float Xmin=-1,float Ymin=-1,float Xmax=1,float Ymax=1,float centreX =0, float centreY=0);
 
-    bool triangle_strip = true;
+    int triangle_strip = 0; // 0 = triangle_strip // 1 = triangle // 2 = patch
     QVector3D BBMin = QVector3D(0,0,0);
     QVector3D BBMax = QVector3D(0,0,0);
     QVector3D internBBMin = QVector3D(0,0,0);
@@ -108,13 +108,15 @@ protected:
     std::vector<QVector3D>  vertex;
     //void initPlanegeometry();
     void subdivisePlan(int x, int y,  VertexData vertices[],float Xmin,float Ymin,float Xmax,float Ymax,float centreX =0, float centreY=0);//,std::string nameWeightMap );
-    void TriangleForPlan(int x, int y,GLushort indices[]);
+    void TriangleStripForPlan(int x, int y,GLushort indices[]);
+    void TriangleListForPlan(int x, int y,GLushort indices[]);
     void updatePlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax, float centreX =0, float centreY=0);
+    void convertStripToTriangle(GLushort indicesIn[], GLushort indicesOut[], int size);
 
     std::vector<QVector3D> getVertex();
 
-    int precisionX = 255;
-    int precisionY= 255;
+    int precisionX = 100; // attention! une valeur trop haute provoque
+    int precisionY= 100;  // un dépassement de capacité (size > sizemax of array)
 
     QVector3D Min = QVector3D(0,0,0);
     QVector3D Max = QVector3D(0,0,0);

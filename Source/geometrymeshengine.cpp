@@ -89,7 +89,7 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
     // normalBuf.bind();
     // normalBuf.allocate(normals, vertexNumber * sizeof(QVector3D));
 
-    triangle_strip = false;
+    triangle_strip = 2;
 
     //      normalBuf
 }
@@ -137,13 +137,22 @@ void GeometryMeshEngine::drawWithNormal(QOpenGLShaderProgram *program)
     int size = (int)indexBuf.size();
     // std::cout << indexBuf.size() << " , meow " <<  size << std::endl;
 
-    if(triangle_strip){
+    int MaxPatchVertices = 0;
+    glGetIntegerv(GL_MAX_PATCH_VERTICES, &MaxPatchVertices);
+   // printf("Max supported patch vertices %d\n", MaxPatchVertices);
+    glPatchParameteri(GL_PATCH_VERTICES, 3);
+
+
+    if(triangle_strip==0){
         glDrawElements(GL_TRIANGLE_STRIP, size/2, GL_UNSIGNED_SHORT, 0); //Careful update indicesNumber when creating new geometry
         //glDrawElements(GL_PATCHES, size/2, GL_UNSIGNED_SHORT, 0);
         //glDrawArrays( GL_PATCHES, 0, size/2 );
     }
-    else
+    else{  if(triangle_strip == 1)
         glDrawElements(GL_TRIANGLES, size/2, GL_UNSIGNED_SHORT, 0);
+        else
+            glDrawElements(GL_PATCHES, size/2, GL_UNSIGNED_SHORT, 0);
+    }
 
     //glDrawElementsInstanced(GL_TRIANGLES, GLsizei count, GLenum type, const void *indices, GLsizei instancecount);
 }
