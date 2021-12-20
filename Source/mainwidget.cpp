@@ -422,7 +422,7 @@ void MainWidget::initializeGL()
     glEnable(GL_DEPTH_TEST);
 
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
-   //  glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
+    // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
      glLineWidth(3);
     // Enable back face culling
     //  glEnable(GL_CULL_FACE);
@@ -474,6 +474,9 @@ void MainWidget::initShaders()
         close();
     //compile control shader
     if (!program.addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/tesselationshader.glsl"))
+        close();
+    //compile geometry shader
+    if (!program.addShaderFromSourceFile(QOpenGLShader::Geometry, ":/Shaders/geometryshader.glsl"))
         close();
 
 

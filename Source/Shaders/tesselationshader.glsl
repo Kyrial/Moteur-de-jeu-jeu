@@ -18,10 +18,10 @@ in vec2 v_texcoord_ES_in[];
 in vec3 v_normal_ES_in[];
 in vec3 FragPos_ES_in[];
 
-out vec2 v_texcoord;
-out vec3 v_position;
-out vec3 v_normal;
-out vec3 FragPos;
+out vec2 g_texcoord;
+out vec3 g_position;
+out vec3 g_normal;
+out vec3 g_FragPos;
 
 
 
@@ -142,11 +142,11 @@ void main(void)
 {
 
     // Interpolate the attributes of the output vertex using the barycentric coordinates
-    v_texcoord = interpolate2D(v_texcoord_ES_in[0], v_texcoord_ES_in[1], v_texcoord_ES_in[2]);
-    v_normal = interpolate3D(v_normal_ES_in[0], v_normal_ES_in[1], v_normal_ES_in[2]);
-    v_normal = normalize(v_normal);
-    FragPos = interpolate3D(FragPos_ES_in[0], FragPos_ES_in[1], FragPos_ES_in[2]);
-    v_position = interpolate3D(v_position_ES_in[0], v_position_ES_in[1], v_position_ES_in[2]);
+    g_texcoord = interpolate2D(v_texcoord_ES_in[0], v_texcoord_ES_in[1], v_texcoord_ES_in[2]);
+    g_normal = interpolate3D(v_normal_ES_in[0], v_normal_ES_in[1], v_normal_ES_in[2]);
+    g_normal = normalize(g_normal);
+    g_FragPos = interpolate3D(FragPos_ES_in[0], FragPos_ES_in[1], FragPos_ES_in[2]);
+    g_position = interpolate3D(v_position_ES_in[0], v_position_ES_in[1], v_position_ES_in[2]);
 
 
     // Displace the vertex along the normal
@@ -154,21 +154,22 @@ void main(void)
     //v_position += v_normal * Displacement * gDispFactor;
     //FragPos += v_normal*0.1 ;
 
-    float hauteurMesh = (perlin2d(v_position.x,v_position.y  , 8)-.3)*2;
+    float hauteurMesh = (perlin2d(g_position.x,g_position.y  , 8)-.3)*2;
     float hauteurTexture = hauteurMesh;
-    float hauteurEau =-0.1+cos((animation+(v_position.y)*300)/100)/65;
-    if(v_position.z==0){
+    float hauteurEau =-0.1+cos((animation+(g_position.y)*300)/100)/65;
+    if(g_position.z==0){
         if(hauteurMesh<hauteurEau){
             hauteurMesh = hauteurEau;
-            v_normal = vec3(0,0,1);
+            g_normal = vec3(0,0,1);
         }
         else
-            v_normal = getNormal(v_position.xyz);
+            g_normal = getNormal(g_position.xyz);
 
-        FragPos = vec3(transform_Matrix * vec4(v_position.xy,hauteurMesh, 1.0));
+        g_FragPos = vec3(transform_Matrix * vec4(g_position.xy,hauteurMesh, 1.0));
         //gl_Position = mvp_matrix*camera_matrix* transform_Matrix * vec4(v_position.xy , hauteurMesh,1.);
 
     }
-    v_position = vec3(v_position.xy, hauteurTexture);
-    gl_Position = mvp_matrix *camera_matrix  * vec4(FragPos, 1.0);
+    g_position = vec3(g_position.xy, hauteurTexture);
+    gl_Position = mvp_matrix *camera_matrix  * vec4(g_FragPos, 1.0);
+
 }

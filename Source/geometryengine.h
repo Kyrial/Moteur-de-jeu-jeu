@@ -111,7 +111,7 @@ protected:
     void TriangleStripForPlan(int x, int y,GLushort indices[]);
     void TriangleListForPlan(int x, int y,GLushort indices[]);
     void updatePlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax, float centreX =0, float centreY=0);
-    void convertStripToTriangle(GLushort indicesIn[], GLushort indicesOut[], int size);
+    unsigned int convertStripToTriangle(GLushort indicesIn[], GLushort indicesOut[], int size);
 
     std::vector<QVector3D> getVertex();
 

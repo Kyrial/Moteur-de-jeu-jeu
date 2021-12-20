@@ -626,11 +626,12 @@ void GeometryEngine::TriangleListForPlan(int x, int y,GLushort indices[]){
     }
 }
 
-void GeometryEngine::convertStripToTriangle(GLushort indicesIn[], GLushort indicesOut[], int size){
+unsigned int GeometryEngine::convertStripToTriangle(GLushort indicesIn[], GLushort indicesOut[], int size){
     short a, b, c;
-    unsigned int count =0;
+     unsigned int count =0;
     for( int i=0; i<size -2; i++ )
     {
+        if(indicesIn[i+0] != indicesIn[i+1] && indicesIn[i+0] != indicesIn[i+2] && indicesIn[i+1] != indicesIn[i+2]){
         if( i%2 == 0 )
         {
             a = indicesIn[i+0];
@@ -646,7 +647,9 @@ void GeometryEngine::convertStripToTriangle(GLushort indicesIn[], GLushort indic
         indicesOut[count++]=a;
         indicesOut[count++]=b;
         indicesOut[count++]=c;
+        }
     }
+    return count;
 }
 
 
@@ -676,7 +679,7 @@ void GeometryEngine::initPlanegeometry(float Xmin,float Ymin,float Xmax,float Ym
     unsigned int vertexNumber = x*y ;
     VertexData vertices[x*y];
     unsigned int indexCount = x*y+y*(x-2)+2*(x-2)+2;
-//     unsigned int indexCount = (x*y)*3;
+//     unsigned int indexCount = (x*y-1)*3;
     GLushort indicesIn[indexCount];
     subdivisePlan(x,  y,  vertices, Xmin, Ymin, Xmax, Ymax, centreX,  centreY);
     TriangleStripForPlan(x,  y, indicesIn);
@@ -684,7 +687,7 @@ void GeometryEngine::initPlanegeometry(float Xmin,float Ymin,float Xmax,float Ym
     // qDebug("taille index %i",indexCount);
     //qDebug("taille index tab %i",x*y+y*(x-2)+2*(x-2)+2);
     GLushort indicesOut[indexCount*3];
-    convertStripToTriangle(indicesIn, indicesOut, indexCount);
+    indexCount = convertStripToTriangle(indicesIn, indicesOut, indexCount);
 
 
     initBB(vertices, vertexNumber);
@@ -699,7 +702,8 @@ void GeometryEngine::initPlanegeometry(float Xmin,float Ymin,float Xmax,float Ym
     arrayBuf.release();
     // Transfer index data to VBO 1
     indexBuf.bind();
-    indexBuf.allocate(indicesOut,  ((indexCount*3-1)* sizeof(GLushort)));
+//    indexBuf.allocate(indicesOut,  ((indexCount*3-1)* sizeof(GLushort)));
+    indexBuf.allocate(indicesOut,  ((indexCount)* sizeof(GLushort)));
     //  std::cout << indexBuf.size() << " index count " << indexCount <<"sizeof" <<  sizeof(GLushort) << std::endl;
     indexBuf.release();
     //! [1]

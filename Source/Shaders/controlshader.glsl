@@ -17,7 +17,7 @@ out vec3 FragPos_ES_in[];
 float GetTessLevel(float Distance0, float Distance1)
 {
     float AvgDistance = (Distance0 + Distance1) / 2.0;
-
+/*
     if (AvgDistance <= 3) {
         return 32.0;
     }
@@ -30,6 +30,8 @@ float GetTessLevel(float Distance0, float Distance1)
     else {
         return 1.0;
     }
+*/
+    return min(32,(max(1, 16- pow(log(AvgDistance),2)-AvgDistance/3)));
 }
 
 void main(void)
