@@ -542,10 +542,10 @@ QVector3D GeometryEngine::mapCoordChanged(QVector3D coordCharacter, QMatrix4x4 o
     float centreY = floor(coordCharacter2[1]);
     if (lastCentre != QVector2D(centreX,centreY)){
         lastCentre = QVector2D(centreX,centreY);
-        // qDebug("maoww :%f, et coordperso = %f \n ",centreX, centreY );
+         qDebug("maoww :%f, et coordplan = %f \n ",centreX, centreY );
         //qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter1[0], coordCharacter1[1] );
-        qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter2[0], coordCharacter2[1] );
-        updatePlanegeometry((centreX)-11,(centreY)-11,(centreX)+11,(centreY)+11, (centreX), (centreY));
+        //qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter2[0], coordCharacter2[1] );
+        updatePlanegeometry((centreX)-25,(centreY)-25,(centreX)+25,(centreY)+25, (centreX), (centreY));
     }
     return coordCharacter2;
     //   addInstancedGrass(300,QVector3D((centreX)-12,(centreY)-12,0),QVector3D((centreX)+12,(centreY)+12,0) );
@@ -720,13 +720,13 @@ void GeometryEngine::addInstancedGrass(int nb, QVector3D min, QVector3D max){
     float ratioArbre=0.42;
     // float intervalX=( max[0]-min[0])/(float)(nbMaxArbre-1);
     // float intervalY=( max[1]-min[1])/(float)(nbMaxArbre-1);
-    for(float i=min[0]+2.5; i<max[0]-2.5; i+=nbMaxArbre){
-        for(float j=min[1]+2.5;j<max[1]-2.5; j+=nbMaxArbre){
+    for(float i=min[0]+7; i<max[0]-7; i+=nbMaxArbre){
+        for(float j=min[1]+7;j<max[1]-7; j+=nbMaxArbre){
             float hauteurMesh =(perlin2d( i, j , 5)-0.3)*2;
             float arbreChance =(perlin2d( i*2, j*2 , 1));
             if(hauteurMesh>0 && ratioArbre> arbreChance){
                 Transform t;
-                t.setTranslate(i,j,hauteurMesh);
+                t.setTranslate(i,j,hauteurMesh-0.02);
 
                 Transform t_2;
 

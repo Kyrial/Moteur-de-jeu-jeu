@@ -47,6 +47,7 @@ void main(void)
     //float Displacement = texture(gDisplacementMap, v_texcoord.xy).x;
     //v_position += v_normal * Displacement * gDispFactor;
     //FragPos += v_normal*0.1 ;
+
     gl_Position = mvp_matrix *camera_matrix  * vec4(FragPos, 1.0);
     //FragPos = v_position.xyz;
 }

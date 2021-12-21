@@ -1,14 +1,14 @@
 /*
-    QMVC - Reference Implementation of paper: 
+    QMVC - Reference Implementation of paper:
     
-    "Mean Value Coordinates for Quad Cages in 3D", 
+    "Mean Value Coordinates for Quad Cages in 3D",
     jean-Marc Thiery, Pooran Memari and Tamy Boubekeur
     SIGGRAPH Asia 2018
     
-    This program allows to compute QMVC for a set of 3D points contained 
-    in a cage made of quad and triangles, as well as other flavors of 
-    space coordinates for cages (MVC, SMVC, GC, MEC). It comes also with 
-    a 3D viewer which helps deforming a mesh with a cage. 
+    This program allows to compute QMVC for a set of 3D points contained
+    in a cage made of quad and triangles, as well as other flavors of
+    space coordinates for cages (MVC, SMVC, GC, MEC). It comes also with
+    a 3D viewer which helps deforming a mesh with a cage.
     
     Copyright (C) 2018  jean-Marc Thiery, Pooran Memari and Tamy Boubekeur
 
@@ -44,12 +44,12 @@
 #include <QDir>
 #include <stdio.h>  /* defines FILENAME_MAX */
 #ifdef WINDOWS
-    #include <direct.h>
-    #define GetCurrentDir _getcwd
+#include <direct.h>
+#define GetCurrentDir _getcwd
 #else
-    #include <unistd.h>
-    #define GetCurrentDir getcwd
- #endif
+#include <unistd.h>
+#define GetCurrentDir getcwd
+#endif
 
 
 
@@ -86,28 +86,28 @@ template< class point_t , class type_t > bool open( const std::string & filename
                                                     bool convertToTriangles = true,
                                                     bool randomize = false )
 {
-    QString fEmp = QCoreApplication::applicationDirPath()+ QDir::separator() +"sphere.off";
+    QString fEmp = QCoreApplication::applicationDirPath()+ QDir::separator() +filename.c_str();
     std::cout <<"ici         "<< qPrintable(fEmp) <<std::endl;
     char cCurrentPath[FILENAME_MAX];
     if (!GetCurrentDir(cCurrentPath, sizeof(cCurrentPath)))
-         {
-         return errno;
-         }
+    {
+        return errno;
+    }
     cCurrentPath[sizeof(cCurrentPath) - 1] = '\0'; /* not really required */
     qDebug("The current working directory is %s", cCurrentPath);
     std::ifstream myfile;
     std::string path =(cCurrentPath);
-    path = path +"\\debug\\sphere.off";
-  //  std::cout << path <<" testtttt" << std::endl;
-    myfile.open(/*path.c_str());//*/filename.c_str());
-  /*  if (!myfile.is_open())
+
+    //  std::cout << path <<" testtttt" << std::endl;
+  //  myfile.open(/*path.c_str());//*/filename.c_str());
+    /*  if (!myfile.is_open())
     {
         std::cout << filename << " cannot be opened" << std::endl;
         return false;
     }*/
- //   QFile myFile(/*QApplication::applicationDirPath() +*/ filename.c_str());
+    //   QFile myFile(/*QApplication::applicationDirPath() +*/ filename.c_str());
     QFile myFile(filename.c_str());
-  //  QFile myFile(fEmp);
+    //  QFile myFile(fEmp);
 
     if(!myFile.open(QIODevice::ReadOnly))
     {
@@ -125,12 +125,13 @@ template< class point_t , class type_t > bool open( const std::string & filename
     if( magic_s != "OFF" )
     {
         std::cout << qPrintable(magic_s) << " != OFF :   We handle ONLY *.off files." << std::endl;
-        myfile.close();
+        myFile.close();
+        //myfile.close();
         return false;
     }
 
     int n_vertices , n_faces , dummy_int;
-   // myfile >> n_vertices >> n_faces >> dummy_int;
+    // myfile >> n_vertices >> n_faces >> dummy_int;
     in  >> n_vertices >> n_faces >> dummy_int;
     vertices.resize(n_vertices);
 
@@ -141,16 +142,16 @@ template< class point_t , class type_t > bool open( const std::string & filename
         //typename point_t::type_t x , y , z;
 
         point_t ( x , y , z);
-       // myfile >> x >> y >> z;
-         in >> x >> y >> z;
+        // myfile >> x >> y >> z;
+        in >> x >> y >> z;
         if( std::isnan(x) )
             x =(0.0);
-           // x = typename point_t::type_t(0.0);
+        // x = typename point_t::type_t(0.0);
         if( std::isnan(y) )
-           // y = typename point_t::type_t(0.0);
-             y =(0.0);
+            // y = typename point_t::type_t(0.0);
+            y =(0.0);
         if( std::isnan(z) )
-        //    z = typename point_t::type_t(0.0);
+            //    z = typename point_t::type_t(0.0);
             z =(0.0);
         vertices[v] = point_t( x , y , z );
     }
@@ -160,13 +161,13 @@ template< class point_t , class type_t > bool open( const std::string & filename
     {
         int n_vertices_on_face;
         in >> n_vertices_on_face;
-       // myfile >> n_vertices_on_face;
+        // myfile >> n_vertices_on_face;
         if( n_vertices_on_face == 3 )
         {
             //type_t _v1 , _v2 , _v3;
             unsigned int v1 , v2 ,v3;
             std::vector< unsigned int > _v;
-           // myfile >> v1 >> v2 >> v3;
+            // myfile >> v1 >> v2 >> v3;
             in >> v1 >> v2 >> v3;
             _v.push_back( v1 );
             _v.push_back( v2 );
@@ -179,7 +180,7 @@ template< class point_t , class type_t > bool open( const std::string & filename
             vhandles.resize(n_vertices_on_face);
             for( int i=0 ; i < n_vertices_on_face ; ++i )
                 in >> vhandles[i];
-   //             myfile >> vhandles[i];
+            //             myfile >> vhandles[i];
 
             if( convertToTriangles )
             {
@@ -201,13 +202,13 @@ template< class point_t , class type_t > bool open( const std::string & filename
         else
         {
             std::cout << "OFFIO::open error : Face number " << f << " has " << n_vertices_on_face << " vertices" << std::endl;
-            myfile.close();
+            //myfile.close();
             myFile.close();
             return false;
         }
     }
-
-    myfile.close();
+    myFile.close();
+    // myfile.close();
     return true;
 }
 
@@ -309,8 +310,8 @@ template< class point_t > bool open( const std::string & filename , std::vector<
 
         BB = max( BB , point_t( x , y , z ) );
         bb = min( bb , point_t( x , y , z ) );
-     //   bb = point_t::min( bb , point_t( x , y , z ) );
-    //    BB = point_t::max( BB , point_t( x , y , z ) );
+        //   bb = point_t::min( bb , point_t( x , y , z ) );
+        //    BB = point_t::max( BB , point_t( x , y , z ) );
     }
 
     myfile.close();
@@ -341,7 +342,7 @@ template< class point_t , class int_type_t > bool open(
         bool convertEdgesToDegenerateTriangles = true)
 {
 
-     QFile myFile(filename.c_str());
+    QFile myFile(filename.c_str());
 
 
     //std::ifstream myfile;

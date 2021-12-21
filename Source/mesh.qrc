@@ -6,6 +6,7 @@
         <file>Mesh/house.off</file>
         <file>Mesh/space_station.off</file>
         <file>Mesh/grass.obj</file>
-		<file>Mesh/tree.obj</file>
+        <file>Mesh/tree.obj</file>
+        <file>Mesh/sphere2.obj</file>
     </qresource>
 </RCC>

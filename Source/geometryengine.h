@@ -81,12 +81,12 @@ public:
 
 
     virtual void drawCubeGeometry(QOpenGLShaderProgram *program);
-    virtual void initMesh(std::string filename, bool a= true){}
-    virtual void initMeshObj(std::string filename,bool a= true){}
-    virtual void bindMesh(std::vector< std::vector<unsigned int> >  faces){}
+    virtual void initMesh(std::string filename, bool a= true,bool centre= false, bool inverse = false){}
+    virtual void initMeshObj(std::string filename,bool a= true,bool centre= false, bool inverse = false){}
+    virtual void bindMesh(std::vector< std::vector<unsigned int> >  faces,bool centre= false, bool inverse = false){}
     virtual void initLifeBar(){}
     virtual bool updateLifeBar(double deltaTime){}
-
+    virtual QVector3D setNormalToCentreCircle(QVector3D vec, QVector3D centre, bool inverse){};
     QOpenGLBuffer arrayBuf;
     QOpenGLBuffer indexBuf;
 
@@ -115,8 +115,8 @@ protected:
 
     std::vector<QVector3D> getVertex();
 
-    int precisionX = 100; // attention! une valeur trop haute provoque
-    int precisionY= 100;  // un dépassement de capacité (size > sizemax of array)
+    int precisionX = 101; // attention! une valeur trop haute provoque
+    int precisionY= 101;  // un dépassement de capacité (size > sizemax of array)
 
     QVector3D Min = QVector3D(0,0,0);
     QVector3D Max = QVector3D(0,0,0);

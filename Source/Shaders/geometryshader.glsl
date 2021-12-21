@@ -1,6 +1,6 @@
 #version 410
 layout (triangles) in;
-layout (triangle_strip, max_vertices = 6) out;
+layout (triangle_strip, max_vertices = 9) out;
 
 uniform float animation = 1;
 
@@ -52,11 +52,19 @@ void generatePoint(vec4 v)
     v_position =g_position[0] ;// vec3(g_position[0].xy,1);
     v_normal = g_normal[0];
     FragPos = g_FragPos[0];
-    if(g_position[0].z >-0.04 && 0.03- g_position[0].z/10>0 ){
-        gl_Position =  mvp_matrix *camera_matrix* transform_Matrix*(vec4( v_position.xyz,1.)+vec4(0.,cos((animation+(g_position[0].y)*300)/200)/75,0.04-(g_position[0].z/11),0.));
+    if(g_position[0].z >-0.04 && 0.029- g_position[0].z/10>0 ){
+   /*     gl_Position =  mvp_matrix *camera_matrix* transform_Matrix*(vec4( v_position.xyz,1.));
+        EmitVertex();
+        gl_Position =  mvp_matrix *camera_matrix* transform_Matrix*(vec4( v_position.xyz,1.));
+        EmitVertex();*/
+        gl_Position =  mvp_matrix *camera_matrix* transform_Matrix*(vec4( v_position.xyz,1.)+vec4(0.,cos((animation+(g_position[0].y)*300)/200)/75,0.035-(g_position[0].z/11),0.));
         EmitVertex();
         gl_Position =  mvp_matrix *camera_matrix* transform_Matrix*(vec4( v_position.xyz,1.)+vec4(0.,cos(0.5+(animation+(g_position[0].y)*300)/200)/60,0.05-(g_position[0].z/11),0.));
         EmitVertex();
+     /*   gl_Position =  mvp_matrix *camera_matrix* transform_Matrix*(vec4( v_position.xyz,1.)+vec4(cos(0.5+(animation+(g_position[0].y)*300)/200)/100,0.0,0.04-(g_position[0].z/11),0.));
+        EmitVertex();
+        gl_Position = gl_in[2].gl_Position;
+        EmitVertex();*/
     }
     v_position = vec3(g_position[0].xy,0.01);
 

@@ -6,22 +6,25 @@ GeometryMeshEngine::GeometryMeshEngine()
 }
 
 
-void GeometryMeshEngine::initMeshObj(std::string filename, bool collisionActivated){
+void GeometryMeshEngine::initMeshObj(std::string filename, bool collisionActivated, bool centre, bool inverse){
 
     std::vector< std::vector<unsigned int> >  faces;
 
     OBJIO::open(filename, vertex, faces, true);
-    bindMesh(faces,collisionActivated);
+    bindMesh(faces,collisionActivated, centre, inverse);
 }
 
-void GeometryMeshEngine::initMesh(std::string filename,  bool collisionActivated ){
+void GeometryMeshEngine::initMesh(std::string filename,  bool collisionActivated, bool centre, bool inverse ){
 
     std::vector< std::vector<unsigned int> >  faces;
 
     OFFIO::open(filename, vertex, faces, true);
-    bindMesh(faces,collisionActivated);
+   // qDebug("avant");
+    bindMesh(faces,collisionActivated,  centre, inverse);
+   // qDebug("après");
 }
-void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  faces, bool collisionActivated){
+void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  faces, bool collisionActivated, bool centre, bool inverse){
+//qDebug("0.0");
     unsigned int vertexNumber = vertex.size();
     VertexDataWithNormal vertices[vertexNumber];
     VertexData vertices2[vertexNumber];
@@ -32,35 +35,37 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
     //normalBuf
     //int face=0;
     QVector3D normal;
+//qDebug("0.5");
 
+    if(centre)
+        for(int i=0; i<vertexNumber;i++)
+            normals[i]=setNormalToCentreCircle(vertex[i], QVector3D(0,0,0), inverse);
+    qDebug("1");
     for(int i=0; i<indexCount;i+=3) {
         indices[i]= faces[i/3][0];
         indices[i+1]= faces[i/3][1];
         indices[i+2]= faces[i/3][2];
+        if(!centre){
+            normal = QVector3D::normal(vertex[faces[i/3][0]],vertex[faces[i/3][1]],vertex[faces[i/3][2]]);
 
-        normal = QVector3D::normal(vertex[faces[i/3][0]],vertex[faces[i/3][1]],vertex[faces[i/3][2]]);
-        for(int k = 0; k<3;k++){
-        if(normals[faces[i/3][k]] != QVector3D())
-            normals[faces[i/3][k]]= (normals[faces[i/3][k]]+normal);
-        else
-        normals[faces[i/3][k]]= normal;
-}
-//.normalized()
+            for(int k = 0; k<3;k++){
+
+                if(normals[faces[i/3][k]] != QVector3D())
+                    normals[faces[i/3][k]]= (normals[faces[i/3][k]]+normal);
+                else
+                    normals[faces[i/3][k]]= normal;
+
+            }
+        }
+        //.normalized()
     }
+  //  qDebug("2");
 
-   /* for(int i =0; i< indexCount;i++){
+    /* for(int i =0; i< indexCount;i++){
         normals[i] = normals[i].normalized();
     }*/
 
     for(int i=0; i<vertexNumber;i++) {
-        /*if(face ==0){
-            normal = QVector3D::normal(vertex[i],vertex[i+1],vertex[i+2]);
-            //normal = QVector3D(0,0,1);
-            face =3;
-        }
-        else
-            face--;*/
-        //vertices[i]= {vertex[i], QVector2D(i/(float)vertexNumber, i/(float)vertexNumber)};
         vertices[i]= {vertex[i], QVector2D((vertex[i][0]+vertex[i][2])/3, (vertex[i][1]))/3,normals[i].normalized()};
         vertices2[i]= {vertex[i], QVector2D(vertex[i][0]+vertex[i][1], vertex[i][0]+vertex[i][2])};
     }
@@ -72,10 +77,12 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
     if(collisionActivated)
         initBB(vertex);
     else{
-        QVector3D Min = QVector3D(0,0,0);
-        QVector3D Max = QVector3D(0,0,0);
+        Min = QVector3D(0,0,0);
+        Max = QVector3D(0,0,0);
         noCollision = true;
     }
+   // qDebug("3");
+
     // Transfer vertex data to VBO 0
     arrayBuf.bind();
     if (withNormal)
@@ -139,7 +146,7 @@ void GeometryMeshEngine::drawWithNormal(QOpenGLShaderProgram *program)
 
     int MaxPatchVertices = 0;
     glGetIntegerv(GL_MAX_PATCH_VERTICES, &MaxPatchVertices);
-   // printf("Max supported patch vertices %d\n", MaxPatchVertices);
+    // printf("Max supported patch vertices %d\n", MaxPatchVertices);
     glPatchParameteri(GL_PATCH_VERTICES, 3);
 
 
@@ -149,10 +156,15 @@ void GeometryMeshEngine::drawWithNormal(QOpenGLShaderProgram *program)
         //glDrawArrays( GL_PATCHES, 0, size/2 );
     }
     else{  if(triangle_strip == 1)
-        glDrawElements(GL_TRIANGLES, size/2, GL_UNSIGNED_SHORT, 0);
+            glDrawElements(GL_TRIANGLES, size/2, GL_UNSIGNED_SHORT, 0);
         else
             glDrawElements(GL_PATCHES, size/2, GL_UNSIGNED_SHORT, 0);
     }
 
     //glDrawElementsInstanced(GL_TRIANGLES, GLsizei count, GLenum type, const void *indices, GLsizei instancecount);
+}
+QVector3D GeometryMeshEngine::setNormalToCentreCircle(QVector3D vec, QVector3D centre, bool inverse){
+    if(!inverse)
+        return   vec - centre;
+    else return  centre - vec;
 }

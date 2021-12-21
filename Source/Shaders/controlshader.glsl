@@ -31,7 +31,9 @@ float GetTessLevel(float Distance0, float Distance1)
         return 1.0;
     }
 */
-    return min(32,(max(1, 16- pow(log(AvgDistance),2)-AvgDistance/3)));
+    //return min(32,(max(1, 16- pow(log(AvgDistance),2)-AvgDistance/3)));
+    return min(32,(max(1, 16- sqrt(AvgDistance*7))));
+
 }
 
 void main(void)

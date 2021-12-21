@@ -16,6 +16,8 @@ in vec3 v_position;
 in vec3 v_normal;
 in vec3 FragPos;
 
+out vec4 FragColor;
+
 //! [0]
 
 float max(float a, float b){
@@ -54,7 +56,7 @@ vec4 getLumiere(vec3 fragPosition, float specularStrength=1.,float minDiffusion=
     vec3 reflectDir = reflect(-lightDir, v_normal);
     float spec = pow(max(dot(viewDir, reflectDir), 0.0), 256);
     //   float spec = pow(max(dot(viewDir, halfwayDir), 0.0), 256);
-    vec3 specular = specularStrength * spec * vec3(1,1,1);
+    vec3 specular =  specularStrength * spec * vec3(1,1,1);
 
     return vec4(diffuse.xyz + specular.xyz,1);
 }
@@ -83,13 +85,17 @@ vec4  calculTexture(float position,vec2 texcoord ){
 void main()
 {
     if(textureSample==false){
-        gl_FragColor =getLumiere( FragPos.xyz)*calculTexture(v_position.y+(abs(v_position.x)+abs(v_position.z)),v_texcoord);
+        FragColor =getLumiere( FragPos.xyz)*calculTexture(v_position.y+(abs(v_position.x)+abs(v_position.z)),v_texcoord);
        // gl_FragColor =calculTexture(v_position.y,v_texcoord);
 
 
     }
     else{
-        gl_FragColor = getLumiere( FragPos.xyz)*texture2D(textureScene, v_texcoord) ;
+        vec4 color = getLumiere( FragPos.xyz)*texture2D(textureScene, v_texcoord);
+        color.a = 1;
+        //discard
+        FragColor = color ;
+
     }
 
 

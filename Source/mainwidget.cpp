@@ -140,7 +140,7 @@ void MainWidget::scene(){
 
     //Instance INIT GAME OBJECT //Terre
     GeometryEngine *geo_Terre = new GeometryEngine;
-    geo_Terre->initPlanegeometry(-11,-11,11,11);
+    geo_Terre->initPlanegeometry(-25,-25,25,25);
     // geo_Terre->initMesh(":/Mesh/sphere.off");
     Transform *t_Terre = new Transform;
     //t_Terre->setRotation(-1,0,0,23.44);
@@ -190,7 +190,7 @@ void MainWidget::scene(){
     tHerbe->setRotation(1,0,0,90);
     Object* herbe= addGameObject(allShaders[1],Terre,tHerbe , geo_herbe,new Transform);
     herbe->instanced=true;
-    herbe->geo->withNormal = true;
+
 
     //Fin creation
     ////////////
@@ -224,6 +224,7 @@ void MainWidget::scene(){
 
     //geo_Soleil->initCubeGeometry();
     GeometryEngine *geo_mobile = new GeometryMeshEngine;
+    geo_mobile->withNormal = true;
     geo_mobile->initMesh(":/Mesh/space_station.off");
     Transform *anim_mobile = new Transform;
     anim_mobile->setTranslate(0,0,0);
@@ -245,7 +246,7 @@ void MainWidget::scene(){
     t_NLune->setScale(15.3,15.3,15.3);
     t_NLune->setTranslate(40,0,35);
     Transform *anim_NLune = new Transform;
-    //anim_NLune->setRotation(0,0,-2,5);
+    anim_NLune->setRotation(0,0,-2,2);
     //anim_NLune->setRotation(0,1,0,2);
     Object* noeudLune = addGameObject(&program,NoeudSatellite,t_NLune,new GeometryEngine, anim_NLune);
     noeudLune->setName("noeudLune");
@@ -254,23 +255,42 @@ void MainWidget::scene(){
     //Instance INIT GAME OBJECT //lune
     GeometryEngine *geo_Lune = new GeometryMeshEngine;
     //geo_Lune->initCubeGeometry();
-   geo_Lune->initMesh(":/Mesh/sphere.off", false);
+    geo_Lune->withNormal = true;
+   geo_Lune->initMesh(":/Mesh/sphere.off", false, true, true);
     // geo_Lune->initMesh(":Mesh/space_station.off");
     Transform *t_Lune = new Transform;
     t_Lune->setScale(2,2,2);
     t_Lune->setRotation(1,0,0,6.68);
     Transform *anim_Lune = new Transform;
     anim_Lune->setRotation(0,0,1,0.8);
-    Object* Lune = addGameObject(allShaders[1],noeudLune,t_Lune , geo_Lune,anim_Lune);
+    Object* Lune = addGameObject(allShaders[1],noeudLune,t_Lune , geo_Lune,anim_Lune,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
     Lune->setLumiere();
     Lune->setName("Lune");
     for(int i =0 ;i < allShaders.size(); i++)
         Lune->addShader(allShaders[i]);
     //Fin creation
     ////////////
-
-
-
+ // qDebug("test");
+    //Instance INIT GAME OBJECT //lune
+    GeometryEngine *geo_ciel = new GeometryMeshEngine;
+    //geo_Lune->initCubeGeometry();
+    geo_ciel->withNormal = true;
+   geo_ciel->initMesh(":/Mesh/sphere.off", false,true,false);
+   //qDebug("test");
+    // geo_Lune->initMesh(":Mesh/space_station.off");
+    Transform *t_Ciel = new Transform;
+    t_Ciel->setScale(1600,1600,1600);
+    t_Ciel->setRotation(1,0,0,90);
+    Transform *anim_Ciel = new Transform;
+   // anim_Ciel->setRotation(0,0,1,0.8);
+    Object* Ciel = addGameObject(allShaders[1],NoeudSatellite,t_Ciel , geo_ciel,anim_Ciel,new QOpenGLTexture(QImage(":/Texture/Textureciel1.jpg").mirrored()));
+   // Lune->setLumiere();
+    Lune->setName("Ciel");
+   /* for(int i =0 ;i < allShaders.size(); i++)
+        Lune->addShader(allShaders[i]);*/
+    //Fin creation
+    ////////////
+   // qDebug("test");
 
     //Instance INIT GAME OBJECT // BILLBOARD
     GeometryEngine *geo_bill = new geometryUI;
@@ -425,10 +445,12 @@ void MainWidget::initializeGL()
     // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
      glLineWidth(3);
     // Enable back face culling
-    //  glEnable(GL_CULL_FACE);
+//      glEnable(GL_CULL_FACE);
+      glDisable(GL_CULL_FACE);
     //! [2]
-
-
+    glEnable(GL_BLEND);
+    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
 
 
@@ -568,7 +590,7 @@ void MainWidget::resizeGL(int w, int h)
     qreal aspect = qreal(w) / qreal(h ? h : 1);
 
     // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
-    const qreal zNear = 0.05, zFar = 80.0, fov = 45.0;
+    const qreal zNear = 0.05, zFar = 85.0, fov = 45.0;
 
     // Reset projection
     projection.setToIdentity();
