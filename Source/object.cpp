@@ -107,17 +107,20 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
             bool collision = true;
             QVector3D mesh = QVector3D();
             QVector3D hauteur = geo->findCoordmesh( obj->geo,  t, this->getTransf(),collision, mesh);
-            hauteur.setZ(hauteur.z()+0.01);
+            hauteur.setZ(hauteur.z()+hauteur.z()/20);
             if(collision){
                 obj->canJump=true;
-                qDebug("COOOOOOOOOLLLLLLLLLLLIIIIIIIIIIIIISSSSSSSIIIIIIIIIIIOOOOOOOOONNNNNNNNNN");
+               // qDebug("COOOOOOOOOLLLLLLLLLLLIIIIIIIIIIIIISSSSSSSIIIIIIIIIIIOOOOOOOOONNNNNNNNNN");
                 obj->t.addTranslate(hauteur);
                 QVector3D direction =Transform::extracteTranslate(anim);
                 //  qDebug("  %f,   %f    %f   \n ", mesh.x(), mesh.y(),(mesh.z()));
 
+                qDebug("Direction Collision %f, %f, %f",direction.x(), direction.y(), direction.z() );
 
                 direction = (this->geo->gestionCollision(obj->geo, direction, mesh))*0.7;
-                //direction = Transform::convergeZero(direction);
+
+                qDebug("Direction Collision %f, %f, %f \n",direction.x(), direction.y(), direction.z() );
+                direction = Transform::convergeZero(direction);
                 obj->animation.setTranslate(direction);
                 //obj->animation.setTranslate(QVector3D(0,0,0));
 

@@ -140,6 +140,7 @@ void MainWidget::scene(){
 
     //Instance INIT GAME OBJECT //Terre
     GeometryEngine *geo_Terre = new GeometryEngine;
+    geo_Terre->setPrecisionTexture(10);
     geo_Terre->initPlanegeometry(-25,-25,25,25);
     // geo_Terre->initMesh(":/Mesh/sphere.off");
     Transform *t_Terre = new Transform;
@@ -183,6 +184,7 @@ void MainWidget::scene(){
     //Instance INIT GAME OBJECT //soleil2
     GeometryEngine *geo_herbe = new GeometryMeshEngine;
     geo_herbe->withNormal = true;
+    geo_herbe->setPrecisionTexture(0.20);
     geo_herbe->initMeshObj(":/Mesh/tree.obj");
     geo_herbe->addInstancedGrass(300);
     Transform *tHerbe = new Transform;
@@ -225,11 +227,12 @@ void MainWidget::scene(){
     //geo_Soleil->initCubeGeometry();
     GeometryEngine *geo_mobile = new GeometryMeshEngine;
     geo_mobile->withNormal = true;
+    geo_mobile->setPrecisionTexture(0.5);
     geo_mobile->initMesh(":/Mesh/space_station.off");
     Transform *anim_mobile = new Transform;
     anim_mobile->setTranslate(0,0,0);
     Object* satellite =addGameObject(allShaders[1],NoeudSatellite, new Transform ,   geo_mobile, anim_mobile,
-                                     new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
+            new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
 
 
     Object *cameraObj= new CameraObject();
@@ -242,7 +245,7 @@ void MainWidget::scene(){
 
     //Instance INIT GAME OBJECT // NOEUD LUNE
     Transform *t_NLune = new Transform;
-//    t_NLune->setScale(0.3,0.3,0.3);
+    //    t_NLune->setScale(0.3,0.3,0.3);
     t_NLune->setScale(15.3,15.3,15.3);
     t_NLune->setTranslate(40,0,35);
     Transform *anim_NLune = new Transform;
@@ -254,9 +257,10 @@ void MainWidget::scene(){
     //Fin creation
     //Instance INIT GAME OBJECT //lune
     GeometryEngine *geo_Lune = new GeometryMeshEngine;
+    geo_Lune->setPrecisionTexture(0.5);
     //geo_Lune->initCubeGeometry();
     geo_Lune->withNormal = true;
-   geo_Lune->initMesh(":/Mesh/sphere.off", false, true, true);
+    geo_Lune->initMesh(":/Mesh/sphere.off", false, true, true);
     // geo_Lune->initMesh(":Mesh/space_station.off");
     Transform *t_Lune = new Transform;
     t_Lune->setScale(2,2,2);
@@ -270,31 +274,32 @@ void MainWidget::scene(){
         Lune->addShader(allShaders[i]);
     //Fin creation
     ////////////
- // qDebug("test");
+    // qDebug("test");
     //Instance INIT GAME OBJECT //lune
     GeometryEngine *geo_ciel = new GeometryMeshEngine;
     //geo_Lune->initCubeGeometry();
+    geo_ciel->setPrecisionTexture(0.20);
     geo_ciel->withNormal = true;
-   geo_ciel->initMesh(":/Mesh/sphere.off", false,true,false);
-   //qDebug("test");
+    geo_ciel->initMesh(":/Mesh/sphere.off", false,true,false);
+    //qDebug("test");
     // geo_Lune->initMesh(":Mesh/space_station.off");
     Transform *t_Ciel = new Transform;
-    t_Ciel->setScale(1600,1600,1600);
+    t_Ciel->setScale(3010,3010,3010);
     t_Ciel->setRotation(1,0,0,90);
     Transform *anim_Ciel = new Transform;
-   // anim_Ciel->setRotation(0,0,1,0.8);
+    // anim_Ciel->setRotation(0,0,1,0.8);
     Object* Ciel = addGameObject(allShaders[1],NoeudSatellite,t_Ciel , geo_ciel,anim_Ciel,new QOpenGLTexture(QImage(":/Texture/Textureciel1.jpg").mirrored()));
-   // Lune->setLumiere();
+    // Lune->setLumiere();
     Lune->setName("Ciel");
-   /* for(int i =0 ;i < allShaders.size(); i++)
+    /* for(int i =0 ;i < allShaders.size(); i++)
         Lune->addShader(allShaders[i]);*/
     //Fin creation
     ////////////
-   // qDebug("test");
+    // qDebug("test");
 
     //Instance INIT GAME OBJECT // BILLBOARD
     GeometryEngine *geo_bill = new geometryUI;
-  // geo_bill->initMesh(":/Mesh/sphere.off", false);
+    // geo_bill->initMesh(":/Mesh/sphere.off", false);
     geo_bill->initLifeBar();
     Transform *tbill = new Transform;
     tbill->setScale(10,10,10);
@@ -303,7 +308,20 @@ void MainWidget::scene(){
     Object* noeudBill = addBillboardObject(allShaders[1],satellite,tbill, geo_bill,anim_tbill,new QOpenGLTexture(QImage(":/Texture/lifeBar.png").mirrored()));
     //Fin creation
 
+    //Instance INIT GAME OBJECT //Terre
+    GeometryEngine *geo_nuage = new GeometryEngine;
 
+
+    geo_nuage->initCurvedPlanegeometry(-35,-35,35,35, true);
+    // geo_Terre->initMesh(":/Mesh/sphere.off");
+    Transform *t_nuage = new Transform;
+    t_nuage->setScale(300,300,300);
+    t_nuage->setTranslate(0,0,0.8);
+    Transform *anim_nuage = new Transform;
+    //anim_Terre->setRotation(0,0,1,1);
+    Object* nuage = addGameObject(allShaders[2],NoeudSatellite,t_nuage , geo_nuage,anim_nuage);
+    Terre->setName("nuage");
+    //Fin creation
 
 
 
@@ -443,14 +461,14 @@ void MainWidget::initializeGL()
 
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
     // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
-     glLineWidth(3);
+    glLineWidth(3);
     // Enable back face culling
-//      glEnable(GL_CULL_FACE);
-      glDisable(GL_CULL_FACE);
+    //      glEnable(GL_CULL_FACE);
+    glDisable(GL_CULL_FACE);
     //! [2]
     glEnable(GL_BLEND);
-    //glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
-    glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
+    //glBlendFunc(GL_ONE, GL_ONE_MINUS_SRC_ALPHA);
 
 
 
@@ -519,6 +537,10 @@ void MainWidget::initShaders()
     // Compile fragment shader
     if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/HerbeShader/h_fshader.glsl"))
         close();
+    /*    // Compile fragment shader
+    if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/HerbeShader/cloud_fshader.glsl"))
+        close();*/
+
     //compile control shader
     if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/controlshader.glsl"))
         close();
@@ -530,7 +552,33 @@ void MainWidget::initShaders()
     // Link shader pipeline
     if (!herbeShader->link())
         close();
+
     allShaders.push_back(herbeShader);
+
+
+
+    // Compile vertex shader QOpenGLShaderProgram
+    QOpenGLShaderProgram *cloudShader = new QOpenGLShaderProgram;
+    if(!cloudShader->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/HerbeShader/h_vshader.glsl"))
+        close();
+
+    // Compile fragment shader
+    if (!cloudShader->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/CloudShader/cloud_fshader.glsl"))
+     //     if(!cloudShader->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/HerbeShader/h_fshader.glsl"))
+        close();
+    //compile control shader
+    if (!cloudShader->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/controlshader.glsl"))
+        close();
+    //compile control shader
+    if (!cloudShader->addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/HerbeShader/h_tesselationshader.glsl"))
+        close();
+
+
+    // Link shader pipeline
+    if (!cloudShader->link())
+        close();
+
+    allShaders.push_back(cloudShader);
 
 
 
@@ -590,7 +638,7 @@ void MainWidget::resizeGL(int w, int h)
     qreal aspect = qreal(w) / qreal(h ? h : 1);
 
     // Set near plane to 3.0, far plane to 7.0, field of view 45 degrees
-    const qreal zNear = 0.05, zFar = 85.0, fov = 45.0;
+    const qreal zNear = 0.05, zFar = 150.0, fov = 45.0;
 
     // Reset projection
     projection.setToIdentity();
@@ -608,7 +656,7 @@ void MainWidget::paintGL()
     // Clear color and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-   /* QPainter painter(this);
+    /* QPainter painter(this);
     QLinearGradient gradient(QPointF(50, -20), QPointF(80, 20));
     gradient.setColorAt(0.0, Qt::white);
     gradient.setColorAt(1.0, QColor(0xa6, 0xce, 0x39));
@@ -651,8 +699,12 @@ void MainWidget::paintGL()
         allShaders[i]->setUniformValue("animation", (float)absoluteTime.elapsed());
 
     }
+    allShaders[1]->bind();
     allShaders[1]->setUniformValue("textureFeuille", 1); //changer texture
     allShaders[1]->setUniformValue("textureBois", 5);
+    allShaders[2]->bind();
+    allShaders[2]->setUniformValue("textureFeuille", 1); //changer texture
+    allShaders[2]->setUniformValue("textureBois", 5);
 
     // program.setUniformValue("mvp_matrix",  matrix * view * projection);
     //! [6]
@@ -683,7 +735,7 @@ void MainWidget::paintGL()
     //gameObj->updateBB();
     QToolTip::showText(QPoint(50,50), "meow",this);
 
-  /*  //Opengl api
+    /*  //Opengl api
     painter.endNativePainting();
     painter.end();*/
 

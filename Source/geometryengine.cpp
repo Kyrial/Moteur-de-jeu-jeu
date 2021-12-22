@@ -160,6 +160,10 @@ GeometryEngine::~GeometryEngine()
 }
 //! [0]
 
+void GeometryEngine::setPrecisionTexture(float val)
+{
+    precisionTexture = val;
+}
 
 
 std::vector<QVector3D> GeometryEngine::getVertex(){
@@ -543,8 +547,7 @@ QVector3D GeometryEngine::mapCoordChanged(QVector3D coordCharacter, QMatrix4x4 o
     if (lastCentre != QVector2D(centreX,centreY)){
         lastCentre = QVector2D(centreX,centreY);
          qDebug("maoww :%f, et coordplan = %f \n ",centreX, centreY );
-        //qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter1[0], coordCharacter1[1] );
-        //qDebug("maoww :%f, et coordperso = %f \n ",coordCharacter2[0], coordCharacter2[1] );
+
         updatePlanegeometry((centreX)-25,(centreY)-25,(centreX)+25,(centreY)+25, (centreX), (centreY));
     }
     return coordCharacter2;
@@ -579,8 +582,26 @@ void GeometryEngine::subdivisePlan(int x, int y, VertexData vertices[], float Xm
             //   qDebug("%f %f",Xmin+intervalX*i, Ymin+intervalY*j);
             //  vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j, static_cast<float> (rand()) / static_cast<float> (RAND_MAX) ), QVector2D((intervalX_Texture*i)/2, (intervalY_Texture*j)/2)};
             //            vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f ), QVector2D((intervalX_Texture*(i))*2+centreX*((Xmax-Xmin)/(float)(x-1))*2, (intervalY_Texture*(j))*2+centreY*((Ymax-Ymin)/(float)(y-1))*2)};
-            vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f ), QVector2D((intervalX_Texture*(i))*2+(centreX/(Xmax-Xmin))*4, (intervalY_Texture*(j))*2+(centreY/(Ymax-Ymin))*4)};
+            vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f ), QVector2D((intervalX_Texture*(i))*precisionTexture+(centreX/(Xmax-Xmin))*precisionTexture*2, (intervalY_Texture*(j))*precisionTexture+(centreY/(Ymax-Ymin))*precisionTexture*2)};
             vertex[i*y+j] =QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f );
+        }
+    }
+}
+void GeometryEngine::subdiviseCurvedPlan(int x, int y, VertexData vertices[], float Xmin,float Ymin,float Xmax,float Ymax)//, std::string  nameWeightMap = "")
+{
+    vertex.resize(x*y);
+    float intervalX_Texture=2/(float)(x-1);
+    float intervalY_Texture=2/(float)(y-1);
+
+    float intervalX=(Xmax-Xmin)/(float)(x-1);
+    float intervalY=(Ymax-Ymin)/(float)(y-1);
+    for(int i=0; i<x; i++){
+        for(int j=0;j<y; j++){
+           // float dist = (abs(Xmin+intervalX*i-(Xmax+Xmin))+abs(Ymin+intervalY*j-(Ymax+Ymin)))/5-1;
+             float dist = sqrt(pow(abs(Xmin+intervalX*i-(Xmax+Xmin)),2)+pow(abs(Ymin+intervalY*j-(Ymax+Ymin)),2))/3-1;
+
+            vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,-dist ), QVector2D(intervalX_Texture*(i)*precisionTexture, (intervalY_Texture*(j))*precisionTexture)};
+            vertex[i*y+j] =QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,-dist );
         }
     }
 }
@@ -668,6 +689,47 @@ void GeometryEngine::updatePlanegeometry(float Xmin,float Ymin,float Xmax,float 
     arrayBuf.bind();
     arrayBuf.allocate(vertices, vertexNumber * sizeof(VertexData));
     arrayBuf.release();
+}
+
+void GeometryEngine::initCurvedPlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax,bool collisionActivated)
+{
+    //img = QImage(":/heightmap-1024x1024.png");
+    heightMap = true;
+    int x=precisionX;
+    int y=precisionY;
+    unsigned int vertexNumber = x*y ;
+    VertexData vertices[x*y];
+    unsigned int indexCount = x*y+y*(x-2)+2*(x-2)+2;
+//     unsigned int indexCount = (x*y-1)*3;
+    GLushort indicesIn[indexCount];
+    subdiviseCurvedPlan(x,  y,  vertices, Xmin, Ymin, Xmax, Ymax);
+    TriangleStripForPlan(x,  y, indicesIn);
+    GLushort indicesOut[indexCount*3];
+    indexCount = convertStripToTriangle(indicesIn, indicesOut, indexCount);
+    if(collisionActivated){
+        initBB(vertices, vertexNumber);
+        if(Min[2]==0 && Max[2]==0){
+            Max[2] = 1.5;
+            Min[2] = -3.0;
+        }
+    }
+    else{
+        Min = QVector3D(0,0,0);
+        Max = QVector3D(0,0,0);
+        noCollision = true;
+    }
+    //! [1]
+    // Transfer vertex data to VBO 0
+    arrayBuf.bind();
+    arrayBuf.allocate(vertices, vertexNumber * sizeof(VertexData));
+    arrayBuf.release();
+    // Transfer index data to VBO 1
+    indexBuf.bind();
+//    indexBuf.allocate(indicesOut,  ((indexCount*3-1)* sizeof(GLushort)));
+    indexBuf.allocate(indicesOut,  ((indexCount)* sizeof(GLushort)));
+    //  std::cout << indexBuf.size() << " index count " << indexCount <<"sizeof" <<  sizeof(GLushort) << std::endl;
+    indexBuf.release();
+    //! [1]
 }
 
 void GeometryEngine::initPlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax, float centreX, float centreY)

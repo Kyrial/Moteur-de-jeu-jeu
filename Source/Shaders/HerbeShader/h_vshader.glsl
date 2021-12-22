@@ -20,7 +20,7 @@ uniform sampler2D texture;
 void main()
 {
 
-    // gl_Position = mvp_matrix *camera_matrix* transform_Matrix * a_position;
+    //gl_Position = mvp_matrix *camera_matrix* transform_Matrix * a_position;
 
     FragPos = vec3(transform_Matrix * vec4(a_position.xyz, 1.0));
 

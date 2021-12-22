@@ -160,14 +160,7 @@ r.setColumn(3,QVector4D(.0,.0,.0,1.0));
 
 
 
-    void convergeZero(){
-        if (abs(t[0]) < 0.01)
-            t[0]= 0;
-        if (abs(t[1]) < 0.01)
-            t[1]= 0;
-        if (abs(t[2]) < 0.01)
-            t[2]= 0;
-    }
+
 
     static QVector3D convergeZero(QVector3D vec);
 

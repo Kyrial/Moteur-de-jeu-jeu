@@ -73,13 +73,27 @@ class GeometryEngine : protected QOpenGLFunctions_4_1_Core
 
 public:
 
-    GeometryEngine();
     QVector3D coordLastCollision = QVector3D(999,999,999);
-    bool withNormal = false;
     QVector2D lastCentre = QVector2D(0,0);
+
+    QVector3D BBMin = QVector3D(0,0,0);
+    QVector3D BBMax = QVector3D(0,0,0);
+    QVector3D internBBMin = QVector3D(0,0,0);
+    QVector3D internBBMax = QVector3D(0,0,0);
+    bool withNormal = false;
+    bool heightMap = false;
+    bool noCollision = false;
+    float precisionTexture=1;
+
+    QOpenGLBuffer arrayBuf;
+    QOpenGLBuffer indexBuf;
+    QVector<QMatrix4x4> modelMatrices;
+
+    int triangle_strip = 0; // 0 = triangle_strip // 1 = triangle // 2 = patch
+
+
+    GeometryEngine();
     virtual ~GeometryEngine();
-
-
     virtual void drawCubeGeometry(QOpenGLShaderProgram *program);
     virtual void initMesh(std::string filename, bool a= true,bool centre= false, bool inverse = false){}
     virtual void initMeshObj(std::string filename,bool a= true,bool centre= false, bool inverse = false){}
@@ -87,27 +101,24 @@ public:
     virtual void initLifeBar(){}
     virtual bool updateLifeBar(double deltaTime){}
     virtual QVector3D setNormalToCentreCircle(QVector3D vec, QVector3D centre, bool inverse){};
-    QOpenGLBuffer arrayBuf;
-    QOpenGLBuffer indexBuf;
 
-
-    QVector<QMatrix4x4> modelMatrices;
 
     void initCubeGeometry();
     void initPlanegeometry(float Xmin=-1,float Ymin=-1,float Xmax=1,float Ymax=1,float centreX =0, float centreY=0);
+    void initCurvedPlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax,bool collisionActivated);
 
-    int triangle_strip = 0; // 0 = triangle_strip // 1 = triangle // 2 = patch
-    QVector3D BBMin = QVector3D(0,0,0);
-    QVector3D BBMax = QVector3D(0,0,0);
-    QVector3D internBBMin = QVector3D(0,0,0);
-    QVector3D internBBMax = QVector3D(0,0,0);
-    bool heightMap = false;
-    bool noCollision = false;
+    void setPrecisionTexture(float val);
+
 protected:
     QImage img;
     std::vector<QVector3D>  vertex;
-    //void initPlanegeometry();
+
+    QVector3D Min = QVector3D(0,0,0);
+    QVector3D Max = QVector3D(0,0,0);
+
     void subdivisePlan(int x, int y,  VertexData vertices[],float Xmin,float Ymin,float Xmax,float Ymax,float centreX =0, float centreY=0);//,std::string nameWeightMap );
+    void subdiviseCurvedPlan(int x, int y, VertexData vertices[], float Xmin=-1,float Ymin=-1,float Xmax=1,float Ymax=1);
+
     void TriangleStripForPlan(int x, int y,GLushort indices[]);
     void TriangleListForPlan(int x, int y,GLushort indices[]);
     void updatePlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax, float centreX =0, float centreY=0);
@@ -118,8 +129,7 @@ protected:
     int precisionX = 101; // attention! une valeur trop haute provoque
     int precisionY= 101;  // un dépassement de capacité (size > sizemax of array)
 
-    QVector3D Min = QVector3D(0,0,0);
-    QVector3D Max = QVector3D(0,0,0);
+
 
     void initBB(std::vector<QVector3D> vertex);
     void initBB(VertexData vertices[], int i);
@@ -132,7 +142,7 @@ public:
 
     QVector3D findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM,  bool &collision, QVector3D & mesh);
     QVector3D getNormal();
-    QVector3D getNormal(QVector3D mesh);
+    QVector3D getNormal(QVector3D vertex);
     QVector3D recallageCollision(GeometryEngine *geoB);
     void resetBB();
     bool ifNoeudVide();
@@ -141,8 +151,7 @@ public:
     void updateBB(QMatrix4x4 m);
     void ajustBB(GeometryEngine *geo);
     void ajustBB(QVector3D min, QVector3D max);
-    static QVector3D  calcBBMin(QVector3D const & last, QVector3D const & min);
-    static QVector3D  calcBBMax(QVector3D const & last, QVector3D const & max);
+
     bool intersect(GeometryEngine *geo);
     bool internintersect(GeometryEngine *geo);
     QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec, QVector3D mesh = QVector3D(0,0,0));
@@ -152,15 +161,8 @@ public:
 
     void addInstancedGrass(int nb, QVector3D min=QVector3D(-13,-13,0), QVector3D max=QVector3D(13,13,0));
 
-
-    void test(){
-         /*  glPushMatrix();
-           glRotatef(90, 0, 0, 1);
-           QString qStr = QString("Here's a very long string which doesn't mean anything at all but had some rendering problems");
-           renderText(0.0, 0.0, 0.0, qStr);
-           glPopMatrix();*/
-    }
-
+    static QVector3D  calcBBMin(QVector3D const & last, QVector3D const & min);
+    static QVector3D  calcBBMax(QVector3D const & last, QVector3D const & max);
 };
 
 #endif // GEOMETRYENGINE_H

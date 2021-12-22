@@ -17,6 +17,8 @@ in vec3 v_position;
 in vec3 v_normal;
 in vec3 FragPos;
 
+out vec4 FragColor;
+
 //! [0]
 
 float max(float a, float b){
@@ -25,13 +27,13 @@ float max(float a, float b){
 float min(float a, float b){
     return a<b?a:b;
 }
-
+/*
 float distance(float a, float b){
     if(a<b)
         return b-a;
     else
         return a-b;
-}
+}*/
 
 float poid(float a, float b, float intervalle){
     //return max(0.01, 100- distance(a,b)*5);
@@ -39,7 +41,7 @@ float poid(float a, float b, float intervalle){
 }
 
 vec2 animationEau(){
-    return  v_texcoord*cos((animation+(v_position.y)*1000)/10000)/7+(0.5)/7;
+    return  v_texcoord*cos((animation+(v_position.y)*100)/40000)/7+(0.5)/7;
 }
 
 vec4 getLumiere(vec3 fragPosition, float specularStrength=1.,float minDiffusion=0.16){
@@ -110,18 +112,16 @@ void main()
         //      min(1,max(1-distance(v_position.z,0.4)*4.5,0))*texture2D(textureRock, v_texcoord);
         //gl_FragColor =calculTexture(v_position.z,v_texcoord);
         //gl_FragColor =getLumiere( FragPos.xyz)*calculTexture(v_position.z,v_texcoord);
-        gl_FragColor =calculTexture(v_position.z,v_texcoord);
+        FragColor =calculTexture(v_position.z,v_texcoord);
     }
     else{
 
         //gl_FragColor = texture2D(textureScene, v_texcoord);
 
-        gl_FragColor = getLumiere( FragPos.xyz)*texture2D(textureScene, v_texcoord) ;//,texture2D(textureScene, v_texcoord));
-    }
-    /*gl_FragColor =0*texture2D(textureSnow, v_texcoord)+
-            0*texture2D(textureGrass, v_texcoord)+
-            1*texture2D(textureRock, v_texcoord);*/
+        FragColor = getLumiere( FragPos.xyz)*texture2D(textureScene, v_texcoord) ;
 
+    }
+    //FragColor.xyz = FragColor.xyz - max(distance(viewPosition.xyz,FragPos.xyz)/20,0);
 
 
 

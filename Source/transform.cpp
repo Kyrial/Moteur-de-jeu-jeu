@@ -9,12 +9,21 @@ QMatrix4x4 Transform::inverse(QMatrix4x4 const m){
 }
 
 QVector3D Transform::convergeZero(QVector3D vec){
-    if (abs(vec[0]) < 0.001)
+    if (abs(vec[0]) < 0.05)
         vec[0]= 0;
-    if (abs(vec[1]) < 0.001)
+    if (abs(vec[1]) < 0.05)
         vec[1]= 0;
-    if (abs(vec[2]) < 0.001)
+    if (abs(vec[2]) < 0.009)
         vec[2]= 0;
+
+
+     /*   if (abs(t[0]) < 0.05)
+            t[0]= 0;
+        if (abs(t[1]) < 0.05)
+            t[1]= 0;
+        if (abs(t[2]) < 0.01)
+            t[2]= 0;
+    */
     return vec;
 }
 

@@ -66,8 +66,8 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
     }*/
 
     for(int i=0; i<vertexNumber;i++) {
-        vertices[i]= {vertex[i], QVector2D((vertex[i][0]+vertex[i][2])/3, (vertex[i][1]))/3,normals[i].normalized()};
-        vertices2[i]= {vertex[i], QVector2D(vertex[i][0]+vertex[i][1], vertex[i][0]+vertex[i][2])};
+        vertices[i]= {vertex[i], QVector2D((2+vertex[i][0]+vertex[i][2])*precisionTexture, (2+vertex[i][1]+vertex[i][2])*precisionTexture),normals[i].normalized()};
+        vertices2[i]= {vertex[i], QVector2D((vertex[i][0]+vertex[i][1])*precisionTexture, (vertex[i][0]+vertex[i][2])*precisionTexture)};
     }
 
 
