@@ -40,8 +40,11 @@ float poid(float a, float b, float intervalle){
     return min(1,max(0,1-abs(a-b)/intervalle));
 }
 
-vec2 animationEau(){
-    return  v_texcoord*cos((animation+(v_position.y)*100)/40000)/7+(0.5)/7;
+vec2 animationEau(int zoom = 4){
+    vec2 eaux = vec2(0.,0.);
+    eaux.y=  (v_texcoord.y+(animation/8000))/zoom;//+cos((animation/10000+(v_position.y)*100)/40000)/7+(0.5)/7;
+    eaux.x = (v_texcoord.x +cos((animation/500))/10)/zoom;
+    return eaux;
 }
 
 vec4 getLumiere(vec3 fragPosition, float specularStrength=1.,float minDiffusion=0.16){
@@ -85,7 +88,7 @@ vec4  calculTexture(float position,vec2 texcoord ){
         return texture2D(textureSnow, texcoord);
     if(position <eau-gapEau)
         return texture2D(textureEau, texcoord);
-    return (poid(position, eau,gapEau)/poids)*texture2D(textureEau, animationEau())*getLumiere( FragPos.xyz,5.)+
+    return (poid(position, eau,gapEau)/poids)*texture2D(textureEau, (animationEau(8)+animationEau(4))/2)*getLumiere( FragPos.xyz,5.)+
             (poid(position, herbe,gapHerbe)/poids)*texture2D(textureGrass, texcoord)*getLumiere( FragPos.xyz,0.5)+
             (poid(position, pierre,gapPierre)/poids)*texture2D(textureRock, texcoord)*getLumiere( FragPos.xyz,2.)+
             (poid(position, neige,gapNeige)/poids)*texture2D(textureSnow, texcoord)*getLumiere( FragPos.xyz,5.);

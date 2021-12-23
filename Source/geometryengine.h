@@ -159,7 +159,9 @@ public:
 
     QVector3D mapCoordChanged(QVector3D vec,QMatrix4x4 objM,QMatrix4x4 ourM);
 
-    void addInstancedGrass(int nb, QVector3D min=QVector3D(-13,-13,0), QVector3D max=QVector3D(13,13,0));
+    void addInstancedGrass(float ratioArbre=0.42, QVector3D min=QVector3D(-13,-13,0), QVector3D max=QVector3D(13,13,0));
+    void gestionBoundingBoxForInstance( QVector3D min, QVector3D max);
+
 
     static QVector3D  calcBBMin(QVector3D const & last, QVector3D const & min);
     static QVector3D  calcBBMax(QVector3D const & last, QVector3D const & max);

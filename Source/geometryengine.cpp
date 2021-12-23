@@ -396,13 +396,13 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     //   QVector3D d = invOurM*BBMax;
 
     // vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f ), QVector2D((intervalX_Texture*i)/2, (intervalY_Texture*j)/2)};
-    float interval=(Max[0]-Min[0])/(float)(precisionX-1);
+//  float interval=(Max[0]-Min[0])/(float)(precisionX-1);
     //(val+min)/ interval = case
-    int caseX = (a.x()- Min[0])/interval;
-    int caseY = (a.y()- Min[1])/interval;
+//int caseX = (a.x()- Min[0])/interval;
+//int caseY = (a.y()- Min[1])/interval;
     //float interval_Texture=2/(float)(precisionX-1);
     // QVector3D k
-    normal= vertex[caseX*precisionX+caseY];
+    normal= a; //vertex[caseX*precisionX+caseY];
     /*VertexData vertices[precisionX*precisionY];
 
    for(int i=0; i<precisionX; i++){
@@ -546,7 +546,7 @@ QVector3D GeometryEngine::mapCoordChanged(QVector3D coordCharacter, QMatrix4x4 o
     float centreY = floor(coordCharacter2[1]);
     if (lastCentre != QVector2D(centreX,centreY)){
         lastCentre = QVector2D(centreX,centreY);
-         qDebug("maoww :%f, et coordplan = %f \n ",centreX, centreY );
+        qDebug("maoww :%f, et coordplan = %f \n ",centreX, centreY );
 
         updatePlanegeometry((centreX)-25,(centreY)-25,(centreX)+25,(centreY)+25, (centreX), (centreY));
     }
@@ -597,8 +597,8 @@ void GeometryEngine::subdiviseCurvedPlan(int x, int y, VertexData vertices[], fl
     float intervalY=(Ymax-Ymin)/(float)(y-1);
     for(int i=0; i<x; i++){
         for(int j=0;j<y; j++){
-           // float dist = (abs(Xmin+intervalX*i-(Xmax+Xmin))+abs(Ymin+intervalY*j-(Ymax+Ymin)))/5-1;
-             float dist = sqrt(pow(abs(Xmin+intervalX*i-(Xmax+Xmin)),2)+pow(abs(Ymin+intervalY*j-(Ymax+Ymin)),2))/3-1;
+            // float dist = (abs(Xmin+intervalX*i-(Xmax+Xmin))+abs(Ymin+intervalY*j-(Ymax+Ymin)))/5-1;
+            float dist = sqrt(pow(abs(Xmin+intervalX*i-(Xmax+Xmin)),2)+pow(abs(Ymin+intervalY*j-(Ymax+Ymin)),2))/3-1;
 
             vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,-dist ), QVector2D(intervalX_Texture*(i)*precisionTexture, (intervalY_Texture*(j))*precisionTexture)};
             vertex[i*y+j] =QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,-dist );
@@ -649,25 +649,25 @@ void GeometryEngine::TriangleListForPlan(int x, int y,GLushort indices[]){
 
 unsigned int GeometryEngine::convertStripToTriangle(GLushort indicesIn[], GLushort indicesOut[], int size){
     short a, b, c;
-     unsigned int count =0;
+    unsigned int count =0;
     for( int i=0; i<size -2; i++ )
     {
         if(indicesIn[i+0] != indicesIn[i+1] && indicesIn[i+0] != indicesIn[i+2] && indicesIn[i+1] != indicesIn[i+2]){
-        if( i%2 == 0 )
-        {
-            a = indicesIn[i+0];
-            b = indicesIn[i+1];
-            c = indicesIn[i+2];
-        }
-        else
-        {
-            a = indicesIn[i+2];
-            b = indicesIn[i+1];
-            c = indicesIn[i+0];
-        }
-        indicesOut[count++]=a;
-        indicesOut[count++]=b;
-        indicesOut[count++]=c;
+            if( i%2 == 0 )
+            {
+                a = indicesIn[i+0];
+                b = indicesIn[i+1];
+                c = indicesIn[i+2];
+            }
+            else
+            {
+                a = indicesIn[i+2];
+                b = indicesIn[i+1];
+                c = indicesIn[i+0];
+            }
+            indicesOut[count++]=a;
+            indicesOut[count++]=b;
+            indicesOut[count++]=c;
         }
     }
     return count;
@@ -700,7 +700,7 @@ void GeometryEngine::initCurvedPlanegeometry(float Xmin,float Ymin,float Xmax,fl
     unsigned int vertexNumber = x*y ;
     VertexData vertices[x*y];
     unsigned int indexCount = x*y+y*(x-2)+2*(x-2)+2;
-//     unsigned int indexCount = (x*y-1)*3;
+    //     unsigned int indexCount = (x*y-1)*3;
     GLushort indicesIn[indexCount];
     subdiviseCurvedPlan(x,  y,  vertices, Xmin, Ymin, Xmax, Ymax);
     TriangleStripForPlan(x,  y, indicesIn);
@@ -725,7 +725,7 @@ void GeometryEngine::initCurvedPlanegeometry(float Xmin,float Ymin,float Xmax,fl
     arrayBuf.release();
     // Transfer index data to VBO 1
     indexBuf.bind();
-//    indexBuf.allocate(indicesOut,  ((indexCount*3-1)* sizeof(GLushort)));
+    //    indexBuf.allocate(indicesOut,  ((indexCount*3-1)* sizeof(GLushort)));
     indexBuf.allocate(indicesOut,  ((indexCount)* sizeof(GLushort)));
     //  std::cout << indexBuf.size() << " index count " << indexCount <<"sizeof" <<  sizeof(GLushort) << std::endl;
     indexBuf.release();
@@ -741,11 +741,11 @@ void GeometryEngine::initPlanegeometry(float Xmin,float Ymin,float Xmax,float Ym
     unsigned int vertexNumber = x*y ;
     VertexData vertices[x*y];
     unsigned int indexCount = x*y+y*(x-2)+2*(x-2)+2;
-//     unsigned int indexCount = (x*y-1)*3;
+    //     unsigned int indexCount = (x*y-1)*3;
     GLushort indicesIn[indexCount];
     subdivisePlan(x,  y,  vertices, Xmin, Ymin, Xmax, Ymax, centreX,  centreY);
     TriangleStripForPlan(x,  y, indicesIn);
-  //  TriangleListForPlan(x,  y, indicesIn);
+    //  TriangleListForPlan(x,  y, indicesIn);
     // qDebug("taille index %i",indexCount);
     //qDebug("taille index tab %i",x*y+y*(x-2)+2*(x-2)+2);
     GLushort indicesOut[indexCount*3];
@@ -754,7 +754,7 @@ void GeometryEngine::initPlanegeometry(float Xmin,float Ymin,float Xmax,float Ym
 
     initBB(vertices, vertexNumber);
     if(Min[2]==0 && Max[2]==0){
-        Max[2] = 1.5;
+        Max[2] = 3.5;
         Min[2] = -3.0;
     }
     //! [1]
@@ -764,7 +764,7 @@ void GeometryEngine::initPlanegeometry(float Xmin,float Ymin,float Xmax,float Ym
     arrayBuf.release();
     // Transfer index data to VBO 1
     indexBuf.bind();
-//    indexBuf.allocate(indicesOut,  ((indexCount*3-1)* sizeof(GLushort)));
+    //    indexBuf.allocate(indicesOut,  ((indexCount*3-1)* sizeof(GLushort)));
     indexBuf.allocate(indicesOut,  ((indexCount)* sizeof(GLushort)));
     //  std::cout << indexBuf.size() << " index count " << indexCount <<"sizeof" <<  sizeof(GLushort) << std::endl;
     indexBuf.release();
@@ -775,11 +775,10 @@ double randMToN(double M, double N)
     return M + (rand() / ( RAND_MAX / (N-M) ) ) ;
 }
 
-void GeometryEngine::addInstancedGrass(int nb, QVector3D min, QVector3D max){
+void GeometryEngine::addInstancedGrass(float ratioArbre, QVector3D min, QVector3D max){
 
     modelMatrices.clear();
     float nbMaxArbre =0.5;
-    float ratioArbre=0.42;
     // float intervalX=( max[0]-min[0])/(float)(nbMaxArbre-1);
     // float intervalY=( max[1]-min[1])/(float)(nbMaxArbre-1);
     for(float i=min[0]+7; i<max[0]-7; i+=nbMaxArbre){
@@ -791,41 +790,26 @@ void GeometryEngine::addInstancedGrass(int nb, QVector3D min, QVector3D max){
                 t.setTranslate(i,j,hauteurMesh-0.02);
 
                 Transform t_2;
-
                 float randRotation = perlin2d( i*20, j*20 , 1)*90;
                 float randScale = perlin2d( i*15, j*15 , 1)*0.5+0.9;
                 t_2.setScale(QVector3D(randScale,randScale,randScale));
 
                 t_2.setRotation(0,0,1,randRotation);
                 modelMatrices.push_back(t.doTransformation()*t_2.doTransformation()); //t.doAnimation(&t_2,1));
-
             }
         }
     }
-
-
-    /*
-    srand(0);
-    for(int i =0; i<nb; i++){
-        float randX = randMToN( min[0],   max[0]);//randMToN( -12.0,  12.0);
-        float randY = randMToN( min[1],   max[1]);//randMToN( -12.0,  12.0);
-        float hauteurMesh =(perlin2d( randX, randY , 8)-0.3)*2;
-        Transform t;
-        if(hauteurMesh>0){
-            t.setTranslate(randX,randY,hauteurMesh);
-
-            Transform t_2;
-            float randRotation = randMToN( -90.0,  90.0);
-            float randScale = randMToN( 0.9,  1.3);
-            t_2.setScale(QVector3D(randScale,randScale,randScale));
-
-            t_2.setRotation(0,0,1,randRotation);
-            modelMatrices.push_back(t.doTransformation()*t_2.doTransformation()); //t.doAnimation(&t_2,1));
-        }
-    }*/
-
+  //  gestionBoundingBoxForInstance(min,max);
 }
-
+//todo
+void GeometryEngine::gestionBoundingBoxForInstance( QVector3D min, QVector3D max){
+    Min[0] = min[0];
+    Max[0] = max[0];
+    Min[1] = min[1];
+    Max[1] = max[1];
+    Max[2] = Max[2]+30;
+    Min[2] = min[2]-3.0;
+}
 
 
 //! [2]

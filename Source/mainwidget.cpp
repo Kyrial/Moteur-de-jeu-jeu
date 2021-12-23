@@ -169,24 +169,13 @@ void MainWidget::scene(){
     //Fin creation
 
 
-    /*
-    //Instance INIT GAME OBJECT //soleil1
-    GeometryEngine *geo_Soleil1 = new GeometryMeshEngine;
-    geo_Soleil1->initMesh(":/Mesh/house.off");
-    Transform *t_Soleil1 = new Transform;
-    //t_Soleil1->setRotation(-1,0,0,6.68);
-    t_Soleil1->setTranslate(0,2,0);
-    Transform *anim_Soleil1 = new Transform;
-//anim_Soleil1->setRotation(1,1,0,1.8);
-    addGameObject(allShaders[0],noeudSoleil,t_Soleil1 , geo_Soleil1,anim_Soleil1,new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
-    //Fin creation
-*/
-    //Instance INIT GAME OBJECT //soleil2
+
+    //Instance INIT GAME OBJECT //arbre
     GeometryEngine *geo_herbe = new GeometryMeshEngine;
     geo_herbe->withNormal = true;
     geo_herbe->setPrecisionTexture(0.20);
     geo_herbe->initMeshObj(":/Mesh/tree.obj");
-    geo_herbe->addInstancedGrass(300);
+    geo_herbe->addInstancedGrass();
     Transform *tHerbe = new Transform;
     tHerbe->setScale(0.05,0.05,0.05);
     tHerbe->setRotation(1,0,0,90);
@@ -284,7 +273,7 @@ void MainWidget::scene(){
     //qDebug("test");
     // geo_Lune->initMesh(":Mesh/space_station.off");
     Transform *t_Ciel = new Transform;
-    t_Ciel->setScale(3010,3010,3010);
+    t_Ciel->setScale(2800,2800,2800);
     t_Ciel->setRotation(1,0,0,90);
     Transform *anim_Ciel = new Transform;
     // anim_Ciel->setRotation(0,0,1,0.8);
@@ -312,11 +301,11 @@ void MainWidget::scene(){
     GeometryEngine *geo_nuage = new GeometryEngine;
 
 
-    geo_nuage->initCurvedPlanegeometry(-35,-35,35,35, true);
+    geo_nuage->initCurvedPlanegeometry(-35,-35,35,35, false);
     // geo_Terre->initMesh(":/Mesh/sphere.off");
     Transform *t_nuage = new Transform;
-    t_nuage->setScale(300,300,300);
-    t_nuage->setTranslate(0,0,0.8);
+    t_nuage->setScale(280,280,280);
+    t_nuage->setTranslate(0,0,1);
     Transform *anim_nuage = new Transform;
     //anim_Terre->setRotation(0,0,1,1);
     Object* nuage = addGameObject(allShaders[2],NoeudSatellite,t_nuage , geo_nuage,anim_nuage);
@@ -460,8 +449,8 @@ void MainWidget::initializeGL()
     glEnable(GL_DEPTH_TEST);
 
     glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
-    // glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
-    glLineWidth(3);
+   //  glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
+    glLineWidth(2);
     // Enable back face culling
     //      glEnable(GL_CULL_FACE);
     glDisable(GL_CULL_FACE);
@@ -656,7 +645,13 @@ void MainWidget::paintGL()
     // Clear color and depth buffer
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-    /* QPainter painter(this);
+    if (polygonMode)
+        glPolygonMode( GL_FRONT_AND_BACK, GL_LINE);
+
+    else
+        glPolygonMode( GL_FRONT_AND_BACK, GL_FILL);
+
+        /* QPainter painter(this);
     QLinearGradient gradient(QPointF(50, -20), QPointF(80, 20));
     gradient.setColorAt(0.0, Qt::white);
     gradient.setColorAt(1.0, QColor(0xa6, 0xce, 0x39));
@@ -794,7 +789,18 @@ void MainWidget::keyPress(QKeyEvent *event)
         gameObj->animate = gameObj->animate == true ? false: true;
         break;
     }
+
+    case Qt::Key_W: // tourne terrain
+    {
+    if (polygonMode)
+        polygonMode = false;
+
+
+    else
+        polygonMode = true;
+
     }
+          }
     //emit projectionChanged(projection);
 
     //projection.translate(0.0, 0.0, -1.0) ;

@@ -14,8 +14,14 @@ class GeometryMeshEngine : public GeometryEngine
 {
 public:
     GeometryMeshEngine();
-
-    void initMesh(std::string filenamen, bool collisionActivated= true, bool centre= false, bool inverse = false);
+    /**
+     * @brief initMesh charge un fichier .off et appelle bindMesh
+     * @param filename[in] nom du fichier
+     * @param collisionActivated[in] bouleen determinant si l'objet subit les collisions
+     * @param centre boolean permet de modifier la direction de la normal ( pour les spheres)
+     * @param inverse si centre a True, determine l'orientation de la normal
+     */
+    void initMesh(std::string filename, bool collisionActivated= true, bool centre= false, bool inverse = false);
     void initMeshObj(std::string filename, bool collisionActivated= true, bool centre= false, bool inverse = false);
     void bindMesh(std::vector< std::vector<unsigned int> >  faces, bool a = true, bool centre= false, bool inverse = false);
 

@@ -14,7 +14,12 @@ void Object::addShader(QOpenGLShaderProgram * shad){
 }
 
 
-
+/**
+ * @brief  Met à jour la scene
+ * @details Parcours le graphe de scene, met a jour les bounding box, envoie au shader matrice de transformation, mesh, texture
+ * @param deltaTime[in] Intervalle de temps entre la dernière mise a jour de la scene
+ * @param lastM[in] matrice de transformation du parent
+ */
 void  Object::updateScene(double deltaTime, QMatrix4x4 lastM){
     shader->bind();
 
@@ -86,7 +91,12 @@ Object* Object::getRacine(){
 }
 
 
-
+/**
+ * @brief verifie si l'element a subit une collision
+ * @param obj[in,out] object recherchant une collision avec un autre objet
+ * @param anim
+ * @param t
+ */
 void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
 
     // QMatrix4x4 m= chargeMatriceForShader(program, deltaTime,lastM);
@@ -254,7 +264,7 @@ void Object::updateTree(QVector3D coordCharacter2){
     float centreY = floor(coordCharacter2[1]);
     if (geo->lastCentre != QVector2D(centreX,centreY)){
         geo->lastCentre = QVector2D(centreX,centreY);
-        geo->addInstancedGrass(300,QVector3D((centreX)-12,(centreY)-12,0),QVector3D((centreX)+12,(centreY)+12,0) );
+        geo->addInstancedGrass(0.42,QVector3D((centreX)-12,(centreY)-12,0),QVector3D((centreX)+12,(centreY)+12,0) );
     }
 }
 

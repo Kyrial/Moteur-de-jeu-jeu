@@ -134,6 +134,7 @@ private:
     QOpenGLTexture * textureSnow;
     QOpenGLTexture * textureEau;
     QOpenGLTexture * textureBois;
+    bool polygonMode = true;
 
 
     QMatrix4x4 projection;
