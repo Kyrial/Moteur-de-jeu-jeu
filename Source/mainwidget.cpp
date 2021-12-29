@@ -181,7 +181,7 @@ void MainWidget::scene(){
     tHerbe->setRotation(1,0,0,90);
     Object* herbe= addGameObject(allShaders[1],Terre,tHerbe , geo_herbe,new Transform);
     herbe->instanced=true;
-
+    herbe->setName("arbre");
 
     //Fin creation
     ////////////

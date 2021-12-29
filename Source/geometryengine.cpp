@@ -224,7 +224,18 @@ QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB, QVector3D vec, 
     else{
         return vec - 2* QVector3D::dotProduct(vec, getNormal(mesh)) * getNormal(mesh);
     }
+}
+QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB,QVector3D vec, int numInstenced){
 
+    QVector3D milieuA = internbbInstenced[numInstenced].BBMin + (internbbInstenced[numInstenced].BBMax - internbbInstenced[numInstenced].BBMin)/2;
+    QVector3D milieuB = geoB->BBMin +(geoB->BBMax - geoB->BBMin)/2;
+    // qDebug("\n\nAAAAAAAAAAAAAAAAAAAAA\n\n");
+    QVector3D vecAB = milieuB -milieuA;
+
+    //V = V - 2(V.N)*N
+
+    //  return vec - 2* QVector3D::dotProduct(vec, vecAB) * vecAB;
+    return vec - 2* QVector3D::dotProduct(vec, getNormal()) * getNormal();
 }
 
 bool GeometryEngine::ifNoeudVide(){
@@ -235,39 +246,75 @@ void GeometryEngine::resetBB(){
     BBMax = QVector3D(0,0,0);
 }
 
-bool GeometryEngine::internintersect(GeometryEngine *geo){
-    return (geo->BBMin.x() <= internBBMax.x() && geo->BBMax.x() >= internBBMin.x()) &&
-            (geo->BBMin.y() <= internBBMax.y() && geo->BBMax.y() >= internBBMin.y()) &&
-            (geo->BBMin.z() <= internBBMax.z() && geo->BBMax.z() >= internBBMin.z());
+bool GeometryEngine::internintersect(GeometryEngine *geo, int &numInstence, QMatrix4x4 AllTransform){
+    if(modelMatrices.size()>0)
+        return internintersectInstenced(geo, numInstence,AllTransform);
+    else
+        return (geo->BBMin.x() <= internBBMax.x() && geo->BBMax.x() >= internBBMin.x()) &&
+                (geo->BBMin.y() <= internBBMax.y() && geo->BBMax.y() >= internBBMin.y()) &&
+                (geo->BBMin.z() <= internBBMax.z() && geo->BBMax.z() >= internBBMin.z());
 }
 bool GeometryEngine::intersect(GeometryEngine *geo){
-    bool result;
-    //  if (heightMap == false){
-    result = (geo->BBMin.x() <= BBMax.x() && geo->BBMax.x() >= BBMin.x()) &&
-            (geo->BBMin.y() <= BBMax.y() && geo->BBMax.y() >= BBMin.y()) &&
-            (geo->BBMin.z() <= BBMax.z() && geo->BBMax.z() >= BBMin.z());
-    // }
-    //  else{
-    //      result = (geo->BBMin.x() <= BBMax.x() && geo->BBMax.x() >= BBMin.x()) &&
-    //           (geo->BBMin.y() <= BBMax.y() && geo->BBMax.y() >= BBMin.y()); }
 
-
-
-    return result;
+        bool result;
+        //  if (heightMap == false){
+        result = (geo->BBMin.x() <= BBMax.x() && geo->BBMax.x() >= BBMin.x()) &&
+                (geo->BBMin.y() <= BBMax.y() && geo->BBMax.y() >= BBMin.y()) &&
+                (geo->BBMin.z() <= BBMax.z() && geo->BBMax.z() >= BBMin.z());
+        // }
+        //  else{
+        //      result = (geo->BBMin.x() <= BBMax.x() && geo->BBMax.x() >= BBMin.x()) &&
+        //           (geo->BBMin.y() <= BBMax.y() && geo->BBMax.y() >= BBMin.y()); }
+        return result;
+    //}
 }
 
+bool GeometryEngine::internintersectInstenced(GeometryEngine *geo, int &numInstence, QMatrix4x4 AllTransform){
+    bool result = false;
+    numInstence = -1;
+    for(int i= 0;i <modelMatrices.size();i++){
+
+        result = (geo->BBMin.x() <= internbbInstenced[i].BBMax.x() && geo->BBMax.x() >= internbbInstenced[i].BBMin.x()) &&
+                (geo->BBMin.y() <= internbbInstenced[i].BBMax.y() && geo->BBMax.y() >= internbbInstenced[i].BBMin.y()) &&
+                (geo->BBMin.z() <= internbbInstenced[i].BBMax.z() && geo->BBMax.z() >= internbbInstenced[i].BBMin.z());
+        if (result == true){
+            numInstence=i;
+            return true;
+        }
+    }
+    return false;
+}
 
 
 //matrice avec coefficiant négatif -> inverse le min et le max !
-void GeometryEngine::updateBB(QMatrix4x4 m){
-    // if (noCollision) return;
-    QVector3D tempMin = calcBBMin( m*Min,m*Max);
-    QVector3D tempMax = calcBBMax( m*Min,m*Max);
+void GeometryEngine::updateBB(QMatrix4x4 m, QMatrix4x4 lastM, QMatrix4x4 courante){
+    if (modelMatrices.size()>0){
+        for(int i=0;i<modelMatrices.size();i++){
+            QVector3D tempMin = calcBBMin( lastM*modelMatrices[i]*courante*Min, lastM*modelMatrices[i]*courante*Max);
+            QVector3D tempMax = calcBBMax( lastM*modelMatrices[i]*courante*Min, lastM*modelMatrices[i]*courante*Max);
 
-    BBMin = tempMin;
-    BBMax = tempMax;
-    internBBMin = tempMin;
-    internBBMax = tempMax;
+
+            internbbInstenced[i].BBMin = tempMin;
+            internbbInstenced[i].BBMax = tempMax;
+            if(i==0){
+                BBMin = tempMin;
+                BBMax = tempMax;
+            }else
+            {
+                BBMin = calcBBMin(BBMin,tempMin);
+                BBMax = calcBBMax(BBMax,tempMax);
+            }
+        }
+    }
+    else{
+        QVector3D tempMin = calcBBMin( m*Min,m*Max);
+        QVector3D tempMax = calcBBMax( m*Min,m*Max);
+
+        BBMin = tempMin;
+        BBMax = tempMax;
+        internBBMin = tempMin;
+        internBBMax = tempMax;
+    }
 }
 
 
@@ -370,7 +417,7 @@ void GeometryEngine::initBB(std::vector<QVector3D> vertex){
     BBMax = Max;
 
 }
-
+/*
 float GeometryEngine::getHauteur(QVector2D coordText){
 
 
@@ -381,7 +428,7 @@ float GeometryEngine::getHauteur(QVector2D coordText){
     QRgb rgb = img.pixel(x,y);
     //    float q = (qRed(img.pixel(y,x))/ 125.0-1.0)*0.7;
     return (qRed(rgb)/ 255.0);
-}
+}*/
 
 QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM, bool &collision, QVector3D &normal){
     QMatrix4x4 invObjM = Transform::inverse(objM);
@@ -389,17 +436,18 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
 
     QVector3D inv_BBMin = invObjM*geo->BBMin;
     QVector3D inv_BBMax = invObjM*geo->BBMax;
-
+    ///TODO
+    //code a verifier
     QVector3D a = (inv_BBMin + QVector3D(inv_BBMax.x(),inv_BBMax.y(), inv_BBMin.z()))/2; // minimum BB
     //   QVector3D b = invObjM*geo->BBMax;
     //  QVector3D c = invOurM*BBMin;
     //   QVector3D d = invOurM*BBMax;
 
     // vertices[i*y+j]= {QVector3D(Xmin+intervalX*i, Ymin+intervalY*j,0.0f ), QVector2D((intervalX_Texture*i)/2, (intervalY_Texture*j)/2)};
-//  float interval=(Max[0]-Min[0])/(float)(precisionX-1);
+    //  float interval=(Max[0]-Min[0])/(float)(precisionX-1);
     //(val+min)/ interval = case
-//int caseX = (a.x()- Min[0])/interval;
-//int caseY = (a.y()- Min[1])/interval;
+    //int caseX = (a.x()- Min[0])/interval;
+    //int caseY = (a.y()- Min[1])/interval;
     //float interval_Texture=2/(float)(precisionX-1);
     // QVector3D k
     normal= a; //vertex[caseX*precisionX+caseY];
@@ -799,7 +847,9 @@ void GeometryEngine::addInstancedGrass(float ratioArbre, QVector3D min, QVector3
             }
         }
     }
-  //  gestionBoundingBoxForInstance(min,max);
+
+    internbbInstenced.resize(modelMatrices.size());
+    //  gestionBoundingBoxForInstance(min,max);
 }
 //todo
 void GeometryEngine::gestionBoundingBoxForInstance( QVector3D min, QVector3D max){

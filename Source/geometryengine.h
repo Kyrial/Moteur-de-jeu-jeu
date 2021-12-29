@@ -64,7 +64,13 @@
 struct VertexData
 {
     QVector3D position;
-    QVector2D texCoord;
+    QVector3D texCoord;
+};
+
+struct MinMax
+{
+    QVector3D BBMin =QVector3D(0,0,0);
+    QVector3D BBMax = QVector3D(0,0,0);
 };
 
 
@@ -72,6 +78,8 @@ class GeometryEngine : protected QOpenGLFunctions_4_1_Core
 {
 
 public:
+
+    QVector<MinMax> internbbInstenced;
 
     QVector3D coordLastCollision = QVector3D(999,999,999);
     QVector2D lastCentre = QVector2D(0,0);
@@ -110,7 +118,7 @@ public:
     void setPrecisionTexture(float val);
 
 protected:
-    QImage img;
+
     std::vector<QVector3D>  vertex;
 
     QVector3D Min = QVector3D(0,0,0);
@@ -136,7 +144,7 @@ protected:
     void setBBMin(QVector3D v);
     void setBBMax(QVector3D v);
 
-    float getHauteur(QVector2D coordText);
+  //  float getHauteur(QVector2D coordText);
 public:
 
 
@@ -148,14 +156,15 @@ public:
     bool ifNoeudVide();
     void remplaceBB(GeometryEngine *geo);
     void remplaceBB(QVector3D m,QVector3D M);
-    void updateBB(QMatrix4x4 m);
+    void updateBB(QMatrix4x4 m, QMatrix4x4 lastM =QMatrix4x4(), QMatrix4x4 courante = QMatrix4x4());
     void ajustBB(GeometryEngine *geo);
     void ajustBB(QVector3D min, QVector3D max);
 
     bool intersect(GeometryEngine *geo);
-    bool internintersect(GeometryEngine *geo);
+    bool internintersect(GeometryEngine *geo ,int &numInstence, QMatrix4x4 AllTransform = QMatrix4x4());
+    bool internintersectInstenced(GeometryEngine *geo ,int &numInstence, QMatrix4x4 AllTransform = QMatrix4x4());
     QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec, QVector3D mesh = QVector3D(0,0,0));
-
+    QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec, int numInstenced);
 
     QVector3D mapCoordChanged(QVector3D vec,QMatrix4x4 objM,QMatrix4x4 ourM);
 

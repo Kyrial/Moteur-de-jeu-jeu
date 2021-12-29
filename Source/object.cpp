@@ -70,14 +70,14 @@ void  Object::updateScene(double deltaTime, QMatrix4x4 lastM){
 
 
     if(enfants.size()<=0+ enfant_without_collision)
-        geo->updateBB(m);
+        geo->updateBB(m, lastM, calculMatrice(deltaTime));
     else{
         if(geo->ifNoeudVide())
             geo->remplaceBB(newBBMin,newBBMax);
         else
         {
             geo->resetBB();
-            geo->updateBB(m);
+            geo->updateBB(m,lastM, calculMatrice(deltaTime));
             geo->ajustBB(newBBMin,newBBMax);
         }
     }
@@ -109,9 +109,11 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
         }
     }
 
-
-
-    if(!geo->ifNoeudVide() && this != obj &&this->geo->internintersect(obj->geo)){
+   // if(Name=="arbre"){
+  //  int a = 0;
+  //  }
+    int instance = -1;
+    if(!geo->ifNoeudVide() && this != obj &&this->geo->internintersect(obj->geo,instance,this->saveAlltransform.doTransformation())){
 
         if(geo->heightMap){
             bool collision = true;
@@ -137,9 +139,12 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
             }
         }
         else{
-            qDebug("COOOOOOOOOLLLLLLLLLLLIIIIIIIIIIIIISSSSSSSIIIIIIIIIIIOOOOOOOOONNNNNNNNNN");
+            qDebug("COOLLIISSIIIIOONN avec %s", this->Name.toStdString().c_str());
             QVector3D direction =Transform::extracteTranslate(anim);
-            direction = this->geo->gestionCollision(obj->geo, direction);
+            if(instanced && instance>0)
+                direction = this->geo->gestionCollision(obj->geo,direction,instance);
+            else
+                direction = this->geo->gestionCollision(obj->geo, direction);
             obj->animation.setTranslate(direction*0.7);
             //obj->animation.setTranslate(QVector3D(0,0,0));
             obj->t.addTranslate(geo->recallageCollision(obj->geo));

@@ -101,6 +101,18 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
     //      normalBuf
 }
 
+
+/*
+void findBBinstance(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM){
+    QMatrix4x4 invObjM = Transform::inverse(objM);
+    QMatrix4x4 invOurM = Transform::inverse(ourM);
+
+    QVector3D inv_BBMin = invObjM*geo->BBMin;
+    QVector3D inv_BBMax = invObjM*geo->BBMax;
+    //    modelMatrices
+}*/
+
+
 void GeometryMeshEngine::drawCubeGeometry(QOpenGLShaderProgram *program){
     if(withNormal)
         drawWithNormal(program);
@@ -160,7 +172,6 @@ void GeometryMeshEngine::drawWithNormal(QOpenGLShaderProgram *program)
         else
             glDrawElements(GL_PATCHES, size/2, GL_UNSIGNED_SHORT, 0);
     }
-
     //glDrawElementsInstanced(GL_TRIANGLES, GLsizei count, GLenum type, const void *indices, GLsizei instancecount);
 }
 QVector3D GeometryMeshEngine::setNormalToCentreCircle(QVector3D vec, QVector3D centre, bool inverse){
