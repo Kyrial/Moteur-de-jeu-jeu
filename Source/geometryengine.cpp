@@ -173,6 +173,7 @@ std::vector<QVector3D> GeometryEngine::getVertex(){
 
 //recallage lors collision
 QVector3D GeometryEngine::recallageCollision(GeometryEngine *geoB){
+    //TODO
     QVector3D milieuA = BBMin + (BBMax - BBMin)/2;
     QVector3D milieuB = geoB->BBMin +(geoB->BBMax - geoB->BBMin)/2;
 
@@ -204,25 +205,39 @@ QVector3D GeometryEngine::getNormal(QVector3D pt){
     QVector3D A = QVector3D(pt.x(),pt.y(),perlin2d(pt.x(),pt.y()  , 2)-.3)*2;
     QVector3D B = QVector3D(pt.x()+0.1,pt.y(),perlin2d(pt.x()+0.1,pt.y()  , 2)-.3)*2;
     QVector3D C = QVector3D(pt.x(),pt.y()+0.1,perlin2d(pt.x(),pt.y()+0.1  , 2)-.3)*2;
-    return QVector3D::normal(A,B,C);
+    QVector3D normal = QVector3D::normal(A,B,C);
+    if(normal.z()<0)//normal dans le mauvais sens
+        normal[2] = -normal.z();
+    return normal;
 }
 
 //geo en déplacement
-QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB, QVector3D vec, QVector3D mesh){
+QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB, QVector3D vec){
     // qDebug("  %f,   %f    %f   \n ", mesh.x(), mesh.y(),(mesh.z()));
-    if(mesh == QVector3D(0,0,0)){
+
         QVector3D milieuA = BBMin + (BBMax - BBMin)/2;
         QVector3D milieuB = geoB->BBMin +(geoB->BBMax - geoB->BBMin)/2;
         // qDebug("\n\nAAAAAAAAAAAAAAAAAAAAA\n\n");
-        QVector3D vecAB = milieuB -milieuA;
+        QVector3D vecAB = (milieuB -milieuA).normalized();
 
         //V = V - 2(V.N)*N
 
-        //  return vec - 2* QVector3D::dotProduct(vec, vecAB) * vecAB;
-        return vec - 2* QVector3D::dotProduct(vec, getNormal()) * getNormal();
+          return (vec.normalized() - 2* QVector3D::dotProduct(vec.normalized(), vecAB) * vecAB)*vec.length();
+      //  return vec - 2* QVector3D::dotProduct(vec, getNormal()) * getNormal();
+}
+
+QVector3D GeometryEngine::gestionCollision( QVector3D vec, QVector3D point){
+    // qDebug("  %f,   %f    %f   \n ", mesh.x(), mesh.y(),(mesh.z()));
+    if(point == QVector3D(9999,9999,9999)){
+        QVector3D normal = QVector3D(0,0,1);
+
+        //V = V - 2(V.N)*N
+
+          return (vec.normalized() - 2* QVector3D::dotProduct(vec.normalized(), normal) * normal)*vec.length();
+      //  return vec - 2* QVector3D::dotProduct(vec, getNormal()) * getNormal();
     }
     else{
-        return vec - 2* QVector3D::dotProduct(vec, getNormal(mesh)) * getNormal(mesh);
+        return (vec.normalized() - 2* QVector3D::dotProduct(vec.normalized(), getNormal(point)) * getNormal(point))*vec.length();
     }
 }
 QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB,QVector3D vec, int numInstenced){
@@ -230,12 +245,13 @@ QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB,QVector3D vec, i
     QVector3D milieuA = internbbInstenced[numInstenced].BBMin + (internbbInstenced[numInstenced].BBMax - internbbInstenced[numInstenced].BBMin)/2;
     QVector3D milieuB = geoB->BBMin +(geoB->BBMax - geoB->BBMin)/2;
     // qDebug("\n\nAAAAAAAAAAAAAAAAAAAAA\n\n");
-    QVector3D vecAB = milieuB -milieuA;
+
+    QVector3D vecAB = (milieuB -milieuA).normalized();
 
     //V = V - 2(V.N)*N
 
-    //  return vec - 2* QVector3D::dotProduct(vec, vecAB) * vecAB;
-    return vec - 2* QVector3D::dotProduct(vec, getNormal()) * getNormal();
+      return (vec.normalized() - 2* QVector3D::dotProduct(vec.normalized(), vecAB) * vecAB)*vec.length();
+//    return vec - 2* QVector3D::dotProduct(vec, getNormal()) * getNormal();
 }
 
 bool GeometryEngine::ifNoeudVide(){
@@ -474,7 +490,7 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     //float hauteurTexture = std::max(-0.5, std::min((float)1.25,colorx*2)-0.25);
     if(hauteurMesh<-0.2){
         hauteurMesh = -0.2;//+cos((animation+(a_position.y)*300)/100)/150;
-        normal= QVector3D(0,0,0);
+        normal= QVector3D(9999,9999,9999);
     }
     QVector3D vecTranslate;
     if(hauteurMesh < a[2])

@@ -117,8 +117,8 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
 
         if(geo->heightMap){
             bool collision = true;
-            QVector3D mesh = QVector3D();
-            QVector3D hauteur = geo->findCoordmesh( obj->geo,  t, this->getTransf(),collision, mesh);
+            QVector3D point = QVector3D(9999,9999,9999);
+            QVector3D hauteur = geo->findCoordmesh( obj->geo,  t, this->getTransf(),collision, point);
             hauteur.setZ(hauteur.z()+hauteur.z()/20);
             if(collision){
                 obj->canJump=true;
@@ -129,7 +129,7 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
 
                 qDebug("Direction Collision %f, %f, %f",direction.x(), direction.y(), direction.z() );
 
-                direction = (this->geo->gestionCollision(obj->geo, direction, mesh))*0.7;
+                direction = (this->geo->gestionCollision(direction, point))*0.7;
 
                 qDebug("Direction Collision %f, %f, %f \n",direction.x(), direction.y(), direction.z() );
                 direction = Transform::convergeZero(direction);
@@ -139,12 +139,17 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
             }
         }
         else{
-            qDebug("COOLLIISSIIIIOONN avec %s", this->Name.toStdString().c_str());
+            qDebug("\n collision avec %s", this->Name.toStdString().c_str());
+
             QVector3D direction =Transform::extracteTranslate(anim);
+            qDebug("direction  %f, %f, %f",direction.x(), direction.y(), direction.z() );
+
             if(instanced && instance>0)
                 direction = this->geo->gestionCollision(obj->geo,direction,instance);
             else
                 direction = this->geo->gestionCollision(obj->geo, direction);
+            qDebug("Direction apres collision %f, %f, %f",direction.x(), direction.y(), direction.z() );
+
             obj->animation.setTranslate(direction*0.7);
             //obj->animation.setTranslate(QVector3D(0,0,0));
             obj->t.addTranslate(geo->recallageCollision(obj->geo));

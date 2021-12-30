@@ -163,7 +163,8 @@ public:
     bool intersect(GeometryEngine *geo);
     bool internintersect(GeometryEngine *geo ,int &numInstence, QMatrix4x4 AllTransform = QMatrix4x4());
     bool internintersectInstenced(GeometryEngine *geo ,int &numInstence, QMatrix4x4 AllTransform = QMatrix4x4());
-    QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec, QVector3D mesh = QVector3D(0,0,0));
+    QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec);
+    QVector3D gestionCollision(QVector3D vec, QVector3D mesh);
     QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec, int numInstenced);
 
     QVector3D mapCoordChanged(QVector3D vec,QMatrix4x4 objM,QMatrix4x4 ourM);
