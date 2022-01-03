@@ -133,6 +133,10 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
 
                 qDebug("Direction Collision %f, %f, %f \n",direction.x(), direction.y(), direction.z() );
                 direction = Transform::convergeZero(direction);
+                if(direction.z()<0){
+                    qDebug("direction hauteur erroné");
+                    direction[2] = -direction.z();
+                }
                 obj->animation.setTranslate(direction);
                 //obj->animation.setTranslate(QVector3D(0,0,0));
 
@@ -152,7 +156,7 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
 
             obj->animation.setTranslate(direction*0.7);
             //obj->animation.setTranslate(QVector3D(0,0,0));
-            obj->t.addTranslate(geo->recallageCollision(obj->geo));
+            obj->t.addTranslate(geo->recallageCollision(obj->geo, instance));
         }
 
 

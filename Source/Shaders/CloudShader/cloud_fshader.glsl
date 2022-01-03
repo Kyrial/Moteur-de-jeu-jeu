@@ -166,7 +166,7 @@ void main()
         //vec4 color = getLumiere( FragPos.xyz)*texture2D(textureScene, v_texcoord);
 
     vec4 color = vec4(0.8,0.8,0.8,1);
-    color.a = (perlin2d(FragPos.x+animation/1000,FragPos.y+animation/1000 , 2)-0.5)*2;
+    color.a = (perlin2d(FragPos.x/2+animation/1000,FragPos.y/2+animation/1000 , 2)-0.5)+(perlin2d(FragPos.x/4+animation/1000,FragPos.y/4+animation/1000 , 2)-0.4);
         //discard
         FragColor = color ;
 

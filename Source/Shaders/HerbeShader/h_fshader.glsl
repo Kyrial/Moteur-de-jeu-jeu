@@ -38,8 +38,11 @@ float poid(float a, float b, float intervalle){
     return min(1,max(0,1-abs(a-b)/intervalle));
 }
 
-vec2 animationEau(){
-    return  v_texcoord*cos((animation+(v_position.y)*1000)/10000)/7+(0.5)/7;
+vec2 animationfeuille(int zoom = 4){
+    vec2 feuilles = vec2(0.,0.);
+    feuilles.y=  (v_texcoord.y+cos(animation/700)/70)/zoom;//+cos((animation/10000+(v_position.y)*100)/40000)/7+(0.5)/7;
+    feuilles.x = (v_texcoord.x +cos((animation/900))/70)/zoom;
+    return feuilles;
 }
 
 vec4 getLumiere(vec3 fragPosition, float specularStrength=1.,float minDiffusion=0.4){
@@ -78,7 +81,7 @@ vec4  calculTexture(float position,vec2 texcoord ){
     if(position <bois-gapBois)
         return texture2D(textureBois, texcoord);
     return (poid(position, bois,gapBois)/poids)*texture2D(textureBois, texcoord)+//*getLumiere( FragPos.xyz)+
-            (poid(position, feuille,gapfeuille)/poids)*texture2D(textureFeuille, texcoord)*getLumiere( FragPos.xyz);//*getLumiere( FragPos.xyz,.5);
+            (poid(position, feuille,gapfeuille)/poids)*texture2D(textureFeuille, (animationfeuille(8)+animationfeuille(4)))*getLumiere( FragPos.xyz);//*getLumiere( FragPos.xyz,.5);
 
 }
 
