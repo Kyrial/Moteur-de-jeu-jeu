@@ -7,11 +7,19 @@ GeometryMeshEngine::GeometryMeshEngine()
 
 
 void GeometryMeshEngine::initMeshObj(std::string filename, bool collisionActivated, bool centre, bool inverse){
-
     std::vector< std::vector<unsigned int> >  faces;
+    if(withTextureCoord){
+
+
+        OBJIO::open(filename, vertex, faces, textures, indicesTextures, true);
+        bindMesh(faces,collisionActivated, centre, inverse);
+    }
+    else{
+
 
     OBJIO::open(filename, vertex, faces, true);
     bindMesh(faces,collisionActivated, centre, inverse);
+    }
 }
 
 void GeometryMeshEngine::initMesh(std::string filename,  bool collisionActivated, bool centre, bool inverse ){
@@ -40,7 +48,7 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
     if(centre)
         for(int i=0; i<vertexNumber;i++)
             normals[i]=setNormalToCentreCircle(vertex[i], QVector3D(0,0,0), inverse);
-    qDebug("1");
+
     for(int i=0; i<indexCount;i+=3) {
         indices[i]= faces[i/3][0];
         indices[i+1]= faces[i/3][1];
@@ -64,10 +72,25 @@ void GeometryMeshEngine::bindMesh(std::vector< std::vector<unsigned int> >  face
     /* for(int i =0; i< indexCount;i++){
         normals[i] = normals[i].normalized();
     }*/
+    if(withTextureCoord && textures.size() >0){
+        QVector<QVector2D> textVertex;
+        textVertex.resize(vertexNumber);
+        for(int i=0; i<indexCount;i+=3){
+            textVertex[faces[i/3][0]]= textures[indicesTextures[i/3][0]];
+            textVertex[faces[i/3][1]]= textures[indicesTextures[i/3][1]];
+            textVertex[faces[i/3][2]]= textures[indicesTextures[i/3][2]];
+}
 
+        for(int i=0; i<vertexNumber;i++) {
+            vertices[i]= {vertex[i], textVertex[i],normals[i].normalized()};
+            vertices2[i]= {vertex[i], textVertex[i]};
+        }
+    }
+    else{
     for(int i=0; i<vertexNumber;i++) {
         vertices[i]= {vertex[i], QVector2D((2+vertex[i][0]+vertex[i][2])*precisionTexture, (2+vertex[i][1]+vertex[i][2])*precisionTexture),normals[i].normalized()};
         vertices2[i]= {vertex[i], QVector2D((vertex[i][0]+vertex[i][1])*precisionTexture, (vertex[i][0]+vertex[i][2])*precisionTexture)};
+    }
     }
 
 

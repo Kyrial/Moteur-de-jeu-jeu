@@ -24,6 +24,7 @@ public:
     float facteurCynetique = 50;
 
 
+
 //QVector3D coordLastCollision = QVector3D(999,999,999);
     float dist2Points(QVector3D pt1, QVector3D pt2){
         return
@@ -76,9 +77,8 @@ public:
         Object::updateScene(deltaTime, lastM);
 
     }
-
-
-
 };
+
+
 
 #endif // MOBILEOBJ_H

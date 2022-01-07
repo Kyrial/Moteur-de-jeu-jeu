@@ -24,7 +24,7 @@ public:
  QVector<QOpenGLShaderProgram*> allShader;
     bool instanced = false;
 
-
+ float transfertForce = 0; //[0,1]
 protected:
     Transform t = Transform();
     Transform animation = Transform();
@@ -41,6 +41,8 @@ protected:
     QOpenGLShaderProgram *shader;
     Transform saveAlltransform = Transform();
     QString Name= "";
+
+
     ///Constructeur
 
 public:
@@ -142,6 +144,8 @@ public:
     }
 
 public:
+    void transfertDeForce(QVector3D direction);
+
     virtual void  updateScene( double deltaTime =1, QMatrix4x4 m= QMatrix4x4());
     void findCollision( Object *obj,QMatrix4x4 anim,  QMatrix4x4 t);
     void updateBB();

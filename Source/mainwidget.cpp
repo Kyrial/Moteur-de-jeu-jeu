@@ -179,14 +179,34 @@ void MainWidget::scene(){
     Transform *tHerbe = new Transform;
     tHerbe->setScale(0.05,0.05,0.05);
     tHerbe->setRotation(1,0,0,90);
-    Object* herbe= addGameObject(allShaders[1],Terre,tHerbe , geo_herbe,new Transform);
+    Object* herbe= addGameObject(allShaders[3],Terre,tHerbe , geo_herbe,new Transform);
     herbe->instanced=true;
     herbe->setName("arbre");
+    //herbe->transfertForce = 1;
 
     //Fin creation
     ////////////
 
 
+    //divers objet mobile
+    //sous noeud car le maillage de l'objet est de travers
+    GeometryEngine *geo_decors1 = new GeometryMeshEngine;
+    geo_decors1->withNormal = true;
+//    geo_mobile->setPrecisionTexture(0.5);
+    geo_decors1->withTextureCoord =true;
+  //  geo_mobile->initMesh(":/Mesh/space_station.off");
+    geo_decors1->initMeshObj(":/Mesh/Cube_obj.obj");
+    Transform *t_decors1 = new Transform;
+    t_decors1->setScale(0.005,0.005,0.005);
+    t_decors1->setTranslate(60,60,60);
+   // t_decors1->setRotation(1,0,0,90);
+   // t_mobile->setRotation(QQuaternion::fromAxisAndAngle(0,0,-1,90) * QQuaternion::fromAxisAndAngle(1,0,0,90));
+    Transform *anim_decors1 = new Transform;
+    anim_decors1->setTranslate(0,0,2);
+    Object* decors1 =addMobileObject(allShaders[1],Terre, t_decors1,   geo_decors1, anim_decors1,
+//            new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
+    new QOpenGLTexture(QImage(":/Texture/Cube_diffuse.jpg").mirrored()));
+    decors1->transfertForce = 1;
 
 
 
@@ -204,28 +224,41 @@ void MainWidget::scene(){
                     new QOpenGLTexture(QImage(":/textureSoleil.png").mirrored())
                     );*/
 
-    //Instance INIT GAME MOBILE //test
-    // GeometryEngine *geo_mobile2 = new GeometryEngine;
-    //geo_mobile2->initMesh(":/Mesh/space_station.off");
-    Transform *t_mobile = new Transform;
-    t_mobile->setScale(0.015,0.015,0.015);
+    //Instance INIT GAME MOBILE
+
+    //noeud du joueur, les touche effectuent les translation sur ce noeud
+    Transform *noeud_mobile = new Transform;
+    noeud_mobile->setScale(0.0115,0.0115,0.0115);
+    //t_mobile->setRotation(1,0,0,90);
     //  t_mobile->setTranslate(80,0,25);
-    Object* NoeudSatellite =addMobileObject(&program,Terre,t_mobile ,  new GeometryEngine, new Transform);
+    Object* NoeudSatellite =addMobileObject(&program,Terre,noeud_mobile ,  new GeometryEngine, new Transform);
 
 
-    //geo_Soleil->initCubeGeometry();
+    //sous noeud pour effectuer les rotation
+    Object* Satellite =addGameObject(&program,NoeudSatellite,new Transform ,  new GeometryEngine, new Transform);
+
+
+
+    //sous noeud car le maillage de l'objet est de travers
     GeometryEngine *geo_mobile = new GeometryMeshEngine;
     geo_mobile->withNormal = true;
-    geo_mobile->setPrecisionTexture(0.5);
-    geo_mobile->initMesh(":/Mesh/space_station.off");
+//    geo_mobile->setPrecisionTexture(0.5);
+    geo_mobile->withTextureCoord =true;
+  //  geo_mobile->initMesh(":/Mesh/space_station.off");
+    geo_mobile->initMeshObj(":/Mesh/FA59A.obj");
+    Transform *t_mobile = new Transform;
+    //t_mobile->setScale(0.0215,0.0215,0.0215);
+    t_mobile->setRotation(1,0,0,90);
+   // t_mobile->setRotation(QQuaternion::fromAxisAndAngle(0,0,-1,90) * QQuaternion::fromAxisAndAngle(1,0,0,90));
     Transform *anim_mobile = new Transform;
     anim_mobile->setTranslate(0,0,0);
-    Object* satellite =addGameObject(allShaders[1],NoeudSatellite, new Transform ,   geo_mobile, anim_mobile,
-            new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
+    Object* sousSatellite =addGameObject(allShaders[1],Satellite, t_mobile,   geo_mobile, anim_mobile,
+//            new QOpenGLTexture(QImage(":/Texture/textureSoleil.png").mirrored()));
+    new QOpenGLTexture(QImage(":/Texture/FA59A.png").mirrored()));
 
 
     Object *cameraObj= new CameraObject();
-    satellite->addChild(cameraObj);
+    Satellite->addChild(cameraObj);
     cameraObj->setShader(&program);
     for(int i =0 ;i < allShaders.size(); i++)
         cameraObj->addShader(allShaders[i]);
@@ -270,6 +303,7 @@ void MainWidget::scene(){
     geo_ciel->setPrecisionTexture(0.20);
     geo_ciel->withNormal = true;
     geo_ciel->initMesh(":/Mesh/sphere.off", false,true,false);
+
     //qDebug("test");
     // geo_Lune->initMesh(":Mesh/space_station.off");
     Transform *t_Ciel = new Transform;
@@ -294,7 +328,7 @@ void MainWidget::scene(){
     tbill->setScale(10,10,10);
     tbill->setTranslate(0,0,2);
     Transform *anim_tbill = new Transform;
-    Object* noeudBill = addBillboardObject(allShaders[1],satellite,tbill, geo_bill,anim_tbill,new QOpenGLTexture(QImage(":/Texture/lifeBar.png").mirrored()));
+    Object* noeudBill = addBillboardObject(allShaders[1],Satellite,tbill, geo_bill,anim_tbill,new QOpenGLTexture(QImage(":/Texture/lifeBar.png").mirrored()));
     //Fin creation
 
     //Instance INIT GAME OBJECT //Terre
@@ -331,14 +365,14 @@ void MainWidget::scene(){
     QObject::connect(this, &MainWidget::emitFilter,
                      NoeudSatellite, &Object::keyPressedChangedMove);
     QObject::connect(this, &MainWidget::emitFilter,
-                     satellite, &Object::keyPressedChangedRotate);
+                     Satellite, &Object::keyPressedChangedRotate);
     //emitFilter
     //    void keyPressedChangedMove(QEvent * event);
     //  void keyPressedChangedRotate(QEvent * event);
     //Fin creation
 
 
-    QObject::connect(satellite, &Object::emitPosition,
+    QObject::connect(Satellite, &Object::emitPosition,
                      Terre, &Object::mapCoordChanged);
     QObject::connect(Terre, &Object::emitTree,
                      herbe, &Object::updateTree);
@@ -492,20 +526,20 @@ void MainWidget::initializeGL()
 void MainWidget::initShaders()
 {
     // Compile vertex shader
-    if (!program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/vshader.glsl"))
+    if (!program.addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/TerrainShader/vshader.glsl"))
         close();
 
     // Compile fragment shader
-    if (!program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/fshader.glsl"))
+    if (!program.addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/TerrainShader/fshader.glsl"))
         close();
     //compile control shader
     if (!program.addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/controlshader.glsl"))
         close();
     //compile control shader
-    if (!program.addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/tesselationshader.glsl"))
+    if (!program.addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/TerrainShader/tesselationshader.glsl"))
         close();
     //compile geometry shader
-    if (!program.addShaderFromSourceFile(QOpenGLShader::Geometry, ":/Shaders/geometryshader.glsl"))
+    if (!program.addShaderFromSourceFile(QOpenGLShader::Geometry, ":/Shaders/TerrainShader/geometryshader.glsl"))
         close();
 
 
@@ -518,37 +552,38 @@ void MainWidget::initShaders()
         close();
 
     allShaders.push_back(&program);
+
     // Compile vertex shader QOpenGLShaderProgram
-    QOpenGLShaderProgram *herbeShader = new QOpenGLShaderProgram;
-    if(!herbeShader->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/HerbeShader/h_vshader.glsl"))
+    QOpenGLShaderProgram *meshShader = new QOpenGLShaderProgram;
+    if(!meshShader->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/MeshShader/h_vshader.glsl"))
         close();
 
     // Compile fragment shader
-    if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/HerbeShader/h_fshader.glsl"))
+    if (!meshShader->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/MeshShader/h_fshader.glsl"))
         close();
     /*    // Compile fragment shader
     if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/HerbeShader/cloud_fshader.glsl"))
         close();*/
 
     //compile control shader
-    if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/controlshader.glsl"))
+    if (!meshShader->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/controlshader.glsl"))
         close();
     //compile control shader
-    if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/HerbeShader/h_tesselationshader.glsl"))
+    if (!meshShader->addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/MeshShader/h_tesselationshader.glsl"))
         close();
 
 
     // Link shader pipeline
-    if (!herbeShader->link())
+    if (!meshShader->link())
         close();
 
-    allShaders.push_back(herbeShader);
+    allShaders.push_back(meshShader);
 
 
 
     // Compile vertex shader QOpenGLShaderProgram
     QOpenGLShaderProgram *cloudShader = new QOpenGLShaderProgram;
-    if(!cloudShader->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/HerbeShader/h_vshader.glsl"))
+    if(!cloudShader->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/MeshShader/h_vshader.glsl"))
         close();
 
     // Compile fragment shader
@@ -559,7 +594,7 @@ void MainWidget::initShaders()
     if (!cloudShader->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/controlshader.glsl"))
         close();
     //compile control shader
-    if (!cloudShader->addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/HerbeShader/h_tesselationshader.glsl"))
+    if (!cloudShader->addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/MeshShader/h_tesselationshader.glsl"))
         close();
 
 
@@ -570,6 +605,32 @@ void MainWidget::initShaders()
     allShaders.push_back(cloudShader);
 
 
+
+    // Compile vertex shader QOpenGLShaderProgram
+    QOpenGLShaderProgram *treeShader = new QOpenGLShaderProgram;
+    if(!treeShader->addShaderFromSourceFile(QOpenGLShader::Vertex, ":/Shaders/MeshShader/h_vshader.glsl"))
+        close();
+
+    // Compile fragment shader
+    if (!treeShader->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/MeshShader/h_fshader.glsl"))
+        close();
+    /*    // Compile fragment shader
+    if (!herbeShader->addShaderFromSourceFile(QOpenGLShader::Fragment, ":/Shaders/HerbeShader/cloud_fshader.glsl"))
+        close();*/
+
+    //compile control shader
+    if (!treeShader->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/controlshader.glsl"))
+        close();
+    //compile control shader
+    if (!treeShader->addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/TreeShader/arbre_tesselationshader.glsl"))
+        close();
+
+
+    // Link shader pipeline
+    if (!treeShader->link())
+        close();
+
+    allShaders.push_back(treeShader);
 
 
 
@@ -694,13 +755,12 @@ void MainWidget::paintGL()
         allShaders[i]->setUniformValue("animation", (float)absoluteTime.elapsed());
 
     }
-    allShaders[1]->bind();
-    allShaders[1]->setUniformValue("textureFeuille", 1); //changer texture
-    allShaders[1]->setUniformValue("textureBois", 5);
-    allShaders[2]->bind();
-    allShaders[2]->setUniformValue("textureFeuille", 1); //changer texture
-    allShaders[2]->setUniformValue("textureBois", 5);
+    for(int i=1; i < allShaders.size();i++){
+    allShaders[i]->bind();
+    allShaders[i]->setUniformValue("textureFeuille", 1); //changer texture
+    allShaders[i]->setUniformValue("textureBois", 5);
 
+}
     // program.setUniformValue("mvp_matrix",  matrix * view * projection);
     //! [6]
     emit projectionChanged(projection*matrix);

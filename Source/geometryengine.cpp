@@ -282,7 +282,12 @@ QVector3D GeometryEngine::getNormal(QVector3D pt){
     return normal;
 }
 
-//geo en déplacement
+/**
+ * @brief  gestion de la collision avec gameObject
+ * @param geoB
+ * @param vec
+ * @return
+ */
 QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB, QVector3D vec){
     // qDebug("  %f,   %f    %f   \n ", mesh.x(), mesh.y(),(mesh.z()));
 
@@ -301,6 +306,12 @@ QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB, QVector3D vec){
     //  return vec - 2* QVector3D::dotProduct(vec, getNormal()) * getNormal();
 }
 
+/**
+ * @brief gestion de la collision avec le terrain
+ * @param vec
+ * @param point
+ * @return
+ */
 QVector3D GeometryEngine::gestionCollision( QVector3D vec, QVector3D point){
     // qDebug("  %f,   %f    %f   \n ", mesh.x(), mesh.y(),(mesh.z()));
     if(point == QVector3D(9999,9999,9999)){
@@ -315,6 +326,13 @@ QVector3D GeometryEngine::gestionCollision( QVector3D vec, QVector3D point){
         return (vec.normalized() - 2* QVector3D::dotProduct(vec.normalized(), getNormal(point)) * getNormal(point))*vec.length();
     }
 }
+/**
+ * @brief  gestion de la collision avec le terrain avec un gameobject contenant un nombre n d'instance
+ * @param geoB
+ * @param vec
+ * @param numInstenced
+ * @return
+ */
 QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB,QVector3D vec, int numInstenced){
 
     QVector3D milieuA = internbbInstenced[numInstenced].BBMin + (internbbInstenced[numInstenced].BBMax - internbbInstenced[numInstenced].BBMin)/2;

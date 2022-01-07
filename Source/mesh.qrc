@@ -2,11 +2,11 @@
     <qresource prefix="/">
         <file>Mesh/sphere.obj</file>
         <file>Mesh/sphere.off</file>
-        <file>Mesh/dragon.off</file>
-        <file>Mesh/house.off</file>
         <file>Mesh/space_station.off</file>
-        <file>Mesh/grass.obj</file>
         <file>Mesh/tree.obj</file>
         <file>Mesh/sphere2.obj</file>
+        <file>Mesh/SS1.obj</file>
+        <file>Mesh/FA59A.obj</file>
+        <file>Mesh/Cube_obj.obj</file>
     </qresource>
 </RCC>

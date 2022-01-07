@@ -426,6 +426,129 @@ template< class point_t , class int_type_t > bool open(
 }
 
 
+template< class point_t , class texture, class int_type_t > bool open(
+        const std::string & filename,
+        std::vector<point_t> & vertices,
+        std::vector< std::vector< int_type_t > > & faces,
+        std::vector<texture> & textures,
+         std::vector< std::vector< int_type_t > > & indicetextures,
+        bool convertToTriangles = true,
+        bool randomize = false,
+        bool convertEdgesToDegenerateTriangles = true)
+{
+
+    QFile myFile(filename.c_str());
+
+
+    //std::ifstream myfile;
+    //myfile.open(filename.c_str());
+    if (!myFile.open(QIODevice::ReadOnly))//!myfile.is_open())
+    {
+        std::cout << filename << " cannot be opened" << std::endl;
+        return false;
+    }
+    QTextStream in(&myFile);
+    vertices.clear();
+    faces.clear();
+
+    while(!myFile.atEnd())// myfile.good() )
+    {
+        //std::string line;
+        //getline (myfile,line);
+        QString QTLine = myFile.readLine();
+        //QString QTLine = QString::fromStdString( line );
+        QRegExp reg("\\s+");
+        QStringList lineElements = QTLine.split(reg);
+
+        if(  lineElements.size() > 0  )
+        {
+            QString elementType = lineElements[0];
+            // vertex
+            if ( elementType == QString("v") )
+            {
+                vertices.push_back(point_t( lineElements[1].toDouble() , lineElements[2].toDouble() , lineElements[3].toDouble() ));
+            }
+            if ( elementType == QString("vt") )
+            {
+                textures.push_back(texture( lineElements[1].toDouble() , lineElements[2].toDouble()));
+            }
+            // face
+            else if ( elementType == QString("f") )
+            {
+                std::vector< int_type_t > vhandles;
+                std::vector< int_type_t > texthandles;
+                for( int i = 1 ; i < lineElements.size() ; ++i )
+                {
+                    QStringList FaceElements = lineElements[i].split("/", QString::SkipEmptyParts);
+                    if( FaceElements.size() > 0 ){
+                        vhandles.push_back( (int_type_t)( (abs(FaceElements[0].toInt()) - 1) ) );
+                        texthandles.push_back( (int_type_t)( (abs(FaceElements[1].toInt()) - 1) ) );
+                    }
+                }
+
+                if (vhandles.size()>3)
+                {
+                    if( convertToTriangles )
+                    {
+                        //model is not triangulated, so let us do this on the fly...
+                        //to have a more uniform mesh, we add randomization
+                        unsigned int k=(randomize)?(rand()%vhandles.size()):0;
+                        for (unsigned int i=0;i<vhandles.size()-2;++i)
+                        {
+                            std::vector< int_type_t > tri(3);
+                            tri[0]= (int_type_t) vhandles[(k+0)%vhandles.size()];
+                            tri[1]= (int_type_t) vhandles[(k+i+1)%vhandles.size()];
+                            tri[2]= (int_type_t) vhandles[(k+i+2)%vhandles.size()];
+                            faces.push_back(tri);
+
+                            std::vector< int_type_t > tritexture(3);
+                            tritexture[0]= (int_type_t) texthandles[(k+0)%texthandles.size()];
+                            tritexture[1]= (int_type_t) texthandles[(k+i+1)%texthandles.size()];
+                            tritexture[2]= (int_type_t) texthandles[(k+i+2)%texthandles.size()];
+                            indicetextures.push_back(tritexture);
+                        }
+                    }
+                    else{
+                        faces.push_back(vhandles);
+                        indicetextures.push_back(texthandles);
+                    }
+                }
+                else if (vhandles.size()==3)
+                {
+                    faces.push_back(vhandles);
+                    indicetextures.push_back(texthandles);
+                }
+                else if (vhandles.size()==2)
+                {
+                    if( convertEdgesToDegenerateTriangles )
+                    {
+                        printf("Unexpected number of face vertices (2). Converting edge to degenerate triangle");
+                        vhandles.push_back(vhandles[1]);
+                        faces.push_back(vhandles);
+                        texthandles.push_back(texthandles[1]);
+                        indicetextures.push_back(texthandles);
+                    }
+                    else
+                        printf("Unexpected number of face vertices (2). Ignoring face");
+                }
+            }
+        }
+    }
+    myFile.close();
+    return true;
+}
+
+
+
+
+
+
+
+
+
+
+
+
 
 template< class point_t , class int_type_t > bool open(
         const std::string & filename,

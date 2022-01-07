@@ -25,6 +25,10 @@ public:
     void initMeshObj(std::string filename, bool collisionActivated= true, bool centre= false, bool inverse = false);
     void bindMesh(std::vector< std::vector<unsigned int> >  faces, bool a = true, bool centre= false, bool inverse = false);
 
+
+    std::vector<QVector2D>  textures;
+    std::vector< std::vector<unsigned int> >  indicesTextures;
+
 //        QOpenGLBuffer normalBuf;
 
     void drawWithNormal(QOpenGLShaderProgram *program);

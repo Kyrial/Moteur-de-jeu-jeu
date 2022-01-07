@@ -78,7 +78,7 @@ class GeometryEngine : protected QOpenGLFunctions_4_1_Core
 {
 
 public:
-
+    bool withTextureCoord = false;
     QVector<MinMax> internbbInstenced;
 
     QVector3D coordLastCollision = QVector3D(999,999,999);
@@ -103,8 +103,8 @@ public:
     GeometryEngine();
     virtual ~GeometryEngine();
     virtual void drawCubeGeometry(QOpenGLShaderProgram *program);
-    virtual void initMesh(std::string filename, bool a= true,bool centre= false, bool inverse = false){}
-    virtual void initMeshObj(std::string filename,bool a= true,bool centre= false, bool inverse = false){}
+    virtual void initMesh(std::string filename, bool collisionActivated= true,bool centre= false, bool inverse = false){}
+    virtual void initMeshObj(std::string filename,bool collisionActivated= true,bool centre= false, bool inverse = false){}
     virtual void bindMesh(std::vector< std::vector<unsigned int> >  faces,bool centre= false, bool inverse = false){}
     virtual void initLifeBar(){}
     virtual bool updateLifeBar(double deltaTime){}

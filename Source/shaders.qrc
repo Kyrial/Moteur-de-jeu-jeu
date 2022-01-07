@@ -1,13 +1,14 @@
 <RCC>
     <qresource prefix="/">
-        <file>Shaders/vshader.glsl</file>
-        <file>Shaders/fshader.glsl</file>
+        <file>Shaders/TerrainShader/vshader.glsl</file>
+        <file>Shaders/TerrainShader/fshader.glsl</file>
         <file>Shaders/controlshader.glsl</file>
-        <file>Shaders/tesselationshader.glsl</file>
-        <file>Shaders/HerbeShader/h_tesselationshader.glsl</file>
-        <file>Shaders/HerbeShader/h_vshader.glsl</file>
-        <file>Shaders/HerbeShader/h_fshader.glsl</file>
-        <file>Shaders/geometryshader.glsl</file>
+        <file>Shaders/TerrainShader/tesselationshader.glsl</file>
+        <file>Shaders/MeshShader/h_tesselationshader.glsl</file>
+        <file>Shaders/MeshShader/h_vshader.glsl</file>
+        <file>Shaders/MeshShader/h_fshader.glsl</file>
+        <file>Shaders/TerrainShader/geometryshader.glsl</file>
         <file>Shaders/CloudShader/cloud_fshader.glsl</file>
+		<file>Shaders/TreeShader/arbre_tesselationshader.glsl</file>
     </qresource>
 </RCC>

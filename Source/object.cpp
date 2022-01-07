@@ -109,9 +109,9 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
         }
     }
 
-   // if(Name=="arbre"){
-  //  int a = 0;
-  //  }
+    // if(Name=="arbre"){
+    //  int a = 0;
+    //  }
     int instance = -1;
     if(!geo->ifNoeudVide() && this != obj &&this->geo->internintersect(obj->geo,instance,this->saveAlltransform.doTransformation())){
 
@@ -122,7 +122,7 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
             hauteur.setZ(hauteur.z()+hauteur.z()/20);
             if(collision){
                 obj->canJump=true;
-               // qDebug("COOOOOOOOOLLLLLLLLLLLIIIIIIIIIIIIISSSSSSSIIIIIIIIIIIOOOOOOOOONNNNNNNNNN");
+                // qDebug("COOOOOOOOOLLLLLLLLLLLIIIIIIIIIIIIISSSSSSSIIIIIIIIIIIOOOOOOOOONNNNNNNNNN");
                 obj->t.addTranslate(hauteur);
                 QVector3D direction =Transform::extracteTranslate(anim);
                 //  qDebug("  %f,   %f    %f   \n ", mesh.x(), mesh.y(),(mesh.z()));
@@ -146,15 +146,22 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
             qDebug("\n collision avec %s", this->Name.toStdString().c_str());
 
             QVector3D direction =Transform::extracteTranslate(anim);
+            QVector3D directionDeviee = direction;
             qDebug("direction  %f, %f, %f",direction.x(), direction.y(), direction.z() );
 
             if(instanced && instance>0)
-                direction = this->geo->gestionCollision(obj->geo,direction,instance);
+                directionDeviee = this->geo->gestionCollision(obj->geo,direction,instance);
             else
-                direction = this->geo->gestionCollision(obj->geo, direction);
+                directionDeviee = this->geo->gestionCollision(obj->geo, direction);
             qDebug("Direction apres collision %f, %f, %f",direction.x(), direction.y(), direction.z() );
+            if(direction != directionDeviee){
+                obj->animation.setTranslate(directionDeviee*0.7);
+           //     if(instanced && instance>0)
+           //         this->transfertDeForce(directionDeviee*0.7,instance );
+           //     else
+                this->transfertDeForce(direction*0.7);
+            }
 
-            obj->animation.setTranslate(direction*0.7);
             //obj->animation.setTranslate(QVector3D(0,0,0));
             obj->t.addTranslate(geo->recallageCollision(obj->geo, instance));
         }
@@ -281,6 +288,15 @@ void Object::updateTree(QVector3D coordCharacter2){
         geo->addInstancedGrass(0.42,QVector3D((centreX)-12,(centreY)-12,0),QVector3D((centreX)+12,(centreY)+12,0) );
     }
 }
+
+void Object::transfertDeForce(QVector3D direction){
+    animation.setTranslate(animation.getTranslate()+direction*transfertForce);
+}
+
+//void Object::transfertDeForce(QVector3D direction){
+//    animation.setTranslate(animation.getTranslate()+direction*transfertForce);
+//}
+
 
 
 

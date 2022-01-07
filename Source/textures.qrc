@@ -4,13 +4,14 @@
         <file>Texture/grass.png</file>
         <file>Texture/snowrocks.png</file>
         <file>Texture/rock.png</file>
-        <file>Texture/Heightmap_Rocky.png</file>
-        <file>Texture/Heightmap_Mountain.png</file>
         <file>Texture/heightmap-1024x1024.png</file>
         <file>Texture/textureSoleil.png</file>
         <file>Texture/textureEau.png</file>
         <file>Texture/Textureciel1.jpg</file>
         <file>Texture/textureBois.png</file>
         <file>Texture/lifeBar.png</file>
+        <file>Texture/HULL.jpg</file>
+        <file>Texture/FA59A.png</file>
+        <file>Texture/Cube_diffuse.jpg</file>
     </qresource>
 </RCC>
