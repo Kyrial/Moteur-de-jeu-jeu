@@ -96,7 +96,7 @@ public:
     MainWidget(int fps);
     /**
      * @brief modifFPS : modifi les FPS
-     * @param x
+     * @param x : nouvelle valeur des FPS
      */
     void modifFPS(int x);
 
@@ -106,6 +106,10 @@ public:
     double deltaTime = 1;
 
 protected:
+    /**
+     * @brief sauvegarde la position du clique de la souris
+     * @param e : position
+     */
     void mousePressEvent(QMouseEvent *e) override;
     void mouseReleaseEvent(QMouseEvent *e) override;
     void timerEvent(QTimerEvent *e) override;
@@ -113,8 +117,13 @@ protected:
     void initializeGL() override;
     void resizeGL(int w, int h) override;
     void paintGL() override;
-
+    /**
+     * @brief initialise le shader
+     */
     void initShaders();
+    /**
+     * @brief initialise la texture
+     */
     void initTextures();
 
     //  void keyPressEvent(QKeyEvent *e) override;
@@ -124,13 +133,22 @@ protected:
     Object* addMobileObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *texture);
     Object* addBillboardObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim,QOpenGLTexture *txtr);
 
-
+    /**
+     * @brief initialise le monde
+     */
     void initMonde();
+    /**
+     * @brief métode répertorient tout les objets du graphe de scène
+     */
     void scene();
 
 private:
 
     QBasicTimer timer;
+    /**
+     * @brief donne un attribut à la texture
+     * @param texture : la texture
+     */
     void addAttributeToTexture(QOpenGLTexture* texture);
     QOpenGLShaderProgram program;
     QVector<QOpenGLShaderProgram*> allShaders;
@@ -156,15 +174,40 @@ private:
     QVector3D rotationAxis;
     qreal angularSpeed;
     QQuaternion rotation;
-
+    /**
+     * @brief trigget sur event des touches claviers
+     * @param e
+     */
     void keyPressEvent(QKeyEvent *e) override;
+    /**
+     * @brief gère tout les évenements
+     * @param object
+     * @param event
+     * @return
+     */
     bool eventFilter(QObject *object, QEvent *event) override;
 signals:
+    /**
+     * @brief envois un signal lorsqu'une touche est préssée
+     * @param e
+     */
     void signalKeyPress(QKeyEvent *e);
+    /**
+     * @brief projectionChanged : c'est un signal qui avertit le slot connécté que la projection a changé
+     * @param val
+     */
     void projectionChanged(QMatrix4x4 val);
+    /**
+     * @brief emitFilter : signal qui avertit qu'une touche à été préssé ou relaché
+     * @param event
+     */
     void emitFilter(QEvent *event);
 public slots :
     void cameraControle();
+    /**
+     * @brief envois le signal emitFilter()
+     * @param e
+     */
     void keyPress(QKeyEvent *e);
 
 };
