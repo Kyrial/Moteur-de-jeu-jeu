@@ -73,18 +73,31 @@
 #include <QPainter>
 #include <QToolTip>
 class GeometryEngine;
-
+/**
+ * @file
+ * @brief la classe MainWidget est la classe principale qui contiens le graphe de scène et initialise la confiture
+ */
+/**
+ * @brief la classe MainWidget est la classe principale qui contiens le graphe de scène et initialise la confiture
+ */
 class MainWidget : public QOpenGLWidget, protected QOpenGLFunctions_4_1_Core
 {
     Q_OBJECT
 
 public:
+    /**
+     * @brief Constructeur
+     * @param parent
+     */
     explicit MainWidget(QWidget *parent = 0);
     ~MainWidget();
     MainWidget();
 
     MainWidget(int fps);
-
+    /**
+     * @brief modifFPS : modifi les FPS
+     * @param x
+     */
     void modifFPS(int x);
 
     int FPS = 20;
