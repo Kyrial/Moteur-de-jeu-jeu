@@ -12,6 +12,10 @@ class Controler : public QOpenGLWidget
 
 public:
     /**
+     * @file
+     * @brief Gère les touches
+     */
+    /**
      * @brief Gère les touches
      */
     Controler();
