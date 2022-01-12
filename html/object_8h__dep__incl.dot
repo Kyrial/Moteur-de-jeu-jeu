@@ -1,0 +1,20 @@
+digraph "object.h"
+{
+ // LATEX_PDF_SIZE
+  edge [fontname="Helvetica",fontsize="10",labelfontname="Helvetica",labelfontsize="10"];
+  node [fontname="Helvetica",fontsize="10",shape=record];
+  Node1 [label="object.h",height=0.2,width=0.4,color="black", fillcolor="grey75", style="filled", fontcolor="black",tooltip="le fichier contient la classe Object est la classe mère et est abstraite, elle contient les comportem..."];
+  Node1 -> Node2 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node2 [label="billboardobject.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$billboardobject_8h.html",tooltip="la classe BillboardObject devait etre a la base capable d'afficher des billboard, mais par manque de ..."];
+  Node2 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node3 [label="mainwidget.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mainwidget_8h.html",tooltip="la classe MainWidget est la classe principale qui contiens le graphe de scène et initialise la confit..."];
+  Node1 -> Node4 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node4 [label="cameraobject.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$cameraobject_8h.html",tooltip="le fichier contient la classe CameraObject qui gère l'objet Caméra"];
+  Node4 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node5 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node5 [label="gameobject.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$gameobject_8h.html",tooltip="le fichier contient la classe GameObject contient les objets qui ne subisse pas la gravité,..."];
+  Node5 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node1 -> Node6 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+  Node6 [label="mobileobj.h",height=0.2,width=0.4,color="black", fillcolor="white", style="filled",URL="$mobileobj_8h.html",tooltip="le fichier contient la classe MobileObject contient les objets subissant la gravité,..."];
+  Node6 -> Node3 [dir="back",color="midnightblue",fontsize="10",style="solid",fontname="Helvetica"];
+}

@@ -1,0 +1,86 @@
+.TH "CameraObject" 3 "Mercredi 12 Janvier 2022" "Moteur De Jeu" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+CameraObject \- la classe \fBCameraObject\fP qui gère l'objet Caméra  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <cameraobject\&.h>\fP
+.PP
+Est dérivée de \fBObject\fP\&.
+.SS "Fonctions membres publiques"
+
+.in +1c
+.ti -1c
+.RI "\fBCameraObject\fP ()"
+.br
+.RI "Constructeur\&. "
+.ti -1c
+.RI "\fBCameraObject\fP (\fBObject\fP par)"
+.br
+.RI "\fBCameraObject\fP constructeur avec parametre\&. "
+.ti -1c
+.RI "void \fBupdateScene\fP (double deltaTime=1, QMatrix4x4 m=QMatrix4x4())"
+.br
+.RI "updateScene met a jour la caméra "
+.ti -1c
+.RI "void \fBkeyPress\fP (QKeyEvent *event)"
+.br
+.in -1c
+.SS "Attributs publics"
+
+.in +1c
+.ti -1c
+.RI "QVector3D \fBrotation_camera\fP = QVector3D(1\&.0f, 1\&.0f, 3\&.0f)"
+.br
+.ti -1c
+.RI "QVector3D \fBcamera_position\fP = QVector3D(0\&.0f, 1\&.2f, 0\&.5f)"
+.br
+.ti -1c
+.RI "QVector3D \fBcamera_target\fP = QVector3D(0\&.0f, 0\&.1f, 1\&.0f)"
+.br
+.ti -1c
+.RI "QVector3D \fBcamera_up\fP = QVector3D(0\&.0f, 0\&.0f, 0\&.5f)"
+.br
+.in -1c
+.SS "Membres hérités additionnels"
+.SH "Description détaillée"
+.PP 
+la classe \fBCameraObject\fP qui gère l'objet Caméra 
+.SH "Documentation des constructeurs et destructeur"
+.PP 
+.SS "CameraObject::CameraObject (\fBObject\fP par)\fC [inline]\fP"
+
+.PP
+\fBCameraObject\fP constructeur avec parametre\&. 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIpar\fP le parent 
+.RE
+.PP
+
+.SH "Documentation des fonctions membres"
+.PP 
+.SS "void CameraObject::updateScene (double deltaTime = \fC1\fP, QMatrix4x4 m = \fCQMatrix4x4()\fP)\fC [virtual]\fP"
+
+.PP
+updateScene met a jour la caméra 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIdeltaTime\fP 
+.br
+\fIm\fP 
+.RE
+.PP
+
+.PP
+Réimplémentée à partir de \fBObject\fP\&.
+
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour Moteur De Jeu à partir du code source\&.

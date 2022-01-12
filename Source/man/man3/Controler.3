@@ -1,0 +1,96 @@
+.TH "Controler" 3 "Mercredi 12 Janvier 2022" "Moteur De Jeu" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Controler
+.SH SYNOPSIS
+.br
+.PP
+.PP
+Est dérivée de QOpenGLWidget\&.
+.SS "Connecteurs publics"
+
+.in +1c
+.ti -1c
+.RI "void \fBkeyPressEvent\fP (QKeyEvent *event)"
+.br
+.RI "evenement lorsque une touche du clavier est préssée "
+.ti -1c
+.RI "void \fBmouseMoveEvent\fP (QMouseEvent *event)"
+.br
+.RI "evenement lié au mouvement de la souris "
+.in -1c
+.SS "Signaux"
+
+.in +1c
+.ti -1c
+.RI "void \fBpauseChanged\fP ()"
+.br
+.RI "mettre et enlever la pause "
+.ti -1c
+.RI "void \fBviewChanged\fP (QKeyEvent *event)"
+.br
+.RI "changer la vue "
+.ti -1c
+.RI "void \fBmoveObject\fP (QKeyEvent *event)"
+.br
+.RI "déplacement d'un objet "
+.in -1c
+.SS "Fonctions membres publiques"
+
+.in +1c
+.ti -1c
+.RI "\fBControler\fP ()"
+.br
+.RI "Gère les touches\&. "
+.in -1c
+.SH "Documentation des fonctions membres"
+.PP 
+.SS "void Controler::keyPressEvent (QKeyEvent * event)\fC [slot]\fP"
+
+.PP
+evenement lorsque une touche du clavier est préssée 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIevent\fP 
+.RE
+.PP
+
+.SS "void Controler::mouseMoveEvent (QMouseEvent * event)\fC [slot]\fP"
+
+.PP
+evenement lié au mouvement de la souris 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIevent\fP 
+.RE
+.PP
+
+.SS "void Controler::moveObject (QKeyEvent * event)\fC [signal]\fP"
+
+.PP
+déplacement d'un objet 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIevent\fP 
+.RE
+.PP
+
+.SS "void Controler::viewChanged (QKeyEvent * event)\fC [signal]\fP"
+
+.PP
+changer la vue 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIevent\fP 
+.RE
+.PP
+
+
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour Moteur De Jeu à partir du code source\&.

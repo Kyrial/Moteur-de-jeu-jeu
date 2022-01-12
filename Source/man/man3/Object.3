@@ -1,0 +1,282 @@
+.TH "Object" 3 "Mercredi 12 Janvier 2022" "Moteur De Jeu" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Object \- la classe \fBObject\fP est la classe mère et est abstraite, elle contient les comportement par défaut\&. les autre classe sont ses fille et spécifie les comportement selon leurs besoins\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <object\&.h>\fP
+.PP
+Est dérivée de QObject\&.
+.PP
+Dérivée par \fBCameraObject\fP, \fBGameObject\fP, \fBMobileObj\fP, et \fBbillboardObject\fP\&.
+.SS "Connecteurs publics"
+
+.in +1c
+.ti -1c
+.RI "void \fBcontroleMouvements\fP (QKeyEvent *event)"
+.br
+.ti -1c
+.RI "void \fBgetDirView\fP (QVector3D dirView)"
+.br
+.ti -1c
+.RI "void \fBgetProjection\fP (QMatrix4x4 proj)"
+.br
+.ti -1c
+.RI "void \fBcontroleRotation\fP (QKeyEvent *event)"
+.br
+.ti -1c
+.RI "void \fBkeyPressedChangedMove\fP (QEvent *event)"
+.br
+.ti -1c
+.RI "void \fBkeyPressedChangedRotate\fP (QEvent *event)"
+.br
+.ti -1c
+.RI "void \fBmapCoordChanged\fP (QVector3D vec, QMatrix4x4 objM)"
+.br
+.ti -1c
+.RI "void \fBupdateTree\fP (QVector3D vec)"
+.br
+.in -1c
+.SS "Signaux"
+
+.in +1c
+.ti -1c
+.RI "void \fBviewDirChanged\fP (QVector3D vec)"
+.br
+.ti -1c
+.RI "void \fBemitPosition\fP (QVector3D vec, QMatrix4x4 objM)"
+.br
+.ti -1c
+.RI "void \fBemitTree\fP (QVector3D)"
+.br
+.in -1c
+.SS "Fonctions membres publiques"
+
+.in +1c
+.ti -1c
+.RI "\fBObject\fP ()"
+.br
+.RI "Constructeur\&. "
+.ti -1c
+.RI "\fBObject\fP (\fBTransform\fP tt, \fBTransform\fP anim)"
+.br
+.RI "constructeur avec parametre "
+.ti -1c
+.RI "void \fBupdateMesh\fP (\fBGeometryEngine\fP *ge)"
+.br
+.RI "Getter/Setter\&. "
+.ti -1c
+.RI "void \fBsetTexture\fP (QOpenGLTexture *txtr)"
+.br
+.ti -1c
+.RI "void \fBsetShader\fP (QOpenGLShaderProgram *shad)"
+.br
+.ti -1c
+.RI "void \fBaddChild\fP (\fBObject\fP *enfant)"
+.br
+.ti -1c
+.RI "void \fBSetParent\fP (\fBObject\fP *pa)"
+.br
+.ti -1c
+.RI "void \fBsetTransf\fP (QMatrix4x4 m)"
+.br
+.ti -1c
+.RI "QMatrix4x4 \fBgetTransf\fP ()"
+.br
+.ti -1c
+.RI "void \fBsetLumiere\fP ()"
+.br
+.ti -1c
+.RI "void \fBcalculsInstanced\fP (double deltaTime, QMatrix4x4 m)"
+.br
+.RI "Methode\&. "
+.ti -1c
+.RI "void \fBsetName\fP (QString n)"
+.br
+.ti -1c
+.RI "void \fBtransfertDeForce\fP (QVector3D direction)"
+.br
+.ti -1c
+.RI "virtual void \fBupdateScene\fP (double deltaTime=1, QMatrix4x4 m=QMatrix4x4())"
+.br
+.RI "boucle de rendu, appel au parents "
+.ti -1c
+.RI "void \fBfindCollision\fP (\fBObject\fP *obj, QMatrix4x4 anim, QMatrix4x4 t)"
+.br
+.RI "verifie si l'element a subit une collision "
+.ti -1c
+.RI "void \fBupdateBB\fP ()"
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBgetRacine\fP ()"
+.br
+.ti -1c
+.RI "virtual void \fBaddShader\fP (QOpenGLShaderProgram *shader)"
+.br
+.in -1c
+.SS "Attributs publics"
+
+.in +1c
+.ti -1c
+.RI "\fBGeometryEngine\fP * \fBgeo\fP = new \fBGeometryEngine\fP()"
+.br
+.RI "ATTRIBUT\&. "
+.ti -1c
+.RI "\fBObject\fP * \fBMonde\fP"
+.br
+.ti -1c
+.RI "QVector< QOpenGLShaderProgram * > \fBallShader\fP"
+.br
+.ti -1c
+.RI "bool \fBinstanced\fP = false"
+.br
+.ti -1c
+.RI "float \fBtransfertForce\fP = 0"
+.br
+.in -1c
+.SS "Attributs publics statiques"
+
+.in +1c
+.ti -1c
+.RI "static bool \fBanimate\fP = false"
+.br
+.in -1c
+.SS "Fonctions membres protégées"
+
+.in +1c
+.ti -1c
+.RI "void \fBchargerTextureForShader\fP ()"
+.br
+.ti -1c
+.RI "QMatrix4x4 \fBcalculMatrice\fP (double deltaTime)"
+.br
+.ti -1c
+.RI "virtual QMatrix4x4 \fBApplyMatriceForShader\fP (double deltaTime, QMatrix4x4 m)"
+.br
+.ti -1c
+.RI "virtual QMatrix4x4 \fBchargeMatriceForShader\fP (double deltaTime)"
+.br
+.ti -1c
+.RI "virtual QMatrix4x4 \fBchargeMatriceForShader\fP (double deltaTime, QMatrix4x4 m)"
+.br
+.in -1c
+.SS "Attributs protégés"
+
+.in +1c
+.ti -1c
+.RI "\fBTransform\fP \fBt\fP = \fBTransform\fP()"
+.br
+.ti -1c
+.RI "\fBTransform\fP \fBanimation\fP = \fBTransform\fP()"
+.br
+.ti -1c
+.RI "QOpenGLTexture * \fBtexture\fP"
+.br
+.ti -1c
+.RI "bool \fBifTexture\fP =false"
+.br
+.ti -1c
+.RI "QVector< \fBObject\fP * > \fBenfants\fP = QVector<\fBObject\fP*>()"
+.br
+.ti -1c
+.RI "\fBObject\fP * \fBparent\fP"
+.br
+.ti -1c
+.RI "QMatrix4x4 \fBtransf\fP = QMatrix4x4()"
+.br
+.ti -1c
+.RI "bool \fBcanJump\fP = true"
+.br
+.ti -1c
+.RI "bool \fBlumiere\fP = false"
+.br
+.ti -1c
+.RI "QVector3D \fBdirView\fP = QVector3D(0,1,0)"
+.br
+.ti -1c
+.RI "QMatrix4x4 \fBprojection\fP = QMatrix4x4()"
+.br
+.ti -1c
+.RI "QSet< int > \fBpressedKeys\fP"
+.br
+.ti -1c
+.RI "QOpenGLShaderProgram * \fBshader\fP"
+.br
+.ti -1c
+.RI "\fBTransform\fP \fBsaveAlltransform\fP = \fBTransform\fP()"
+.br
+.ti -1c
+.RI "QString \fBName\fP = ''"
+.br
+.in -1c
+.SH "Description détaillée"
+.PP 
+la classe \fBObject\fP est la classe mère et est abstraite, elle contient les comportement par défaut\&. les autre classe sont ses fille et spécifie les comportement selon leurs besoins\&. 
+.SH "Documentation des constructeurs et destructeur"
+.PP 
+.SS "Object::Object ()"
+
+.PP
+Constructeur\&. Constructeur 
+.SS "Object::Object (\fBTransform\fP tt, \fBTransform\fP anim)\fC [inline]\fP"
+
+.PP
+constructeur avec parametre 
+.PP
+\fBParamètres\fP
+.RS 4
+\fItt\fP matrice de transformation 
+.br
+\fIanim\fP matrice d'animation 
+.RE
+.PP
+
+.SH "Documentation des fonctions membres"
+.PP 
+.SS "void Object::findCollision (\fBObject\fP * obj, QMatrix4x4 anim, QMatrix4x4 t)"
+
+.PP
+verifie si l'element a subit une collision 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIobj[in,out]\fP object recherchant une collision avec un autre objet 
+.br
+\fIanim\fP 
+.br
+\fIt\fP 
+.RE
+.PP
+
+.SS "void Object::updateScene (double deltaTime = \fC1\fP, QMatrix4x4 lastM = \fCQMatrix4x4()\fP)\fC [virtual]\fP"
+
+.PP
+boucle de rendu, appel au parents Met à jour la scene\&.
+.PP
+\fBParamètres\fP
+.RS 4
+\fIdeltaTime\fP intervalle de temps depuis le dernier appel 
+.br
+\fIm\fP matrice de transformation du parent
+.RE
+.PP
+Parcours le graphe de scene, met a jour les bounding box, envoie au shader matrice de transformation, mesh, texture 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIdeltaTime[in]\fP Intervalle de temps entre la dernière mise a jour de la scene 
+.br
+\fIlastM[in]\fP matrice de transformation du parent 
+.RE
+.PP
+
+.PP
+Réimplémentée dans \fBMobileObj\fP, \fBGameObject\fP, \fBbillboardObject\fP, et \fBCameraObject\fP\&.
+
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour Moteur De Jeu à partir du code source\&.

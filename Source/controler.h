@@ -6,13 +6,20 @@
 #include <QObject>
 #include <QKeyEvent>
 
+/**
+ * @file
+ * @brief le fichier contient la classe Controler qui  Gère les touches*/
+
+/**
+ * @brief la classe Controler qui Gère les touches */
+
 class Controler : public QOpenGLWidget
 {
     Q_OBJECT
 
 public:
     /**
-     * @brief Gère les touches
+     * @brief constructeur
      */
     Controler();
 

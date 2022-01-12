@@ -1,0 +1,146 @@
+.TH "MobileObj" 3 "Mercredi 12 Janvier 2022" "Moteur De Jeu" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+MobileObj \- la classe MobileObject contient les objets subissant la gravité, on peut y trouver le joueur, la boite\&.  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <mobileobj\&.h>\fP
+.PP
+Est dérivée de \fBObject\fP\&.
+.SS "Fonctions membres publiques"
+
+.in +1c
+.ti -1c
+.RI "\fBMobileObj\fP ()"
+.br
+.RI "Constructeur\&. "
+.ti -1c
+.RI "\fBMobileObj\fP (\fBTransform\fP tt, \fBTransform\fP anim)"
+.br
+.RI "constructeur avec parametre "
+.ti -1c
+.RI "float \fBdist2Points\fP (QVector3D pt1, QVector3D pt2)"
+.br
+.RI "calcul la distance entre deux points "
+.ti -1c
+.RI "void \fBaddGravite\fP (double deltaTime)"
+.br
+.RI "ajoute la gravité et la perte cinetique en fonction du deltaTemps "
+.ti -1c
+.RI "void \fBtestCollision\fP (QMatrix4x4 m=QMatrix4x4())"
+.br
+.RI "appel FindCollision afin de rechercher si une collision a lieu "
+.ti -1c
+.RI "void \fBupdateScene\fP (double deltaTime)"
+.br
+.RI "updateScene boucle de rendu, appel recursif, appel à \fBaddGravite()\fP et \fBtestCollision()\fP "
+.ti -1c
+.RI "void \fBupdateScene\fP (double deltaTime, QMatrix4x4 lastM)"
+.br
+.RI "updateScene boucle de rendu, appel recursif, appel à \fBaddGravite()\fP et \fBtestCollision()\fP "
+.in -1c
+.SS "Attributs publics"
+
+.in +1c
+.ti -1c
+.RI "float \fBfacteurGravite\fP =300"
+.br
+.ti -1c
+.RI "float \fBfacteurCynetique\fP = 50"
+.br
+.in -1c
+.SS "Membres hérités additionnels"
+.SH "Description détaillée"
+.PP 
+la classe MobileObject contient les objets subissant la gravité, on peut y trouver le joueur, la boite\&. 
+.SH "Documentation des constructeurs et destructeur"
+.PP 
+.SS "MobileObj::MobileObj (\fBTransform\fP tt, \fBTransform\fP anim)\fC [inline]\fP"
+
+.PP
+constructeur avec parametre 
+.PP
+\fBParamètres\fP
+.RS 4
+\fItt\fP matrice de transformation 
+.br
+\fIanim\fP matrice d'animation 
+.RE
+.PP
+
+.SH "Documentation des fonctions membres"
+.PP 
+.SS "void MobileObj::addGravite (double deltaTime)\fC [inline]\fP"
+
+.PP
+ajoute la gravité et la perte cinetique en fonction du deltaTemps 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIdeltaTime\fP intervalle de temps depuis le dernier appel 
+.RE
+.PP
+
+.SS "float MobileObj::dist2Points (QVector3D pt1, QVector3D pt2)\fC [inline]\fP"
+
+.PP
+calcul la distance entre deux points 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIpt1\fP point1 
+.br
+\fIpt2\fP point2 
+.RE
+.PP
+\fBRenvoie\fP
+.RS 4
+retourne la distance entre pt1 et pt2 
+.RE
+.PP
+
+.SS "void MobileObj::testCollision (QMatrix4x4 m = \fCQMatrix4x4()\fP)\fC [inline]\fP"
+
+.PP
+appel FindCollision afin de rechercher si une collision a lieu 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIm\fP matrice dans le repère monde 
+.RE
+.PP
+
+.SS "void MobileObj::updateScene (double deltaTime)\fC [inline]\fP"
+
+.PP
+updateScene boucle de rendu, appel recursif, appel à \fBaddGravite()\fP et \fBtestCollision()\fP 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIdeltaTime\fP intervalle de temps depuis le dernier appel 
+.RE
+.PP
+
+.SS "void MobileObj::updateScene (double deltaTime, QMatrix4x4 lastM)\fC [inline]\fP, \fC [virtual]\fP"
+
+.PP
+updateScene boucle de rendu, appel recursif, appel à \fBaddGravite()\fP et \fBtestCollision()\fP 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIdeltaTime\fP intervalle de temps depuis le dernier appel 
+.br
+\fIlastM\fP matrice de transformation du parent 
+.RE
+.PP
+
+.PP
+Réimplémentée à partir de \fBObject\fP\&.
+
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour Moteur De Jeu à partir du code source\&.

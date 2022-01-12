@@ -1,0 +1,286 @@
+.TH "Transform" 3 "Mercredi 12 Janvier 2022" "Moteur De Jeu" \" -*- nroff -*-
+.ad l
+.nh
+.SH NAME
+Transform \- la classe \fBTransform\fP \fBTransform\fP effectue les calculs géométrique afin de générer une matrice de tranformation à partir de scale, translate, rotation  
+
+.SH SYNOPSIS
+.br
+.PP
+.PP
+\fC#include <transform\&.h>\fP
+.SS "Fonctions membres publiques"
+
+.in +1c
+.ti -1c
+.RI "\fBTransform\fP (QVector3D sc, QQuaternion ro, QVector3D tr)"
+.br
+.ti -1c
+.RI "QMatrix4x4 \fBdoTransformation\fP ()"
+.br
+.RI "calcul la transformation a partir de scale, translate, rotate "
+.ti -1c
+.RI "QMatrix4x4 \fBdoAnimation\fP (\fBTransform\fP *anim, double deltaTime)"
+.br
+.RI "appel combine_with(*anim, deltaTime) et \fBdoTransformation()\fP afin de mettre a jour la matrice de transformation en fonction de la matrice d'animation "
+.ti -1c
+.RI "void \fBsetTransform\fP (QMatrix4x4 m)"
+.br
+.ti -1c
+.RI "void \fBsetRotation\fP (QVector3D &v, float f)"
+.br
+.ti -1c
+.RI "void \fBsetRotation\fP (float x, float y, float z, float f)"
+.br
+.ti -1c
+.RI "void \fBsetRotation\fP (float facteur)"
+.br
+.ti -1c
+.RI "void \fBsetRotation\fP (QQuaternion q)"
+.br
+.ti -1c
+.RI "void \fBsetScale\fP (QVector3D v)"
+.br
+.ti -1c
+.RI "void \fBsetScale\fP (float x, float y, float z)"
+.br
+.ti -1c
+.RI "void \fBsetTranslate\fP (QVector3D v)"
+.br
+.ti -1c
+.RI "void \fBsetTranslate\fP (float x, float y, float z)"
+.br
+.ti -1c
+.RI "void \fBsetTranslate\fP (float vit)"
+.br
+.ti -1c
+.RI "void \fBaddTranslate\fP (QVector3D val)"
+.br
+.ti -1c
+.RI "\fBTransform\fP \fBcombine_with\fP (\fBTransform\fP &b, double deltaTime)"
+.br
+.RI "combine deux transformations "
+.ti -1c
+.RI "\fBTransform\fP \fBmix_with\fP (\fBTransform\fP &b, float k)"
+.br
+.RI "interpole deux transformations "
+.ti -1c
+.RI "QVector3D \fBgetTranslate\fP ()"
+.br
+.ti -1c
+.RI "void \fBforward\fP ()"
+.br
+.RI "fait avencer le joueur "
+.ti -1c
+.RI "void \fBforward\fP (QVector3D dirView)"
+.br
+.RI "fait avencer le joueur dans la direction dirView "
+.ti -1c
+.RI "void \fBbackward\fP ()"
+.br
+.ti -1c
+.RI "void \fBbackward\fP (QVector3D dirView)"
+.br
+.RI "fait reculer le joueur dans la direction dirView "
+.ti -1c
+.RI "void \fBleft\fP ()"
+.br
+.ti -1c
+.RI "void \fBleft2\fP ()"
+.br
+.RI "fait tourner a gauche le joueur "
+.ti -1c
+.RI "void \fBright\fP ()"
+.br
+.ti -1c
+.RI "void \fBright2\fP ()"
+.br
+.RI "fait tourner a droite le joueur "
+.ti -1c
+.RI "void \fBjump\fP ()"
+.br
+.RI "jump, tout est dit "
+.ti -1c
+.RI "void \fBborneRotation\fP ()"
+.br
+.RI "obsolete "
+.in -1c
+.SS "Fonctions membres publiques statiques"
+
+.in +1c
+.ti -1c
+.RI "static QVector3D \fBextracteTranslate\fP (QMatrix4x4 m)"
+.br
+.RI "extrait la composante translate d'une QMatrix4x4 "
+.ti -1c
+.RI "static QVector3D \fBextracteScale\fP (QMatrix4x4 m)"
+.br
+.RI "extrait la composante scale d'une QMatrix4x4 "
+.ti -1c
+.RI "static QMatrix4x4 \fBextracteRotate\fP (QMatrix4x4 m)"
+.br
+.RI "extrait la composante rotate d'une QMatrix4x4 "
+.ti -1c
+.RI "static QVector3D \fBconvergeZero\fP (QVector3D vec)"
+.br
+.ti -1c
+.RI "static QMatrix4x4 \fBinverse\fP (QMatrix4x4 const m)"
+.br
+.in -1c
+.SS "Fonctions membres protégées"
+
+.in +1c
+.ti -1c
+.RI "QMatrix4x4 \fBdoScale\fP (QMatrix4x4 m)"
+.br
+.ti -1c
+.RI "QMatrix4x4 \fBdoRotate\fP (QMatrix4x4 m)"
+.br
+.ti -1c
+.RI "QMatrix4x4 \fBdoTranslate\fP (QMatrix4x4 m)"
+.br
+.in -1c
+.SH "Description détaillée"
+.PP 
+la classe \fBTransform\fP \fBTransform\fP effectue les calculs géométrique afin de générer une matrice de tranformation à partir de scale, translate, rotation 
+.SH "Documentation des fonctions membres"
+.PP 
+.SS "void Transform::backward (QVector3D dirView)\fC [inline]\fP"
+
+.PP
+fait reculer le joueur dans la direction dirView 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIdirView\fP direction 
+.RE
+.PP
+
+.SS "\fBTransform\fP Transform::combine_with (\fBTransform\fP & b, double deltaTime)\fC [inline]\fP"
+
+.PP
+combine deux transformations 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIb\fP l'autre transformation 
+.br
+\fIdeltaTime\fP intervalle de temps 
+.RE
+.PP
+\fBRenvoie\fP
+.RS 4
+le resultat de la combinaison 
+.RE
+.PP
+
+.SS "QMatrix4x4 Transform::doAnimation (\fBTransform\fP * anim, double deltaTime)\fC [inline]\fP"
+
+.PP
+appel combine_with(*anim, deltaTime) et \fBdoTransformation()\fP afin de mettre a jour la matrice de transformation en fonction de la matrice d'animation 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIanim\fP matrice d'animation 
+.br
+\fIdeltaTime\fP intervalle de temps depuis le dernier appel 
+.RE
+.PP
+\fBRenvoie\fP
+.RS 4
+matrice résultante de la combinaison entre this et anim 
+.RE
+.PP
+
+.SS "QMatrix4x4 Transform::doTransformation ()\fC [inline]\fP"
+
+.PP
+calcul la transformation a partir de scale, translate, rotate 
+.PP
+\fBRenvoie\fP
+.RS 4
+
+.RE
+.PP
+
+.SS "static QMatrix4x4 Transform::extracteRotate (QMatrix4x4 m)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+extrait la composante rotate d'une QMatrix4x4 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIm\fP la fameuse matrice QMatrix4x4 
+.RE
+.PP
+\fBRenvoie\fP
+.RS 4
+retourne la rotation 
+.RE
+.PP
+
+.SS "static QVector3D Transform::extracteScale (QMatrix4x4 m)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+extrait la composante scale d'une QMatrix4x4 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIm\fP la fameuse matrice QMatrix4x4 
+.RE
+.PP
+\fBRenvoie\fP
+.RS 4
+retourne la mise à l'echelle 
+.RE
+.PP
+
+.SS "static QVector3D Transform::extracteTranslate (QMatrix4x4 m)\fC [inline]\fP, \fC [static]\fP"
+
+.PP
+extrait la composante translate d'une QMatrix4x4 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIm\fP la fameuse matrice QMatrix4x4 
+.RE
+.PP
+\fBRenvoie\fP
+.RS 4
+retourne la translation 
+.RE
+.PP
+
+.SS "void Transform::forward (QVector3D dirView)\fC [inline]\fP"
+
+.PP
+fait avencer le joueur dans la direction dirView 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIdirView\fP direction 
+.RE
+.PP
+
+.SS "\fBTransform\fP Transform::mix_with (\fBTransform\fP & b, float k)\fC [inline]\fP"
+
+.PP
+interpole deux transformations 
+.PP
+\fBParamètres\fP
+.RS 4
+\fIb\fP transformation 
+.br
+\fIk\fP le poid entre les deux transformations 
+.RE
+.PP
+\fBRenvoie\fP
+.RS 4
+le resutltat de l'interpolation 
+.RE
+.PP
+
+
+.SH "Auteur"
+.PP 
+Généré automatiquement par Doxygen pour Moteur De Jeu à partir du code source\&.
