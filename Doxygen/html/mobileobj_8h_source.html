@@ -1,0 +1,198 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Moteur De Jeu:  Fichier source de Source/mobileobj.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logopetit.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Moteur De Jeu
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Recherche','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('mobileobj_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">mobileobj.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="mobileobj_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef MOBILEOBJ_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define MOBILEOBJ_H</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;QVector3D&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &quot;<a class="code" href="transform_8h.html">transform.h</a>&quot;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &quot;<a class="code" href="geometryengine_8h.html">geometryengine.h</a>&quot;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &quot;<a class="code" href="object_8h.html">object.h</a>&quot;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span> </div>
+<div class="line"><a id="l00018" name="l00018"></a><span class="lineno"><a class="line" href="class_mobile_obj.html">   18</a></span><span class="keyword">class </span><a class="code hl_class" href="class_mobile_obj.html">MobileObj</a>  : <span class="keyword">public</span> <a class="code hl_class" href="class_object.html">Object</a></div>
+<div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>{</div>
+<div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>Q_OBJECT</div>
+<div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span> </div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno"><a class="line" href="class_mobile_obj.html#a7d2898370690449289a6bbd0fa473fae">   27</a></span>    <a class="code hl_function" href="class_mobile_obj.html#a7d2898370690449289a6bbd0fa473fae">MobileObj</a>():<a class="code hl_class" href="class_object.html">Object</a>(){}</div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span> </div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno"><a class="line" href="class_mobile_obj.html#a1bf4c559389157e37cb6099aa5ed87ba">   35</a></span>    <a class="code hl_function" href="class_mobile_obj.html#a1bf4c559389157e37cb6099aa5ed87ba">MobileObj</a>(<a class="code hl_class" href="class_transform.html">Transform</a> tt,<a class="code hl_class" href="class_transform.html">Transform</a> anim):<a class="code hl_class" href="class_object.html">Object</a>(tt,anim){}</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span> </div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="keywordtype">float</span> facteurGravite =300;</div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">float</span> facteurCynetique = 50;</div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span> </div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno"><a class="line" href="class_mobile_obj.html#a083fb83731337c55a2216560e78cfbb8">   48</a></span>    <span class="keywordtype">float</span> <a class="code hl_function" href="class_mobile_obj.html#a083fb83731337c55a2216560e78cfbb8">dist2Points</a>(QVector3D pt1, QVector3D pt2){</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>        <span class="keywordflow">return</span></div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>                pt1.distanceToPoint(pt2);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    };</div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span> </div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno"><a class="line" href="class_mobile_obj.html#aaa399ff61b596074e4514c042d5eb31b">   57</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_mobile_obj.html#aaa399ff61b596074e4514c042d5eb31b">addGravite</a>(<span class="keywordtype">double</span> deltaTime){</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span> </div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        <span class="keywordtype">float</span> dist = <a class="code hl_function" href="class_mobile_obj.html#a083fb83731337c55a2216560e78cfbb8">dist2Points</a>(<a class="code hl_variable" href="class_object.html#a05a745798164c71d2ea9431535fe228e">geo</a>-&gt;coordLastCollision, <a class="code hl_function" href="class_transform.html#a5470db871eb7881e9ff90d9020e4ca4e">Transform::extracteTranslate</a>(t.<a class="code hl_function" href="class_transform.html#a9c07946c92e291404f4b584c6dd5c7e1">doTransformation</a>()));</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        <span class="keywordflow">if</span>(dist &gt;1.1){</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span> </div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        <span class="comment">//l&#39;objet subit la gravité</span></div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <a class="code hl_class" href="class_transform.html">Transform</a> G = <a class="code hl_class" href="class_transform.html">Transform</a>();</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="comment">//QVector3D(0,0,-(pow(1.1,(deltaTime/facteurGravite)))/10);</span></div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>        G.setTranslate(0,0,-(pow(1.1,(deltaTime/facteurGravite)))/10);</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>        animation = animation.<a class="code hl_function" href="class_transform.html#a1ffb00dd51d8fe95805f95fd42423907">combine_with</a>(G, deltaTime);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span> </div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>        }</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        <span class="comment">//l&#39;objet est freiner</span></div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span> </div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        animation.setTranslate(pow(0.9,deltaTime/facteurCynetique));</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="comment">//animation.setRotation(0.75);</span></div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        animation.setTranslate(Transform::convergeZero(animation.getTranslate()));</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    }</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span> </div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="class_mobile_obj.html#ae48c9fa52a7877fa7564c0f46b2119f9">   83</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_mobile_obj.html#ae48c9fa52a7877fa7564c0f46b2119f9">testCollision</a>(QMatrix4x4 m = QMatrix4x4()){</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        QMatrix4x4 anim = animation.<a class="code hl_function" href="class_transform.html#a9c07946c92e291404f4b584c6dd5c7e1">doTransformation</a>();</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        Monde-&gt;<a class="code hl_function" href="class_object.html#ae2e1554452085bb630c37ad8d5ede781">findCollision</a>(<span class="keyword">this</span>,anim,m);</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    }</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno"><a class="line" href="class_mobile_obj.html#ab7d467bb3e8b2de7e33a1b2a466b8eb7">   93</a></span>    <span class="keywordtype">void</span>  <a class="code hl_function" href="class_mobile_obj.html#ab7d467bb3e8b2de7e33a1b2a466b8eb7">updateScene</a>( <span class="keywordtype">double</span> deltaTime){</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>        <span class="keywordflow">if</span>(animate){</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>            <a class="code hl_function" href="class_mobile_obj.html#aaa399ff61b596074e4514c042d5eb31b">addGravite</a>( deltaTime);</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>            <a class="code hl_function" href="class_mobile_obj.html#ae48c9fa52a7877fa7564c0f46b2119f9">testCollision</a>();</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>        }</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>        QMatrix4x4 m= chargeMatriceForShader(deltaTime);</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>        <a class="code hl_function" href="class_object.html#a4c31a5390f2e48e086d76edb585a61ff">Object::updateScene</a>(deltaTime, m);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    }</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno"><a class="line" href="class_mobile_obj.html#ae9a430fba11e5d69a475f897859d3611">  110</a></span>    <span class="keywordtype">void</span>  <a class="code hl_function" href="class_mobile_obj.html#ae9a430fba11e5d69a475f897859d3611">updateScene</a>(<span class="keywordtype">double</span> deltaTime,QMatrix4x4 lastM){</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        <span class="keywordflow">if</span>(animate){</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>            <a class="code hl_function" href="class_mobile_obj.html#aaa399ff61b596074e4514c042d5eb31b">addGravite</a>( deltaTime);</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            <a class="code hl_function" href="class_mobile_obj.html#ae48c9fa52a7877fa7564c0f46b2119f9">testCollision</a>(lastM);</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>        }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span> </div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        <a class="code hl_function" href="class_object.html#a4c31a5390f2e48e086d76edb585a61ff">Object::updateScene</a>(deltaTime, lastM);</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    }</div>
+<div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span>};</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span> </div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span><span class="preprocessor">#endif </span><span class="comment">// MOBILEOBJ_H</span></div>
+<div class="ttc" id="aclass_mobile_obj_html"><div class="ttname"><a href="class_mobile_obj.html">MobileObj</a></div><div class="ttdoc">la classe MobileObject contient les objets subissant la gravité, on peut y trouver le joueur,...</div><div class="ttdef"><b>Definition:</b> mobileobj.h:19</div></div>
+<div class="ttc" id="aclass_mobile_obj_html_a083fb83731337c55a2216560e78cfbb8"><div class="ttname"><a href="class_mobile_obj.html#a083fb83731337c55a2216560e78cfbb8">MobileObj::dist2Points</a></div><div class="ttdeci">float dist2Points(QVector3D pt1, QVector3D pt2)</div><div class="ttdoc">calcul la distance entre deux points</div><div class="ttdef"><b>Definition:</b> mobileobj.h:48</div></div>
+<div class="ttc" id="aclass_mobile_obj_html_a1bf4c559389157e37cb6099aa5ed87ba"><div class="ttname"><a href="class_mobile_obj.html#a1bf4c559389157e37cb6099aa5ed87ba">MobileObj::MobileObj</a></div><div class="ttdeci">MobileObj(Transform tt, Transform anim)</div><div class="ttdoc">constructeur avec parametre</div><div class="ttdef"><b>Definition:</b> mobileobj.h:35</div></div>
+<div class="ttc" id="aclass_mobile_obj_html_a7d2898370690449289a6bbd0fa473fae"><div class="ttname"><a href="class_mobile_obj.html#a7d2898370690449289a6bbd0fa473fae">MobileObj::MobileObj</a></div><div class="ttdeci">MobileObj()</div><div class="ttdoc">Constructeur.</div><div class="ttdef"><b>Definition:</b> mobileobj.h:27</div></div>
+<div class="ttc" id="aclass_mobile_obj_html_aaa399ff61b596074e4514c042d5eb31b"><div class="ttname"><a href="class_mobile_obj.html#aaa399ff61b596074e4514c042d5eb31b">MobileObj::addGravite</a></div><div class="ttdeci">void addGravite(double deltaTime)</div><div class="ttdoc">ajoute la gravité et la perte cinetique en fonction du deltaTemps</div><div class="ttdef"><b>Definition:</b> mobileobj.h:57</div></div>
+<div class="ttc" id="aclass_mobile_obj_html_ab7d467bb3e8b2de7e33a1b2a466b8eb7"><div class="ttname"><a href="class_mobile_obj.html#ab7d467bb3e8b2de7e33a1b2a466b8eb7">MobileObj::updateScene</a></div><div class="ttdeci">void updateScene(double deltaTime)</div><div class="ttdoc">updateScene boucle de rendu, appel recursif, appel à addGravite() et testCollision()</div><div class="ttdef"><b>Definition:</b> mobileobj.h:93</div></div>
+<div class="ttc" id="aclass_mobile_obj_html_ae48c9fa52a7877fa7564c0f46b2119f9"><div class="ttname"><a href="class_mobile_obj.html#ae48c9fa52a7877fa7564c0f46b2119f9">MobileObj::testCollision</a></div><div class="ttdeci">void testCollision(QMatrix4x4 m=QMatrix4x4())</div><div class="ttdoc">appel FindCollision afin de rechercher si une collision a lieu</div><div class="ttdef"><b>Definition:</b> mobileobj.h:83</div></div>
+<div class="ttc" id="aclass_mobile_obj_html_ae9a430fba11e5d69a475f897859d3611"><div class="ttname"><a href="class_mobile_obj.html#ae9a430fba11e5d69a475f897859d3611">MobileObj::updateScene</a></div><div class="ttdeci">void updateScene(double deltaTime, QMatrix4x4 lastM)</div><div class="ttdoc">updateScene boucle de rendu, appel recursif, appel à addGravite() et testCollision()</div><div class="ttdef"><b>Definition:</b> mobileobj.h:110</div></div>
+<div class="ttc" id="aclass_object_html"><div class="ttname"><a href="class_object.html">Object</a></div><div class="ttdoc">la classe Object est la classe mère et est abstraite, elle contient les comportement par défaut....</div><div class="ttdef"><b>Definition:</b> object.h:26</div></div>
+<div class="ttc" id="aclass_object_html_a05a745798164c71d2ea9431535fe228e"><div class="ttname"><a href="class_object.html#a05a745798164c71d2ea9431535fe228e">Object::geo</a></div><div class="ttdeci">GeometryEngine * geo</div><div class="ttdoc">ATTRIBUT.</div><div class="ttdef"><b>Definition:</b> object.h:31</div></div>
+<div class="ttc" id="aclass_object_html_a4c31a5390f2e48e086d76edb585a61ff"><div class="ttname"><a href="class_object.html#a4c31a5390f2e48e086d76edb585a61ff">Object::updateScene</a></div><div class="ttdeci">virtual void updateScene(double deltaTime=1, QMatrix4x4 m=QMatrix4x4())</div><div class="ttdoc">boucle de rendu, appel au parents</div><div class="ttdef"><b>Definition:</b> object.cpp:23</div></div>
+<div class="ttc" id="aclass_object_html_ae2e1554452085bb630c37ad8d5ede781"><div class="ttname"><a href="class_object.html#ae2e1554452085bb630c37ad8d5ede781">Object::findCollision</a></div><div class="ttdeci">void findCollision(Object *obj, QMatrix4x4 anim, QMatrix4x4 t)</div><div class="ttdoc">verifie si l'element a subit une collision</div><div class="ttdef"><b>Definition:</b> object.cpp:100</div></div>
+<div class="ttc" id="aclass_transform_html"><div class="ttname"><a href="class_transform.html">Transform</a></div><div class="ttdoc">la classe Transform Transform effectue les calculs géométrique afin de générer une matrice de tranfor...</div><div class="ttdef"><b>Definition:</b> transform.h:23</div></div>
+<div class="ttc" id="aclass_transform_html_a1ffb00dd51d8fe95805f95fd42423907"><div class="ttname"><a href="class_transform.html#a1ffb00dd51d8fe95805f95fd42423907">Transform::combine_with</a></div><div class="ttdeci">Transform combine_with(Transform &amp;b, double deltaTime)</div><div class="ttdoc">combine deux transformations</div><div class="ttdef"><b>Definition:</b> transform.h:166</div></div>
+<div class="ttc" id="aclass_transform_html_a5470db871eb7881e9ff90d9020e4ca4e"><div class="ttname"><a href="class_transform.html#a5470db871eb7881e9ff90d9020e4ca4e">Transform::extracteTranslate</a></div><div class="ttdeci">static QVector3D extracteTranslate(QMatrix4x4 m)</div><div class="ttdoc">extrait la composante translate d'une QMatrix4x4</div><div class="ttdef"><b>Definition:</b> transform.h:124</div></div>
+<div class="ttc" id="aclass_transform_html_a9c07946c92e291404f4b584c6dd5c7e1"><div class="ttname"><a href="class_transform.html#a9c07946c92e291404f4b584c6dd5c7e1">Transform::doTransformation</a></div><div class="ttdeci">QMatrix4x4 doTransformation()</div><div class="ttdoc">calcul la transformation a partir de scale, translate, rotate</div><div class="ttdef"><b>Definition:</b> transform.h:44</div></div>
+<div class="ttc" id="ageometryengine_8h_html"><div class="ttname"><a href="geometryengine_8h.html">geometryengine.h</a></div><div class="ttdoc">le fichier contient la classe GeometryEngine qui effectue toute les actions en rapport aux maillage</div></div>
+<div class="ttc" id="aobject_8h_html"><div class="ttname"><a href="object_8h.html">object.h</a></div><div class="ttdoc">le fichier contient la classe Object est la classe mère et est abstraite, elle contient les comportem...</div></div>
+<div class="ttc" id="atransform_8h_html"><div class="ttname"><a href="transform_8h.html">transform.h</a></div><div class="ttdoc">le fichier contient la classe Transform effectue les calculs géométrique afin de générer une matrice ...</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_74389ed8173ad57b461b9d623a1f3867.html">Source</a></li><li class="navelem"><a class="el" href="mobileobj_8h.html">mobileobj.h</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+  </ul>
+</div>
+</body>
+</html>

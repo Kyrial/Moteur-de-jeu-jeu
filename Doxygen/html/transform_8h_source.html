@@ -1,0 +1,353 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>Moteur De Jeu:  Fichier source de Source/transform.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectlogo"><img alt="Logo" src="logopetit.png"/></td>
+  <td id="projectalign">
+   <div id="projectname">Moteur De Jeu
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Recherche','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('transform_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+<div class="header">
+  <div class="headertitle"><div class="title">transform.h</div></div>
+</div><!--header-->
+<div class="contents">
+<a href="transform_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="preprocessor">#ifndef TRANSFORM_H</span></div>
+<div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="preprocessor">#define TRANSFORM_H</span></div>
+<div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span> </div>
+<div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="preprocessor">#include &lt;QMatrix3x3&gt;</span></div>
+<div class="line"><a id="l00005" name="l00005"></a><span class="lineno">    5</span><span class="preprocessor">#include &lt;QMatrix4x4&gt;</span></div>
+<div class="line"><a id="l00006" name="l00006"></a><span class="lineno">    6</span><span class="preprocessor">#include &lt;QVector3D&gt;</span></div>
+<div class="line"><a id="l00007" name="l00007"></a><span class="lineno">    7</span><span class="preprocessor">#include &lt;QVector4D&gt;</span></div>
+<div class="line"><a id="l00008" name="l00008"></a><span class="lineno">    8</span><span class="preprocessor">#include &lt;QQuaternion&gt;</span></div>
+<div class="line"><a id="l00009" name="l00009"></a><span class="lineno">    9</span><span class="preprocessor">#include &lt;QOpenGLBuffer&gt;</span></div>
+<div class="line"><a id="l00010" name="l00010"></a><span class="lineno">   10</span> </div>
+<div class="line"><a id="l00011" name="l00011"></a><span class="lineno">   11</span><span class="comment">//a faire:</span></div>
+<div class="line"><a id="l00012" name="l00012"></a><span class="lineno">   12</span><span class="comment">//inversion</span></div>
+<div class="line"><a id="l00013" name="l00013"></a><span class="lineno">   13</span><span class="comment">//combinaision</span></div>
+<div class="line"><a id="l00014" name="l00014"></a><span class="lineno">   14</span> </div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno"><a class="line" href="class_transform.html">   22</a></span><span class="keyword">class  </span><a class="code hl_class" href="class_transform.html">Transform</a></div>
+<div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>{</div>
+<div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span><span class="comment">//Attribut</span></div>
+<div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span>    QVector3D s; <span class="comment">//uniform scale</span></div>
+<div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span>   QQuaternion r; <span class="comment">// rotation</span></div>
+<div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>   QVector3D t; <span class="comment">// translation</span></div>
+<div class="line"><a id="l00029" name="l00029"></a><span class="lineno">   29</span> </div>
+<div class="line"><a id="l00030" name="l00030"></a><span class="lineno">   30</span> </div>
+<div class="line"><a id="l00031" name="l00031"></a><span class="lineno">   31</span> </div>
+<div class="line"><a id="l00032" name="l00032"></a><span class="lineno">   32</span> </div>
+<div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span> </div>
+<div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>   <span class="comment">//constructeur</span></div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    <a class="code hl_class" href="class_transform.html">Transform</a>():s(QVector3D(1,1,1)),  r(QQuaternion()), t(QVector3D()){}</div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <a class="code hl_class" href="class_transform.html">Transform</a>(QVector3D sc, QQuaternion ro, QVector3D tr):s(sc), r(ro), t(tr){}</div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span><span class="comment">//methode</span></div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno"><a class="line" href="class_transform.html#a9c07946c92e291404f4b584c6dd5c7e1">   44</a></span><span class="comment"></span>    QMatrix4x4 <a class="code hl_function" href="class_transform.html#a9c07946c92e291404f4b584c6dd5c7e1">doTransformation</a>(){</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>         QMatrix4x4 a= QMatrix4x4 ();</div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>         a = doTranslate(doRotate(doScale(a)));</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>         <span class="keywordflow">return</span> a;</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    }</div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span> </div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno"><a class="line" href="class_transform.html#a64a2fbd4261bb71ac9e7d37ee7bd0864">   56</a></span>    QMatrix4x4 <a class="code hl_function" href="class_transform.html#a64a2fbd4261bb71ac9e7d37ee7bd0864">doAnimation</a>(<a class="code hl_class" href="class_transform.html">Transform</a>* anim, <span class="keywordtype">double</span> deltaTime){</div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>        <a class="code hl_class" href="class_transform.html">Transform</a> a =<a class="code hl_function" href="class_transform.html#a1ffb00dd51d8fe95805f95fd42423907">combine_with</a>(*anim, deltaTime);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>        this-&gt;setScale(a.s);</div>
+<div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span>        this-&gt;setRotation(a.r);</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>        this-&gt;setTranslate(a.t);</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>        QMatrix4x4 res = this-&gt;<a class="code hl_function" href="class_transform.html#a9c07946c92e291404f4b584c6dd5c7e1">doTransformation</a>();</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        <span class="keywordflow">return</span> res;</div>
+<div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span> </div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>    }</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span> </div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span> </div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    <span class="keywordtype">void</span> setTransform(QMatrix4x4 m){</div>
+<div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span>       s = <a class="code hl_function" href="class_transform.html#a51368a678ae1975b385ed6c1a869ca6c">extracteScale</a>(m);</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>       QGenericMatrix&lt;3, 3, float&gt; q =<a class="code hl_function" href="class_transform.html#a046620f82e0ada25d145add203cf3227">Transform::extracteRotate</a>(m).toGenericMatrix&lt;3,3&gt;();</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>       r =  QQuaternion::fromRotationMatrix(q);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span> </div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>       t = <a class="code hl_function" href="class_transform.html#a5470db871eb7881e9ff90d9020e4ca4e">extracteTranslate</a>(m);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>    }</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span> </div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span> </div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    <span class="keywordtype">void</span> setRotation( QVector3D &amp; v, <span class="keywordtype">float</span> f){</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>        r = QQuaternion::fromAxisAndAngle(v,f);</div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    }</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordtype">void</span> setRotation(<span class="keywordtype">float</span> x,<span class="keywordtype">float</span> y,<span class="keywordtype">float</span> z, <span class="keywordtype">float</span> f){</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        r = QQuaternion::fromAxisAndAngle(QVector3D(x,y,z),f);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span> </div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    }</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <span class="keywordtype">void</span> setRotation(<span class="keywordtype">float</span> facteur){</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>        <a class="code hl_function" href="class_transform.html#a6487f7455e63a7deaff37dcbf0a50469">borneRotation</a>();</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>        QVector3D vec = QVector3D();</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>        <span class="keywordtype">float</span> angle = 1;</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>        r.getAxisAndAngle(&amp;vec,&amp;angle);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>        r = QQuaternion::fromAxisAndAngle(vec,angle*facteur);</div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    }</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    <span class="keywordtype">void</span> setRotation(QQuaternion q){</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>        r = q;</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    }</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span>    <span class="keywordtype">void</span> setScale( QVector3D v){</div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>        s = v;</div>
+<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    }</div>
+<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordtype">void</span> setScale( <span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y, <span class="keywordtype">float</span> z){</div>
+<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span>        s = QVector3D(x,y,z);</div>
+<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    }</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span> </div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordtype">void</span> setTranslate( QVector3D v){</div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>        t = v;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    }</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordtype">void</span> setTranslate( <span class="keywordtype">float</span> x, <span class="keywordtype">float</span> y, <span class="keywordtype">float</span> z){</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>        t = QVector3D(x,y,z);</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    }</div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="keywordtype">void</span> setTranslate(<span class="keywordtype">float</span> vit){</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>        t[0] = t[0]*vit;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>        t[1] = t[1]*vit;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>        <span class="keywordflow">if</span> (t[2]&gt;0)</div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>            t[2] = t[2]*vit;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    }</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordtype">void</span> addTranslate(QVector3D val){</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>        t = t+val;</div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    }</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span> </div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno"><a class="line" href="class_transform.html#a5470db871eb7881e9ff90d9020e4ca4e">  124</a></span>    <span class="keyword">static</span> QVector3D <a class="code hl_function" href="class_transform.html#a5470db871eb7881e9ff90d9020e4ca4e">extracteTranslate</a>(QMatrix4x4 m){</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>        <span class="keywordflow">return</span> m.column(3).toVector3D();</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    }</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno"><a class="line" href="class_transform.html#a51368a678ae1975b385ed6c1a869ca6c">  132</a></span>    <span class="keyword">static</span> QVector3D <a class="code hl_function" href="class_transform.html#a51368a678ae1975b385ed6c1a869ca6c">extracteScale</a>(QMatrix4x4 m){</div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>        <span class="keywordflow">return</span> QVector3D(m.column(0).toVector3D().length(),m.column(1).toVector3D().length(),m.column(2).toVector3D().length());</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    }</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span> </div>
+<div class="line"><a id="l00141" name="l00141"></a><span class="lineno"><a class="line" href="class_transform.html#a046620f82e0ada25d145add203cf3227">  141</a></span>    <span class="keyword">static</span> QMatrix4x4 <a class="code hl_function" href="class_transform.html#a046620f82e0ada25d145add203cf3227">extracteRotate</a>(QMatrix4x4 m){</div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>       QVector3D vecScale = <a class="code hl_function" href="class_transform.html#a51368a678ae1975b385ed6c1a869ca6c">extracteScale</a>( m);</div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    QMatrix4x4 r = QMatrix4x4();</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    r.setColumn(0,m.column(0).toVector3D()/vecScale.x());</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    r.setColumn(1,m.column(1).toVector3D()/vecScale.x());</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    r.setColumn(2,m.column(2).toVector3D()/vecScale.x());</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>r.setColumn(3,QVector4D(.0,.0,.0,1.0));</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    <span class="keywordflow">return</span> r;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>   }</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span><span class="comment">//fromRotationMatrix</span></div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span> </div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="comment">//QVector4D apply( QVector4D p); //p is in affine coords</span></div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>  <span class="comment">//  QVector3D applyToPoint( QVector3D p);</span></div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span><span class="comment">//    QVector3D applyToVector( QVector3D v);</span></div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> <span class="comment">//   QVector3D applyToVersor( QVector3D v);</span></div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno"><a class="line" href="class_transform.html#a1ffb00dd51d8fe95805f95fd42423907">  166</a></span>   <a class="code hl_class" href="class_transform.html">Transform</a> <a class="code hl_function" href="class_transform.html#a1ffb00dd51d8fe95805f95fd42423907">combine_with</a>( <a class="code hl_class" href="class_transform.html">Transform</a> &amp; b,<span class="keywordtype">double</span> deltaTime){</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>       <a class="code hl_class" href="class_transform.html">Transform</a> result;</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>       result.s = this-&gt;s *b.s; <span class="comment">//(b.s*deltaTime) ;</span></div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>       QVector3D angle = QVector3D();</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span>       <span class="keywordtype">float</span> f = 1;</div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span>       b.r.getAxisAndAngle(&amp;angle,&amp;f);</div>
+<div class="line"><a id="l00173" name="l00173"></a><span class="lineno">  173</span>       result.r = this-&gt;r * QQuaternion::fromAxisAndAngle(angle,f*(0.03*deltaTime));<span class="comment">//(b.r*deltaTime);//QQuaternion::slerp(this-&gt;r,b.r,0.5);</span></div>
+<div class="line"><a id="l00174" name="l00174"></a><span class="lineno">  174</span>       result.t = this-&gt;t + b.t *deltaTime*0.03;<span class="comment">//(b.t*deltaTime);</span></div>
+<div class="line"><a id="l00175" name="l00175"></a><span class="lineno">  175</span>       <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00176" name="l00176"></a><span class="lineno">  176</span>    }</div>
+<div class="line"><a id="l00177" name="l00177"></a><span class="lineno">  177</span> </div>
+<div class="line"><a id="l00178" name="l00178"></a><span class="lineno">  178</span> </div>
+<div class="line"><a id="l00179" name="l00179"></a><span class="lineno">  179</span>   <span class="comment">//interpolation</span></div>
+<div class="line"><a id="l00186" name="l00186"></a><span class="lineno"><a class="line" href="class_transform.html#a7baa18afb2e05764e7f9d6525d1a3ddb">  186</a></span><span class="comment"></span>    <a class="code hl_class" href="class_transform.html">Transform</a> <a class="code hl_function" href="class_transform.html#a7baa18afb2e05764e7f9d6525d1a3ddb">mix_with</a>(<a class="code hl_class" href="class_transform.html">Transform</a> &amp; b, <span class="keywordtype">float</span> k){</div>
+<div class="line"><a id="l00187" name="l00187"></a><span class="lineno">  187</span>       <a class="code hl_class" href="class_transform.html">Transform</a> result;</div>
+<div class="line"><a id="l00188" name="l00188"></a><span class="lineno">  188</span>       result.s = this-&gt;s * k + b.s * (1-k);</div>
+<div class="line"><a id="l00189" name="l00189"></a><span class="lineno">  189</span>      <span class="comment">// result.r = this-&gt;r mix_with(b, k);</span></div>
+<div class="line"><a id="l00190" name="l00190"></a><span class="lineno">  190</span>       result.r = QQuaternion::slerp(this-&gt;r,b.r,k);</div>
+<div class="line"><a id="l00191" name="l00191"></a><span class="lineno">  191</span>       result.t = this-&gt;t * k + b.t * (1-k);</div>
+<div class="line"><a id="l00192" name="l00192"></a><span class="lineno">  192</span>       <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00193" name="l00193"></a><span class="lineno">  193</span>    }</div>
+<div class="line"><a id="l00194" name="l00194"></a><span class="lineno">  194</span> </div>
+<div class="line"><a id="l00195" name="l00195"></a><span class="lineno">  195</span> </div>
+<div class="line"><a id="l00196" name="l00196"></a><span class="lineno">  196</span>    QVector3D getTranslate(){</div>
+<div class="line"><a id="l00197" name="l00197"></a><span class="lineno">  197</span>        <span class="keywordflow">return</span> t;</div>
+<div class="line"><a id="l00198" name="l00198"></a><span class="lineno">  198</span>    }</div>
+<div class="line"><a id="l00199" name="l00199"></a><span class="lineno">  199</span> </div>
+<div class="line"><a id="l00200" name="l00200"></a><span class="lineno">  200</span> </div>
+<div class="line"><a id="l00201" name="l00201"></a><span class="lineno">  201</span> </div>
+<div class="line"><a id="l00202" name="l00202"></a><span class="lineno">  202</span> </div>
+<div class="line"><a id="l00203" name="l00203"></a><span class="lineno">  203</span> </div>
+<div class="line"><a id="l00204" name="l00204"></a><span class="lineno">  204</span> </div>
+<div class="line"><a id="l00205" name="l00205"></a><span class="lineno">  205</span>    <span class="keyword">static</span> QVector3D convergeZero(QVector3D vec);</div>
+<div class="line"><a id="l00206" name="l00206"></a><span class="lineno">  206</span> </div>
+<div class="line"><a id="l00207" name="l00207"></a><span class="lineno">  207</span> </div>
+<div class="line"><a id="l00208" name="l00208"></a><span class="lineno">  208</span>   <span class="comment">// QVector4D apply( QVector4D p);</span></div>
+<div class="line"><a id="l00209" name="l00209"></a><span class="lineno">  209</span> </div>
+<div class="line"><a id="l00210" name="l00210"></a><span class="lineno">  210</span>    <span class="keyword">static</span> QMatrix4x4 inverse(QMatrix4x4 <span class="keyword">const</span> m);</div>
+<div class="line"><a id="l00211" name="l00211"></a><span class="lineno">  211</span> </div>
+<div class="line"><a id="l00212" name="l00212"></a><span class="lineno">  212</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00213" name="l00213"></a><span class="lineno">  213</span> </div>
+<div class="line"><a id="l00214" name="l00214"></a><span class="lineno">  214</span>    QMatrix4x4 doScale(QMatrix4x4 m){</div>
+<div class="line"><a id="l00215" name="l00215"></a><span class="lineno">  215</span>         m.scale(s);</div>
+<div class="line"><a id="l00216" name="l00216"></a><span class="lineno">  216</span>         <span class="keywordflow">return</span> m;</div>
+<div class="line"><a id="l00217" name="l00217"></a><span class="lineno">  217</span>    }</div>
+<div class="line"><a id="l00218" name="l00218"></a><span class="lineno">  218</span>    QMatrix4x4 doRotate(QMatrix4x4 m){</div>
+<div class="line"><a id="l00219" name="l00219"></a><span class="lineno">  219</span>         m.rotate(r);</div>
+<div class="line"><a id="l00220" name="l00220"></a><span class="lineno">  220</span>         <span class="keywordflow">return</span> m;</div>
+<div class="line"><a id="l00221" name="l00221"></a><span class="lineno">  221</span>    }</div>
+<div class="line"><a id="l00222" name="l00222"></a><span class="lineno">  222</span>    QMatrix4x4 doTranslate(QMatrix4x4 m){</div>
+<div class="line"><a id="l00223" name="l00223"></a><span class="lineno">  223</span>         m.translate(t);</div>
+<div class="line"><a id="l00224" name="l00224"></a><span class="lineno">  224</span>         <span class="keywordflow">return</span> m;</div>
+<div class="line"><a id="l00225" name="l00225"></a><span class="lineno">  225</span>    }</div>
+<div class="line"><a id="l00226" name="l00226"></a><span class="lineno">  226</span> </div>
+<div class="line"><a id="l00227" name="l00227"></a><span class="lineno">  227</span> </div>
+<div class="line"><a id="l00228" name="l00228"></a><span class="lineno">  228</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00232" name="l00232"></a><span class="lineno"><a class="line" href="class_transform.html#aac2d1a7b47493cb7b498de6d506bb0f1">  232</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_transform.html#aac2d1a7b47493cb7b498de6d506bb0f1">forward</a>(){</div>
+<div class="line"><a id="l00233" name="l00233"></a><span class="lineno">  233</span>        t += QVector3D(0.8,0,0);</div>
+<div class="line"><a id="l00234" name="l00234"></a><span class="lineno">  234</span>    }</div>
+<div class="line"><a id="l00239" name="l00239"></a><span class="lineno"><a class="line" href="class_transform.html#a52d98548c5ea927aad81b6a4919e7778">  239</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_transform.html#a52d98548c5ea927aad81b6a4919e7778">forward</a>(QVector3D dirView){</div>
+<div class="line"><a id="l00240" name="l00240"></a><span class="lineno">  240</span>        <span class="keywordflow">if</span>( (QVector3D(dirView.x(),dirView.y(),0).normalized()).length()&lt;9)</div>
+<div class="line"><a id="l00241" name="l00241"></a><span class="lineno">  241</span>        t += QVector3D(dirView.x(),dirView.y(),0).normalized();</div>
+<div class="line"><a id="l00242" name="l00242"></a><span class="lineno">  242</span>    }</div>
+<div class="line"><a id="l00243" name="l00243"></a><span class="lineno">  243</span> </div>
+<div class="line"><a id="l00244" name="l00244"></a><span class="lineno">  244</span>    <span class="keywordtype">void</span> backward(){</div>
+<div class="line"><a id="l00245" name="l00245"></a><span class="lineno">  245</span>        t += QVector3D(-0.8,0,0);</div>
+<div class="line"><a id="l00246" name="l00246"></a><span class="lineno">  246</span>    }</div>
+<div class="line"><a id="l00251" name="l00251"></a><span class="lineno"><a class="line" href="class_transform.html#a50f15a845c76f112b72799a62431856a">  251</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_transform.html#a50f15a845c76f112b72799a62431856a">backward</a>(QVector3D dirView){</div>
+<div class="line"><a id="l00252" name="l00252"></a><span class="lineno">  252</span>        <span class="keywordflow">if</span>( (QVector3D(-dirView.x(),-dirView.y(),0).normalized()).length()&lt;9)</div>
+<div class="line"><a id="l00253" name="l00253"></a><span class="lineno">  253</span>        t += QVector3D(-dirView.x(),-dirView.y(),0).normalized();</div>
+<div class="line"><a id="l00254" name="l00254"></a><span class="lineno">  254</span>    }</div>
+<div class="line"><a id="l00255" name="l00255"></a><span class="lineno">  255</span> </div>
+<div class="line"><a id="l00256" name="l00256"></a><span class="lineno">  256</span>    <span class="keywordtype">void</span> left(){</div>
+<div class="line"><a id="l00257" name="l00257"></a><span class="lineno">  257</span>        t += QVector3D(0,0.8,0);</div>
+<div class="line"><a id="l00258" name="l00258"></a><span class="lineno">  258</span>    }</div>
+<div class="line"><a id="l00262" name="l00262"></a><span class="lineno"><a class="line" href="class_transform.html#a481273e9c610568cb05e2f2d921deb1d">  262</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_transform.html#a481273e9c610568cb05e2f2d921deb1d">left2</a>(){</div>
+<div class="line"><a id="l00263" name="l00263"></a><span class="lineno">  263</span>       <span class="comment">// borneRotation();</span></div>
+<div class="line"><a id="l00264" name="l00264"></a><span class="lineno">  264</span>         r =  this-&gt;r *QQuaternion::fromAxisAndAngle(QVector3D(0,0,1),1);</div>
+<div class="line"><a id="l00265" name="l00265"></a><span class="lineno">  265</span>    }</div>
+<div class="line"><a id="l00266" name="l00266"></a><span class="lineno">  266</span>    <span class="keywordtype">void</span> right(){</div>
+<div class="line"><a id="l00267" name="l00267"></a><span class="lineno">  267</span>        t += QVector3D(0,-0.6,0);</div>
+<div class="line"><a id="l00268" name="l00268"></a><span class="lineno">  268</span>    }</div>
+<div class="line"><a id="l00272" name="l00272"></a><span class="lineno"><a class="line" href="class_transform.html#a36bc7369b9da3a059566cd369e14b2e9">  272</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_transform.html#a36bc7369b9da3a059566cd369e14b2e9">right2</a>(){</div>
+<div class="line"><a id="l00273" name="l00273"></a><span class="lineno">  273</span>         <span class="comment">//borneRotation();</span></div>
+<div class="line"><a id="l00274" name="l00274"></a><span class="lineno">  274</span> </div>
+<div class="line"><a id="l00275" name="l00275"></a><span class="lineno">  275</span>         r =  this-&gt;r *QQuaternion::fromAxisAndAngle(QVector3D(0,0,-1),1);</div>
+<div class="line"><a id="l00276" name="l00276"></a><span class="lineno">  276</span>    }</div>
+<div class="line"><a id="l00280" name="l00280"></a><span class="lineno"><a class="line" href="class_transform.html#acd1ad62e3339479602ce2d8db42ecab9">  280</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_transform.html#acd1ad62e3339479602ce2d8db42ecab9">jump</a>(){</div>
+<div class="line"><a id="l00281" name="l00281"></a><span class="lineno">  281</span>        t += QVector3D(0,0,2);</div>
+<div class="line"><a id="l00282" name="l00282"></a><span class="lineno">  282</span>    }</div>
+<div class="line"><a id="l00283" name="l00283"></a><span class="lineno">  283</span> </div>
+<div class="line"><a id="l00287" name="l00287"></a><span class="lineno"><a class="line" href="class_transform.html#a6487f7455e63a7deaff37dcbf0a50469">  287</a></span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_transform.html#a6487f7455e63a7deaff37dcbf0a50469">borneRotation</a>(){</div>
+<div class="line"><a id="l00288" name="l00288"></a><span class="lineno">  288</span>        QVector3D vec = QVector3D();</div>
+<div class="line"><a id="l00289" name="l00289"></a><span class="lineno">  289</span>        <span class="keywordtype">float</span> angle = 1;</div>
+<div class="line"><a id="l00290" name="l00290"></a><span class="lineno">  290</span>        r.getAxisAndAngle(&amp;vec,&amp;angle);</div>
+<div class="line"><a id="l00291" name="l00291"></a><span class="lineno">  291</span>        <span class="keywordflow">if</span> (angle &lt; 0.01)</div>
+<div class="line"><a id="l00292" name="l00292"></a><span class="lineno">  292</span>            angle = 0.0;</div>
+<div class="line"><a id="l00293" name="l00293"></a><span class="lineno">  293</span>        <span class="keywordflow">if</span> (angle &gt; 5)</div>
+<div class="line"><a id="l00294" name="l00294"></a><span class="lineno">  294</span>            angle = 5;</div>
+<div class="line"><a id="l00295" name="l00295"></a><span class="lineno">  295</span> </div>
+<div class="line"><a id="l00296" name="l00296"></a><span class="lineno">  296</span>        vec[0] = abs(vec.x())&lt;0.01? 0 : abs(vec.x()) &gt; 100 ? 100 : vec.x();</div>
+<div class="line"><a id="l00297" name="l00297"></a><span class="lineno">  297</span>        vec[1] = abs(vec.y())&lt;0.01? 0 : abs(vec.y()) &gt; 100 ? 100 : vec.y();</div>
+<div class="line"><a id="l00298" name="l00298"></a><span class="lineno">  298</span>        vec[2] = abs(vec.z())&lt;0.01? 0 : abs(vec.z()) &gt; 100 ? 100 : vec.z();</div>
+<div class="line"><a id="l00299" name="l00299"></a><span class="lineno">  299</span>        r = QQuaternion::fromAxisAndAngle(vec,angle);</div>
+<div class="line"><a id="l00300" name="l00300"></a><span class="lineno">  300</span>    }</div>
+<div class="line"><a id="l00301" name="l00301"></a><span class="lineno">  301</span> </div>
+<div class="line"><a id="l00302" name="l00302"></a><span class="lineno">  302</span> </div>
+<div class="line"><a id="l00303" name="l00303"></a><span class="lineno">  303</span> </div>
+<div class="line"><a id="l00304" name="l00304"></a><span class="lineno">  304</span>};</div>
+<div class="line"><a id="l00305" name="l00305"></a><span class="lineno">  305</span><span class="preprocessor">#endif </span><span class="comment">// TRANSFORM_H</span></div>
+<div class="line"><a id="l00306" name="l00306"></a><span class="lineno">  306</span> </div>
+<div class="ttc" id="aclass_transform_html"><div class="ttname"><a href="class_transform.html">Transform</a></div><div class="ttdoc">la classe Transform Transform effectue les calculs géométrique afin de générer une matrice de tranfor...</div><div class="ttdef"><b>Definition:</b> transform.h:23</div></div>
+<div class="ttc" id="aclass_transform_html_a046620f82e0ada25d145add203cf3227"><div class="ttname"><a href="class_transform.html#a046620f82e0ada25d145add203cf3227">Transform::extracteRotate</a></div><div class="ttdeci">static QMatrix4x4 extracteRotate(QMatrix4x4 m)</div><div class="ttdoc">extrait la composante rotate d'une QMatrix4x4</div><div class="ttdef"><b>Definition:</b> transform.h:141</div></div>
+<div class="ttc" id="aclass_transform_html_a1ffb00dd51d8fe95805f95fd42423907"><div class="ttname"><a href="class_transform.html#a1ffb00dd51d8fe95805f95fd42423907">Transform::combine_with</a></div><div class="ttdeci">Transform combine_with(Transform &amp;b, double deltaTime)</div><div class="ttdoc">combine deux transformations</div><div class="ttdef"><b>Definition:</b> transform.h:166</div></div>
+<div class="ttc" id="aclass_transform_html_a36bc7369b9da3a059566cd369e14b2e9"><div class="ttname"><a href="class_transform.html#a36bc7369b9da3a059566cd369e14b2e9">Transform::right2</a></div><div class="ttdeci">void right2()</div><div class="ttdoc">fait tourner a droite le joueur</div><div class="ttdef"><b>Definition:</b> transform.h:272</div></div>
+<div class="ttc" id="aclass_transform_html_a481273e9c610568cb05e2f2d921deb1d"><div class="ttname"><a href="class_transform.html#a481273e9c610568cb05e2f2d921deb1d">Transform::left2</a></div><div class="ttdeci">void left2()</div><div class="ttdoc">fait tourner a gauche le joueur</div><div class="ttdef"><b>Definition:</b> transform.h:262</div></div>
+<div class="ttc" id="aclass_transform_html_a50f15a845c76f112b72799a62431856a"><div class="ttname"><a href="class_transform.html#a50f15a845c76f112b72799a62431856a">Transform::backward</a></div><div class="ttdeci">void backward(QVector3D dirView)</div><div class="ttdoc">fait reculer le joueur dans la direction dirView</div><div class="ttdef"><b>Definition:</b> transform.h:251</div></div>
+<div class="ttc" id="aclass_transform_html_a51368a678ae1975b385ed6c1a869ca6c"><div class="ttname"><a href="class_transform.html#a51368a678ae1975b385ed6c1a869ca6c">Transform::extracteScale</a></div><div class="ttdeci">static QVector3D extracteScale(QMatrix4x4 m)</div><div class="ttdoc">extrait la composante scale d'une QMatrix4x4</div><div class="ttdef"><b>Definition:</b> transform.h:132</div></div>
+<div class="ttc" id="aclass_transform_html_a52d98548c5ea927aad81b6a4919e7778"><div class="ttname"><a href="class_transform.html#a52d98548c5ea927aad81b6a4919e7778">Transform::forward</a></div><div class="ttdeci">void forward(QVector3D dirView)</div><div class="ttdoc">fait avencer le joueur dans la direction dirView</div><div class="ttdef"><b>Definition:</b> transform.h:239</div></div>
+<div class="ttc" id="aclass_transform_html_a5470db871eb7881e9ff90d9020e4ca4e"><div class="ttname"><a href="class_transform.html#a5470db871eb7881e9ff90d9020e4ca4e">Transform::extracteTranslate</a></div><div class="ttdeci">static QVector3D extracteTranslate(QMatrix4x4 m)</div><div class="ttdoc">extrait la composante translate d'une QMatrix4x4</div><div class="ttdef"><b>Definition:</b> transform.h:124</div></div>
+<div class="ttc" id="aclass_transform_html_a6487f7455e63a7deaff37dcbf0a50469"><div class="ttname"><a href="class_transform.html#a6487f7455e63a7deaff37dcbf0a50469">Transform::borneRotation</a></div><div class="ttdeci">void borneRotation()</div><div class="ttdoc">obsolete</div><div class="ttdef"><b>Definition:</b> transform.h:287</div></div>
+<div class="ttc" id="aclass_transform_html_a64a2fbd4261bb71ac9e7d37ee7bd0864"><div class="ttname"><a href="class_transform.html#a64a2fbd4261bb71ac9e7d37ee7bd0864">Transform::doAnimation</a></div><div class="ttdeci">QMatrix4x4 doAnimation(Transform *anim, double deltaTime)</div><div class="ttdoc">appel combine_with(*anim, deltaTime) et doTransformation() afin de mettre a jour la matrice de transf...</div><div class="ttdef"><b>Definition:</b> transform.h:56</div></div>
+<div class="ttc" id="aclass_transform_html_a7baa18afb2e05764e7f9d6525d1a3ddb"><div class="ttname"><a href="class_transform.html#a7baa18afb2e05764e7f9d6525d1a3ddb">Transform::mix_with</a></div><div class="ttdeci">Transform mix_with(Transform &amp;b, float k)</div><div class="ttdoc">interpole deux transformations</div><div class="ttdef"><b>Definition:</b> transform.h:186</div></div>
+<div class="ttc" id="aclass_transform_html_a9c07946c92e291404f4b584c6dd5c7e1"><div class="ttname"><a href="class_transform.html#a9c07946c92e291404f4b584c6dd5c7e1">Transform::doTransformation</a></div><div class="ttdeci">QMatrix4x4 doTransformation()</div><div class="ttdoc">calcul la transformation a partir de scale, translate, rotate</div><div class="ttdef"><b>Definition:</b> transform.h:44</div></div>
+<div class="ttc" id="aclass_transform_html_aac2d1a7b47493cb7b498de6d506bb0f1"><div class="ttname"><a href="class_transform.html#aac2d1a7b47493cb7b498de6d506bb0f1">Transform::forward</a></div><div class="ttdeci">void forward()</div><div class="ttdoc">fait avencer le joueur</div><div class="ttdef"><b>Definition:</b> transform.h:232</div></div>
+<div class="ttc" id="aclass_transform_html_acd1ad62e3339479602ce2d8db42ecab9"><div class="ttname"><a href="class_transform.html#acd1ad62e3339479602ce2d8db42ecab9">Transform::jump</a></div><div class="ttdeci">void jump()</div><div class="ttdoc">jump, tout est dit</div><div class="ttdef"><b>Definition:</b> transform.h:280</div></div>
+</div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
+<!-- start footer part -->
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="dir_74389ed8173ad57b461b9d623a1f3867.html">Source</a></li><li class="navelem"><a class="el" href="transform_8h.html">transform.h</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+  </ul>
+</div>
+</body>
+</html>
