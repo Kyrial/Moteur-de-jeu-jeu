@@ -9,7 +9,14 @@ struct VertexDataWithNormal
     QVector2D texCoord;
     QVector3D normal;
 };
+/**
+* @file
+* @brief le fichier contient la classe GeometryMeshEngine qui effectue toute les actions en rapport aux maillage importer
+*/
 
+/**
+* @brief la classe GeometryMeshEngine effectue toute les actions en rapport aux maillage importer
+*/
 class GeometryMeshEngine : public GeometryEngine
 {
 public:

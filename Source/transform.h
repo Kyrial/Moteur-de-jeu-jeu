@@ -12,7 +12,13 @@
 //inversion
 //combinaision
 
-
+/**
+ * @file
+ * @brief le fichier contient la classe Transform effectue les calculs géométrique afin de générer une matrice de tranformation à partir de scale, translate, rotation
+*/
+/**
+ * @brief la classe Transform Transform effectue les calculs géométrique afin de générer une matrice de tranformation à partir de scale, translate, rotation
+*/
 class  Transform
 {
 private:
@@ -31,12 +37,22 @@ public:
     Transform(QVector3D sc, QQuaternion ro, QVector3D tr):s(sc), r(ro), t(tr){}
 
 //methode
+    /**
+     * @brief calcul la transformation a partir de scale, translate, rotate
+     * @return
+     */
     QMatrix4x4 doTransformation(){
          QMatrix4x4 a= QMatrix4x4 ();
          a = doTranslate(doRotate(doScale(a)));
          return a;
     }
 
+    /**
+     * @brief appel combine_with(*anim, deltaTime) et doTransformation() afin de mettre a jour la matrice de transformation en fonction de la matrice d'animation
+     * @param anim matrice d'animation
+     * @param deltaTime intervalle de temps depuis le dernier appel
+     * @return matrice résultante de la combinaison entre this et anim
+     */
     QMatrix4x4 doAnimation(Transform* anim, double deltaTime){
         Transform a =combine_with(*anim, deltaTime);
         this->setScale(a.s);
@@ -100,14 +116,28 @@ public:
         t = t+val;
     }
 
-    //Extract is basically the last column of the matrix
+    /**
+     * @brief extrait la composante translate d'une QMatrix4x4
+     * @param m la fameuse matrice QMatrix4x4
+     * @return retourne la translation
+     */
     static QVector3D extracteTranslate(QMatrix4x4 m){
         return m.column(3).toVector3D();
     }
+    /**
+     * @brief extrait la composante scale d'une QMatrix4x4
+     * @param m la fameuse matrice QMatrix4x4
+     * @return retourne la mise à l'echelle
+     */
     static QVector3D extracteScale(QMatrix4x4 m){
         return QVector3D(m.column(0).toVector3D().length(),m.column(1).toVector3D().length(),m.column(2).toVector3D().length());
     }
 
+    /**
+     * @brief extrait la composante rotate d'une QMatrix4x4
+     * @param m la fameuse matrice QMatrix4x4
+     * @return retourne la rotation
+     */
     static QMatrix4x4 extracteRotate(QMatrix4x4 m){
        QVector3D vecScale = extracteScale( m);
     QMatrix4x4 r = QMatrix4x4();
@@ -127,6 +157,12 @@ r.setColumn(3,QVector4D(.0,.0,.0,1.0));
 //    QVector3D applyToVector( QVector3D v);
  //   QVector3D applyToVersor( QVector3D v);
 
+    /**
+    * @brief combine deux transformations
+    * @param b l'autre transformation
+    * @param deltaTime intervalle de temps
+    * @return le resultat de la combinaison
+    */
    Transform combine_with( Transform & b,double deltaTime){
        Transform result;
        result.s = this->s *b.s; //(b.s*deltaTime) ;
@@ -140,9 +176,13 @@ r.setColumn(3,QVector4D(.0,.0,.0,1.0));
     }
 
 
- //   Transform interpolate_with( Transform &t, QVector3D k);
-
    //interpolation
+   /**
+     * @brief interpole deux transformations
+     * @param b transformation
+     * @param k le poid entre les deux transformations
+     * @return le resutltat de l'interpolation
+     */
     Transform mix_with(Transform & b, float k){
        Transform result;
        result.s = this->s * k + b.s * (1-k);
@@ -186,24 +226,39 @@ protected:
 
 
 public:
-
+    /**
+     * @brief fait avencer le joueur
+     */
     void forward(){
         t += QVector3D(0.8,0,0);
     }
+    /**
+     * @brief fait avencer le joueur dans la direction dirView
+     * @param dirView direction
+     */
     void forward(QVector3D dirView){
+        if( (QVector3D(dirView.x(),dirView.y(),0).normalized()).length()<9)
         t += QVector3D(dirView.x(),dirView.y(),0).normalized();
     }
 
     void backward(){
         t += QVector3D(-0.8,0,0);
     }
+    /**
+     * @brief fait reculer le joueur dans la direction dirView
+     * @param dirView direction
+     */
     void backward(QVector3D dirView){
+        if( (QVector3D(-dirView.x(),-dirView.y(),0).normalized()).length()<9)
         t += QVector3D(-dirView.x(),-dirView.y(),0).normalized();
     }
 
     void left(){
         t += QVector3D(0,0.8,0);
     }
+    /**
+     * @brief fait tourner a gauche le joueur
+     */
     void left2(){
        // borneRotation();
          r =  this->r *QQuaternion::fromAxisAndAngle(QVector3D(0,0,1),1);
@@ -211,16 +266,24 @@ public:
     void right(){
         t += QVector3D(0,-0.6,0);
     }
+    /**
+     * @brief fait tourner a droite le joueur
+     */
     void right2(){
          //borneRotation();
 
          r =  this->r *QQuaternion::fromAxisAndAngle(QVector3D(0,0,-1),1);
     }
+    /**
+     * @brief jump, tout est dit
+     */
     void jump(){
         t += QVector3D(0,0,2);
     }
 
-
+    /**
+     * @brief obsolete
+     */
     void borneRotation(){
         QVector3D vec = QVector3D();
         float angle = 1;

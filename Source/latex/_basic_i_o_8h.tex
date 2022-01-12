@@ -1,0 +1,89 @@
+\hypertarget{_basic_i_o_8h}{}\doxysection{Référence du fichier Basic\+IO.\+h}
+\label{_basic_i_o_8h}\index{BasicIO.h@{BasicIO.h}}
+
+
+librairie fournie afin de pouvoir lire un fichier. a été modifié afin de pouvoir lire un fichiers \char`\"{}off\char`\"{} et des fichier \char`\"{}obj\char`\"{} tout en récupérant les coordonnée de textures.  
+
+
+{\ttfamily \#include $<$vector$>$}\newline
+{\ttfamily \#include $<$string$>$}\newline
+{\ttfamily \#include $<$iostream$>$}\newline
+{\ttfamily \#include $<$fstream$>$}\newline
+{\ttfamily \#include $<$QString$>$}\newline
+{\ttfamily \#include $<$QString\+List$>$}\newline
+{\ttfamily \#include $<$QFile$>$}\newline
+{\ttfamily \#include $<$QData\+Stream$>$}\newline
+{\ttfamily \#include $<$cfloat$>$}\newline
+{\ttfamily \#include $<$cmath$>$}\newline
+{\ttfamily \#include $<$cassert$>$}\newline
+{\ttfamily \#include $<$QText\+Stream$>$}\newline
+{\ttfamily \#include $<$QCore\+Application$>$}\newline
+{\ttfamily \#include $<$QDir$>$}\newline
+{\ttfamily \#include $<$stdio.\+h$>$}\newline
+{\ttfamily \#include $<$unistd.\+h$>$}\newline
+\doxysubsection*{Macros}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_basic_i_o_8h_af0c0d1034a71f8aa3a08cda83c9d4e7a}\label{_basic_i_o_8h_af0c0d1034a71f8aa3a08cda83c9d4e7a}} 
+\#define {\bfseries Get\+Current\+Dir}~getcwd
+\end{DoxyCompactItemize}
+\doxysubsection*{Fonctions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{_basic_i_o_8h_ad6c55c0c80ea9b7e1e30a13b649b8e65}\label{_basic_i_o_8h_ad6c55c0c80ea9b7e1e30a13b649b8e65}} 
+{\footnotesize template$<$class point\+\_\+t $>$ }\\point\+\_\+t {\bfseries OFFIO\+::max} (point\+\_\+t BB, point\+\_\+t pt)
+\item 
+\mbox{\Hypertarget{_basic_i_o_8h_ac6527a896807d153812e9ebc979c9d9f}\label{_basic_i_o_8h_ac6527a896807d153812e9ebc979c9d9f}} 
+{\footnotesize template$<$class point\+\_\+t $>$ }\\point\+\_\+t {\bfseries OFFIO\+::min} (point\+\_\+t BB, point\+\_\+t pt)
+\item 
+\mbox{\Hypertarget{_basic_i_o_8h_af98cb722e4bde7eca2a0d3dfb7a55432}\label{_basic_i_o_8h_af98cb722e4bde7eca2a0d3dfb7a55432}} 
+{\footnotesize template$<$class point\+\_\+t , class type\+\_\+t $>$ }\\bool {\bfseries OFFIO\+::open} (const std\+::string \&filename, std\+::vector$<$ point\+\_\+t $>$ \&vertices, std\+::vector$<$ std\+::vector$<$ type\+\_\+t $>$ $>$ \&faces, bool convert\+To\+Triangles=true, bool randomize=false)
+\item 
+\mbox{\Hypertarget{_basic_i_o_8h_a8692cf4a3e5edc29388fbfe2ffec0b44}\label{_basic_i_o_8h_a8692cf4a3e5edc29388fbfe2ffec0b44}} 
+{\footnotesize template$<$class point\+\_\+t , class type\+\_\+t $>$ }\\bool {\bfseries OFFIO\+::save} (const std\+::string \&filename, std\+::vector$<$ point\+\_\+t $>$ \&vertices, std\+::vector$<$ std\+::vector$<$ type\+\_\+t $>$ $>$ \&faces)
+\item 
+\mbox{\Hypertarget{_basic_i_o_8h_ab2bebdab855443000a9d213155194c4d}\label{_basic_i_o_8h_ab2bebdab855443000a9d213155194c4d}} 
+{\footnotesize template$<$class point\+\_\+t , class face\+\_\+t $>$ }\\bool {\bfseries OFFIO\+::save\+From\+Mesh\+Format} (const std\+::string \&filename, const point\+\_\+t $\ast$vertices, unsigned int n\+\_\+vertices, const face\+\_\+t $\ast$faces, unsigned int n\+\_\+faces)
+\item 
+\mbox{\Hypertarget{_basic_i_o_8h_adfe18e618f39f26143984bca0da321e2}\label{_basic_i_o_8h_adfe18e618f39f26143984bca0da321e2}} 
+{\footnotesize template$<$class point\+\_\+t $>$ }\\bool {\bfseries OFFIO\+::open} (const std\+::string \&filename, std\+::vector$<$ point\+\_\+t $>$ \&vertices)
+\item 
+{\footnotesize template$<$class point\+\_\+t , class int\+\_\+type\+\_\+t $>$ }\\bool \mbox{\hyperlink{_basic_i_o_8h_a9f29e4a94e538fc858f8e76b4937ac9d}{OBJIO\+::open}} (const std\+::string \&filename, std\+::vector$<$ point\+\_\+t $>$ \&vertices, std\+::vector$<$ std\+::vector$<$ int\+\_\+type\+\_\+t $>$ $>$ \&faces, bool convert\+To\+Triangles=true, bool randomize=false, bool convert\+Edges\+To\+Degenerate\+Triangles=true)
+\item 
+{\footnotesize template$<$class point\+\_\+t , class texture , class int\+\_\+type\+\_\+t $>$ }\\bool \mbox{\hyperlink{_basic_i_o_8h_a4950155da3e2d8ba9e9bc42f9fb2dc54}{OBJIO\+::open}} (const std\+::string \&filename, std\+::vector$<$ point\+\_\+t $>$ \&vertices, std\+::vector$<$ std\+::vector$<$ int\+\_\+type\+\_\+t $>$ $>$ \&faces, std\+::vector$<$ texture $>$ \&textures, std\+::vector$<$ std\+::vector$<$ int\+\_\+type\+\_\+t $>$ $>$ \&indicetextures, bool convert\+To\+Triangles=true, bool randomize=false, bool convert\+Edges\+To\+Degenerate\+Triangles=true)
+\item 
+\mbox{\Hypertarget{_basic_i_o_8h_a4986b82ecd9d0fc4cc8e7e814a07f919}\label{_basic_i_o_8h_a4986b82ecd9d0fc4cc8e7e814a07f919}} 
+{\footnotesize template$<$class point\+\_\+t , class int\+\_\+type\+\_\+t $>$ }\\bool {\bfseries OBJIO\+::open} (const std\+::string \&filename, std\+::vector$<$ point\+\_\+t $>$ \&vertices, std\+::vector$<$ std\+::vector$<$ int\+\_\+type\+\_\+t $>$ $>$ \&faces, std\+::vector$<$ std\+::pair$<$ int\+\_\+type\+\_\+t, int\+\_\+type\+\_\+t $>$ $>$ \&additional\+\_\+edges, bool convert\+To\+Triangles=true, bool randomize=false)
+\item 
+\mbox{\Hypertarget{_basic_i_o_8h_adef56448cf809276731edc69d7f13356}\label{_basic_i_o_8h_adef56448cf809276731edc69d7f13356}} 
+{\footnotesize template$<$class point\+\_\+t $>$ }\\bool {\bfseries OBJIO\+::open} (const std\+::string \&filename, std\+::vector$<$ point\+\_\+t $>$ \&vertices)
+\item 
+\mbox{\Hypertarget{_basic_i_o_8h_a155a40c3d0d42d06f36549163c6d7724}\label{_basic_i_o_8h_a155a40c3d0d42d06f36549163c6d7724}} 
+{\footnotesize template$<$class point\+\_\+t , typename int\+\_\+t $>$ }\\bool {\bfseries OBJIO\+::save} (std\+::string const \&filename, std\+::vector$<$ point\+\_\+t $>$ \&verticesP, std\+::vector$<$ std\+::vector$<$ int\+\_\+t $>$ $>$ \&facesP)
+\item 
+\mbox{\Hypertarget{_basic_i_o_8h_adb3f0ec4a1b9da81f6841c760efde06b}\label{_basic_i_o_8h_adb3f0ec4a1b9da81f6841c760efde06b}} 
+{\footnotesize template$<$class point\+\_\+t , class face\+\_\+t , class edge\+\_\+t $>$ }\\bool {\bfseries OBJIO\+::save\+From\+Mesh\+Format} (const std\+::string \&filename, const point\+\_\+t $\ast$vertices, unsigned int n\+\_\+vertices, const face\+\_\+t $\ast$faces, unsigned int n\+\_\+faces, const edge\+\_\+t $\ast$edges, unsigned int n\+\_\+edges)
+\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+librairie fournie afin de pouvoir lire un fichier. a été modifié afin de pouvoir lire un fichiers \char`\"{}off\char`\"{} et des fichier \char`\"{}obj\char`\"{} tout en récupérant les coordonnée de textures. 
+
+
+
+\doxysubsection{Documentation des fonctions}
+\mbox{\Hypertarget{_basic_i_o_8h_a9f29e4a94e538fc858f8e76b4937ac9d}\label{_basic_i_o_8h_a9f29e4a94e538fc858f8e76b4937ac9d}} 
+\index{BasicIO.h@{BasicIO.h}!open@{open}}
+\index{open@{open}!BasicIO.h@{BasicIO.h}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}\hspace{0.1cm}{\footnotesize\ttfamily [1/2]}}
+{\footnotesize\ttfamily template$<$class point\+\_\+t , class int\+\_\+type\+\_\+t $>$ \\
+bool OBJIO\+::open (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename,  }\item[{std\+::vector$<$ point\+\_\+t $>$ \&}]{vertices,  }\item[{std\+::vector$<$ std\+::vector$<$ int\+\_\+type\+\_\+t $>$ $>$ \&}]{faces,  }\item[{bool}]{convert\+To\+Triangles = {\ttfamily true},  }\item[{bool}]{randomize = {\ttfamily false},  }\item[{bool}]{convert\+Edges\+To\+Degenerate\+Triangles = {\ttfamily true} }\end{DoxyParamCaption})}
+
+myfile.\+is\+\_\+open())\mbox{\Hypertarget{_basic_i_o_8h_a4950155da3e2d8ba9e9bc42f9fb2dc54}\label{_basic_i_o_8h_a4950155da3e2d8ba9e9bc42f9fb2dc54}} 
+\index{BasicIO.h@{BasicIO.h}!open@{open}}
+\index{open@{open}!BasicIO.h@{BasicIO.h}}
+\doxysubsubsection{\texorpdfstring{open()}{open()}\hspace{0.1cm}{\footnotesize\ttfamily [2/2]}}
+{\footnotesize\ttfamily template$<$class point\+\_\+t , class texture , class int\+\_\+type\+\_\+t $>$ \\
+bool OBJIO\+::open (\begin{DoxyParamCaption}\item[{const std\+::string \&}]{filename,  }\item[{std\+::vector$<$ point\+\_\+t $>$ \&}]{vertices,  }\item[{std\+::vector$<$ std\+::vector$<$ int\+\_\+type\+\_\+t $>$ $>$ \&}]{faces,  }\item[{std\+::vector$<$ texture $>$ \&}]{textures,  }\item[{std\+::vector$<$ std\+::vector$<$ int\+\_\+type\+\_\+t $>$ $>$ \&}]{indicetextures,  }\item[{bool}]{convert\+To\+Triangles = {\ttfamily true},  }\item[{bool}]{randomize = {\ttfamily false},  }\item[{bool}]{convert\+Edges\+To\+Degenerate\+Triangles = {\ttfamily true} }\end{DoxyParamCaption})}
+
+myfile.\+is\+\_\+open())

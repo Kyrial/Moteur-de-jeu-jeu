@@ -12,6 +12,16 @@
 #include <QOpenGLWidget>
 #include <QObject>
 #include <QKeyEvent>
+
+/**
+ * @file
+ * @brief le fichier contient la classe Object est la classe mère et est abstraite, elle contient les comportement par défaut. les autre classe sont ses fille et spécifie les comportement selon leurs besoins.
+*/
+
+/**
+ * @brief la classe Object est la classe mère et est abstraite, elle contient les comportement par défaut. les autre classe sont ses fille et spécifie les comportement selon leurs besoins.
+*/
+
 class Object: public QObject
 {
     Q_OBJECT
@@ -47,8 +57,15 @@ protected:
 
 public:
 
-
+    /**
+     * @brief  Constructeur
+     */
     Object();
+    /**
+     * @brief constructeur avec parametre
+     * @param tt matrice de transformation
+     * @param anim matrice d'animation
+     */
     Object(Transform tt,Transform anim):t(tt),animation(anim){}
 
 
@@ -146,6 +163,11 @@ public:
 public:
     void transfertDeForce(QVector3D direction);
 
+    /**
+     * @brief boucle de rendu, appel au parents
+     * @param deltaTime intervalle de temps depuis le dernier appel
+     * @param m matrice de transformation du parent
+     */
     virtual void  updateScene( double deltaTime =1, QMatrix4x4 m= QMatrix4x4());
     void findCollision( Object *obj,QMatrix4x4 anim,  QMatrix4x4 t);
     void updateBB();

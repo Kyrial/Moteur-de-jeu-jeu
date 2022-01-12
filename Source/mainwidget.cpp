@@ -78,13 +78,25 @@ MainWidget::MainWidget(QWidget *parent) :
 {
 
 }
-
+/**
+ * @brief initialise le graphe de scène avec le noeud monde
+ */
 void MainWidget::initMonde(){
     //Transform tt = Transform();
     gameObj = new GameObject();// tt, geo);
     gameObj->setName("racine");
 }
 
+/**
+ * @brief ajoute un GameObject au graphe de scène
+ * @param shad shader
+ * @param parent gameobject parent
+ * @param t transformation
+ * @param mesh geometry, pour gerer les maillages
+ * @param anim tranformation pour l'animation
+ * @param texture la textures
+ * @return
+ */
 Object* MainWidget::addGameObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh=new GeometryEngine(), Transform *anim = new Transform(),QOpenGLTexture *texture=NULL){
     //setTexture(QOpenGLTexture *txtr)
     Object *gameObj2 = new GameObject(*t, *anim);
@@ -95,6 +107,16 @@ Object* MainWidget::addGameObject(QOpenGLShaderProgram* shad,Object *parent, Tra
     gameObj2->setShader(shad);
     return gameObj2;
 }
+/**
+ * @brief ajoute un MobileObject au graphe de scène
+ * @param shad shader
+ * @param parent gameobject parent
+ * @param t transformation
+ * @param mesh geometry, pour gerer les maillages
+ * @param anim tranformation pour l'animation
+ * @param texture la textures
+ * @return
+ */
 Object* MainWidget::addMobileObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh=new GeometryEngine(), Transform *anim = new Transform(),QOpenGLTexture *texture=NULL ){
     //setTexture(QOpenGLTexture *txtr)
     //MobileObj *Obj2
@@ -106,6 +128,16 @@ Object* MainWidget::addMobileObject(QOpenGLShaderProgram* shad,Object *parent, T
     mobileobj->setShader(shad);
     return mobileobj;
 }
+/**
+ * @brief ajoute un  addBillboardObject au graphe de scène
+ * @param shad shader
+ * @param parent gameobject parent
+ * @param t transformation
+ * @param mesh geometry, pour gerer les maillages
+ * @param anim tranformation pour l'animation
+ * @param texture la textures
+ * @return
+ */
 Object* MainWidget::addBillboardObject(QOpenGLShaderProgram* shad,Object *parent, Transform *t, GeometryEngine *mesh=new GeometryEngine(), Transform *anim = new Transform(),QOpenGLTexture *texture=NULL ){
     //setTexture(QOpenGLTexture *txtr)
     //MobileObj *Obj2
@@ -117,7 +149,9 @@ Object* MainWidget::addBillboardObject(QOpenGLShaderProgram* shad,Object *parent
     billboardobj->setShader(shad);
     return billboardobj;
 }
-
+/**
+ * @brief Methode repertoriant tout les object du graphe de scène
+ */
 void MainWidget::scene(){
     gameObj->setShader(allShaders[0]);
 
@@ -523,6 +557,9 @@ void MainWidget::initializeGL()
 
 
 //! [3]
+/**
+* @brief initShaders initialise tous les shaders
+*/
 void MainWidget::initShaders()
 {
     // Compile vertex shader
@@ -566,7 +603,7 @@ void MainWidget::initShaders()
         close();*/
 
     //compile control shader
-    if (!meshShader->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/controlshader.glsl"))
+    if (!meshShader->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/meshs_controlshader.glsl"))
         close();
     //compile control shader
     if (!meshShader->addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/MeshShader/h_tesselationshader.glsl"))
@@ -619,7 +656,7 @@ void MainWidget::initShaders()
         close();*/
 
     //compile control shader
-    if (!treeShader->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/controlshader.glsl"))
+    if (!treeShader->addShaderFromSourceFile(QOpenGLShader::TessellationControl, ":/Shaders/meshs_controlshader.glsl"))
         close();
     //compile control shader
     if (!treeShader->addShaderFromSourceFile(QOpenGLShader::TessellationEvaluation, ":/Shaders/TreeShader/arbre_tesselationshader.glsl"))
@@ -646,6 +683,9 @@ void MainWidget::addAttributeToTexture(QOpenGLTexture* texture){
     texture->setWrapMode(QOpenGLTexture::Repeat);
 }
 
+/**
+ * @brief initTextures initialise toute les textures
+ */
 void MainWidget::initTextures()
 {
     // Load cube.png image
@@ -806,6 +846,7 @@ void MainWidget::keyPressEvent(QKeyEvent *event)
 
 
 bool MainWidget::eventFilter(QObject *object, QEvent *event){
+    if(gameObj->animate)
     if(true ||(event->type()==QEvent::KeyPress || event->type()==QEvent::KeyRelease)) {
         //qDebug("filtre ");
         emit emitFilter(event);

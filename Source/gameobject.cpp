@@ -1,19 +1,13 @@
 #include "gameobject.h"
-/*
-GameObject::GameObject()
-{
-    //t = Transform();
-}
-*/
-/*
-GameObject::~GameObject(){
 
-    geo.delete;
 
-        t.destroy();
-    enfants.destroy()
-      parent->destroy();
-}*/
+
+
+
+/**
+ * @brief charge le shader, appelle la methode parent
+ * @param deltaTime intervalle de temps
+ */
 void  GameObject::updateScene( double deltaTime){
     QMatrix4x4 m= chargeMatriceForShader(deltaTime);
 

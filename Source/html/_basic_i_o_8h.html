@@ -1,0 +1,279 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=11"/>
+<meta name="generator" content="Doxygen 1.9.3"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>My Project: Référence du fichier BasicIO.h</title>
+<link href="tabs.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="jquery.js"></script>
+<script type="text/javascript" src="dynsections.js"></script>
+<link href="search/search.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="search/searchdata.js"></script>
+<script type="text/javascript" src="search/search.js"></script>
+<link href="doxygen.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+<div id="top"><!-- do not remove this div, it is closed by doxygen! -->
+<div id="titlearea">
+<table cellspacing="0" cellpadding="0">
+ <tbody>
+ <tr id="projectrow">
+  <td id="projectalign">
+   <div id="projectname">My Project
+   </div>
+  </td>
+ </tr>
+ </tbody>
+</table>
+</div>
+<!-- end header part -->
+<!-- Généré par Doxygen 1.9.3 -->
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+var searchBox = new SearchBox("searchBox", "search",'Recherche','.html');
+/* @license-end */
+</script>
+<script type="text/javascript" src="menudata.js"></script>
+<script type="text/javascript" src="menu.js"></script>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(function() {
+  initMenu('',true,false,'search.php','Recherche');
+  $(document).ready(function() { init_search(); });
+});
+/* @license-end */
+</script>
+<div id="main-nav"></div>
+<!-- window showing the filter options -->
+<div id="MSearchSelectWindow"
+     onmouseover="return searchBox.OnSearchSelectShow()"
+     onmouseout="return searchBox.OnSearchSelectHide()"
+     onkeydown="return searchBox.OnSearchSelectKey(event)">
+</div>
+
+<!-- iframe showing the search results (closed by default) -->
+<div id="MSearchResultsWindow">
+<iframe src="javascript:void(0)" frameborder="0" 
+        name="MSearchResults" id="MSearchResults">
+</iframe>
+</div>
+
+</div><!-- top -->
+<div class="header">
+  <div class="summary">
+<a href="#define-members">Macros</a> &#124;
+<a href="#func-members">Fonctions</a>  </div>
+  <div class="headertitle"><div class="title">Référence du fichier BasicIO.h</div></div>
+</div><!--header-->
+<div class="contents">
+
+<p>librairie fournie afin de pouvoir lire un fichier. a été modifié afin de pouvoir lire un fichiers "off" et des fichier "obj" tout en récupérant les coordonnée de textures.  
+<a href="#details">Plus de détails...</a></p>
+<div class="textblock"><code>#include &lt;vector&gt;</code><br />
+<code>#include &lt;string&gt;</code><br />
+<code>#include &lt;iostream&gt;</code><br />
+<code>#include &lt;fstream&gt;</code><br />
+<code>#include &lt;QString&gt;</code><br />
+<code>#include &lt;QStringList&gt;</code><br />
+<code>#include &lt;QFile&gt;</code><br />
+<code>#include &lt;QDataStream&gt;</code><br />
+<code>#include &lt;cfloat&gt;</code><br />
+<code>#include &lt;cmath&gt;</code><br />
+<code>#include &lt;cassert&gt;</code><br />
+<code>#include &lt;QTextStream&gt;</code><br />
+<code>#include &lt;QCoreApplication&gt;</code><br />
+<code>#include &lt;QDir&gt;</code><br />
+<code>#include &lt;stdio.h&gt;</code><br />
+<code>#include &lt;unistd.h&gt;</code><br />
+</div>
+<p><a href="_basic_i_o_8h_source.html">Aller au code source de ce fichier.</a></p>
+<table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="define-members" name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:af0c0d1034a71f8aa3a08cda83c9d4e7a"><td class="memItemLeft" align="right" valign="top"><a id="af0c0d1034a71f8aa3a08cda83c9d4e7a" name="af0c0d1034a71f8aa3a08cda83c9d4e7a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><b>GetCurrentDir</b>&#160;&#160;&#160;getcwd</td></tr>
+<tr class="separator:af0c0d1034a71f8aa3a08cda83c9d4e7a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="func-members" name="func-members"></a>
+Fonctions</h2></td></tr>
+<tr class="memitem:ad6c55c0c80ea9b7e1e30a13b649b8e65"><td class="memTemplParams" colspan="2"><a id="ad6c55c0c80ea9b7e1e30a13b649b8e65" name="ad6c55c0c80ea9b7e1e30a13b649b8e65"></a>
+template&lt;class point_t &gt; </td></tr>
+<tr class="memitem:ad6c55c0c80ea9b7e1e30a13b649b8e65"><td class="memTemplItemLeft" align="right" valign="top">point_t&#160;</td><td class="memTemplItemRight" valign="bottom"><b>OFFIO::max</b> (point_t BB, point_t pt)</td></tr>
+<tr class="separator:ad6c55c0c80ea9b7e1e30a13b649b8e65"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac6527a896807d153812e9ebc979c9d9f"><td class="memTemplParams" colspan="2"><a id="ac6527a896807d153812e9ebc979c9d9f" name="ac6527a896807d153812e9ebc979c9d9f"></a>
+template&lt;class point_t &gt; </td></tr>
+<tr class="memitem:ac6527a896807d153812e9ebc979c9d9f"><td class="memTemplItemLeft" align="right" valign="top">point_t&#160;</td><td class="memTemplItemRight" valign="bottom"><b>OFFIO::min</b> (point_t BB, point_t pt)</td></tr>
+<tr class="separator:ac6527a896807d153812e9ebc979c9d9f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:af98cb722e4bde7eca2a0d3dfb7a55432"><td class="memTemplParams" colspan="2"><a id="af98cb722e4bde7eca2a0d3dfb7a55432" name="af98cb722e4bde7eca2a0d3dfb7a55432"></a>
+template&lt;class point_t , class type_t &gt; </td></tr>
+<tr class="memitem:af98cb722e4bde7eca2a0d3dfb7a55432"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>OFFIO::open</b> (const std::string &amp;filename, std::vector&lt; point_t &gt; &amp;vertices, std::vector&lt; std::vector&lt; type_t &gt; &gt; &amp;faces, bool convertToTriangles=true, bool randomize=false)</td></tr>
+<tr class="separator:af98cb722e4bde7eca2a0d3dfb7a55432"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a8692cf4a3e5edc29388fbfe2ffec0b44"><td class="memTemplParams" colspan="2"><a id="a8692cf4a3e5edc29388fbfe2ffec0b44" name="a8692cf4a3e5edc29388fbfe2ffec0b44"></a>
+template&lt;class point_t , class type_t &gt; </td></tr>
+<tr class="memitem:a8692cf4a3e5edc29388fbfe2ffec0b44"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>OFFIO::save</b> (const std::string &amp;filename, std::vector&lt; point_t &gt; &amp;vertices, std::vector&lt; std::vector&lt; type_t &gt; &gt; &amp;faces)</td></tr>
+<tr class="separator:a8692cf4a3e5edc29388fbfe2ffec0b44"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab2bebdab855443000a9d213155194c4d"><td class="memTemplParams" colspan="2"><a id="ab2bebdab855443000a9d213155194c4d" name="ab2bebdab855443000a9d213155194c4d"></a>
+template&lt;class point_t , class face_t &gt; </td></tr>
+<tr class="memitem:ab2bebdab855443000a9d213155194c4d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>OFFIO::saveFromMeshFormat</b> (const std::string &amp;filename, const point_t *vertices, unsigned int n_vertices, const face_t *faces, unsigned int n_faces)</td></tr>
+<tr class="separator:ab2bebdab855443000a9d213155194c4d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adfe18e618f39f26143984bca0da321e2"><td class="memTemplParams" colspan="2"><a id="adfe18e618f39f26143984bca0da321e2" name="adfe18e618f39f26143984bca0da321e2"></a>
+template&lt;class point_t &gt; </td></tr>
+<tr class="memitem:adfe18e618f39f26143984bca0da321e2"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>OFFIO::open</b> (const std::string &amp;filename, std::vector&lt; point_t &gt; &amp;vertices)</td></tr>
+<tr class="separator:adfe18e618f39f26143984bca0da321e2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a9f29e4a94e538fc858f8e76b4937ac9d"><td class="memTemplParams" colspan="2">template&lt;class point_t , class int_type_t &gt; </td></tr>
+<tr class="memitem:a9f29e4a94e538fc858f8e76b4937ac9d"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_basic_i_o_8h.html#a9f29e4a94e538fc858f8e76b4937ac9d">OBJIO::open</a> (const std::string &amp;filename, std::vector&lt; point_t &gt; &amp;vertices, std::vector&lt; std::vector&lt; int_type_t &gt; &gt; &amp;faces, bool convertToTriangles=true, bool randomize=false, bool convertEdgesToDegenerateTriangles=true)</td></tr>
+<tr class="separator:a9f29e4a94e538fc858f8e76b4937ac9d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4950155da3e2d8ba9e9bc42f9fb2dc54"><td class="memTemplParams" colspan="2">template&lt;class point_t , class texture , class int_type_t &gt; </td></tr>
+<tr class="memitem:a4950155da3e2d8ba9e9bc42f9fb2dc54"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><a class="el" href="_basic_i_o_8h.html#a4950155da3e2d8ba9e9bc42f9fb2dc54">OBJIO::open</a> (const std::string &amp;filename, std::vector&lt; point_t &gt; &amp;vertices, std::vector&lt; std::vector&lt; int_type_t &gt; &gt; &amp;faces, std::vector&lt; texture &gt; &amp;textures, std::vector&lt; std::vector&lt; int_type_t &gt; &gt; &amp;indicetextures, bool convertToTriangles=true, bool randomize=false, bool convertEdgesToDegenerateTriangles=true)</td></tr>
+<tr class="separator:a4950155da3e2d8ba9e9bc42f9fb2dc54"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a4986b82ecd9d0fc4cc8e7e814a07f919"><td class="memTemplParams" colspan="2"><a id="a4986b82ecd9d0fc4cc8e7e814a07f919" name="a4986b82ecd9d0fc4cc8e7e814a07f919"></a>
+template&lt;class point_t , class int_type_t &gt; </td></tr>
+<tr class="memitem:a4986b82ecd9d0fc4cc8e7e814a07f919"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>OBJIO::open</b> (const std::string &amp;filename, std::vector&lt; point_t &gt; &amp;vertices, std::vector&lt; std::vector&lt; int_type_t &gt; &gt; &amp;faces, std::vector&lt; std::pair&lt; int_type_t, int_type_t &gt; &gt; &amp;additional_edges, bool convertToTriangles=true, bool randomize=false)</td></tr>
+<tr class="separator:a4986b82ecd9d0fc4cc8e7e814a07f919"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adef56448cf809276731edc69d7f13356"><td class="memTemplParams" colspan="2"><a id="adef56448cf809276731edc69d7f13356" name="adef56448cf809276731edc69d7f13356"></a>
+template&lt;class point_t &gt; </td></tr>
+<tr class="memitem:adef56448cf809276731edc69d7f13356"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>OBJIO::open</b> (const std::string &amp;filename, std::vector&lt; point_t &gt; &amp;vertices)</td></tr>
+<tr class="separator:adef56448cf809276731edc69d7f13356"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a155a40c3d0d42d06f36549163c6d7724"><td class="memTemplParams" colspan="2"><a id="a155a40c3d0d42d06f36549163c6d7724" name="a155a40c3d0d42d06f36549163c6d7724"></a>
+template&lt;class point_t , typename int_t &gt; </td></tr>
+<tr class="memitem:a155a40c3d0d42d06f36549163c6d7724"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>OBJIO::save</b> (std::string const &amp;filename, std::vector&lt; point_t &gt; &amp;verticesP, std::vector&lt; std::vector&lt; int_t &gt; &gt; &amp;facesP)</td></tr>
+<tr class="separator:a155a40c3d0d42d06f36549163c6d7724"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:adb3f0ec4a1b9da81f6841c760efde06b"><td class="memTemplParams" colspan="2"><a id="adb3f0ec4a1b9da81f6841c760efde06b" name="adb3f0ec4a1b9da81f6841c760efde06b"></a>
+template&lt;class point_t , class face_t , class edge_t &gt; </td></tr>
+<tr class="memitem:adb3f0ec4a1b9da81f6841c760efde06b"><td class="memTemplItemLeft" align="right" valign="top">bool&#160;</td><td class="memTemplItemRight" valign="bottom"><b>OBJIO::saveFromMeshFormat</b> (const std::string &amp;filename, const point_t *vertices, unsigned int n_vertices, const face_t *faces, unsigned int n_faces, const edge_t *edges, unsigned int n_edges)</td></tr>
+<tr class="separator:adb3f0ec4a1b9da81f6841c760efde06b"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p >librairie fournie afin de pouvoir lire un fichier. a été modifié afin de pouvoir lire un fichiers "off" et des fichier "obj" tout en récupérant les coordonnée de textures. </p>
+</div><h2 class="groupheader">Documentation des fonctions</h2>
+<a id="a9f29e4a94e538fc858f8e76b4937ac9d" name="a9f29e4a94e538fc858f8e76b4937ac9d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a9f29e4a94e538fc858f8e76b4937ac9d">&#9670;&nbsp;</a></span>open() <span class="overload">[1/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class point_t , class int_type_t &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool OBJIO::open </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; point_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vertices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; int_type_t &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>faces</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>convertToTriangles</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>randomize</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>convertEdgesToDegenerateTriangles</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >myfile.is_open())</p>
+
+</div>
+</div>
+<a id="a4950155da3e2d8ba9e9bc42f9fb2dc54" name="a4950155da3e2d8ba9e9bc42f9fb2dc54"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a4950155da3e2d8ba9e9bc42f9fb2dc54">&#9670;&nbsp;</a></span>open() <span class="overload">[2/2]</span></h2>
+
+<div class="memitem">
+<div class="memproto">
+<div class="memtemplate">
+template&lt;class point_t , class texture , class int_type_t &gt; </div>
+      <table class="memname">
+        <tr>
+          <td class="memname">bool OBJIO::open </td>
+          <td>(</td>
+          <td class="paramtype">const std::string &amp;&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; point_t &gt; &amp;&#160;</td>
+          <td class="paramname"><em>vertices</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; int_type_t &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>faces</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; texture &gt; &amp;&#160;</td>
+          <td class="paramname"><em>textures</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">std::vector&lt; std::vector&lt; int_type_t &gt; &gt; &amp;&#160;</td>
+          <td class="paramname"><em>indicetextures</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>convertToTriangles</em> = <code>true</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>randomize</em> = <code>false</code>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>convertEdgesToDegenerateTriangles</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p >myfile.is_open())</p>
+
+</div>
+</div>
+</div><!-- contents -->
+<!-- start footer part -->
+<hr class="footer"/><address class="footer"><small>
+Généré par&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
+</small></address>
+</body>
+</html>

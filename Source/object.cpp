@@ -164,6 +164,8 @@ void Object::findCollision( Object* obj, QMatrix4x4 anim, QMatrix4x4 t){
 
             //obj->animation.setTranslate(QVector3D(0,0,0));
             obj->t.addTranslate(geo->recallageCollision(obj->geo, instance));
+
+            geo->coordLastCollisionUpdateForMeshsCollision( obj->geo,  t);
         }
 
 

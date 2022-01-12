@@ -51,7 +51,10 @@
 #define GetCurrentDir getcwd
 #endif
 
-
+/**
+ *@file BasicIO.h
+ *@brief librairie fournie afin de pouvoir lire un fichier. a été modifié afin de pouvoir lire un fichiers "off" et des fichier "obj" tout en récupérant les coordonnée de textures.
+ */
 
 
 namespace OFFIO{

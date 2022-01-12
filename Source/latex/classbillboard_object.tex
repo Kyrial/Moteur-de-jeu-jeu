@@ -1,0 +1,107 @@
+\hypertarget{classbillboard_object}{}\doxysection{Référence de la classe billboard\+Object}
+\label{classbillboard_object}\index{billboardObject@{billboardObject}}
+
+
+la classe Billboard\+Object devait etre a la base capable d\textquotesingle{}afficher des billboard, mais par manque de temps, elle est capable de contenir uniquement la barre de vie.  
+
+
+
+
+{\ttfamily \#include $<$billboardobject.\+h$>$}
+
+Graphe d\textquotesingle{}héritage de billboard\+Object\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=3.000000cm]{classbillboard_object}
+\end{center}
+\end{figure}
+\doxysubsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbillboard_object_adf18acc25f94c24cb80af2d7fbbb5653}\label{classbillboard_object_adf18acc25f94c24cb80af2d7fbbb5653}} 
+{\bfseries billboard\+Object} ()
+\begin{DoxyCompactList}\small\item\em Constructeur. \end{DoxyCompactList}\item 
+\mbox{\hyperlink{classbillboard_object_aac1fcf9f2baf9c02d9155f867674a935}{billboard\+Object}} (\mbox{\hyperlink{class_transform}{Transform}} tt, \mbox{\hyperlink{class_transform}{Transform}} anim)
+\begin{DoxyCompactList}\small\item\em constructeur avec parametre \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{classbillboard_object_afa27a28210b91867db16f1d68da7862e}{update\+Scene}} (double delta\+Time, QMatrix4x4 m)
+\begin{DoxyCompactList}\small\item\em boucle de rendu, appel au parents \end{DoxyCompactList}\item 
+bool \mbox{\hyperlink{classbillboard_object_a14141e1ce26b9220bfd16b3abb3bece6}{Updatebarre\+De\+Vie}} (double delta\+Time)
+\begin{DoxyCompactList}\small\item\em met a jour la bare de vie \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Attributs publics}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classbillboard_object_af9961b73225b41ccbbb704369950702f}\label{classbillboard_object_af9961b73225b41ccbbb704369950702f}} 
+float {\bfseries vie} = 100
+\begin{DoxyCompactList}\small\item\em vie point de vie du joueur, se dégrade au fil du temps \end{DoxyCompactList}\end{DoxyCompactItemize}
+\doxysubsection*{Membres hérités additionnels}
+
+
+\doxysubsection{Description détaillée}
+la classe Billboard\+Object devait etre a la base capable d\textquotesingle{}afficher des billboard, mais par manque de temps, elle est capable de contenir uniquement la barre de vie. 
+
+\doxysubsection{Documentation des constructeurs et destructeur}
+\mbox{\Hypertarget{classbillboard_object_aac1fcf9f2baf9c02d9155f867674a935}\label{classbillboard_object_aac1fcf9f2baf9c02d9155f867674a935}} 
+\index{billboardObject@{billboardObject}!billboardObject@{billboardObject}}
+\index{billboardObject@{billboardObject}!billboardObject@{billboardObject}}
+\doxysubsubsection{\texorpdfstring{billboardObject()}{billboardObject()}}
+{\footnotesize\ttfamily billboard\+Object\+::billboard\+Object (\begin{DoxyParamCaption}\item[{\mbox{\hyperlink{class_transform}{Transform}}}]{tt,  }\item[{\mbox{\hyperlink{class_transform}{Transform}}}]{anim }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [inline]}}
+
+
+
+constructeur avec parametre 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em tt} & matrice de transformation \\
+\hline
+{\em anim} & matrice d\textquotesingle{}animation \\
+\hline
+\end{DoxyParams}
+
+
+\doxysubsection{Documentation des fonctions membres}
+\mbox{\Hypertarget{classbillboard_object_a14141e1ce26b9220bfd16b3abb3bece6}\label{classbillboard_object_a14141e1ce26b9220bfd16b3abb3bece6}} 
+\index{billboardObject@{billboardObject}!UpdatebarreDeVie@{UpdatebarreDeVie}}
+\index{UpdatebarreDeVie@{UpdatebarreDeVie}!billboardObject@{billboardObject}}
+\doxysubsubsection{\texorpdfstring{UpdatebarreDeVie()}{UpdatebarreDeVie()}}
+{\footnotesize\ttfamily bool billboard\+Object\+::\+Updatebarre\+De\+Vie (\begin{DoxyParamCaption}\item[{double}]{delta\+Time }\end{DoxyParamCaption})}
+
+
+
+met a jour la bare de vie 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em delta\+Time} & intervalle de temps depuis le dernier appel \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{classbillboard_object_afa27a28210b91867db16f1d68da7862e}\label{classbillboard_object_afa27a28210b91867db16f1d68da7862e}} 
+\index{billboardObject@{billboardObject}!updateScene@{updateScene}}
+\index{updateScene@{updateScene}!billboardObject@{billboardObject}}
+\doxysubsubsection{\texorpdfstring{updateScene()}{updateScene()}}
+{\footnotesize\ttfamily void billboard\+Object\+::update\+Scene (\begin{DoxyParamCaption}\item[{double}]{delta\+Time,  }\item[{QMatrix4x4}]{m }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [virtual]}}
+
+
+
+boucle de rendu, appel au parents 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em delta\+Time} & intervalle de temps depuis le dernier appel \\
+\hline
+{\em m} & matrice de transformation du parent \\
+\hline
+\end{DoxyParams}
+
+
+Réimplémentée à partir de \mbox{\hyperlink{class_object_a4c31a5390f2e48e086d76edb585a61ff}{Object}}.
+
+
+
+La documentation de cette classe a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
+\item 
+\mbox{\hyperlink{billboardobject_8h}{billboardobject.\+h}}\item 
+billboardobject.\+cpp\end{DoxyCompactItemize}

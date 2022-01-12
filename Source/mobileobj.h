@@ -6,17 +6,32 @@
 #include "geometryengine.h"
 #include "object.h"
 
+/**
+ * @file
+ * @brief le fichier contient la classe MobileObject contient les objets subissant la gravité, on peut y trouver le joueur, la boite.
+*/
+
+/**
+ * @brief la classe MobileObject contient les objets subissant la gravité, on peut y trouver le joueur, la boite.
+*/
+
 class MobileObj  : public Object
 {
 Q_OBJECT
 
 public:
 
-
+    /**
+     * @brief  Constructeur
+     */
     MobileObj():Object(){}
 
 
-   // MobileObj(Transform tt):Object(tt){}
+       /**
+     * @brief constructeur avec parametre
+     * @param tt matrice de transformation
+     * @param anim matrice d'animation
+     */
     MobileObj(Transform tt,Transform anim):Object(tt,anim){}
 
 
@@ -24,22 +39,31 @@ public:
     float facteurCynetique = 50;
 
 
-
-//QVector3D coordLastCollision = QVector3D(999,999,999);
+    /**
+     * @brief calcul la distance entre deux points
+     * @param pt1 point1
+     * @param pt2 point2
+     * @return retourne la distance entre pt1 et pt2
+     */
     float dist2Points(QVector3D pt1, QVector3D pt2){
         return
                 pt1.distanceToPoint(pt2);
     };
 
-
+    /**
+     * @brief ajoute la gravité et la perte cinetique en fonction du deltaTemps
+     * @param deltaTime intervalle de temps depuis le dernier appel
+     */
     void addGravite(double deltaTime){
-        Transform G = Transform();
+
 
         float dist = dist2Points(geo->coordLastCollision, Transform::extracteTranslate(t.doTransformation()));
         if(dist >1.1){
 
 
         //l'objet subit la gravité
+        Transform G = Transform();
+        //QVector3D(0,0,-(pow(1.1,(deltaTime/facteurGravite)))/10);
         G.setTranslate(0,0,-(pow(1.1,(deltaTime/facteurGravite)))/10);
         animation = animation.combine_with(G, deltaTime);
 
@@ -52,12 +76,20 @@ public:
 
     }
 
+    /**
+     * @brief appel FindCollision afin de rechercher si une collision a lieu
+     * @param m matrice dans le repère monde
+     */
     void testCollision(QMatrix4x4 m = QMatrix4x4()){
         QMatrix4x4 anim = animation.doTransformation();
         Monde->findCollision(this,anim,m);
     }
 
-
+    /**
+     * @brief updateScene boucle de rendu, appel recursif,
+     * appel à addGravite() et testCollision()
+     * @param deltaTime intervalle de temps depuis le dernier appel
+     */
     void  updateScene( double deltaTime){
         if(animate){
             addGravite( deltaTime);
@@ -68,6 +100,13 @@ public:
         Object::updateScene(deltaTime, m);
 
     }
+    /**
+     * @brief updateScene boucle de rendu, appel recursif,
+     * appel à addGravite() et testCollision()
+     * @param deltaTime intervalle de temps depuis le dernier appel
+     * @param lastM matrice de transformation du parent
+
+     */
     void  updateScene(double deltaTime,QMatrix4x4 lastM){
         if(animate){
             addGravite( deltaTime);

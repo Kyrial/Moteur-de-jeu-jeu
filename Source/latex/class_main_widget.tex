@@ -1,0 +1,230 @@
+\hypertarget{class_main_widget}{}\doxysection{Référence de la classe Main\+Widget}
+\label{class_main_widget}\index{MainWidget@{MainWidget}}
+Graphe d\textquotesingle{}héritage de Main\+Widget\+:\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[height=2.000000cm]{class_main_widget}
+\end{center}
+\end{figure}
+\doxysubsection*{Connecteurs publics}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_main_widget_a8f5cb49640712cee313f2ddd2994ebdd}\label{class_main_widget_a8f5cb49640712cee313f2ddd2994ebdd}} 
+void {\bfseries camera\+Controle} ()
+\item 
+\mbox{\Hypertarget{class_main_widget_a052c49cf0dfda87ca249464b30f9d30d}\label{class_main_widget_a052c49cf0dfda87ca249464b30f9d30d}} 
+void {\bfseries key\+Press} (QKey\+Event $\ast$e)
+\end{DoxyCompactItemize}
+\doxysubsection*{Signaux}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_main_widget_a2b71a7f84ea7c458f996a3f7ccd94ef7}\label{class_main_widget_a2b71a7f84ea7c458f996a3f7ccd94ef7}} 
+void {\bfseries signal\+Key\+Press} (QKey\+Event $\ast$e)
+\item 
+\mbox{\Hypertarget{class_main_widget_a311808e36fe75fa914b3c08917858bfd}\label{class_main_widget_a311808e36fe75fa914b3c08917858bfd}} 
+void {\bfseries projection\+Changed} (QMatrix4x4 val)
+\item 
+\mbox{\Hypertarget{class_main_widget_ab98cd1a5a57aa36c34ed1bba0637e3ce}\label{class_main_widget_ab98cd1a5a57aa36c34ed1bba0637e3ce}} 
+void {\bfseries emit\+Filter} (QEvent $\ast$event)
+\end{DoxyCompactItemize}
+\doxysubsection*{Fonctions membres publiques}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_main_widget_a326fee5088b7cebaa102ed5332dd59ee}\label{class_main_widget_a326fee5088b7cebaa102ed5332dd59ee}} 
+{\bfseries Main\+Widget} (QWidget $\ast$parent=0)
+\item 
+\mbox{\Hypertarget{class_main_widget_a35a3ec334b4b3ad09d249e738b026399}\label{class_main_widget_a35a3ec334b4b3ad09d249e738b026399}} 
+{\bfseries Main\+Widget} (int fps)
+\item 
+\mbox{\Hypertarget{class_main_widget_a6506ae94fa00ea024d876d590d9f50b3}\label{class_main_widget_a6506ae94fa00ea024d876d590d9f50b3}} 
+void {\bfseries modif\+FPS} (int x)
+\end{DoxyCompactItemize}
+\doxysubsection*{Attributs publics}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_main_widget_a21dffbc54cf7dcb896e831503ed4b259}\label{class_main_widget_a21dffbc54cf7dcb896e831503ed4b259}} 
+int {\bfseries FPS} = 20
+\item 
+\mbox{\Hypertarget{class_main_widget_a62ac6f6b5eb04df0c30ac83933870fc1}\label{class_main_widget_a62ac6f6b5eb04df0c30ac83933870fc1}} 
+QElapsed\+Timer {\bfseries last\+Frame}
+\item 
+\mbox{\Hypertarget{class_main_widget_a821d0232b59bc23d6fbd7e63dc97964f}\label{class_main_widget_a821d0232b59bc23d6fbd7e63dc97964f}} 
+QElapsed\+Timer {\bfseries absolute\+Time}
+\item 
+\mbox{\Hypertarget{class_main_widget_a870662b494e65b10b4b7f7acae6ebcbc}\label{class_main_widget_a870662b494e65b10b4b7f7acae6ebcbc}} 
+double {\bfseries delta\+Time} = 1
+\end{DoxyCompactItemize}
+\doxysubsection*{Fonctions membres protégées}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{class_main_widget_af95f85af6ec3ce4a2355d82d891ed2c0}\label{class_main_widget_af95f85af6ec3ce4a2355d82d891ed2c0}} 
+void {\bfseries mouse\+Press\+Event} (QMouse\+Event $\ast$e) override
+\begin{DoxyCompactList}\small\item\em \mbox{[}0\mbox{]} \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_main_widget_a4160044e059b7c4f41d710cda7009e4b}\label{class_main_widget_a4160044e059b7c4f41d710cda7009e4b}} 
+void {\bfseries mouse\+Release\+Event} (QMouse\+Event $\ast$e) override
+\item 
+\mbox{\Hypertarget{class_main_widget_a77d29c4fd66225ea10ffc5369a907c71}\label{class_main_widget_a77d29c4fd66225ea10ffc5369a907c71}} 
+void {\bfseries timer\+Event} (QTimer\+Event $\ast$e) override
+\begin{DoxyCompactList}\small\item\em \mbox{[}1\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_widget_a165d742c4d8f6f65458b04ac8b9ea1db}{initialize\+GL}} () override
+\begin{DoxyCompactList}\small\item\em \mbox{[}1\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_widget_a2a1c57a221291985658820568a8bd5c0}{resize\+GL}} (int w, int h) override
+\begin{DoxyCompactList}\small\item\em \mbox{[}4\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_widget_afbf87f376e972633a553a86c55e37e2e}{paint\+GL}} () override
+\begin{DoxyCompactList}\small\item\em \mbox{[}5\mbox{]} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_main_widget_a3d8d55c802fd4b4dabeef5bd9592c697}{init\+Shaders}} ()
+\begin{DoxyCompactList}\small\item\em \mbox{[}3\mbox{]} \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_main_widget_a45e5b0ff42304bfe4d0500bc4cff79d4}\label{class_main_widget_a45e5b0ff42304bfe4d0500bc4cff79d4}} 
+void {\bfseries init\+Textures} ()
+\begin{DoxyCompactList}\small\item\em init\+Textures initialise toute les textures \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_object}{Object}} $\ast$ \mbox{\hyperlink{class_main_widget_a7f56fc7caa713e27a14f567a0b3e611f}{add\+Game\+Object}} (QOpen\+GLShader\+Program $\ast$shad, \mbox{\hyperlink{class_object}{Object}} $\ast$parent, \mbox{\hyperlink{class_transform}{Transform}} $\ast$t, \mbox{\hyperlink{class_geometry_engine}{Geometry\+Engine}} $\ast$mesh, \mbox{\hyperlink{class_transform}{Transform}} $\ast$anim, QOpen\+GLTexture $\ast$txtr)
+\begin{DoxyCompactList}\small\item\em ajoute un \mbox{\hyperlink{class_game_object}{Game\+Object}} au graphe de scène \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_object}{Object}} $\ast$ \mbox{\hyperlink{class_main_widget_a9c2ef55bb6c708f24195183d23d22420}{add\+Mobile\+Object}} (QOpen\+GLShader\+Program $\ast$shad, \mbox{\hyperlink{class_object}{Object}} $\ast$parent, \mbox{\hyperlink{class_transform}{Transform}} $\ast$t, \mbox{\hyperlink{class_geometry_engine}{Geometry\+Engine}} $\ast$mesh, \mbox{\hyperlink{class_transform}{Transform}} $\ast$anim, QOpen\+GLTexture $\ast$texture)
+\begin{DoxyCompactList}\small\item\em ajoute un Mobile\+Object au graphe de scène \end{DoxyCompactList}\item 
+\mbox{\hyperlink{class_object}{Object}} $\ast$ \mbox{\hyperlink{class_main_widget_a526344b742bb2b3ed931571c2709f7e8}{add\+Billboard\+Object}} (QOpen\+GLShader\+Program $\ast$shad, \mbox{\hyperlink{class_object}{Object}} $\ast$parent, \mbox{\hyperlink{class_transform}{Transform}} $\ast$t, \mbox{\hyperlink{class_geometry_engine}{Geometry\+Engine}} $\ast$mesh, \mbox{\hyperlink{class_transform}{Transform}} $\ast$anim, QOpen\+GLTexture $\ast$txtr)
+\begin{DoxyCompactList}\small\item\em ajoute un add\+Billboard\+Object au graphe de scène \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_main_widget_a1d429b8938f23b9feb3765096cad1588}\label{class_main_widget_a1d429b8938f23b9feb3765096cad1588}} 
+void {\bfseries init\+Monde} ()
+\begin{DoxyCompactList}\small\item\em initialise le graphe de scène avec le noeud monde \end{DoxyCompactList}\item 
+\mbox{\Hypertarget{class_main_widget_ab66aa7a0b110a0421249a0f3f2c53259}\label{class_main_widget_ab66aa7a0b110a0421249a0f3f2c53259}} 
+void {\bfseries scene} ()
+\begin{DoxyCompactList}\small\item\em Methode repertoriant tout les object du graphe de scène. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Documentation des fonctions membres}
+\mbox{\Hypertarget{class_main_widget_a526344b742bb2b3ed931571c2709f7e8}\label{class_main_widget_a526344b742bb2b3ed931571c2709f7e8}} 
+\index{MainWidget@{MainWidget}!addBillboardObject@{addBillboardObject}}
+\index{addBillboardObject@{addBillboardObject}!MainWidget@{MainWidget}}
+\doxysubsubsection{\texorpdfstring{addBillboardObject()}{addBillboardObject()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_object}{Object}} $\ast$ Main\+Widget\+::add\+Billboard\+Object (\begin{DoxyParamCaption}\item[{QOpen\+GLShader\+Program $\ast$}]{shad,  }\item[{\mbox{\hyperlink{class_object}{Object}} $\ast$}]{parent,  }\item[{\mbox{\hyperlink{class_transform}{Transform}} $\ast$}]{t,  }\item[{\mbox{\hyperlink{class_geometry_engine}{Geometry\+Engine}} $\ast$}]{mesh = {\ttfamily new~\mbox{\hyperlink{class_geometry_engine}{Geometry\+Engine}}()},  }\item[{\mbox{\hyperlink{class_transform}{Transform}} $\ast$}]{anim = {\ttfamily new~\mbox{\hyperlink{class_transform}{Transform}}()},  }\item[{QOpen\+GLTexture $\ast$}]{texture = {\ttfamily NULL} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ajoute un add\+Billboard\+Object au graphe de scène 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em shad} & shader \\
+\hline
+{\em parent} & gameobject parent \\
+\hline
+{\em t} & transformation \\
+\hline
+{\em mesh} & geometry, pour gerer les maillages \\
+\hline
+{\em anim} & tranformation pour l\textquotesingle{}animation \\
+\hline
+{\em texture} & la textures \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_main_widget_a7f56fc7caa713e27a14f567a0b3e611f}\label{class_main_widget_a7f56fc7caa713e27a14f567a0b3e611f}} 
+\index{MainWidget@{MainWidget}!addGameObject@{addGameObject}}
+\index{addGameObject@{addGameObject}!MainWidget@{MainWidget}}
+\doxysubsubsection{\texorpdfstring{addGameObject()}{addGameObject()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_object}{Object}} $\ast$ Main\+Widget\+::add\+Game\+Object (\begin{DoxyParamCaption}\item[{QOpen\+GLShader\+Program $\ast$}]{shad,  }\item[{\mbox{\hyperlink{class_object}{Object}} $\ast$}]{parent,  }\item[{\mbox{\hyperlink{class_transform}{Transform}} $\ast$}]{t,  }\item[{\mbox{\hyperlink{class_geometry_engine}{Geometry\+Engine}} $\ast$}]{mesh = {\ttfamily new~\mbox{\hyperlink{class_geometry_engine}{Geometry\+Engine}}()},  }\item[{\mbox{\hyperlink{class_transform}{Transform}} $\ast$}]{anim = {\ttfamily new~\mbox{\hyperlink{class_transform}{Transform}}()},  }\item[{QOpen\+GLTexture $\ast$}]{texture = {\ttfamily NULL} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ajoute un \mbox{\hyperlink{class_game_object}{Game\+Object}} au graphe de scène 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em shad} & shader \\
+\hline
+{\em parent} & gameobject parent \\
+\hline
+{\em t} & transformation \\
+\hline
+{\em mesh} & geometry, pour gerer les maillages \\
+\hline
+{\em anim} & tranformation pour l\textquotesingle{}animation \\
+\hline
+{\em texture} & la textures \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_main_widget_a9c2ef55bb6c708f24195183d23d22420}\label{class_main_widget_a9c2ef55bb6c708f24195183d23d22420}} 
+\index{MainWidget@{MainWidget}!addMobileObject@{addMobileObject}}
+\index{addMobileObject@{addMobileObject}!MainWidget@{MainWidget}}
+\doxysubsubsection{\texorpdfstring{addMobileObject()}{addMobileObject()}}
+{\footnotesize\ttfamily \mbox{\hyperlink{class_object}{Object}} $\ast$ Main\+Widget\+::add\+Mobile\+Object (\begin{DoxyParamCaption}\item[{QOpen\+GLShader\+Program $\ast$}]{shad,  }\item[{\mbox{\hyperlink{class_object}{Object}} $\ast$}]{parent,  }\item[{\mbox{\hyperlink{class_transform}{Transform}} $\ast$}]{t,  }\item[{\mbox{\hyperlink{class_geometry_engine}{Geometry\+Engine}} $\ast$}]{mesh = {\ttfamily new~\mbox{\hyperlink{class_geometry_engine}{Geometry\+Engine}}()},  }\item[{\mbox{\hyperlink{class_transform}{Transform}} $\ast$}]{anim = {\ttfamily new~\mbox{\hyperlink{class_transform}{Transform}}()},  }\item[{QOpen\+GLTexture $\ast$}]{texture = {\ttfamily NULL} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+ajoute un Mobile\+Object au graphe de scène 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em shad} & shader \\
+\hline
+{\em parent} & gameobject parent \\
+\hline
+{\em t} & transformation \\
+\hline
+{\em mesh} & geometry, pour gerer les maillages \\
+\hline
+{\em anim} & tranformation pour l\textquotesingle{}animation \\
+\hline
+{\em texture} & la textures \\
+\hline
+\end{DoxyParams}
+\begin{DoxyReturn}{Renvoie}
+
+\end{DoxyReturn}
+\mbox{\Hypertarget{class_main_widget_a165d742c4d8f6f65458b04ac8b9ea1db}\label{class_main_widget_a165d742c4d8f6f65458b04ac8b9ea1db}} 
+\index{MainWidget@{MainWidget}!initializeGL@{initializeGL}}
+\index{initializeGL@{initializeGL}!MainWidget@{MainWidget}}
+\doxysubsubsection{\texorpdfstring{initializeGL()}{initializeGL()}}
+{\footnotesize\ttfamily void Main\+Widget\+::initialize\+GL (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+
+\mbox{[}1\mbox{]} 
+
+\mbox{[}2\mbox{]}
+
+\mbox{[}2\mbox{]}\mbox{\Hypertarget{class_main_widget_a3d8d55c802fd4b4dabeef5bd9592c697}\label{class_main_widget_a3d8d55c802fd4b4dabeef5bd9592c697}} 
+\index{MainWidget@{MainWidget}!initShaders@{initShaders}}
+\index{initShaders@{initShaders}!MainWidget@{MainWidget}}
+\doxysubsubsection{\texorpdfstring{initShaders()}{initShaders()}}
+{\footnotesize\ttfamily void Main\+Widget\+::init\+Shaders (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [protected]}}
+
+
+
+\mbox{[}3\mbox{]} 
+
+init\+Shaders initialise tous les shaders \mbox{\Hypertarget{class_main_widget_afbf87f376e972633a553a86c55e37e2e}\label{class_main_widget_afbf87f376e972633a553a86c55e37e2e}} 
+\index{MainWidget@{MainWidget}!paintGL@{paintGL}}
+\index{paintGL@{paintGL}!MainWidget@{MainWidget}}
+\doxysubsubsection{\texorpdfstring{paintGL()}{paintGL()}}
+{\footnotesize\ttfamily void Main\+Widget\+::paint\+GL (\begin{DoxyParamCaption}{ }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+
+\mbox{[}5\mbox{]} 
+
+\mbox{[}6\mbox{]}
+
+view
+
+\mbox{[}6\mbox{]}\mbox{\Hypertarget{class_main_widget_a2a1c57a221291985658820568a8bd5c0}\label{class_main_widget_a2a1c57a221291985658820568a8bd5c0}} 
+\index{MainWidget@{MainWidget}!resizeGL@{resizeGL}}
+\index{resizeGL@{resizeGL}!MainWidget@{MainWidget}}
+\doxysubsubsection{\texorpdfstring{resizeGL()}{resizeGL()}}
+{\footnotesize\ttfamily void Main\+Widget\+::resize\+GL (\begin{DoxyParamCaption}\item[{int}]{w,  }\item[{int}]{h }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [override]}, {\ttfamily [protected]}}
+
+
+
+\mbox{[}4\mbox{]} 
+
+\mbox{[}5\mbox{]} 
+
+La documentation de cette classe a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
+\item 
+mainwidget.\+h\item 
+mainwidget.\+cpp\end{DoxyCompactItemize}

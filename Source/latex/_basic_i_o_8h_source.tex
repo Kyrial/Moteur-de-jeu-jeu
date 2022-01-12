@@ -1,0 +1,796 @@
+\hypertarget{_basic_i_o_8h_source}{}\doxysection{Basic\+IO.\+h}
+\mbox{\hyperlink{_basic_i_o_8h}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{comment}{/*}}
+\DoxyCodeLine{2 \textcolor{comment}{    QMVC -\/ Reference Implementation of paper:}}
+\DoxyCodeLine{3 \textcolor{comment}{    }}
+\DoxyCodeLine{4 \textcolor{comment}{    "{}Mean Value Coordinates for Quad Cages in 3D"{},}}
+\DoxyCodeLine{5 \textcolor{comment}{    jean-\/Marc Thiery, Pooran Memari and Tamy Boubekeur}}
+\DoxyCodeLine{6 \textcolor{comment}{    SIGGRAPH Asia 2018}}
+\DoxyCodeLine{7 \textcolor{comment}{    }}
+\DoxyCodeLine{8 \textcolor{comment}{    This program allows to compute QMVC for a set of 3D points contained}}
+\DoxyCodeLine{9 \textcolor{comment}{    in a cage made of quad and triangles, as well as other flavors of}}
+\DoxyCodeLine{10 \textcolor{comment}{    space coordinates for cages (MVC, SMVC, GC, MEC). It comes also with}}
+\DoxyCodeLine{11 \textcolor{comment}{    a 3D viewer which helps deforming a mesh with a cage.}}
+\DoxyCodeLine{12 \textcolor{comment}{    }}
+\DoxyCodeLine{13 \textcolor{comment}{    Copyright (C) 2018  jean-\/Marc Thiery, Pooran Memari and Tamy Boubekeur}}
+\DoxyCodeLine{14 \textcolor{comment}{}}
+\DoxyCodeLine{15 \textcolor{comment}{    This program is free software: you can redistribute it and/or modify}}
+\DoxyCodeLine{16 \textcolor{comment}{    it under the terms of the GNU General Public License as published by}}
+\DoxyCodeLine{17 \textcolor{comment}{    the Free Software Foundation, either version 3 of the License, or}}
+\DoxyCodeLine{18 \textcolor{comment}{    (at your option) any later version.}}
+\DoxyCodeLine{19 \textcolor{comment}{}}
+\DoxyCodeLine{20 \textcolor{comment}{    This program is distributed in the hope that it will be useful,}}
+\DoxyCodeLine{21 \textcolor{comment}{    but WITHOUT ANY WARRANTY; without even the implied warranty of}}
+\DoxyCodeLine{22 \textcolor{comment}{    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the}}
+\DoxyCodeLine{23 \textcolor{comment}{    GNU General Public License for more details.}}
+\DoxyCodeLine{24 \textcolor{comment}{}}
+\DoxyCodeLine{25 \textcolor{comment}{    You should have received a copy of the GNU General Public License}}
+\DoxyCodeLine{26 \textcolor{comment}{    along with this program.  If not, see <https://www.gnu.org/licenses/>.}}
+\DoxyCodeLine{27 \textcolor{comment}{*/}}
+\DoxyCodeLine{28 \textcolor{preprocessor}{\#ifndef BASICIO\_H}}
+\DoxyCodeLine{29 \textcolor{preprocessor}{\#define BASICIO\_H}}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 \textcolor{preprocessor}{\#include <vector>}}
+\DoxyCodeLine{32 \textcolor{preprocessor}{\#include <string>}}
+\DoxyCodeLine{33 \textcolor{preprocessor}{\#include <iostream>}}
+\DoxyCodeLine{34 \textcolor{preprocessor}{\#include <fstream>}}
+\DoxyCodeLine{35 \textcolor{preprocessor}{\#include <QString>}}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#include <QStringList>}}
+\DoxyCodeLine{37 \textcolor{preprocessor}{\#include <QFile>}}
+\DoxyCodeLine{38 \textcolor{preprocessor}{\#include <QDataStream>}}
+\DoxyCodeLine{39 \textcolor{preprocessor}{\#include <cfloat>}}
+\DoxyCodeLine{40 \textcolor{preprocessor}{\#include <cmath>}}
+\DoxyCodeLine{41 \textcolor{preprocessor}{\#include <cassert>}}
+\DoxyCodeLine{42 \textcolor{preprocessor}{\#include <QTextStream>}}
+\DoxyCodeLine{43 \textcolor{preprocessor}{\#include <QCoreApplication>}}
+\DoxyCodeLine{44 \textcolor{preprocessor}{\#include <QDir>}}
+\DoxyCodeLine{45 \textcolor{preprocessor}{\#include <stdio.h>}  \textcolor{comment}{/* defines FILENAME\_MAX */}}
+\DoxyCodeLine{46 \textcolor{preprocessor}{\#ifdef WINDOWS}}
+\DoxyCodeLine{47 \textcolor{preprocessor}{\#include <direct.h>}}
+\DoxyCodeLine{48 \textcolor{preprocessor}{\#define GetCurrentDir \_getcwd}}
+\DoxyCodeLine{49 \textcolor{preprocessor}{\#else}}
+\DoxyCodeLine{50 \textcolor{preprocessor}{\#include <unistd.h>}}
+\DoxyCodeLine{51 \textcolor{preprocessor}{\#define GetCurrentDir getcwd}}
+\DoxyCodeLine{52 \textcolor{preprocessor}{\#endif}}
+\DoxyCodeLine{53 }
+\DoxyCodeLine{60 \textcolor{keyword}{namespace }OFFIO\{}
+\DoxyCodeLine{61 }
+\DoxyCodeLine{62 \textcolor{keyword}{template}<\textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t> point\_t max( point\_t BB , point\_t pt )\{}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64 }
+\DoxyCodeLine{65     \textcolor{keywordflow}{return} BB.x() < pt.x() ?}
+\DoxyCodeLine{66                 pt : pt.x() < BB.x() ?}
+\DoxyCodeLine{67                     BB : BB.y() < pt.y() ?}
+\DoxyCodeLine{68                         pt : pt.y() < BB.y() ?}
+\DoxyCodeLine{69                             BB : BB.z() < pt.z() ?}
+\DoxyCodeLine{70                                 pt : pt.z() < BB.z() ?}
+\DoxyCodeLine{71                                     BB : pt;}
+\DoxyCodeLine{72 \}}
+\DoxyCodeLine{73 \textcolor{keyword}{template}<\textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t> point\_t min( point\_t BB , point\_t pt )\{}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \textcolor{keywordflow}{return} BB.x() > pt.x() ?}
+\DoxyCodeLine{77                 pt : pt.x() > BB.x() ?}
+\DoxyCodeLine{78                     BB : BB.y() > pt.y() ?}
+\DoxyCodeLine{79                         pt : pt.y() > BB.y() ?}
+\DoxyCodeLine{80                             BB : BB.z() > pt.z() ?}
+\DoxyCodeLine{81                                 pt : pt.z() > BB.z() ?}
+\DoxyCodeLine{82                                     BB : pt;}
+\DoxyCodeLine{83 \}}
+\DoxyCodeLine{84 }
+\DoxyCodeLine{85 }
+\DoxyCodeLine{86 \textcolor{keyword}{template}< \textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t , \textcolor{keyword}{class} type\_t > \textcolor{keywordtype}{bool} open( \textcolor{keyword}{const} std::string \& filename ,}
+\DoxyCodeLine{87                                                     std::vector< point\_t > \& vertices ,}
+\DoxyCodeLine{88                                                     std::vector< std::vector< type\_t > > \& faces,}
+\DoxyCodeLine{89                                                     \textcolor{keywordtype}{bool} convertToTriangles = \textcolor{keyword}{true},}
+\DoxyCodeLine{90                                                     \textcolor{keywordtype}{bool} randomize = \textcolor{keyword}{false} )}
+\DoxyCodeLine{91 \{}
+\DoxyCodeLine{92     QString fEmp = QCoreApplication::applicationDirPath()+ QDir::separator() +filename.c\_str();}
+\DoxyCodeLine{93     std::cout <<\textcolor{stringliteral}{"{}ici         "{}}<< qPrintable(fEmp) <<std::endl;}
+\DoxyCodeLine{94     \textcolor{keywordtype}{char} cCurrentPath[FILENAME\_MAX];}
+\DoxyCodeLine{95     \textcolor{keywordflow}{if} (!GetCurrentDir(cCurrentPath, \textcolor{keyword}{sizeof}(cCurrentPath)))}
+\DoxyCodeLine{96     \{}
+\DoxyCodeLine{97         \textcolor{keywordflow}{return} errno;}
+\DoxyCodeLine{98     \}}
+\DoxyCodeLine{99     cCurrentPath[\textcolor{keyword}{sizeof}(cCurrentPath) -\/ 1] = \textcolor{charliteral}{'\(\backslash\)0'}; \textcolor{comment}{/* not really required */}}
+\DoxyCodeLine{100     qDebug(\textcolor{stringliteral}{"{}The current working directory is \%s"{}}, cCurrentPath);}
+\DoxyCodeLine{101     std::ifstream myfile;}
+\DoxyCodeLine{102     std::string path =(cCurrentPath);}
+\DoxyCodeLine{103 }
+\DoxyCodeLine{104     \textcolor{comment}{//  std::cout << path <<"{} testtttt"{} << std::endl;}}
+\DoxyCodeLine{105   \textcolor{comment}{//  myfile.open(/*path.c\_str());//*/filename.c\_str());}}
+\DoxyCodeLine{106     \textcolor{comment}{/*  if (!myfile.is\_open())}}
+\DoxyCodeLine{107 \textcolor{comment}{    \{}}
+\DoxyCodeLine{108 \textcolor{comment}{        std::cout << filename << "{} cannot be opened"{} << std::endl;}}
+\DoxyCodeLine{109 \textcolor{comment}{        return false;}}
+\DoxyCodeLine{110 \textcolor{comment}{    \}*/}}
+\DoxyCodeLine{111     \textcolor{comment}{//   QFile myFile(/*QApplication::applicationDirPath() +*/ filename.c\_str());}}
+\DoxyCodeLine{112     QFile myFile(filename.c\_str());}
+\DoxyCodeLine{113     \textcolor{comment}{//  QFile myFile(fEmp);}}
+\DoxyCodeLine{114 }
+\DoxyCodeLine{115     \textcolor{keywordflow}{if}(!myFile.open(QIODevice::ReadOnly))}
+\DoxyCodeLine{116     \{}
+\DoxyCodeLine{117         std::cout << filename << \textcolor{stringliteral}{"{} cannot be opened"{}} << std::endl;}
+\DoxyCodeLine{118         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{119     \}}
+\DoxyCodeLine{120     QTextStream in(\&myFile);}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123     \textcolor{comment}{//std::string magic\_s;}}
+\DoxyCodeLine{124     QString magic\_s;}
+\DoxyCodeLine{125     \textcolor{comment}{//myfile >> magic\_s;}}
+\DoxyCodeLine{126     in >> magic\_s;}
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     \textcolor{keywordflow}{if}( magic\_s != \textcolor{stringliteral}{"{}OFF"{}} )}
+\DoxyCodeLine{129     \{}
+\DoxyCodeLine{130         std::cout << qPrintable(magic\_s) << \textcolor{stringliteral}{"{} != OFF :   We handle ONLY *.off files."{}} << std::endl;}
+\DoxyCodeLine{131         myFile.close();}
+\DoxyCodeLine{132         \textcolor{comment}{//myfile.close();}}
+\DoxyCodeLine{133         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{134     \}}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{136     \textcolor{keywordtype}{int} n\_vertices , n\_faces , dummy\_int;}
+\DoxyCodeLine{137     \textcolor{comment}{// myfile >> n\_vertices >> n\_faces >> dummy\_int;}}
+\DoxyCodeLine{138     in  >> n\_vertices >> n\_faces >> dummy\_int;}
+\DoxyCodeLine{139     vertices.resize(n\_vertices);}
+\DoxyCodeLine{140 }
+\DoxyCodeLine{141     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{int} v = 0 ; v < n\_vertices ; ++v )}
+\DoxyCodeLine{142     \{}
+\DoxyCodeLine{143         \textcolor{keywordtype}{float} x , y , z;}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145         \textcolor{comment}{//typename point\_t::type\_t x , y , z;}}
+\DoxyCodeLine{146 }
+\DoxyCodeLine{147         point\_t ( x , y , z);}
+\DoxyCodeLine{148         \textcolor{comment}{// myfile >> x >> y >> z;}}
+\DoxyCodeLine{149         in >> x >> y >> z;}
+\DoxyCodeLine{150         \textcolor{keywordflow}{if}( std::isnan(x) )}
+\DoxyCodeLine{151             x =(0.0);}
+\DoxyCodeLine{152         \textcolor{comment}{// x = typename point\_t::type\_t(0.0);}}
+\DoxyCodeLine{153         \textcolor{keywordflow}{if}( std::isnan(y) )}
+\DoxyCodeLine{154             \textcolor{comment}{// y = typename point\_t::type\_t(0.0);}}
+\DoxyCodeLine{155             y =(0.0);}
+\DoxyCodeLine{156         \textcolor{keywordflow}{if}( std::isnan(z) )}
+\DoxyCodeLine{157             \textcolor{comment}{//    z = typename point\_t::type\_t(0.0);}}
+\DoxyCodeLine{158             z =(0.0);}
+\DoxyCodeLine{159         vertices[v] = point\_t( x , y , z );}
+\DoxyCodeLine{160     \}}
+\DoxyCodeLine{161 }
+\DoxyCodeLine{162 }
+\DoxyCodeLine{163     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{int} f = 0 ; f < n\_faces ; ++f )}
+\DoxyCodeLine{164     \{}
+\DoxyCodeLine{165         \textcolor{keywordtype}{int} n\_vertices\_on\_face;}
+\DoxyCodeLine{166         in >> n\_vertices\_on\_face;}
+\DoxyCodeLine{167         \textcolor{comment}{// myfile >> n\_vertices\_on\_face;}}
+\DoxyCodeLine{168         \textcolor{keywordflow}{if}( n\_vertices\_on\_face == 3 )}
+\DoxyCodeLine{169         \{}
+\DoxyCodeLine{170             \textcolor{comment}{//type\_t \_v1 , \_v2 , \_v3;}}
+\DoxyCodeLine{171             \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} v1 , v2 ,v3;}
+\DoxyCodeLine{172             std::vector< unsigned int > \_v;}
+\DoxyCodeLine{173             \textcolor{comment}{// myfile >> v1 >> v2 >> v3;}}
+\DoxyCodeLine{174             in >> v1 >> v2 >> v3;}
+\DoxyCodeLine{175             \_v.push\_back( v1 );}
+\DoxyCodeLine{176             \_v.push\_back( v2 );}
+\DoxyCodeLine{177             \_v.push\_back( v3 );}
+\DoxyCodeLine{178             faces.push\_back( \_v );}
+\DoxyCodeLine{179         \}}
+\DoxyCodeLine{180         \textcolor{keywordflow}{else} \textcolor{keywordflow}{if}( n\_vertices\_on\_face > 3 )}
+\DoxyCodeLine{181         \{}
+\DoxyCodeLine{182             std::vector< type\_t > vhandles;}
+\DoxyCodeLine{183             vhandles.resize(n\_vertices\_on\_face);}
+\DoxyCodeLine{184             \textcolor{keywordflow}{for}( \textcolor{keywordtype}{int} i=0 ; i < n\_vertices\_on\_face ; ++i )}
+\DoxyCodeLine{185                 in >> vhandles[i];}
+\DoxyCodeLine{186             \textcolor{comment}{//             myfile >> vhandles[i];}}
+\DoxyCodeLine{187 }
+\DoxyCodeLine{188             \textcolor{keywordflow}{if}( convertToTriangles )}
+\DoxyCodeLine{189             \{}
+\DoxyCodeLine{190                 \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} k=(randomize)?(rand()\%vhandles.size()):0;}
+\DoxyCodeLine{191                 \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i=0;i<vhandles.size()-\/2;++i)}
+\DoxyCodeLine{192                 \{}
+\DoxyCodeLine{193                     std::vector< type\_t > tri(3);}
+\DoxyCodeLine{194                     tri[0]=vhandles[(k+0)\%vhandles.size()];}
+\DoxyCodeLine{195                     tri[1]=vhandles[(k+i+1)\%vhandles.size()];}
+\DoxyCodeLine{196                     tri[2]=vhandles[(k+i+2)\%vhandles.size()];}
+\DoxyCodeLine{197                     faces.push\_back(tri);}
+\DoxyCodeLine{198                 \}}
+\DoxyCodeLine{199             \}}
+\DoxyCodeLine{200             \textcolor{keywordflow}{else}}
+\DoxyCodeLine{201             \{}
+\DoxyCodeLine{202                 faces.push\_back(vhandles);}
+\DoxyCodeLine{203             \}}
+\DoxyCodeLine{204         \}}
+\DoxyCodeLine{205         \textcolor{keywordflow}{else}}
+\DoxyCodeLine{206         \{}
+\DoxyCodeLine{207             std::cout << \textcolor{stringliteral}{"{}OFFIO::open error : Face number "{}} << f << \textcolor{stringliteral}{"{} has "{}} << n\_vertices\_on\_face << \textcolor{stringliteral}{"{} vertices"{}} << std::endl;}
+\DoxyCodeLine{208             \textcolor{comment}{//myfile.close();}}
+\DoxyCodeLine{209             myFile.close();}
+\DoxyCodeLine{210             \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{211         \}}
+\DoxyCodeLine{212     \}}
+\DoxyCodeLine{213     myFile.close();}
+\DoxyCodeLine{214     \textcolor{comment}{// myfile.close();}}
+\DoxyCodeLine{215     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{216 \}}
+\DoxyCodeLine{217 }
+\DoxyCodeLine{218 }
+\DoxyCodeLine{219 \textcolor{keyword}{template}< \textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t , \textcolor{keyword}{class} type\_t > \textcolor{keywordtype}{bool} save( \textcolor{keyword}{const} std::string \& filename , std::vector< point\_t > \& vertices , std::vector< std::vector< type\_t > > \& faces )}
+\DoxyCodeLine{220 \{}
+\DoxyCodeLine{221     std::ofstream myfile;}
+\DoxyCodeLine{222     myfile.open(filename.c\_str());}
+\DoxyCodeLine{223     \textcolor{keywordflow}{if} (!myfile.is\_open())}
+\DoxyCodeLine{224     \{}
+\DoxyCodeLine{225         std::cout << filename << \textcolor{stringliteral}{"{} cannot be opened"{}} << std::endl;}
+\DoxyCodeLine{226         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{227     \}}
+\DoxyCodeLine{228 }
+\DoxyCodeLine{229     myfile << \textcolor{stringliteral}{"{}OFF"{}} << std::endl;}
+\DoxyCodeLine{230 }
+\DoxyCodeLine{231     \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} n\_vertices = vertices.size() , n\_faces = faces.size();}
+\DoxyCodeLine{232     myfile << n\_vertices << \textcolor{stringliteral}{"{} "{}} << n\_faces << \textcolor{stringliteral}{"{} 0"{}} << std::endl;}
+\DoxyCodeLine{233 }
+\DoxyCodeLine{234     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} v = 0 ; v < n\_vertices ; ++v )}
+\DoxyCodeLine{235     \{}
+\DoxyCodeLine{236         myfile << vertices[v][0] << \textcolor{stringliteral}{"{} "{}} << vertices[v][1] << \textcolor{stringliteral}{"{} "{}} << vertices[v][2] << std::endl;}
+\DoxyCodeLine{237     \}}
+\DoxyCodeLine{238     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} f = 0 ; f < n\_faces ; ++f )}
+\DoxyCodeLine{239     \{}
+\DoxyCodeLine{240         myfile << faces[f].size();}
+\DoxyCodeLine{241         \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vof = 0 ; vof < faces[f].size() ; ++vof )}
+\DoxyCodeLine{242             myfile << \textcolor{stringliteral}{"{} "{}} << faces[f][vof];}
+\DoxyCodeLine{243         myfile << std::endl;}
+\DoxyCodeLine{244     \}}
+\DoxyCodeLine{245     myfile.close();}
+\DoxyCodeLine{246     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{247 \}}
+\DoxyCodeLine{248 \textcolor{keyword}{template}< \textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t , \textcolor{keyword}{class} face\_t > \textcolor{keywordtype}{bool} saveFromMeshFormat( \textcolor{keyword}{const} std::string \& filename , \textcolor{keyword}{const} point\_t * vertices , \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} n\_vertices , \textcolor{keyword}{const} face\_t * faces , \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} n\_faces )}
+\DoxyCodeLine{249 \{}
+\DoxyCodeLine{250     std::ofstream myfile;}
+\DoxyCodeLine{251     myfile.open(filename.c\_str());}
+\DoxyCodeLine{252     \textcolor{keywordflow}{if} (!myfile.is\_open())}
+\DoxyCodeLine{253     \{}
+\DoxyCodeLine{254         std::cout << filename << \textcolor{stringliteral}{"{} cannot be opened"{}} << std::endl;}
+\DoxyCodeLine{255         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{256     \}}
+\DoxyCodeLine{257 }
+\DoxyCodeLine{258     myfile << \textcolor{stringliteral}{"{}OFF"{}} << std::endl;}
+\DoxyCodeLine{259 }
+\DoxyCodeLine{260     myfile << n\_vertices << \textcolor{stringliteral}{"{} "{}} << n\_faces << \textcolor{stringliteral}{"{} 0"{}} << std::endl;}
+\DoxyCodeLine{261 }
+\DoxyCodeLine{262     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} v = 0 ; v < n\_vertices ; ++v )}
+\DoxyCodeLine{263     \{}
+\DoxyCodeLine{264         myfile << vertices[v][0] << \textcolor{stringliteral}{"{} "{}} << vertices[v][1] << \textcolor{stringliteral}{"{} "{}} << vertices[v][2] << std::endl;}
+\DoxyCodeLine{265     \}}
+\DoxyCodeLine{266     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} f = 0 ; f < n\_faces ; ++f )}
+\DoxyCodeLine{267     \{}
+\DoxyCodeLine{268         myfile << faces[f].size();}
+\DoxyCodeLine{269         \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vof = 0 ; vof < faces[f].size() ; ++vof )}
+\DoxyCodeLine{270             myfile << \textcolor{stringliteral}{"{} "{}} << faces[f][vof];}
+\DoxyCodeLine{271         myfile << std::endl;}
+\DoxyCodeLine{272     \}}
+\DoxyCodeLine{273     myfile.close();}
+\DoxyCodeLine{274     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{275 \}}
+\DoxyCodeLine{276 }
+\DoxyCodeLine{277 }
+\DoxyCodeLine{278 \textcolor{keyword}{template}< \textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t > \textcolor{keywordtype}{bool} open( \textcolor{keyword}{const} std::string \& filename , std::vector< point\_t > \& vertices )}
+\DoxyCodeLine{279 \{}
+\DoxyCodeLine{280     std::ifstream myfile;}
+\DoxyCodeLine{281     myfile.open(filename.c\_str());}
+\DoxyCodeLine{282     \textcolor{keywordflow}{if} (!myfile.is\_open())}
+\DoxyCodeLine{283     \{}
+\DoxyCodeLine{284         std::cout << filename << \textcolor{stringliteral}{"{} cannot be opened"{}} << std::endl;}
+\DoxyCodeLine{285         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{286     \}}
+\DoxyCodeLine{287 }
+\DoxyCodeLine{288     std::string magic\_s;}
+\DoxyCodeLine{289 }
+\DoxyCodeLine{290     myfile >> magic\_s;}
+\DoxyCodeLine{291 }
+\DoxyCodeLine{292     \textcolor{keywordflow}{if}( magic\_s != \textcolor{stringliteral}{"{}OFF"{}} )}
+\DoxyCodeLine{293     \{}
+\DoxyCodeLine{294         std::cout << magic\_s << \textcolor{stringliteral}{"{} != OFF :   We handle ONLY *.off files."{}} << std::endl;}
+\DoxyCodeLine{295         myfile.close();}
+\DoxyCodeLine{296         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{297     \}}
+\DoxyCodeLine{298 }
+\DoxyCodeLine{299     \textcolor{keywordtype}{int} n\_vertices , n\_faces , dummy\_int;}
+\DoxyCodeLine{300     myfile >> n\_vertices >> n\_faces >> dummy\_int;}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302     vertices.resize(n\_vertices);}
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304     point\_t bb( FLT\_MAX , FLT\_MAX , FLT\_MAX );}
+\DoxyCodeLine{305     point\_t BB( -\/FLT\_MAX , -\/FLT\_MAX , -\/FLT\_MAX );}
+\DoxyCodeLine{306 }
+\DoxyCodeLine{307     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{int} v = 0 ; v < n\_vertices ; ++v )}
+\DoxyCodeLine{308     \{}
+\DoxyCodeLine{309         \textcolor{comment}{//typename point\_t::type\_t x , y , z;}}
+\DoxyCodeLine{310         \textcolor{keywordtype}{float} x , y , z;}
+\DoxyCodeLine{311         myfile >> x >> y >> z;}
+\DoxyCodeLine{312         vertices[v] = point\_t( x , y , z );}
+\DoxyCodeLine{313 }
+\DoxyCodeLine{314         BB = max( BB , point\_t( x , y , z ) );}
+\DoxyCodeLine{315         bb = min( bb , point\_t( x , y , z ) );}
+\DoxyCodeLine{316         \textcolor{comment}{//   bb = point\_t::min( bb , point\_t( x , y , z ) );}}
+\DoxyCodeLine{317         \textcolor{comment}{//    BB = point\_t::max( BB , point\_t( x , y , z ) );}}
+\DoxyCodeLine{318     \}}
+\DoxyCodeLine{319 }
+\DoxyCodeLine{320     myfile.close();}
+\DoxyCodeLine{321 }
+\DoxyCodeLine{322     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{323 \}}
+\DoxyCodeLine{324 }
+\DoxyCodeLine{325 }
+\DoxyCodeLine{326 }
+\DoxyCodeLine{327 }
+\DoxyCodeLine{328 \}}
+\DoxyCodeLine{329 }
+\DoxyCodeLine{330 }
+\DoxyCodeLine{331 }
+\DoxyCodeLine{332 }
+\DoxyCodeLine{333 }
+\DoxyCodeLine{334 }
+\DoxyCodeLine{335 \textcolor{keyword}{namespace }OBJIO\{}
+\DoxyCodeLine{336 }
+\DoxyCodeLine{337 }
+\DoxyCodeLine{338 }
+\DoxyCodeLine{339 \textcolor{keyword}{template}< \textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t , \textcolor{keyword}{class} \textcolor{keywordtype}{int}\_type\_t > \textcolor{keywordtype}{bool} open(}
+\DoxyCodeLine{340         \textcolor{keyword}{const} std::string \& filename,}
+\DoxyCodeLine{341         std::vector<point\_t> \& vertices,}
+\DoxyCodeLine{342         std::vector< std::vector< int\_type\_t > > \& faces,}
+\DoxyCodeLine{343         \textcolor{keywordtype}{bool} convertToTriangles = \textcolor{keyword}{true},}
+\DoxyCodeLine{344         \textcolor{keywordtype}{bool} randomize = \textcolor{keyword}{false},}
+\DoxyCodeLine{345         \textcolor{keywordtype}{bool} convertEdgesToDegenerateTriangles = \textcolor{keyword}{true})}
+\DoxyCodeLine{346 \{}
+\DoxyCodeLine{347 }
+\DoxyCodeLine{348     QFile myFile(filename.c\_str());}
+\DoxyCodeLine{349 }
+\DoxyCodeLine{350 }
+\DoxyCodeLine{351     \textcolor{comment}{//std::ifstream myfile;}}
+\DoxyCodeLine{352     \textcolor{comment}{//myfile.open(filename.c\_str());}}
+\DoxyCodeLine{353     \textcolor{keywordflow}{if} (!myFile.open(QIODevice::ReadOnly))}
+\DoxyCodeLine{354     \{}
+\DoxyCodeLine{355         std::cout << filename << \textcolor{stringliteral}{"{} cannot be opened"{}} << std::endl;}
+\DoxyCodeLine{356         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{357     \}}
+\DoxyCodeLine{358     QTextStream in(\&myFile);}
+\DoxyCodeLine{359     vertices.clear();}
+\DoxyCodeLine{360     faces.clear();}
+\DoxyCodeLine{361 }
+\DoxyCodeLine{362     \textcolor{keywordflow}{while}(!myFile.atEnd())\textcolor{comment}{// myfile.good() )}}
+\DoxyCodeLine{363     \{}
+\DoxyCodeLine{364         \textcolor{comment}{//std::string line;}}
+\DoxyCodeLine{365         \textcolor{comment}{//getline (myfile,line);}}
+\DoxyCodeLine{366         QString QTLine = myFile.readLine();}
+\DoxyCodeLine{367         \textcolor{comment}{//QString QTLine = QString::fromStdString( line );}}
+\DoxyCodeLine{368         QRegExp reg(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)s+"{}});}
+\DoxyCodeLine{369         QStringList lineElements = QTLine.split(reg);}
+\DoxyCodeLine{370 }
+\DoxyCodeLine{371         \textcolor{keywordflow}{if}(  lineElements.size() > 0  )}
+\DoxyCodeLine{372         \{}
+\DoxyCodeLine{373             QString elementType = lineElements[0];}
+\DoxyCodeLine{374             \textcolor{comment}{// vertex}}
+\DoxyCodeLine{375             \textcolor{keywordflow}{if} ( elementType == QString(\textcolor{stringliteral}{"{}v"{}}) )}
+\DoxyCodeLine{376             \{}
+\DoxyCodeLine{377                 vertices.push\_back(point\_t( lineElements[1].toDouble() , lineElements[2].toDouble() , lineElements[3].toDouble() ));}
+\DoxyCodeLine{378             \}}
+\DoxyCodeLine{379             \textcolor{comment}{// face}}
+\DoxyCodeLine{380             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( elementType == QString(\textcolor{stringliteral}{"{}f"{}}) )}
+\DoxyCodeLine{381             \{}
+\DoxyCodeLine{382                 std::vector< int\_type\_t > vhandles;}
+\DoxyCodeLine{383                 \textcolor{keywordflow}{for}( \textcolor{keywordtype}{int} i = 1 ; i < lineElements.size() ; ++i )}
+\DoxyCodeLine{384                 \{}
+\DoxyCodeLine{385                     QStringList FaceElements = lineElements[i].split(\textcolor{stringliteral}{"{}/"{}}, QString::SkipEmptyParts);}
+\DoxyCodeLine{386                     \textcolor{keywordflow}{if}( FaceElements.size() > 0 )}
+\DoxyCodeLine{387                         vhandles.push\_back( (int\_type\_t)( (abs(FaceElements[0].toInt()) -\/ 1) ) );}
+\DoxyCodeLine{388                 \}}
+\DoxyCodeLine{389 }
+\DoxyCodeLine{390                 \textcolor{keywordflow}{if} (vhandles.size()>3)}
+\DoxyCodeLine{391                 \{}
+\DoxyCodeLine{392                     \textcolor{keywordflow}{if}( convertToTriangles )}
+\DoxyCodeLine{393                     \{}
+\DoxyCodeLine{394                         \textcolor{comment}{//model is not triangulated, so let us do this on the fly...}}
+\DoxyCodeLine{395                         \textcolor{comment}{//to have a more uniform mesh, we add randomization}}
+\DoxyCodeLine{396                         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} k=(randomize)?(rand()\%vhandles.size()):0;}
+\DoxyCodeLine{397                         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i=0;i<vhandles.size()-\/2;++i)}
+\DoxyCodeLine{398                         \{}
+\DoxyCodeLine{399                             std::vector< int\_type\_t > tri(3);}
+\DoxyCodeLine{400                             tri[0]= (int\_type\_t) vhandles[(k+0)\%vhandles.size()];}
+\DoxyCodeLine{401                             tri[1]= (int\_type\_t) vhandles[(k+i+1)\%vhandles.size()];}
+\DoxyCodeLine{402                             tri[2]= (int\_type\_t) vhandles[(k+i+2)\%vhandles.size()];}
+\DoxyCodeLine{403                             faces.push\_back(tri);}
+\DoxyCodeLine{404                         \}}
+\DoxyCodeLine{405                     \}}
+\DoxyCodeLine{406                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{407                         faces.push\_back(vhandles);}
+\DoxyCodeLine{408                 \}}
+\DoxyCodeLine{409                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (vhandles.size()==3)}
+\DoxyCodeLine{410                 \{}
+\DoxyCodeLine{411                     faces.push\_back(vhandles);}
+\DoxyCodeLine{412                 \}}
+\DoxyCodeLine{413                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (vhandles.size()==2)}
+\DoxyCodeLine{414                 \{}
+\DoxyCodeLine{415                     \textcolor{keywordflow}{if}( convertEdgesToDegenerateTriangles )}
+\DoxyCodeLine{416                     \{}
+\DoxyCodeLine{417                         printf(\textcolor{stringliteral}{"{}Unexpected number of face vertices (2). Converting edge to degenerate triangle"{}});}
+\DoxyCodeLine{418                         vhandles.push\_back(vhandles[1]);}
+\DoxyCodeLine{419                         faces.push\_back(vhandles);}
+\DoxyCodeLine{420                     \}}
+\DoxyCodeLine{421                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{422                         printf(\textcolor{stringliteral}{"{}Unexpected number of face vertices (2). Ignoring face"{}});}
+\DoxyCodeLine{423                 \}}
+\DoxyCodeLine{424             \}}
+\DoxyCodeLine{425         \}}
+\DoxyCodeLine{426     \}}
+\DoxyCodeLine{427     myFile.close();}
+\DoxyCodeLine{428     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{429 \}}
+\DoxyCodeLine{430 }
+\DoxyCodeLine{431 }
+\DoxyCodeLine{432 \textcolor{keyword}{template}< \textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t , \textcolor{keyword}{class} texture, \textcolor{keyword}{class} \textcolor{keywordtype}{int}\_type\_t > \textcolor{keywordtype}{bool} open(}
+\DoxyCodeLine{433         \textcolor{keyword}{const} std::string \& filename,}
+\DoxyCodeLine{434         std::vector<point\_t> \& vertices,}
+\DoxyCodeLine{435         std::vector< std::vector< int\_type\_t > > \& faces,}
+\DoxyCodeLine{436         std::vector<texture> \& textures,}
+\DoxyCodeLine{437          std::vector< std::vector< int\_type\_t > > \& indicetextures,}
+\DoxyCodeLine{438         \textcolor{keywordtype}{bool} convertToTriangles = \textcolor{keyword}{true},}
+\DoxyCodeLine{439         \textcolor{keywordtype}{bool} randomize = \textcolor{keyword}{false},}
+\DoxyCodeLine{440         \textcolor{keywordtype}{bool} convertEdgesToDegenerateTriangles = \textcolor{keyword}{true})}
+\DoxyCodeLine{441 \{}
+\DoxyCodeLine{442 }
+\DoxyCodeLine{443     QFile myFile(filename.c\_str());}
+\DoxyCodeLine{444 }
+\DoxyCodeLine{445 }
+\DoxyCodeLine{446     \textcolor{comment}{//std::ifstream myfile;}}
+\DoxyCodeLine{447     \textcolor{comment}{//myfile.open(filename.c\_str());}}
+\DoxyCodeLine{448     \textcolor{keywordflow}{if} (!myFile.open(QIODevice::ReadOnly))}
+\DoxyCodeLine{449     \{}
+\DoxyCodeLine{450         std::cout << filename << \textcolor{stringliteral}{"{} cannot be opened"{}} << std::endl;}
+\DoxyCodeLine{451         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{452     \}}
+\DoxyCodeLine{453     QTextStream in(\&myFile);}
+\DoxyCodeLine{454     vertices.clear();}
+\DoxyCodeLine{455     faces.clear();}
+\DoxyCodeLine{456 }
+\DoxyCodeLine{457     \textcolor{keywordflow}{while}(!myFile.atEnd())\textcolor{comment}{// myfile.good() )}}
+\DoxyCodeLine{458     \{}
+\DoxyCodeLine{459         \textcolor{comment}{//std::string line;}}
+\DoxyCodeLine{460         \textcolor{comment}{//getline (myfile,line);}}
+\DoxyCodeLine{461         QString QTLine = myFile.readLine();}
+\DoxyCodeLine{462         \textcolor{comment}{//QString QTLine = QString::fromStdString( line );}}
+\DoxyCodeLine{463         QRegExp reg(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)s+"{}});}
+\DoxyCodeLine{464         QStringList lineElements = QTLine.split(reg);}
+\DoxyCodeLine{465 }
+\DoxyCodeLine{466         \textcolor{keywordflow}{if}(  lineElements.size() > 0  )}
+\DoxyCodeLine{467         \{}
+\DoxyCodeLine{468             QString elementType = lineElements[0];}
+\DoxyCodeLine{469             \textcolor{comment}{// vertex}}
+\DoxyCodeLine{470             \textcolor{keywordflow}{if} ( elementType == QString(\textcolor{stringliteral}{"{}v"{}}) )}
+\DoxyCodeLine{471             \{}
+\DoxyCodeLine{472                 vertices.push\_back(point\_t( lineElements[1].toDouble() , lineElements[2].toDouble() , lineElements[3].toDouble() ));}
+\DoxyCodeLine{473             \}}
+\DoxyCodeLine{474             \textcolor{keywordflow}{if} ( elementType == QString(\textcolor{stringliteral}{"{}vt"{}}) )}
+\DoxyCodeLine{475             \{}
+\DoxyCodeLine{476                 textures.push\_back(texture( lineElements[1].toDouble() , lineElements[2].toDouble()));}
+\DoxyCodeLine{477             \}}
+\DoxyCodeLine{478             \textcolor{comment}{// face}}
+\DoxyCodeLine{479             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( elementType == QString(\textcolor{stringliteral}{"{}f"{}}) )}
+\DoxyCodeLine{480             \{}
+\DoxyCodeLine{481                 std::vector< int\_type\_t > vhandles;}
+\DoxyCodeLine{482                 std::vector< int\_type\_t > texthandles;}
+\DoxyCodeLine{483                 \textcolor{keywordflow}{for}( \textcolor{keywordtype}{int} i = 1 ; i < lineElements.size() ; ++i )}
+\DoxyCodeLine{484                 \{}
+\DoxyCodeLine{485                     QStringList FaceElements = lineElements[i].split(\textcolor{stringliteral}{"{}/"{}}, QString::SkipEmptyParts);}
+\DoxyCodeLine{486                     \textcolor{keywordflow}{if}( FaceElements.size() > 0 )\{}
+\DoxyCodeLine{487                         vhandles.push\_back( (int\_type\_t)( (abs(FaceElements[0].toInt()) -\/ 1) ) );}
+\DoxyCodeLine{488                         texthandles.push\_back( (int\_type\_t)( (abs(FaceElements[1].toInt()) -\/ 1) ) );}
+\DoxyCodeLine{489                     \}}
+\DoxyCodeLine{490                 \}}
+\DoxyCodeLine{491 }
+\DoxyCodeLine{492                 \textcolor{keywordflow}{if} (vhandles.size()>3)}
+\DoxyCodeLine{493                 \{}
+\DoxyCodeLine{494                     \textcolor{keywordflow}{if}( convertToTriangles )}
+\DoxyCodeLine{495                     \{}
+\DoxyCodeLine{496                         \textcolor{comment}{//model is not triangulated, so let us do this on the fly...}}
+\DoxyCodeLine{497                         \textcolor{comment}{//to have a more uniform mesh, we add randomization}}
+\DoxyCodeLine{498                         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} k=(randomize)?(rand()\%vhandles.size()):0;}
+\DoxyCodeLine{499                         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i=0;i<vhandles.size()-\/2;++i)}
+\DoxyCodeLine{500                         \{}
+\DoxyCodeLine{501                             std::vector< int\_type\_t > tri(3);}
+\DoxyCodeLine{502                             tri[0]= (int\_type\_t) vhandles[(k+0)\%vhandles.size()];}
+\DoxyCodeLine{503                             tri[1]= (int\_type\_t) vhandles[(k+i+1)\%vhandles.size()];}
+\DoxyCodeLine{504                             tri[2]= (int\_type\_t) vhandles[(k+i+2)\%vhandles.size()];}
+\DoxyCodeLine{505                             faces.push\_back(tri);}
+\DoxyCodeLine{506 }
+\DoxyCodeLine{507                             std::vector< int\_type\_t > tritexture(3);}
+\DoxyCodeLine{508                             tritexture[0]= (int\_type\_t) texthandles[(k+0)\%texthandles.size()];}
+\DoxyCodeLine{509                             tritexture[1]= (int\_type\_t) texthandles[(k+i+1)\%texthandles.size()];}
+\DoxyCodeLine{510                             tritexture[2]= (int\_type\_t) texthandles[(k+i+2)\%texthandles.size()];}
+\DoxyCodeLine{511                             indicetextures.push\_back(tritexture);}
+\DoxyCodeLine{512                         \}}
+\DoxyCodeLine{513                     \}}
+\DoxyCodeLine{514                     \textcolor{keywordflow}{else}\{}
+\DoxyCodeLine{515                         faces.push\_back(vhandles);}
+\DoxyCodeLine{516                         indicetextures.push\_back(texthandles);}
+\DoxyCodeLine{517                     \}}
+\DoxyCodeLine{518                 \}}
+\DoxyCodeLine{519                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (vhandles.size()==3)}
+\DoxyCodeLine{520                 \{}
+\DoxyCodeLine{521                     faces.push\_back(vhandles);}
+\DoxyCodeLine{522                     indicetextures.push\_back(texthandles);}
+\DoxyCodeLine{523                 \}}
+\DoxyCodeLine{524                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (vhandles.size()==2)}
+\DoxyCodeLine{525                 \{}
+\DoxyCodeLine{526                     \textcolor{keywordflow}{if}( convertEdgesToDegenerateTriangles )}
+\DoxyCodeLine{527                     \{}
+\DoxyCodeLine{528                         printf(\textcolor{stringliteral}{"{}Unexpected number of face vertices (2). Converting edge to degenerate triangle"{}});}
+\DoxyCodeLine{529                         vhandles.push\_back(vhandles[1]);}
+\DoxyCodeLine{530                         faces.push\_back(vhandles);}
+\DoxyCodeLine{531                         texthandles.push\_back(texthandles[1]);}
+\DoxyCodeLine{532                         indicetextures.push\_back(texthandles);}
+\DoxyCodeLine{533                     \}}
+\DoxyCodeLine{534                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{535                         printf(\textcolor{stringliteral}{"{}Unexpected number of face vertices (2). Ignoring face"{}});}
+\DoxyCodeLine{536                 \}}
+\DoxyCodeLine{537             \}}
+\DoxyCodeLine{538         \}}
+\DoxyCodeLine{539     \}}
+\DoxyCodeLine{540     myFile.close();}
+\DoxyCodeLine{541     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{542 \}}
+\DoxyCodeLine{543 }
+\DoxyCodeLine{544 }
+\DoxyCodeLine{545 }
+\DoxyCodeLine{546 }
+\DoxyCodeLine{547 }
+\DoxyCodeLine{548 }
+\DoxyCodeLine{549 }
+\DoxyCodeLine{550 }
+\DoxyCodeLine{551 }
+\DoxyCodeLine{552 }
+\DoxyCodeLine{553 }
+\DoxyCodeLine{554 }
+\DoxyCodeLine{555 }
+\DoxyCodeLine{556 \textcolor{keyword}{template}< \textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t , \textcolor{keyword}{class} \textcolor{keywordtype}{int}\_type\_t > \textcolor{keywordtype}{bool} open(}
+\DoxyCodeLine{557         \textcolor{keyword}{const} std::string \& filename,}
+\DoxyCodeLine{558         std::vector<point\_t> \& vertices,}
+\DoxyCodeLine{559         std::vector< std::vector< int\_type\_t > > \& faces,}
+\DoxyCodeLine{560         std::vector< std::pair< int\_type\_t , int\_type\_t > > \& additional\_edges,}
+\DoxyCodeLine{561         \textcolor{keywordtype}{bool} convertToTriangles = \textcolor{keyword}{true},}
+\DoxyCodeLine{562         \textcolor{keywordtype}{bool} randomize = \textcolor{keyword}{false})}
+\DoxyCodeLine{563 \{}
+\DoxyCodeLine{564     std::ifstream myfile;}
+\DoxyCodeLine{565     myfile.open(filename.c\_str());}
+\DoxyCodeLine{566     \textcolor{keywordflow}{if} (!myfile.is\_open())}
+\DoxyCodeLine{567     \{}
+\DoxyCodeLine{568         std::cout << filename << \textcolor{stringliteral}{"{} cannot be opened"{}} << std::endl;}
+\DoxyCodeLine{569         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{570     \}}
+\DoxyCodeLine{571 }
+\DoxyCodeLine{572     vertices.clear();}
+\DoxyCodeLine{573     faces.clear();}
+\DoxyCodeLine{574 }
+\DoxyCodeLine{575     \textcolor{keywordflow}{while}( myfile.good() )}
+\DoxyCodeLine{576     \{}
+\DoxyCodeLine{577         std::string line;}
+\DoxyCodeLine{578         getline (myfile,line);}
+\DoxyCodeLine{579         QString QTLine = QString::fromStdString( line );}
+\DoxyCodeLine{580         QRegExp reg(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)s+"{}});}
+\DoxyCodeLine{581         QStringList lineElements = QTLine.split(reg);}
+\DoxyCodeLine{582 }
+\DoxyCodeLine{583         \textcolor{keywordflow}{if}(  lineElements.size() > 0  )}
+\DoxyCodeLine{584         \{}
+\DoxyCodeLine{585             QString elementType = lineElements[0];}
+\DoxyCodeLine{586             \textcolor{comment}{// vertex}}
+\DoxyCodeLine{587             \textcolor{keywordflow}{if} ( elementType == QString(\textcolor{stringliteral}{"{}v"{}}) )}
+\DoxyCodeLine{588             \{}
+\DoxyCodeLine{589                 vertices.push\_back(point\_t( lineElements[1].toDouble() , lineElements[2].toDouble() , lineElements[3].toDouble() ));}
+\DoxyCodeLine{590             \}}
+\DoxyCodeLine{591             \textcolor{comment}{// face}}
+\DoxyCodeLine{592             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( elementType == QString(\textcolor{stringliteral}{"{}f"{}}) )}
+\DoxyCodeLine{593             \{}
+\DoxyCodeLine{594                 std::vector< int\_type\_t > vhandles;}
+\DoxyCodeLine{595                 \textcolor{keywordflow}{for}( \textcolor{keywordtype}{int} i = 1 ; i < lineElements.size() ; ++i )}
+\DoxyCodeLine{596                 \{}
+\DoxyCodeLine{597                     QStringList FaceElements = lineElements[i].split(\textcolor{stringliteral}{"{}/"{}}, QString::SkipEmptyParts);}
+\DoxyCodeLine{598                     \textcolor{keywordflow}{if}( FaceElements.size() > 0 )}
+\DoxyCodeLine{599                         vhandles.push\_back( (int\_type\_t)( (abs(FaceElements[0].toInt()) -\/ 1) ) );}
+\DoxyCodeLine{600                 \}}
+\DoxyCodeLine{601 }
+\DoxyCodeLine{602                 \textcolor{keywordflow}{if} (vhandles.size()>3)}
+\DoxyCodeLine{603                 \{}
+\DoxyCodeLine{604                     \textcolor{keywordflow}{if}( convertToTriangles )}
+\DoxyCodeLine{605                     \{}
+\DoxyCodeLine{606                         \textcolor{comment}{//model is not triangulated, so let us do this on the fly...}}
+\DoxyCodeLine{607                         \textcolor{comment}{//to have a more uniform mesh, we add randomization}}
+\DoxyCodeLine{608                         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} k=(randomize)?(rand()\%vhandles.size()):0;}
+\DoxyCodeLine{609                         \textcolor{keywordflow}{for} (\textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} i=0;i<vhandles.size()-\/2;++i)}
+\DoxyCodeLine{610                         \{}
+\DoxyCodeLine{611                             std::vector< int\_type\_t > tri(3);}
+\DoxyCodeLine{612                             tri[0]= (int\_type\_t) vhandles[(k+0)\%vhandles.size()];}
+\DoxyCodeLine{613                             tri[1]= (int\_type\_t) vhandles[(k+i+1)\%vhandles.size()];}
+\DoxyCodeLine{614                             tri[2]= (int\_type\_t) vhandles[(k+i+2)\%vhandles.size()];}
+\DoxyCodeLine{615                             faces.push\_back(tri);}
+\DoxyCodeLine{616                         \}}
+\DoxyCodeLine{617                     \}}
+\DoxyCodeLine{618                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{619                         faces.push\_back(vhandles);}
+\DoxyCodeLine{620                 \}}
+\DoxyCodeLine{621                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (vhandles.size()==3)}
+\DoxyCodeLine{622                 \{}
+\DoxyCodeLine{623                     faces.push\_back(vhandles);}
+\DoxyCodeLine{624                 \}}
+\DoxyCodeLine{625                 \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} (vhandles.size()==2)}
+\DoxyCodeLine{626                 \{}
+\DoxyCodeLine{627                     \textcolor{keywordflow}{if}( \textcolor{keyword}{true} )}
+\DoxyCodeLine{628                     \{}
+\DoxyCodeLine{629                         \textcolor{comment}{// printf("{}Unexpected number of face vertices (2). Converting edge to degenerate triangle"{});}}
+\DoxyCodeLine{630                         additional\_edges.push\_back( std::pair<int\_type\_t,int\_type\_t>(vhandles[0],vhandles[1]) );}
+\DoxyCodeLine{631                     \}}
+\DoxyCodeLine{632                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{633                         printf(\textcolor{stringliteral}{"{}Unexpected number of face vertices (2). Ignoring face"{}});}
+\DoxyCodeLine{634                 \}}
+\DoxyCodeLine{635             \}}
+\DoxyCodeLine{636             \textcolor{keywordflow}{else} \textcolor{keywordflow}{if} ( elementType == QString(\textcolor{stringliteral}{"{}l"{}}) )}
+\DoxyCodeLine{637             \{}
+\DoxyCodeLine{638                 std::vector< int\_type\_t > vhandles;}
+\DoxyCodeLine{639                 \textcolor{keywordflow}{for}( \textcolor{keywordtype}{int} i = 1 ; i < lineElements.size() ; ++i )}
+\DoxyCodeLine{640                 \{}
+\DoxyCodeLine{641                     QStringList FaceElements = lineElements[i].split(\textcolor{stringliteral}{"{}/"{}}, QString::SkipEmptyParts);}
+\DoxyCodeLine{642                     \textcolor{keywordflow}{if}( FaceElements.size() > 0 )}
+\DoxyCodeLine{643                         vhandles.push\_back( (int\_type\_t)( (abs(FaceElements[0].toInt()) -\/ 1) ) );}
+\DoxyCodeLine{644                 \}}
+\DoxyCodeLine{645                 \textcolor{keywordflow}{if} (vhandles.size()==2)}
+\DoxyCodeLine{646                 \{}
+\DoxyCodeLine{647                     \textcolor{keywordflow}{if}( \textcolor{keyword}{true} )}
+\DoxyCodeLine{648                     \{}
+\DoxyCodeLine{649                         \textcolor{comment}{// printf("{}Unexpected number of face vertices (2). Converting edge to degenerate triangle"{});}}
+\DoxyCodeLine{650                         additional\_edges.push\_back( std::pair<int\_type\_t,int\_type\_t>(vhandles[0],vhandles[1]) );}
+\DoxyCodeLine{651                     \}}
+\DoxyCodeLine{652                     \textcolor{keywordflow}{else}}
+\DoxyCodeLine{653                         printf(\textcolor{stringliteral}{"{}Unexpected number of face vertices (2). Ignoring face"{}});}
+\DoxyCodeLine{654                 \}}
+\DoxyCodeLine{655             \}}
+\DoxyCodeLine{656         \}}
+\DoxyCodeLine{657     \}}
+\DoxyCodeLine{658     myfile.close();}
+\DoxyCodeLine{659     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{660 \}}
+\DoxyCodeLine{661 }
+\DoxyCodeLine{662 }
+\DoxyCodeLine{663 }
+\DoxyCodeLine{664 }
+\DoxyCodeLine{665 }
+\DoxyCodeLine{666 }
+\DoxyCodeLine{667 \textcolor{keyword}{template}< \textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t > \textcolor{keywordtype}{bool} open(}
+\DoxyCodeLine{668         \textcolor{keyword}{const} std::string \& filename,}
+\DoxyCodeLine{669         std::vector<point\_t> \& vertices)}
+\DoxyCodeLine{670 \{}
+\DoxyCodeLine{671     std::ifstream myfile;}
+\DoxyCodeLine{672     myfile.open(filename.c\_str());}
+\DoxyCodeLine{673     \textcolor{keywordflow}{if} (!myfile.is\_open())}
+\DoxyCodeLine{674     \{}
+\DoxyCodeLine{675         std::cout << filename << \textcolor{stringliteral}{"{} cannot be opened"{}} << std::endl;}
+\DoxyCodeLine{676         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{677     \}}
+\DoxyCodeLine{678 }
+\DoxyCodeLine{679     vertices.clear();}
+\DoxyCodeLine{680 }
+\DoxyCodeLine{681     \textcolor{keywordflow}{while}( myfile.good() )}
+\DoxyCodeLine{682     \{}
+\DoxyCodeLine{683         std::string line;}
+\DoxyCodeLine{684         getline (myfile,line);}
+\DoxyCodeLine{685         QString QTLine = QString::fromStdString( line );}
+\DoxyCodeLine{686         QRegExp reg(\textcolor{stringliteral}{"{}\(\backslash\)\(\backslash\)s+"{}});}
+\DoxyCodeLine{687         QStringList lineElements = QTLine.split(reg);}
+\DoxyCodeLine{688         \textcolor{comment}{//        QStringList lineElementsBeforeCleaning = QTLine.split("{} "{}, QString::SkipEmptyParts);}}
+\DoxyCodeLine{689         \textcolor{comment}{//        QStringList lineElements;}}
+\DoxyCodeLine{690         \textcolor{comment}{//        for( int e = 0 ; e < lineElementsBeforeCleaning.size() ; ++e )}}
+\DoxyCodeLine{691         \textcolor{comment}{//        \{}}
+\DoxyCodeLine{692         \textcolor{comment}{//            if( lineElementsBeforeCleaning[e] != "{}"{} \&\& lineElementsBeforeCleaning[e] != "{} "{} )}}
+\DoxyCodeLine{693         \textcolor{comment}{//                lineElements.push\_back( lineElementsBeforeCleaning[e] );}}
+\DoxyCodeLine{694         \textcolor{comment}{//        \}}}
+\DoxyCodeLine{695         \textcolor{keywordflow}{if}(  lineElements.size() > 0  )}
+\DoxyCodeLine{696         \{}
+\DoxyCodeLine{697             QString elementType = lineElements[0];}
+\DoxyCodeLine{698             \textcolor{comment}{// vertex}}
+\DoxyCodeLine{699             \textcolor{keywordflow}{if} ( elementType == QString(\textcolor{stringliteral}{"{}v"{}}) )}
+\DoxyCodeLine{700             \{}
+\DoxyCodeLine{701                 vertices.push\_back(point\_t( lineElements[1].toDouble() , lineElements[2].toDouble() , lineElements[3].toDouble() ));}
+\DoxyCodeLine{702             \}}
+\DoxyCodeLine{703         \}}
+\DoxyCodeLine{704     \}}
+\DoxyCodeLine{705     myfile.close();}
+\DoxyCodeLine{706     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{707 \}}
+\DoxyCodeLine{708 }
+\DoxyCodeLine{709 }
+\DoxyCodeLine{710 }
+\DoxyCodeLine{711 }
+\DoxyCodeLine{712 }
+\DoxyCodeLine{713 }
+\DoxyCodeLine{714 }
+\DoxyCodeLine{715 }
+\DoxyCodeLine{716 \textcolor{keyword}{template}< \textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t , \textcolor{keyword}{typename} \textcolor{keywordtype}{int}\_t > \textcolor{keywordtype}{bool} save(}
+\DoxyCodeLine{717         std::string \textcolor{keyword}{const} \& filename,}
+\DoxyCodeLine{718         std::vector<point\_t> \& verticesP,}
+\DoxyCodeLine{719         std::vector< std::vector<int\_t> > \& facesP )}
+\DoxyCodeLine{720 \{}
+\DoxyCodeLine{721     std::ofstream myfile;}
+\DoxyCodeLine{722     myfile.open(filename.c\_str());}
+\DoxyCodeLine{723     \textcolor{keywordflow}{if} (!myfile.is\_open())}
+\DoxyCodeLine{724     \{}
+\DoxyCodeLine{725         std::cout << filename << \textcolor{stringliteral}{"{} cannot be opened"{}} << std::endl;}
+\DoxyCodeLine{726         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{727     \}}
+\DoxyCodeLine{728 }
+\DoxyCodeLine{729     myfile << \textcolor{stringliteral}{"{}\#OBJ"{}} << std::endl;}
+\DoxyCodeLine{730     myfile << (verticesP.size()) << \textcolor{stringliteral}{"{} "{}} << (facesP.size()) << \textcolor{stringliteral}{"{} 0"{}} << std::endl;}
+\DoxyCodeLine{731 }
+\DoxyCodeLine{732     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} v = 0 ; v < verticesP.size() ; ++v )}
+\DoxyCodeLine{733     \{}
+\DoxyCodeLine{734         myfile << \textcolor{stringliteral}{"{}v "{}} << (verticesP[v][0]) << \textcolor{stringliteral}{"{} "{}} << (verticesP[v][1]) << \textcolor{stringliteral}{"{} "{}} << (verticesP[v][2]) << std::endl;}
+\DoxyCodeLine{735     \}}
+\DoxyCodeLine{736 }
+\DoxyCodeLine{737     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} t = 0 ; t < facesP.size() ; ++t )}
+\DoxyCodeLine{738     \{}
+\DoxyCodeLine{739         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} nv = facesP[t].size();}
+\DoxyCodeLine{740         myfile << \textcolor{stringliteral}{"{}f"{}};}
+\DoxyCodeLine{741         \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vof = 0 ; vof < nv ; ++vof )}
+\DoxyCodeLine{742             myfile << \textcolor{stringliteral}{"{} "{}} << (facesP[t][vof] + 1);}
+\DoxyCodeLine{743         myfile << std::endl;}
+\DoxyCodeLine{744     \}}
+\DoxyCodeLine{745 }
+\DoxyCodeLine{746     myfile.close();}
+\DoxyCodeLine{747     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{748 \}}
+\DoxyCodeLine{749 }
+\DoxyCodeLine{750 }
+\DoxyCodeLine{751 }
+\DoxyCodeLine{752 }
+\DoxyCodeLine{753 }
+\DoxyCodeLine{754 \textcolor{keyword}{template}< \textcolor{keyword}{class} po\textcolor{keywordtype}{int}\_t , \textcolor{keyword}{class} face\_t , \textcolor{keyword}{class} edge\_t > \textcolor{keywordtype}{bool} saveFromMeshFormat(}
+\DoxyCodeLine{755         \textcolor{keyword}{const} std::string \& filename ,}
+\DoxyCodeLine{756         \textcolor{keyword}{const} point\_t * vertices ,}
+\DoxyCodeLine{757         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} n\_vertices ,}
+\DoxyCodeLine{758         \textcolor{keyword}{const} face\_t * faces ,}
+\DoxyCodeLine{759         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} n\_faces ,}
+\DoxyCodeLine{760         \textcolor{keyword}{const} edge\_t * edges ,}
+\DoxyCodeLine{761         \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} n\_edges )}
+\DoxyCodeLine{762 \{}
+\DoxyCodeLine{763     std::ofstream myfile;}
+\DoxyCodeLine{764     myfile.open(filename.c\_str());}
+\DoxyCodeLine{765     \textcolor{keywordflow}{if} (!myfile.is\_open())}
+\DoxyCodeLine{766     \{}
+\DoxyCodeLine{767         std::cout << filename << \textcolor{stringliteral}{"{} cannot be opened"{}} << std::endl;}
+\DoxyCodeLine{768         \textcolor{keywordflow}{return} \textcolor{keyword}{false};}
+\DoxyCodeLine{769     \}}
+\DoxyCodeLine{770 }
+\DoxyCodeLine{771     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} v = 0 ; v < n\_vertices ; ++v )}
+\DoxyCodeLine{772     \{}
+\DoxyCodeLine{773         myfile << \textcolor{stringliteral}{"{}v "{}} << vertices[v][0] << \textcolor{stringliteral}{"{} "{}} << vertices[v][1] << \textcolor{stringliteral}{"{} "{}} << vertices[v][2] << std::endl;}
+\DoxyCodeLine{774     \}}
+\DoxyCodeLine{775     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} f = 0 ; f < n\_faces ; ++f )}
+\DoxyCodeLine{776     \{}
+\DoxyCodeLine{777         myfile << \textcolor{stringliteral}{"{}f"{}};}
+\DoxyCodeLine{778         \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} vof = 0 ; vof < faces[f].size() ; ++vof )}
+\DoxyCodeLine{779             myfile << \textcolor{stringliteral}{"{} "{}} << (faces[f][vof]+1);}
+\DoxyCodeLine{780         myfile << std::endl;}
+\DoxyCodeLine{781     \}}
+\DoxyCodeLine{782     \textcolor{keywordflow}{for}( \textcolor{keywordtype}{unsigned} \textcolor{keywordtype}{int} e = 0 ; e < n\_edges ; ++e )}
+\DoxyCodeLine{783     \{}
+\DoxyCodeLine{784         myfile << \textcolor{stringliteral}{"{}l "{}} << (edges[e][0]+1) << \textcolor{stringliteral}{"{} "{}} << (edges[e][1]+1) << std::endl;}
+\DoxyCodeLine{785     \}}
+\DoxyCodeLine{786     myfile.close();}
+\DoxyCodeLine{787     \textcolor{keywordflow}{return} \textcolor{keyword}{true};}
+\DoxyCodeLine{788 \}}
+\DoxyCodeLine{789 }
+\DoxyCodeLine{790 }
+\DoxyCodeLine{791 }
+\DoxyCodeLine{792 }
+\DoxyCodeLine{793 \}}
+\DoxyCodeLine{794 }
+\DoxyCodeLine{795 }
+\DoxyCodeLine{796 }
+\DoxyCodeLine{797 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// BASICIO\_H}}
+
+\end{DoxyCode}

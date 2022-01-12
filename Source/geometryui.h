@@ -2,6 +2,14 @@
 #define GEOMETRYUI_H
 #include "geometrymeshengine.h"
 
+
+/**
+* @file
+* @brief le fichier contient la classe geometryUI gère les maillage de type BillBoard
+*/
+/**
+* @brief la classe geometryUI gère les maillage de type BillBoard
+*/
 class geometryUI: public GeometryMeshEngine
 {
 public:

@@ -11,6 +11,18 @@
 #include <QQuaternion>
 #include <QVector>
 #include <QOpenGLTexture>
+
+/**
+ * @file
+ * @brief le fichier contient la classe GameObject contient les objets qui ne subisse pas la gravité, comme le terrain, le soleil, les arbres etc ...
+*/
+
+/**
+ * @brief la classe GameObject contient les objets qui ne subisse pas la gravité, comme le terrain, le soleil, les arbres etc ...
+*/
+
+
+
 class GameObject : public Object
 {
     Q_OBJECT
@@ -22,10 +34,15 @@ private:
 
     ///Constructeur
 public:
+    /**
+     * @brief  Constructeur
+     */
     GameObject():Object(){}
-  // GameObject(Transform tt, GameObject par):Object(tt,par){}
-
-   // GameObject(Transform tt):Object(tt){}
+    /**
+     * @brief constructeur avec parametre
+     * @param tt matrice de transformation
+     * @param anim matrice d'animation
+     */
     GameObject(Transform tt,Transform anim):Object(tt,anim){}
 
   /*  GameObject(Transform tt, Object par, QVector<Object*> enf)
@@ -50,8 +67,16 @@ public:
 
     ///Methode
 
-
+    /**
+     * @brief boucle de rendu, appel recursif
+     * @param deltaTime intervalle de temps depuis le dernier appel
+     */
     void   updateScene( double deltaTime);
+    /**
+     * @brief boucle de rendu, appel au parents
+     * @param deltaTime intervalle de temps depuis le dernier appel
+     * @param m matrice de transformation du parent
+     */
     void  updateScene( double deltaTime, QMatrix4x4 lastM) override;
 
 

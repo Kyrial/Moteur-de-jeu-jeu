@@ -9,6 +9,7 @@
         <file>Shaders/MeshShader/h_fshader.glsl</file>
         <file>Shaders/TerrainShader/geometryshader.glsl</file>
         <file>Shaders/CloudShader/cloud_fshader.glsl</file>
-		<file>Shaders/TreeShader/arbre_tesselationshader.glsl</file>
+        <file>Shaders/TreeShader/arbre_tesselationshader.glsl</file>
+        <file>Shaders/meshs_controlshader.glsl</file>
     </qresource>
 </RCC>

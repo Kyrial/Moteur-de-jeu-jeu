@@ -1,0 +1,244 @@
+\hypertarget{transform_8h_source}{}\doxysection{transform.\+h}
+\mbox{\hyperlink{transform_8h}{Aller à la documentation de ce fichier.}}
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef TRANSFORM\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define TRANSFORM\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include <QMatrix3x3>}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include <QMatrix4x4>}}
+\DoxyCodeLine{6 \textcolor{preprocessor}{\#include <QVector3D>}}
+\DoxyCodeLine{7 \textcolor{preprocessor}{\#include <QVector4D>}}
+\DoxyCodeLine{8 \textcolor{preprocessor}{\#include <QQuaternion>}}
+\DoxyCodeLine{9 \textcolor{preprocessor}{\#include <QOpenGLBuffer>}}
+\DoxyCodeLine{10 }
+\DoxyCodeLine{11 \textcolor{comment}{//a faire:}}
+\DoxyCodeLine{12 \textcolor{comment}{//inversion}}
+\DoxyCodeLine{13 \textcolor{comment}{//combinaision}}
+\DoxyCodeLine{14 }
+\DoxyCodeLine{22 \textcolor{keyword}{class  }\mbox{\hyperlink{class_transform}{Transform}}}
+\DoxyCodeLine{23 \{}
+\DoxyCodeLine{24 \textcolor{keyword}{private}:}
+\DoxyCodeLine{25 \textcolor{comment}{//Attribut}}
+\DoxyCodeLine{26     QVector3D s; \textcolor{comment}{//uniform scale}}
+\DoxyCodeLine{27    QQuaternion r; \textcolor{comment}{// rotation}}
+\DoxyCodeLine{28    QVector3D t; \textcolor{comment}{// translation}}
+\DoxyCodeLine{29 }
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31 }
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 \textcolor{keyword}{public}:}
+\DoxyCodeLine{35    \textcolor{comment}{//constructeur}}
+\DoxyCodeLine{36     \mbox{\hyperlink{class_transform}{Transform}}():s(QVector3D(1,1,1)),  r(QQuaternion()), t(QVector3D())\{\}}
+\DoxyCodeLine{37     \mbox{\hyperlink{class_transform}{Transform}}(QVector3D sc, QQuaternion ro, QVector3D tr):s(sc), r(ro), t(tr)\{\}}
+\DoxyCodeLine{38 }
+\DoxyCodeLine{39 \textcolor{comment}{//methode}}
+\DoxyCodeLine{44 \textcolor{comment}{}    QMatrix4x4 \mbox{\hyperlink{class_transform_a9c07946c92e291404f4b584c6dd5c7e1}{doTransformation}}()\{}
+\DoxyCodeLine{45          QMatrix4x4 a= QMatrix4x4 ();}
+\DoxyCodeLine{46          a = doTranslate(doRotate(doScale(a)));}
+\DoxyCodeLine{47          \textcolor{keywordflow}{return} a;}
+\DoxyCodeLine{48     \}}
+\DoxyCodeLine{49 }
+\DoxyCodeLine{56     QMatrix4x4 \mbox{\hyperlink{class_transform_a64a2fbd4261bb71ac9e7d37ee7bd0864}{doAnimation}}(\mbox{\hyperlink{class_transform}{Transform}}* anim, \textcolor{keywordtype}{double} deltaTime)\{}
+\DoxyCodeLine{57         \mbox{\hyperlink{class_transform}{Transform}} a =\mbox{\hyperlink{class_transform_a1ffb00dd51d8fe95805f95fd42423907}{combine\_with}}(*anim, deltaTime);}
+\DoxyCodeLine{58         this-\/>setScale(a.s);}
+\DoxyCodeLine{59         this-\/>setRotation(a.r);}
+\DoxyCodeLine{60         this-\/>setTranslate(a.t);}
+\DoxyCodeLine{61         QMatrix4x4 res = this-\/>\mbox{\hyperlink{class_transform_a9c07946c92e291404f4b584c6dd5c7e1}{doTransformation}}();}
+\DoxyCodeLine{62         \textcolor{keywordflow}{return} res;}
+\DoxyCodeLine{63 }
+\DoxyCodeLine{64     \}}
+\DoxyCodeLine{65 }
+\DoxyCodeLine{66 }
+\DoxyCodeLine{67     \textcolor{keywordtype}{void} setTransform(QMatrix4x4 m)\{}
+\DoxyCodeLine{68        s = \mbox{\hyperlink{class_transform_a51368a678ae1975b385ed6c1a869ca6c}{extracteScale}}(m);}
+\DoxyCodeLine{69        QGenericMatrix<3, 3, float> q =\mbox{\hyperlink{class_transform_a046620f82e0ada25d145add203cf3227}{Transform::extracteRotate}}(m).toGenericMatrix<3,3>();}
+\DoxyCodeLine{70        r =  QQuaternion::fromRotationMatrix(q);}
+\DoxyCodeLine{71 }
+\DoxyCodeLine{72        t = \mbox{\hyperlink{class_transform_a5470db871eb7881e9ff90d9020e4ca4e}{extracteTranslate}}(m);}
+\DoxyCodeLine{73     \}}
+\DoxyCodeLine{74 }
+\DoxyCodeLine{75 }
+\DoxyCodeLine{76     \textcolor{keywordtype}{void} setRotation( QVector3D \& v, \textcolor{keywordtype}{float} f)\{}
+\DoxyCodeLine{77         r = QQuaternion::fromAxisAndAngle(v,f);}
+\DoxyCodeLine{78     \}}
+\DoxyCodeLine{79     \textcolor{keywordtype}{void} setRotation(\textcolor{keywordtype}{float} x,\textcolor{keywordtype}{float} y,\textcolor{keywordtype}{float} z, \textcolor{keywordtype}{float} f)\{}
+\DoxyCodeLine{80         r = QQuaternion::fromAxisAndAngle(QVector3D(x,y,z),f);}
+\DoxyCodeLine{81 }
+\DoxyCodeLine{82     \}}
+\DoxyCodeLine{83     \textcolor{keywordtype}{void} setRotation(\textcolor{keywordtype}{float} facteur)\{}
+\DoxyCodeLine{84         \mbox{\hyperlink{class_transform_a6487f7455e63a7deaff37dcbf0a50469}{borneRotation}}();}
+\DoxyCodeLine{85         QVector3D vec = QVector3D();}
+\DoxyCodeLine{86         \textcolor{keywordtype}{float} angle = 1;}
+\DoxyCodeLine{87         r.getAxisAndAngle(\&vec,\&angle);}
+\DoxyCodeLine{88         r = QQuaternion::fromAxisAndAngle(vec,angle*facteur);}
+\DoxyCodeLine{89 }
+\DoxyCodeLine{90     \}}
+\DoxyCodeLine{91     \textcolor{keywordtype}{void} setRotation(QQuaternion q)\{}
+\DoxyCodeLine{92         r = q;}
+\DoxyCodeLine{93     \}}
+\DoxyCodeLine{94 }
+\DoxyCodeLine{95     \textcolor{keywordtype}{void} setScale( QVector3D v)\{}
+\DoxyCodeLine{96         s = v;}
+\DoxyCodeLine{97     \}}
+\DoxyCodeLine{98     \textcolor{keywordtype}{void} setScale( \textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z)\{}
+\DoxyCodeLine{99         s = QVector3D(x,y,z);}
+\DoxyCodeLine{100     \}}
+\DoxyCodeLine{101 }
+\DoxyCodeLine{102     \textcolor{keywordtype}{void} setTranslate( QVector3D v)\{}
+\DoxyCodeLine{103         t = v;}
+\DoxyCodeLine{104     \}}
+\DoxyCodeLine{105     \textcolor{keywordtype}{void} setTranslate( \textcolor{keywordtype}{float} x, \textcolor{keywordtype}{float} y, \textcolor{keywordtype}{float} z)\{}
+\DoxyCodeLine{106         t = QVector3D(x,y,z);}
+\DoxyCodeLine{107     \}}
+\DoxyCodeLine{108 }
+\DoxyCodeLine{109     \textcolor{keywordtype}{void} setTranslate(\textcolor{keywordtype}{float} vit)\{}
+\DoxyCodeLine{110         t[0] = t[0]*vit;}
+\DoxyCodeLine{111         t[1] = t[1]*vit;}
+\DoxyCodeLine{112         \textcolor{keywordflow}{if} (t[2]>0)}
+\DoxyCodeLine{113             t[2] = t[2]*vit;}
+\DoxyCodeLine{114     \}}
+\DoxyCodeLine{115     \textcolor{keywordtype}{void} addTranslate(QVector3D val)\{}
+\DoxyCodeLine{116         t = t+val;}
+\DoxyCodeLine{117     \}}
+\DoxyCodeLine{118 }
+\DoxyCodeLine{124     \textcolor{keyword}{static} QVector3D \mbox{\hyperlink{class_transform_a5470db871eb7881e9ff90d9020e4ca4e}{extracteTranslate}}(QMatrix4x4 m)\{}
+\DoxyCodeLine{125         \textcolor{keywordflow}{return} m.column(3).toVector3D();}
+\DoxyCodeLine{126     \}}
+\DoxyCodeLine{132     \textcolor{keyword}{static} QVector3D \mbox{\hyperlink{class_transform_a51368a678ae1975b385ed6c1a869ca6c}{extracteScale}}(QMatrix4x4 m)\{}
+\DoxyCodeLine{133         \textcolor{keywordflow}{return} QVector3D(m.column(0).toVector3D().length(),m.column(1).toVector3D().length(),m.column(2).toVector3D().length());}
+\DoxyCodeLine{134     \}}
+\DoxyCodeLine{135 }
+\DoxyCodeLine{141     \textcolor{keyword}{static} QMatrix4x4 \mbox{\hyperlink{class_transform_a046620f82e0ada25d145add203cf3227}{extracteRotate}}(QMatrix4x4 m)\{}
+\DoxyCodeLine{142        QVector3D vecScale = \mbox{\hyperlink{class_transform_a51368a678ae1975b385ed6c1a869ca6c}{extracteScale}}( m);}
+\DoxyCodeLine{143     QMatrix4x4 r = QMatrix4x4();}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145     r.setColumn(0,m.column(0).toVector3D()/vecScale.x());}
+\DoxyCodeLine{146     r.setColumn(1,m.column(1).toVector3D()/vecScale.x());}
+\DoxyCodeLine{147     r.setColumn(2,m.column(2).toVector3D()/vecScale.x());}
+\DoxyCodeLine{148 r.setColumn(3,QVector4D(.0,.0,.0,1.0));}
+\DoxyCodeLine{149     \textcolor{keywordflow}{return} r;}
+\DoxyCodeLine{150    \}}
+\DoxyCodeLine{151 \textcolor{comment}{//fromRotationMatrix}}
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153 }
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     \textcolor{comment}{//QVector4D apply( QVector4D p); //p is in affine coords}}
+\DoxyCodeLine{156   \textcolor{comment}{//  QVector3D applyToPoint( QVector3D p);}}
+\DoxyCodeLine{157 \textcolor{comment}{//    QVector3D applyToVector( QVector3D v);}}
+\DoxyCodeLine{158  \textcolor{comment}{//   QVector3D applyToVersor( QVector3D v);}}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{166    \mbox{\hyperlink{class_transform}{Transform}} \mbox{\hyperlink{class_transform_a1ffb00dd51d8fe95805f95fd42423907}{combine\_with}}( \mbox{\hyperlink{class_transform}{Transform}} \& b,\textcolor{keywordtype}{double} deltaTime)\{}
+\DoxyCodeLine{167        \mbox{\hyperlink{class_transform}{Transform}} result;}
+\DoxyCodeLine{168        result.s = this-\/>s *b.s; \textcolor{comment}{//(b.s*deltaTime) ;}}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170        QVector3D angle = QVector3D();}
+\DoxyCodeLine{171        \textcolor{keywordtype}{float} f = 1;}
+\DoxyCodeLine{172        b.r.getAxisAndAngle(\&angle,\&f);}
+\DoxyCodeLine{173        result.r = this-\/>r * QQuaternion::fromAxisAndAngle(angle,f*(0.03*deltaTime));\textcolor{comment}{//(b.r*deltaTime);//QQuaternion::slerp(this-\/>r,b.r,0.5);}}
+\DoxyCodeLine{174        result.t = this-\/>t + b.t *deltaTime*0.03;\textcolor{comment}{//(b.t*deltaTime);}}
+\DoxyCodeLine{175        \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{176     \}}
+\DoxyCodeLine{177 }
+\DoxyCodeLine{178 }
+\DoxyCodeLine{179    \textcolor{comment}{//interpolation}}
+\DoxyCodeLine{186 \textcolor{comment}{}    \mbox{\hyperlink{class_transform}{Transform}} \mbox{\hyperlink{class_transform_a7baa18afb2e05764e7f9d6525d1a3ddb}{mix\_with}}(\mbox{\hyperlink{class_transform}{Transform}} \& b, \textcolor{keywordtype}{float} k)\{}
+\DoxyCodeLine{187        \mbox{\hyperlink{class_transform}{Transform}} result;}
+\DoxyCodeLine{188        result.s = this-\/>s * k + b.s * (1-\/k);}
+\DoxyCodeLine{189       \textcolor{comment}{// result.r = this-\/>r mix\_with(b, k);}}
+\DoxyCodeLine{190        result.r = QQuaternion::slerp(this-\/>r,b.r,k);}
+\DoxyCodeLine{191        result.t = this-\/>t * k + b.t * (1-\/k);}
+\DoxyCodeLine{192        \textcolor{keywordflow}{return} result;}
+\DoxyCodeLine{193     \}}
+\DoxyCodeLine{194 }
+\DoxyCodeLine{195 }
+\DoxyCodeLine{196     QVector3D getTranslate()\{}
+\DoxyCodeLine{197         \textcolor{keywordflow}{return} t;}
+\DoxyCodeLine{198     \}}
+\DoxyCodeLine{199 }
+\DoxyCodeLine{200 }
+\DoxyCodeLine{201 }
+\DoxyCodeLine{202 }
+\DoxyCodeLine{203 }
+\DoxyCodeLine{204 }
+\DoxyCodeLine{205     \textcolor{keyword}{static} QVector3D convergeZero(QVector3D vec);}
+\DoxyCodeLine{206 }
+\DoxyCodeLine{207 }
+\DoxyCodeLine{208    \textcolor{comment}{// QVector4D apply( QVector4D p);}}
+\DoxyCodeLine{209 }
+\DoxyCodeLine{210     \textcolor{keyword}{static} QMatrix4x4 inverse(QMatrix4x4 \textcolor{keyword}{const} m);}
+\DoxyCodeLine{211 }
+\DoxyCodeLine{212 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{213 }
+\DoxyCodeLine{214     QMatrix4x4 doScale(QMatrix4x4 m)\{}
+\DoxyCodeLine{215          m.scale(s);}
+\DoxyCodeLine{216          \textcolor{keywordflow}{return} m;}
+\DoxyCodeLine{217     \}}
+\DoxyCodeLine{218     QMatrix4x4 doRotate(QMatrix4x4 m)\{}
+\DoxyCodeLine{219          m.rotate(r);}
+\DoxyCodeLine{220          \textcolor{keywordflow}{return} m;}
+\DoxyCodeLine{221     \}}
+\DoxyCodeLine{222     QMatrix4x4 doTranslate(QMatrix4x4 m)\{}
+\DoxyCodeLine{223          m.translate(t);}
+\DoxyCodeLine{224          \textcolor{keywordflow}{return} m;}
+\DoxyCodeLine{225     \}}
+\DoxyCodeLine{226 }
+\DoxyCodeLine{227 }
+\DoxyCodeLine{228 \textcolor{keyword}{public}:}
+\DoxyCodeLine{232     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_transform_aac2d1a7b47493cb7b498de6d506bb0f1}{forward}}()\{}
+\DoxyCodeLine{233         t += QVector3D(0.8,0,0);}
+\DoxyCodeLine{234     \}}
+\DoxyCodeLine{239     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_transform_a52d98548c5ea927aad81b6a4919e7778}{forward}}(QVector3D dirView)\{}
+\DoxyCodeLine{240         \textcolor{keywordflow}{if}( (QVector3D(dirView.x(),dirView.y(),0).normalized()).length()<9)}
+\DoxyCodeLine{241         t += QVector3D(dirView.x(),dirView.y(),0).normalized();}
+\DoxyCodeLine{242     \}}
+\DoxyCodeLine{243 }
+\DoxyCodeLine{244     \textcolor{keywordtype}{void} backward()\{}
+\DoxyCodeLine{245         t += QVector3D(-\/0.8,0,0);}
+\DoxyCodeLine{246     \}}
+\DoxyCodeLine{251     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_transform_a50f15a845c76f112b72799a62431856a}{backward}}(QVector3D dirView)\{}
+\DoxyCodeLine{252         \textcolor{keywordflow}{if}( (QVector3D(-\/dirView.x(),-\/dirView.y(),0).normalized()).length()<9)}
+\DoxyCodeLine{253         t += QVector3D(-\/dirView.x(),-\/dirView.y(),0).normalized();}
+\DoxyCodeLine{254     \}}
+\DoxyCodeLine{255 }
+\DoxyCodeLine{256     \textcolor{keywordtype}{void} left()\{}
+\DoxyCodeLine{257         t += QVector3D(0,0.8,0);}
+\DoxyCodeLine{258     \}}
+\DoxyCodeLine{262     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_transform_a481273e9c610568cb05e2f2d921deb1d}{left2}}()\{}
+\DoxyCodeLine{263        \textcolor{comment}{// borneRotation();}}
+\DoxyCodeLine{264          r =  this-\/>r *QQuaternion::fromAxisAndAngle(QVector3D(0,0,1),1);}
+\DoxyCodeLine{265     \}}
+\DoxyCodeLine{266     \textcolor{keywordtype}{void} right()\{}
+\DoxyCodeLine{267         t += QVector3D(0,-\/0.6,0);}
+\DoxyCodeLine{268     \}}
+\DoxyCodeLine{272     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_transform_a36bc7369b9da3a059566cd369e14b2e9}{right2}}()\{}
+\DoxyCodeLine{273          \textcolor{comment}{//borneRotation();}}
+\DoxyCodeLine{274 }
+\DoxyCodeLine{275          r =  this-\/>r *QQuaternion::fromAxisAndAngle(QVector3D(0,0,-\/1),1);}
+\DoxyCodeLine{276     \}}
+\DoxyCodeLine{280     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_transform_acd1ad62e3339479602ce2d8db42ecab9}{jump}}()\{}
+\DoxyCodeLine{281         t += QVector3D(0,0,2);}
+\DoxyCodeLine{282     \}}
+\DoxyCodeLine{283 }
+\DoxyCodeLine{287     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_transform_a6487f7455e63a7deaff37dcbf0a50469}{borneRotation}}()\{}
+\DoxyCodeLine{288         QVector3D vec = QVector3D();}
+\DoxyCodeLine{289         \textcolor{keywordtype}{float} angle = 1;}
+\DoxyCodeLine{290         r.getAxisAndAngle(\&vec,\&angle);}
+\DoxyCodeLine{291         \textcolor{keywordflow}{if} (angle < 0.01)}
+\DoxyCodeLine{292             angle = 0.0;}
+\DoxyCodeLine{293         \textcolor{keywordflow}{if} (angle > 5)}
+\DoxyCodeLine{294             angle = 5;}
+\DoxyCodeLine{295 }
+\DoxyCodeLine{296         vec[0] = abs(vec.x())<0.01? 0 : abs(vec.x()) > 100 ? 100 : vec.x();}
+\DoxyCodeLine{297         vec[1] = abs(vec.y())<0.01? 0 : abs(vec.y()) > 100 ? 100 : vec.y();}
+\DoxyCodeLine{298         vec[2] = abs(vec.z())<0.01? 0 : abs(vec.z()) > 100 ? 100 : vec.z();}
+\DoxyCodeLine{299         r = QQuaternion::fromAxisAndAngle(vec,angle);}
+\DoxyCodeLine{300     \}}
+\DoxyCodeLine{301 }
+\DoxyCodeLine{302 }
+\DoxyCodeLine{303 }
+\DoxyCodeLine{304 \};}
+\DoxyCodeLine{305 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// TRANSFORM\_H}}
+\DoxyCodeLine{306 }
+
+\end{DoxyCode}

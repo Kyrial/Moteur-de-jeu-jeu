@@ -343,7 +343,7 @@ QVector3D GeometryEngine::gestionCollision(GeometryEngine *geoB,QVector3D vec, i
     //gestion d'erreur dans les collisions
     if (QVector3D::dotProduct(vec.normalized(), vecAB)>0)
     {
-        float val  = QVector3D::dotProduct(vec.normalized(), vecAB);
+      //  float val  = QVector3D::dotProduct(vec.normalized(), vecAB);
         return vec;
     }
     //V = V - 2(V.N)*N
@@ -602,7 +602,13 @@ QVector3D GeometryEngine::findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  Q
     return vecTranslate;
 }
 
-
+void GeometryEngine::coordLastCollisionUpdateForMeshsCollision(GeometryEngine *geo, QMatrix4x4 objM){
+    QMatrix4x4 invObjM = Transform::inverse(objM);
+    QVector3D inv_BBMin = invObjM*geo->BBMin;
+    QVector3D inv_BBMax = invObjM*geo->BBMax;
+    QVector3D a = (inv_BBMin + QVector3D(inv_BBMax.x(),inv_BBMax.y(), inv_BBMin.z()))/2; // minimum BB
+    geo->coordLastCollision = objM*a;
+}
 
 
 
@@ -936,7 +942,12 @@ double randMToN(double M, double N)
 {
     return M + (rand() / ( RAND_MAX / (N-M) ) ) ;
 }
-
+/**
+ * @brief ajoute un nombre d'instances
+ * @param ratioArbre obsolete
+ * @param min intervalle de la carte
+ * @param max intervalle de la carte
+ */
 void GeometryEngine::addInstancedGrass(float ratioArbre, QVector3D min, QVector3D max){
 
     modelMatrices.clear();

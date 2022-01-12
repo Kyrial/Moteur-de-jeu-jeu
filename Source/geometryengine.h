@@ -61,19 +61,30 @@
 #include "BasicIO.h"
 
 #include "transform.h"
+
 struct VertexData
 {
     QVector3D position;
     QVector3D texCoord;
 };
 
+/**
+ * @brief pour la boite englobante (uniquement utilisé pour les instances)
+ */
 struct MinMax
 {
     QVector3D BBMin =QVector3D(0,0,0);
     QVector3D BBMax = QVector3D(0,0,0);
 };
 
+/**
+* @file
+* @brief le fichier contient la classe GeometryEngine qui effectue toute les actions en rapport aux maillage
+*/
 
+/**
+* @brief la classe GeometryEngine effectue toute les actions en rapport aux maillage
+*/
 class GeometryEngine : protected QOpenGLFunctions_4_1_Core
 {
 
@@ -84,9 +95,21 @@ public:
     QVector3D coordLastCollision = QVector3D(999,999,999);
     QVector2D lastCentre = QVector2D(0,0);
 
+    /**
+     * @brief BBMin: minimum de la AABB du noeud (englobe les AABB des enfants) dans l'espace monde
+     */
     QVector3D BBMin = QVector3D(0,0,0);
+    /**
+     * @brief BBMax: maximum de la AABB du noeud (englobe les AABB des enfants) dans l'espace monde
+     */
     QVector3D BBMax = QVector3D(0,0,0);
+    /**
+     * @brief internBBMin: minimum de la AABB du mesh  dans l'espace monde
+     */
     QVector3D internBBMin = QVector3D(0,0,0);
+    /**
+     * @brief internBBMax: maximum de la AABB du mesh  dans l'espace monde
+     */
     QVector3D internBBMax = QVector3D(0,0,0);
     bool withNormal = false;
     bool heightMap = false;
@@ -95,6 +118,9 @@ public:
 
     QOpenGLBuffer arrayBuf;
     QOpenGLBuffer indexBuf;
+    /**
+     * @brief modelMatrices contient les matrice de transformation des instance si elles existent
+     */
     QVector<QMatrix4x4> modelMatrices;
 
     int triangle_strip = 0; // 0 = triangle_strip // 1 = triangle // 2 = patch
@@ -102,17 +128,60 @@ public:
 
     GeometryEngine();
     virtual ~GeometryEngine();
+    /**
+     * @brief dessine le mesh bind
+     * @param program le shader
+     */
     virtual void drawCubeGeometry(QOpenGLShaderProgram *program);
+    /**
+     * @brief initMesh methode virtuel, voir GeometryMeshEngine::initMesh()
+     * @param filename
+     * @param collisionActivated vrai si collision activé
+     * @param centre pour changer la direction des normals
+     * @param inverse inverse la direction des normals
+     */
     virtual void initMesh(std::string filename, bool collisionActivated= true,bool centre= false, bool inverse = false){}
+    /**
+     * @brief initMeshObj methode virtuel, voir GeometryMeshEngine::initMeshObj()
+     * @param filename
+     * @param collisionActivated vrai si collision activé
+     * @param centre pour changer la direction des normals
+     * @param inverse inverse la direction des normals
+     */
     virtual void initMeshObj(std::string filename,bool collisionActivated= true,bool centre= false, bool inverse = false){}
+    /**
+     * @brief bindMesh  methode virtuel, voir GeometryMeshEngine::bindMesh()
+     * @param faces tableau des face de l'objet
+     * @param centre pour changer la direction des normals
+     * @param inverse inverse la direction des normals
+     */
     virtual void bindMesh(std::vector< std::vector<unsigned int> >  faces,bool centre= false, bool inverse = false){}
     virtual void initLifeBar(){}
     virtual bool updateLifeBar(double deltaTime){}
     virtual QVector3D setNormalToCentreCircle(QVector3D vec, QVector3D centre, bool inverse){};
 
-
+    /**
+     * @brief créer un cube
+     */
     void initCubeGeometry();
+    /**
+     * @brief initialise la conseption d'un plan, appel à subdivisePlan() et bind les buffers
+     * @param Xmin
+     * @param Ymin
+     * @param Xmax
+     * @param Ymax
+     * @param centreX centre du terrain axe X
+     * @param centreY centre du terrain axe Y
+     */
     void initPlanegeometry(float Xmin=-1,float Ymin=-1,float Xmax=1,float Ymax=1,float centreX =0, float centreY=0);
+    /**
+     * @brief initialise la conseption d'un plan incurvé, appel à subdiviseCurvedPlan() et bind les buffers
+     * @param Xmin
+     * @param Ymin
+     * @param Xmax
+     * @param Ymax
+     * @param collisionActivated boolean si collision
+     */
     void initCurvedPlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax,bool collisionActivated);
 
     void setPrecisionTexture(float val);
@@ -124,6 +193,18 @@ protected:
     QVector3D Min = QVector3D(0,0,0);
     QVector3D Max = QVector3D(0,0,0);
 
+    /**
+     * @brief Subdivise le plan de precision x et y,
+     * @param x precision
+     * @param y precision
+     * @param vertices
+     * @param Xmin intervalle
+     * @param Ymin intervalle
+     * @param Xmax intervalle
+     * @param Ymax intervalle
+     * @param centreX centre du terrain axe X
+     * @param centreY centre du terrain axe Y
+     */
     void subdivisePlan(int x, int y,  VertexData vertices[],float Xmin,float Ymin,float Xmax,float Ymax,float centreX =0, float centreY=0);//,std::string nameWeightMap );
     void subdiviseCurvedPlan(int x, int y, VertexData vertices[], float Xmin=-1,float Ymin=-1,float Xmax=1,float Ymax=1);
 
@@ -171,7 +252,7 @@ public:
 
     void addInstancedGrass(float ratioArbre=0.42, QVector3D min=QVector3D(-13,-13,0), QVector3D max=QVector3D(13,13,0));
     void gestionBoundingBoxForInstance( QVector3D min, QVector3D max);
-
+    void coordLastCollisionUpdateForMeshsCollision(GeometryEngine *geo, QMatrix4x4 objM);
 
     static QVector3D  calcBBMin(QVector3D const & last, QVector3D const & min);
     static QVector3D  calcBBMax(QVector3D const & last, QVector3D const & max);

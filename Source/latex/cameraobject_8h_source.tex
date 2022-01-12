@@ -1,0 +1,41 @@
+\hypertarget{cameraobject_8h_source}{}\doxysection{cameraobject.\+h}
+
+\begin{DoxyCode}{0}
+\DoxyCodeLine{1 \textcolor{preprocessor}{\#ifndef CAMERAOBJECT\_H}}
+\DoxyCodeLine{2 \textcolor{preprocessor}{\#define CAMERAOBJECT\_H}}
+\DoxyCodeLine{3 }
+\DoxyCodeLine{4 \textcolor{preprocessor}{\#include "{}\mbox{\hyperlink{object_8h}{object.h}}"{}}}
+\DoxyCodeLine{5 \textcolor{preprocessor}{\#include "{}QVector3D"{}}}
+\DoxyCodeLine{6 \textcolor{keyword}{class }\mbox{\hyperlink{class_camera_object}{CameraObject}} : \textcolor{keyword}{public} \mbox{\hyperlink{class_object}{Object}}}
+\DoxyCodeLine{7 \{}
+\DoxyCodeLine{8     Q\_OBJECT}
+\DoxyCodeLine{9 \textcolor{keyword}{public}:}
+\DoxyCodeLine{10     \mbox{\hyperlink{class_camera_object}{CameraObject}}();}
+\DoxyCodeLine{11     \mbox{\hyperlink{class_camera_object}{CameraObject}}(\mbox{\hyperlink{class_object}{Object}} par)\{}
+\DoxyCodeLine{12         parent = \&par;}
+\DoxyCodeLine{13     \}}
+\DoxyCodeLine{14 \textcolor{comment}{//    CameraObject(Object par,QVector<Object*> enf):Object(par,enf)\{\}}}
+\DoxyCodeLine{15 }
+\DoxyCodeLine{16 }
+\DoxyCodeLine{17     QVector3D rotation\_camera  = QVector3D(1.0f, 1.0f, 3.0f);}
+\DoxyCodeLine{18     QVector3D camera\_position = QVector3D(0.0f, 1.2f, 0.5f);}
+\DoxyCodeLine{19     QVector3D camera\_target = QVector3D(0.0f, 0.1f, 1.0f);}
+\DoxyCodeLine{20     QVector3D camera\_up = QVector3D(0.0f, 0.0f, 0.5f);}
+\DoxyCodeLine{21 }
+\DoxyCodeLine{22 }
+\DoxyCodeLine{23 }
+\DoxyCodeLine{24 }
+\DoxyCodeLine{25    \textcolor{keywordtype}{void} rotationScene(\textcolor{keywordtype}{double} deltaTime)\{}
+\DoxyCodeLine{26     camera\_position = QQuaternion::fromAxisAndAngle(QVector3D(0.0f, 0.0f, 2.0f), 0.03*(deltaTime)) * camera\_position;}
+\DoxyCodeLine{27 \}}
+\DoxyCodeLine{28 }
+\DoxyCodeLine{29    \textcolor{keywordtype}{void}  \mbox{\hyperlink{class_camera_object_a9dab9ae65e47fad5849fbf94c103805b}{updateScene}}( \textcolor{keywordtype}{double} deltaTime =1, QMatrix4x4 m= QMatrix4x4());}
+\DoxyCodeLine{30 }
+\DoxyCodeLine{31    \textcolor{keywordtype}{void} keyPress(QKeyEvent *event);}
+\DoxyCodeLine{32 }
+\DoxyCodeLine{33 }
+\DoxyCodeLine{34 }
+\DoxyCodeLine{35  \};}
+\DoxyCodeLine{36 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// CAMERAOBJECT\_H}}
+
+\end{DoxyCode}
