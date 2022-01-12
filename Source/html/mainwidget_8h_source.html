@@ -5,10 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project:  Fichier source de mainwidget.h</title>
+<title>Moteur De Jeu:  Fichier source de mainwidget.h</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -21,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">My Project
+   <div id="projectname">Moteur De Jeu
    </div>
   </td>
  </tr>
@@ -47,6 +51,22 @@ $(function() {
 </script>
 <div id="main-nav"></div>
 </div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('mainwidget_8h_source.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -65,7 +85,7 @@ $(function() {
   <div class="headertitle"><div class="title">mainwidget.h</div></div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/****************************************************************************</span></div>
+<a href="mainwidget_8h.html">Aller à la documentation de ce fichier.</a><div class="fragment"><div class="line"><a id="l00001" name="l00001"></a><span class="lineno">    1</span><span class="comment">/****************************************************************************</span></div>
 <div class="line"><a id="l00002" name="l00002"></a><span class="lineno">    2</span><span class="comment">**</span></div>
 <div class="line"><a id="l00003" name="l00003"></a><span class="lineno">    3</span><span class="comment">** Copyright (C) 2016 The Qt Company Ltd.</span></div>
 <div class="line"><a id="l00004" name="l00004"></a><span class="lineno">    4</span><span class="comment">** Contact: https://www.qt.io/licensing/</span></div>
@@ -140,101 +160,100 @@ $(function() {
 <div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span><span class="preprocessor">#include &lt;QPainter&gt;</span></div>
 <div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span><span class="preprocessor">#include &lt;QToolTip&gt;</span></div>
 <div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span><span class="keyword">class </span><a class="code hl_class" href="class_geometry_engine.html">GeometryEngine</a>;</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno"><a class="line" href="class_main_widget.html">   77</a></span><span class="keyword">class </span><a class="code hl_class" href="class_main_widget.html">MainWidget</a> : <span class="keyword">public</span> QOpenGLWidget, <span class="keyword">protected</span> QOpenGLFunctions_4_1_Core</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>{</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    Q_OBJECT</div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span> </div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span><span class="keyword">public</span>:</div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>    <span class="keyword">explicit</span> <a class="code hl_class" href="class_main_widget.html">MainWidget</a>(QWidget *parent = 0);</div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>    <a class="code hl_class" href="class_main_widget.html">~MainWidget</a>();</div>
-<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    <a class="code hl_class" href="class_main_widget.html">MainWidget</a>();</div>
-<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
-<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    <a class="code hl_class" href="class_main_widget.html">MainWidget</a>(<span class="keywordtype">int</span> fps);</div>
-<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span> </div>
-<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span>    <span class="keywordtype">void</span> modifFPS(<span class="keywordtype">int</span> x);</div>
-<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span> </div>
-<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>    <span class="keywordtype">int</span> FPS = 20;</div>
-<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span>    QElapsedTimer lastFrame;</div>
-<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    QElapsedTimer absoluteTime;</div>
-<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <span class="keywordtype">double</span> deltaTime = 1;</div>
-<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span> </div>
-<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span><span class="keyword">protected</span>:</div>
-<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#af95f85af6ec3ce4a2355d82d891ed2c0">mousePressEvent</a>(QMouseEvent *e) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00097" name="l00097"></a><span class="lineno">   97</span>    <span class="keywordtype">void</span> mouseReleaseEvent(QMouseEvent *e) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00098" name="l00098"></a><span class="lineno">   98</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a77d29c4fd66225ea10ffc5369a907c71">timerEvent</a>(QTimerEvent *e) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00099" name="l00099"></a><span class="lineno">   99</span> </div>
-<div class="line"><a id="l00100" name="l00100"></a><span class="lineno">  100</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a165d742c4d8f6f65458b04ac8b9ea1db">initializeGL</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a2a1c57a221291985658820568a8bd5c0">resizeGL</a>(<span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#afbf87f376e972633a553a86c55e37e2e">paintGL</a>() <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span> </div>
-<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a3d8d55c802fd4b4dabeef5bd9592c697">initShaders</a>();</div>
-<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a45e5b0ff42304bfe4d0500bc4cff79d4">initTextures</a>();</div>
-<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span> </div>
-<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span>    <span class="comment">//  void keyPressEvent(QKeyEvent *e) override;</span></div>
-<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span> </div>
-<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span> </div>
-<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <a class="code hl_class" href="class_object.html">Object</a>* <a class="code hl_function" href="class_main_widget.html#a7f56fc7caa713e27a14f567a0b3e611f">addGameObject</a>(QOpenGLShaderProgram* shad,<a class="code hl_class" href="class_object.html">Object</a> *parent, <a class="code hl_class" href="class_transform.html">Transform</a> *t, <a class="code hl_class" href="class_geometry_engine.html">GeometryEngine</a> *mesh, <a class="code hl_class" href="class_transform.html">Transform</a> *anim,QOpenGLTexture *txtr);</div>
-<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <a class="code hl_class" href="class_object.html">Object</a>* <a class="code hl_function" href="class_main_widget.html#a9c2ef55bb6c708f24195183d23d22420">addMobileObject</a>(QOpenGLShaderProgram* shad,<a class="code hl_class" href="class_object.html">Object</a> *parent, <a class="code hl_class" href="class_transform.html">Transform</a> *t, <a class="code hl_class" href="class_geometry_engine.html">GeometryEngine</a> *mesh, <a class="code hl_class" href="class_transform.html">Transform</a> *anim,QOpenGLTexture *texture);</div>
-<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span>    <a class="code hl_class" href="class_object.html">Object</a>* <a class="code hl_function" href="class_main_widget.html#a526344b742bb2b3ed931571c2709f7e8">addBillboardObject</a>(QOpenGLShaderProgram* shad,<a class="code hl_class" href="class_object.html">Object</a> *parent, <a class="code hl_class" href="class_transform.html">Transform</a> *t, <a class="code hl_class" href="class_geometry_engine.html">GeometryEngine</a> *mesh, <a class="code hl_class" href="class_transform.html">Transform</a> *anim,QOpenGLTexture *txtr);</div>
-<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span> </div>
-<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span> </div>
-<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a1d429b8938f23b9feb3765096cad1588">initMonde</a>();</div>
-<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#ab66aa7a0b110a0421249a0f3f2c53259">scene</a>();</div>
-<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span> </div>
-<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno"><a class="line" href="class_main_widget.html">   83</a></span><span class="keyword">class </span><a class="code hl_class" href="class_main_widget.html">MainWidget</a> : <span class="keyword">public</span> QOpenGLWidget, <span class="keyword">protected</span> QOpenGLFunctions_4_1_Core</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>{</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span>    Q_OBJECT</div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span> </div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span><span class="keyword">public</span>:</div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>    <span class="keyword">explicit</span> <a class="code hl_class" href="class_main_widget.html">MainWidget</a>(QWidget *parent = 0);</div>
+<div class="line"><a id="l00093" name="l00093"></a><span class="lineno">   93</span>    <a class="code hl_class" href="class_main_widget.html">~MainWidget</a>();</div>
+<div class="line"><a id="l00094" name="l00094"></a><span class="lineno">   94</span>    <a class="code hl_class" href="class_main_widget.html">MainWidget</a>();</div>
+<div class="line"><a id="l00095" name="l00095"></a><span class="lineno">   95</span> </div>
+<div class="line"><a id="l00096" name="l00096"></a><span class="lineno">   96</span>    <a class="code hl_class" href="class_main_widget.html">MainWidget</a>(<span class="keywordtype">int</span> fps);</div>
+<div class="line"><a id="l00101" name="l00101"></a><span class="lineno">  101</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a6506ae94fa00ea024d876d590d9f50b3">modifFPS</a>(<span class="keywordtype">int</span> x);</div>
+<div class="line"><a id="l00102" name="l00102"></a><span class="lineno">  102</span> </div>
+<div class="line"><a id="l00103" name="l00103"></a><span class="lineno">  103</span>    <span class="keywordtype">int</span> FPS = 20;</div>
+<div class="line"><a id="l00104" name="l00104"></a><span class="lineno">  104</span>    QElapsedTimer lastFrame;</div>
+<div class="line"><a id="l00105" name="l00105"></a><span class="lineno">  105</span>    QElapsedTimer absoluteTime;</div>
+<div class="line"><a id="l00106" name="l00106"></a><span class="lineno">  106</span>    <span class="keywordtype">double</span> deltaTime = 1;</div>
+<div class="line"><a id="l00107" name="l00107"></a><span class="lineno">  107</span> </div>
+<div class="line"><a id="l00108" name="l00108"></a><span class="lineno">  108</span><span class="keyword">protected</span>:</div>
+<div class="line"><a id="l00109" name="l00109"></a><span class="lineno">  109</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#af95f85af6ec3ce4a2355d82d891ed2c0">mousePressEvent</a>(QMouseEvent *e) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00110" name="l00110"></a><span class="lineno">  110</span>    <span class="keywordtype">void</span> mouseReleaseEvent(QMouseEvent *e) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00111" name="l00111"></a><span class="lineno">  111</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a77d29c4fd66225ea10ffc5369a907c71">timerEvent</a>(QTimerEvent *e) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00112" name="l00112"></a><span class="lineno">  112</span> </div>
+<div class="line"><a id="l00113" name="l00113"></a><span class="lineno">  113</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a165d742c4d8f6f65458b04ac8b9ea1db">initializeGL</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00114" name="l00114"></a><span class="lineno">  114</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a2a1c57a221291985658820568a8bd5c0">resizeGL</a>(<span class="keywordtype">int</span> w, <span class="keywordtype">int</span> h) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00115" name="l00115"></a><span class="lineno">  115</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#afbf87f376e972633a553a86c55e37e2e">paintGL</a>() <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00116" name="l00116"></a><span class="lineno">  116</span> </div>
+<div class="line"><a id="l00117" name="l00117"></a><span class="lineno">  117</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a3d8d55c802fd4b4dabeef5bd9592c697">initShaders</a>();</div>
+<div class="line"><a id="l00118" name="l00118"></a><span class="lineno">  118</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a45e5b0ff42304bfe4d0500bc4cff79d4">initTextures</a>();</div>
 <div class="line"><a id="l00119" name="l00119"></a><span class="lineno">  119</span> </div>
-<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    QBasicTimer timer;</div>
-<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span>    <span class="keywordtype">void</span> addAttributeToTexture(QOpenGLTexture* texture);</div>
-<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span>    QOpenGLShaderProgram program;</div>
-<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    QVector&lt;QOpenGLShaderProgram*&gt; allShaders;</div>
-<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span> </div>
-<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <a class="code hl_class" href="class_geometry_engine.html">GeometryEngine</a> *geometries;</div>
-<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span>    <a class="code hl_class" href="class_game_object.html">GameObject</a> *gameObj;</div>
-<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span>    <a class="code hl_class" href="class_controler.html">Controler</a> *control = <span class="keyword">new</span> <a class="code hl_class" href="class_controler.html">Controler</a>();</div>
-<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span> </div>
-<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="comment">//  MobileObj *mobileobj;</span></div>
-<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span>    QOpenGLTexture *texture;</div>
-<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span> </div>
-<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span>    QOpenGLTexture * textureGrass;</div>
-<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    QOpenGLTexture * textureRock;</div>
-<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    QOpenGLTexture * textureSnow;</div>
-<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    QOpenGLTexture * textureEau;</div>
-<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    QOpenGLTexture * textureBois;</div>
-<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span>    <span class="keywordtype">bool</span> polygonMode = <span class="keyword">false</span>;</div>
-<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span> </div>
-<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span> </div>
-<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    QMatrix4x4 projection;</div>
+<div class="line"><a id="l00120" name="l00120"></a><span class="lineno">  120</span>    <span class="comment">//  void keyPressEvent(QKeyEvent *e) override;</span></div>
+<div class="line"><a id="l00121" name="l00121"></a><span class="lineno">  121</span> </div>
+<div class="line"><a id="l00122" name="l00122"></a><span class="lineno">  122</span> </div>
+<div class="line"><a id="l00123" name="l00123"></a><span class="lineno">  123</span>    <a class="code hl_class" href="class_object.html">Object</a>* <a class="code hl_function" href="class_main_widget.html#a7f56fc7caa713e27a14f567a0b3e611f">addGameObject</a>(QOpenGLShaderProgram* shad,<a class="code hl_class" href="class_object.html">Object</a> *parent, <a class="code hl_class" href="class_transform.html">Transform</a> *t, <a class="code hl_class" href="class_geometry_engine.html">GeometryEngine</a> *mesh, <a class="code hl_class" href="class_transform.html">Transform</a> *anim,QOpenGLTexture *txtr);</div>
+<div class="line"><a id="l00124" name="l00124"></a><span class="lineno">  124</span>    <a class="code hl_class" href="class_object.html">Object</a>* <a class="code hl_function" href="class_main_widget.html#a9c2ef55bb6c708f24195183d23d22420">addMobileObject</a>(QOpenGLShaderProgram* shad,<a class="code hl_class" href="class_object.html">Object</a> *parent, <a class="code hl_class" href="class_transform.html">Transform</a> *t, <a class="code hl_class" href="class_geometry_engine.html">GeometryEngine</a> *mesh, <a class="code hl_class" href="class_transform.html">Transform</a> *anim,QOpenGLTexture *texture);</div>
+<div class="line"><a id="l00125" name="l00125"></a><span class="lineno">  125</span>    <a class="code hl_class" href="class_object.html">Object</a>* <a class="code hl_function" href="class_main_widget.html#a526344b742bb2b3ed931571c2709f7e8">addBillboardObject</a>(QOpenGLShaderProgram* shad,<a class="code hl_class" href="class_object.html">Object</a> *parent, <a class="code hl_class" href="class_transform.html">Transform</a> *t, <a class="code hl_class" href="class_geometry_engine.html">GeometryEngine</a> *mesh, <a class="code hl_class" href="class_transform.html">Transform</a> *anim,QOpenGLTexture *txtr);</div>
+<div class="line"><a id="l00126" name="l00126"></a><span class="lineno">  126</span> </div>
+<div class="line"><a id="l00127" name="l00127"></a><span class="lineno">  127</span> </div>
+<div class="line"><a id="l00128" name="l00128"></a><span class="lineno">  128</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#a1d429b8938f23b9feb3765096cad1588">initMonde</a>();</div>
+<div class="line"><a id="l00129" name="l00129"></a><span class="lineno">  129</span>    <span class="keywordtype">void</span> <a class="code hl_function" href="class_main_widget.html#ab66aa7a0b110a0421249a0f3f2c53259">scene</a>();</div>
+<div class="line"><a id="l00130" name="l00130"></a><span class="lineno">  130</span> </div>
+<div class="line"><a id="l00131" name="l00131"></a><span class="lineno">  131</span><span class="keyword">private</span>:</div>
+<div class="line"><a id="l00132" name="l00132"></a><span class="lineno">  132</span> </div>
+<div class="line"><a id="l00133" name="l00133"></a><span class="lineno">  133</span>    QBasicTimer timer;</div>
+<div class="line"><a id="l00134" name="l00134"></a><span class="lineno">  134</span>    <span class="keywordtype">void</span> addAttributeToTexture(QOpenGLTexture* texture);</div>
+<div class="line"><a id="l00135" name="l00135"></a><span class="lineno">  135</span>    QOpenGLShaderProgram program;</div>
+<div class="line"><a id="l00136" name="l00136"></a><span class="lineno">  136</span>    QVector&lt;QOpenGLShaderProgram*&gt; allShaders;</div>
+<div class="line"><a id="l00137" name="l00137"></a><span class="lineno">  137</span> </div>
+<div class="line"><a id="l00138" name="l00138"></a><span class="lineno">  138</span>    <a class="code hl_class" href="class_geometry_engine.html">GeometryEngine</a> *geometries;</div>
+<div class="line"><a id="l00139" name="l00139"></a><span class="lineno">  139</span>    <a class="code hl_class" href="class_game_object.html">GameObject</a> *gameObj;</div>
+<div class="line"><a id="l00140" name="l00140"></a><span class="lineno">  140</span>    <a class="code hl_class" href="class_controler.html">Controler</a> *control = <span class="keyword">new</span> <a class="code hl_class" href="class_controler.html">Controler</a>();</div>
 <div class="line"><a id="l00141" name="l00141"></a><span class="lineno">  141</span> </div>
-<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    QVector2D mousePressPosition;</div>
-<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    QVector3D rotationAxis;</div>
-<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span>    qreal angularSpeed;</div>
-<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    QQuaternion rotation;</div>
-<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span> </div>
-<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    <span class="keywordtype">void</span> keyPressEvent(QKeyEvent *e) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    <span class="keywordtype">bool</span> eventFilter(QObject *<span class="keywordtype">object</span>, QEvent *event) <span class="keyword">override</span>;</div>
-<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>signals:</div>
-<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keywordtype">void</span> signalKeyPress(QKeyEvent *e);</div>
-<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span>    <span class="keywordtype">void</span> projectionChanged(QMatrix4x4 val);</div>
-<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span>    <span class="keywordtype">void</span> emitFilter(QEvent *event);</div>
-<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span><span class="keyword">public</span> slots :</div>
-<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span>    <span class="keywordtype">void</span> cameraControle();</div>
-<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    <span class="keywordtype">void</span> keyPress(QKeyEvent *e);</div>
-<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span> </div>
-<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>};</div>
-<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span> </div>
-<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span><span class="preprocessor">#endif </span><span class="comment">// MAINWIDGET_H</span></div>
+<div class="line"><a id="l00142" name="l00142"></a><span class="lineno">  142</span>    <span class="comment">//  MobileObj *mobileobj;</span></div>
+<div class="line"><a id="l00143" name="l00143"></a><span class="lineno">  143</span>    QOpenGLTexture *texture;</div>
+<div class="line"><a id="l00144" name="l00144"></a><span class="lineno">  144</span> </div>
+<div class="line"><a id="l00145" name="l00145"></a><span class="lineno">  145</span>    QOpenGLTexture * textureGrass;</div>
+<div class="line"><a id="l00146" name="l00146"></a><span class="lineno">  146</span>    QOpenGLTexture * textureRock;</div>
+<div class="line"><a id="l00147" name="l00147"></a><span class="lineno">  147</span>    QOpenGLTexture * textureSnow;</div>
+<div class="line"><a id="l00148" name="l00148"></a><span class="lineno">  148</span>    QOpenGLTexture * textureEau;</div>
+<div class="line"><a id="l00149" name="l00149"></a><span class="lineno">  149</span>    QOpenGLTexture * textureBois;</div>
+<div class="line"><a id="l00150" name="l00150"></a><span class="lineno">  150</span>    <span class="keywordtype">bool</span> polygonMode = <span class="keyword">false</span>;</div>
+<div class="line"><a id="l00151" name="l00151"></a><span class="lineno">  151</span> </div>
+<div class="line"><a id="l00152" name="l00152"></a><span class="lineno">  152</span> </div>
+<div class="line"><a id="l00153" name="l00153"></a><span class="lineno">  153</span>    QMatrix4x4 projection;</div>
+<div class="line"><a id="l00154" name="l00154"></a><span class="lineno">  154</span> </div>
+<div class="line"><a id="l00155" name="l00155"></a><span class="lineno">  155</span>    QVector2D mousePressPosition;</div>
+<div class="line"><a id="l00156" name="l00156"></a><span class="lineno">  156</span>    QVector3D rotationAxis;</div>
+<div class="line"><a id="l00157" name="l00157"></a><span class="lineno">  157</span>    qreal angularSpeed;</div>
+<div class="line"><a id="l00158" name="l00158"></a><span class="lineno">  158</span>    QQuaternion rotation;</div>
+<div class="line"><a id="l00159" name="l00159"></a><span class="lineno">  159</span> </div>
+<div class="line"><a id="l00160" name="l00160"></a><span class="lineno">  160</span>    <span class="keywordtype">void</span> keyPressEvent(QKeyEvent *e) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00161" name="l00161"></a><span class="lineno">  161</span>    <span class="keywordtype">bool</span> eventFilter(QObject *<span class="keywordtype">object</span>, QEvent *event) <span class="keyword">override</span>;</div>
+<div class="line"><a id="l00162" name="l00162"></a><span class="lineno">  162</span>signals:</div>
+<div class="line"><a id="l00163" name="l00163"></a><span class="lineno">  163</span>    <span class="keywordtype">void</span> signalKeyPress(QKeyEvent *e);</div>
+<div class="line"><a id="l00164" name="l00164"></a><span class="lineno">  164</span>    <span class="keywordtype">void</span> projectionChanged(QMatrix4x4 val);</div>
+<div class="line"><a id="l00165" name="l00165"></a><span class="lineno">  165</span>    <span class="keywordtype">void</span> emitFilter(QEvent *event);</div>
+<div class="line"><a id="l00166" name="l00166"></a><span class="lineno">  166</span><span class="keyword">public</span> slots :</div>
+<div class="line"><a id="l00167" name="l00167"></a><span class="lineno">  167</span>    <span class="keywordtype">void</span> cameraControle();</div>
+<div class="line"><a id="l00168" name="l00168"></a><span class="lineno">  168</span>    <span class="keywordtype">void</span> keyPress(QKeyEvent *e);</div>
+<div class="line"><a id="l00169" name="l00169"></a><span class="lineno">  169</span> </div>
+<div class="line"><a id="l00170" name="l00170"></a><span class="lineno">  170</span>};</div>
+<div class="line"><a id="l00171" name="l00171"></a><span class="lineno">  171</span> </div>
+<div class="line"><a id="l00172" name="l00172"></a><span class="lineno">  172</span><span class="preprocessor">#endif </span><span class="comment">// MAINWIDGET_H</span></div>
 <div class="ttc" id="abillboardobject_8h_html"><div class="ttname"><a href="billboardobject_8h.html">billboardobject.h</a></div><div class="ttdoc">la classe BillboardObject devait etre a la base capable d'afficher des billboard, mais par manque de ...</div></div>
 <div class="ttc" id="aclass_controler_html"><div class="ttname"><a href="class_controler.html">Controler</a></div><div class="ttdef"><b>Definition:</b> controler.h:10</div></div>
 <div class="ttc" id="aclass_game_object_html"><div class="ttname"><a href="class_game_object.html">GameObject</a></div><div class="ttdoc">la classe GameObject contient les objets qui ne subisse pas la gravité, comme le terrain,...</div><div class="ttdef"><b>Definition:</b> gameobject.h:27</div></div>
 <div class="ttc" id="aclass_geometry_engine_html"><div class="ttname"><a href="class_geometry_engine.html">GeometryEngine</a></div><div class="ttdoc">la classe GeometryEngine effectue toute les actions en rapport aux maillage</div><div class="ttdef"><b>Definition:</b> geometryengine.h:89</div></div>
-<div class="ttc" id="aclass_main_widget_html"><div class="ttname"><a href="class_main_widget.html">MainWidget</a></div><div class="ttdef"><b>Definition:</b> mainwidget.h:78</div></div>
+<div class="ttc" id="aclass_main_widget_html"><div class="ttname"><a href="class_main_widget.html">MainWidget</a></div><div class="ttdoc">la classe MainWidget est la classe principale qui contiens le graphe de scène et initialise la confit...</div><div class="ttdef"><b>Definition:</b> mainwidget.h:84</div></div>
 <div class="ttc" id="aclass_main_widget_html_a165d742c4d8f6f65458b04ac8b9ea1db"><div class="ttname"><a href="class_main_widget.html#a165d742c4d8f6f65458b04ac8b9ea1db">MainWidget::initializeGL</a></div><div class="ttdeci">void initializeGL() override</div><div class="ttdoc">[1]</div><div class="ttdef"><b>Definition:</b> mainwidget.cpp:506</div></div>
 <div class="ttc" id="aclass_main_widget_html_a1d429b8938f23b9feb3765096cad1588"><div class="ttname"><a href="class_main_widget.html#a1d429b8938f23b9feb3765096cad1588">MainWidget::initMonde</a></div><div class="ttdeci">void initMonde()</div><div class="ttdoc">initialise le graphe de scène avec le noeud monde</div><div class="ttdef"><b>Definition:</b> mainwidget.cpp:84</div></div>
 <div class="ttc" id="aclass_main_widget_html_a2a1c57a221291985658820568a8bd5c0"><div class="ttname"><a href="class_main_widget.html#a2a1c57a221291985658820568a8bd5c0">MainWidget::resizeGL</a></div><div class="ttdeci">void resizeGL(int w, int h) override</div><div class="ttdoc">[4]</div><div class="ttdef"><b>Definition:</b> mainwidget.cpp:725</div></div>
 <div class="ttc" id="aclass_main_widget_html_a3d8d55c802fd4b4dabeef5bd9592c697"><div class="ttname"><a href="class_main_widget.html#a3d8d55c802fd4b4dabeef5bd9592c697">MainWidget::initShaders</a></div><div class="ttdeci">void initShaders()</div><div class="ttdoc">[3]</div><div class="ttdef"><b>Definition:</b> mainwidget.cpp:563</div></div>
 <div class="ttc" id="aclass_main_widget_html_a45e5b0ff42304bfe4d0500bc4cff79d4"><div class="ttname"><a href="class_main_widget.html#a45e5b0ff42304bfe4d0500bc4cff79d4">MainWidget::initTextures</a></div><div class="ttdeci">void initTextures()</div><div class="ttdoc">initTextures initialise toute les textures</div><div class="ttdef"><b>Definition:</b> mainwidget.cpp:689</div></div>
 <div class="ttc" id="aclass_main_widget_html_a526344b742bb2b3ed931571c2709f7e8"><div class="ttname"><a href="class_main_widget.html#a526344b742bb2b3ed931571c2709f7e8">MainWidget::addBillboardObject</a></div><div class="ttdeci">Object * addBillboardObject(QOpenGLShaderProgram *shad, Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim, QOpenGLTexture *txtr)</div><div class="ttdoc">ajoute un addBillboardObject au graphe de scène</div><div class="ttdef"><b>Definition:</b> mainwidget.cpp:141</div></div>
+<div class="ttc" id="aclass_main_widget_html_a6506ae94fa00ea024d876d590d9f50b3"><div class="ttname"><a href="class_main_widget.html#a6506ae94fa00ea024d876d590d9f50b3">MainWidget::modifFPS</a></div><div class="ttdeci">void modifFPS(int x)</div><div class="ttdoc">modifFPS : modifi les FPS</div><div class="ttdef"><b>Definition:</b> mainwidget.cpp:68</div></div>
 <div class="ttc" id="aclass_main_widget_html_a77d29c4fd66225ea10ffc5369a907c71"><div class="ttname"><a href="class_main_widget.html#a77d29c4fd66225ea10ffc5369a907c71">MainWidget::timerEvent</a></div><div class="ttdeci">void timerEvent(QTimerEvent *e) override</div><div class="ttdoc">[1]</div><div class="ttdef"><b>Definition:</b> mainwidget.cpp:474</div></div>
 <div class="ttc" id="aclass_main_widget_html_a7f56fc7caa713e27a14f567a0b3e611f"><div class="ttname"><a href="class_main_widget.html#a7f56fc7caa713e27a14f567a0b3e611f">MainWidget::addGameObject</a></div><div class="ttdeci">Object * addGameObject(QOpenGLShaderProgram *shad, Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim, QOpenGLTexture *txtr)</div><div class="ttdoc">ajoute un GameObject au graphe de scène</div><div class="ttdef"><b>Definition:</b> mainwidget.cpp:100</div></div>
 <div class="ttc" id="aclass_main_widget_html_a9c2ef55bb6c708f24195183d23d22420"><div class="ttname"><a href="class_main_widget.html#a9c2ef55bb6c708f24195183d23d22420">MainWidget::addMobileObject</a></div><div class="ttdeci">Object * addMobileObject(QOpenGLShaderProgram *shad, Object *parent, Transform *t, GeometryEngine *mesh, Transform *anim, QOpenGLTexture *texture)</div><div class="ttdoc">ajoute un MobileObject au graphe de scène</div><div class="ttdef"><b>Definition:</b> mainwidget.cpp:120</div></div>
@@ -249,9 +268,13 @@ $(function() {
 <div class="ttc" id="ageometryui_8h_html"><div class="ttname"><a href="geometryui_8h.html">geometryui.h</a></div><div class="ttdoc">le fichier contient la classe geometryUI gère les maillage de type BillBoard</div></div>
 <div class="ttc" id="amobileobj_8h_html"><div class="ttname"><a href="mobileobj_8h.html">mobileobj.h</a></div><div class="ttdoc">le fichier contient la classe MobileObject contient les objets subissant la gravité,...</div></div>
 </div><!-- fragment --></div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Généré par&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="mainwidget_8h.html">mainwidget.h</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+  </ul>
+</div>
 </body>
 </html>

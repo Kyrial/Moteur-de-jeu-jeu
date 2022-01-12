@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['vie_0',['vie',['../classbillboard_object.html#af9961b73225b41ccbbb704369950702f',1,'billboardObject']]]
+  ['precisionx_0',['precisionX',['../class_geometry_engine.html#a56d49349ad8ac5bf78b8cae7a3c45bf0',1,'GeometryEngine']]],
+  ['precisiony_1',['precisionY',['../class_geometry_engine.html#afc6a48ae0b2b756e3938acc3f87be9e7',1,'GeometryEngine']]]
 ];

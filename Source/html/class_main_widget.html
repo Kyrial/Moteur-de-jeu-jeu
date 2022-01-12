@@ -5,10 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=11"/>
 <meta name="generator" content="Doxygen 1.9.3"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>My Project: Référence de la classe MainWidget</title>
+<title>Moteur De Jeu: Référence de la classe MainWidget</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
+<link href="navtree.css" rel="stylesheet" type="text/css"/>
+<script type="text/javascript" src="resize.js"></script>
+<script type="text/javascript" src="navtreedata.js"></script>
+<script type="text/javascript" src="navtree.js"></script>
 <link href="search/search.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="search/searchdata.js"></script>
 <script type="text/javascript" src="search/search.js"></script>
@@ -21,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">My Project
+   <div id="projectname">Moteur De Jeu
    </div>
   </td>
  </tr>
@@ -46,6 +50,23 @@ $(function() {
 /* @license-end */
 </script>
 <div id="main-nav"></div>
+</div><!-- top -->
+<div id="side-nav" class="ui-resizable side-nav-resizable">
+  <div id="nav-tree">
+    <div id="nav-tree-contents">
+      <div id="nav-sync" class="sync"></div>
+    </div>
+  </div>
+  <div id="splitbar" style="-moz-user-select:none;" 
+       class="ui-resizable-handle">
+  </div>
+</div>
+<script type="text/javascript">
+/* @license magnet:?xt=urn:btih:d3d9a9a6595521f9666a5e94cc830dab83b65699&amp;dn=expat.txt MIT */
+$(document).ready(function(){initNavTree('class_main_widget.html',''); initResizable(); });
+/* @license-end */
+</script>
+<div id="doc-content">
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
@@ -60,7 +81,6 @@ $(function() {
 </iframe>
 </div>
 
-</div><!-- top -->
 <div class="header">
   <div class="summary">
 <a href="#pub-slots">Connecteurs publics</a> &#124;
@@ -72,6 +92,11 @@ $(function() {
   <div class="headertitle"><div class="title">Référence de la classe MainWidget</div></div>
 </div><!--header-->
 <div class="contents">
+
+<p>la classe <a class="el" href="class_main_widget.html" title="la classe MainWidget est la classe principale qui contiens le graphe de scène et initialise la confit...">MainWidget</a> est la classe principale qui contiens le graphe de scène et initialise la confiture  
+ <a href="class_main_widget.html#details">Plus de détails...</a></p>
+
+<p><code>#include &lt;<a class="el" href="mainwidget_8h_source.html">mainwidget.h</a>&gt;</code></p>
 <div class="dynheader">
 Graphe d'héritage de MainWidget:</div>
 <div class="dyncontent">
@@ -102,14 +127,14 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>emitFilter</b> (QEven
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-methods" name="pub-methods"></a>
 Fonctions membres publiques</h2></td></tr>
-<tr class="memitem:a326fee5088b7cebaa102ed5332dd59ee"><td class="memItemLeft" align="right" valign="top"><a id="a326fee5088b7cebaa102ed5332dd59ee" name="a326fee5088b7cebaa102ed5332dd59ee"></a>
-&#160;</td><td class="memItemRight" valign="bottom"><b>MainWidget</b> (QWidget *parent=0)</td></tr>
+<tr class="memitem:a326fee5088b7cebaa102ed5332dd59ee"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_widget.html#a326fee5088b7cebaa102ed5332dd59ee">MainWidget</a> (QWidget *parent=0)</td></tr>
+<tr class="memdesc:a326fee5088b7cebaa102ed5332dd59ee"><td class="mdescLeft">&#160;</td><td class="mdescRight">Constructeur.  <a href="class_main_widget.html#a326fee5088b7cebaa102ed5332dd59ee">Plus de détails...</a><br /></td></tr>
 <tr class="separator:a326fee5088b7cebaa102ed5332dd59ee"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a35a3ec334b4b3ad09d249e738b026399"><td class="memItemLeft" align="right" valign="top"><a id="a35a3ec334b4b3ad09d249e738b026399" name="a35a3ec334b4b3ad09d249e738b026399"></a>
 &#160;</td><td class="memItemRight" valign="bottom"><b>MainWidget</b> (int fps)</td></tr>
 <tr class="separator:a35a3ec334b4b3ad09d249e738b026399"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a6506ae94fa00ea024d876d590d9f50b3"><td class="memItemLeft" align="right" valign="top"><a id="a6506ae94fa00ea024d876d590d9f50b3" name="a6506ae94fa00ea024d876d590d9f50b3"></a>
-void&#160;</td><td class="memItemRight" valign="bottom"><b>modifFPS</b> (int x)</td></tr>
+<tr class="memitem:a6506ae94fa00ea024d876d590d9f50b3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_main_widget.html#a6506ae94fa00ea024d876d590d9f50b3">modifFPS</a> (int x)</td></tr>
+<tr class="memdesc:a6506ae94fa00ea024d876d590d9f50b3"><td class="mdescLeft">&#160;</td><td class="mdescRight">modifFPS : modifi les FPS  <a href="class_main_widget.html#a6506ae94fa00ea024d876d590d9f50b3">Plus de détails...</a><br /></td></tr>
 <tr class="separator:a6506ae94fa00ea024d876d590d9f50b3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pub-attribs" name="pub-attribs"></a>
@@ -174,6 +199,43 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>scene</b> ()</td></tr
 <tr class="memdesc:ab66aa7a0b110a0421249a0f3f2c53259"><td class="mdescLeft">&#160;</td><td class="mdescRight">Methode repertoriant tout les object du graphe de scène. <br /></td></tr>
 <tr class="separator:ab66aa7a0b110a0421249a0f3f2c53259"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
+<a name="details" id="details"></a><h2 class="groupheader">Description détaillée</h2>
+<div class="textblock"><p >la classe <a class="el" href="class_main_widget.html" title="la classe MainWidget est la classe principale qui contiens le graphe de scène et initialise la confit...">MainWidget</a> est la classe principale qui contiens le graphe de scène et initialise la confiture </p>
+</div><h2 class="groupheader">Documentation des constructeurs et destructeur</h2>
+<a id="a326fee5088b7cebaa102ed5332dd59ee" name="a326fee5088b7cebaa102ed5332dd59ee"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a326fee5088b7cebaa102ed5332dd59ee">&#9670;&nbsp;</a></span>MainWidget()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">MainWidget::MainWidget </td>
+          <td>(</td>
+          <td class="paramtype">QWidget *&#160;</td>
+          <td class="paramname"><em>parent</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">explicit</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Constructeur. </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">parent</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <h2 class="groupheader">Documentation des fonctions membres</h2>
 <a id="a526344b742bb2b3ed931571c2709f7e8" name="a526344b742bb2b3ed931571c2709f7e8"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#a526344b742bb2b3ed931571c2709f7e8">&#9670;&nbsp;</a></span>addBillboardObject()</h2>
@@ -454,6 +516,32 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>scene</b> ()</td></tr
 
 </div>
 </div>
+<a id="a6506ae94fa00ea024d876d590d9f50b3" name="a6506ae94fa00ea024d876d590d9f50b3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6506ae94fa00ea024d876d590d9f50b3">&#9670;&nbsp;</a></span>modifFPS()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void MainWidget::modifFPS </td>
+          <td>(</td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>x</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>modifFPS : modifi les FPS </p>
+<dl class="params"><dt>Paramètres</dt><dd>
+  <table class="params">
+    <tr><td class="paramname">x</td><td></td></tr>
+  </table>
+  </dd>
+</dl>
+
+</div>
+</div>
 <a id="afbf87f376e972633a553a86c55e37e2e" name="afbf87f376e972633a553a86c55e37e2e"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#afbf87f376e972633a553a86c55e37e2e">&#9670;&nbsp;</a></span>paintGL()</h2>
 
@@ -528,9 +616,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>scene</b> ()</td></tr
 <li>mainwidget.cpp</li>
 </ul>
 </div><!-- contents -->
+</div><!-- doc-content -->
 <!-- start footer part -->
-<hr class="footer"/><address class="footer"><small>
-Généré par&#160;<a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3
-</small></address>
+<div id="nav-path" class="navpath"><!-- id is needed for treeview function! -->
+  <ul>
+    <li class="navelem"><a class="el" href="class_main_widget.html">MainWidget</a></li>
+    <li class="footer">Généré par <a href="https://www.doxygen.org/index.html"><img class="footer" src="doxygen.svg" width="104" height="31" alt="doxygen"/></a> 1.9.3 </li>
+  </ul>
+</div>
 </body>
 </html>

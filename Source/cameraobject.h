@@ -3,11 +3,27 @@
 
 #include "object.h"
 #include "QVector3D"
+
+/**
+* @file
+* @brief le fichier contient la classe  CameraObject qui gère l'objet Caméra
+*/
+
+/**
+* @brief la classe CameraObject qui gère l'objet Caméra
+*/
 class CameraObject : public Object
 {
     Q_OBJECT
 public:
+    /**
+     * @brief  Constructeur
+     */
     CameraObject();
+    /**
+     * @brief CameraObject constructeur avec parametre
+     * @param par le parent
+     */
     CameraObject(Object par){
         parent = &par;
     }
@@ -22,10 +38,12 @@ public:
 
 
 
-   void rotationScene(double deltaTime){
-    camera_position = QQuaternion::fromAxisAndAngle(QVector3D(0.0f, 0.0f, 2.0f), 0.03*(deltaTime)) * camera_position;
-}
 
+    /**
+    * @brief updateScene met a jour la caméra
+    * @param deltaTime
+    * @param m
+    */
    void  updateScene( double deltaTime =1, QMatrix4x4 m= QMatrix4x4());
 
    void keyPress(QKeyEvent *event);

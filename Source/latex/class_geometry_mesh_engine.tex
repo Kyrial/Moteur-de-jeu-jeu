@@ -19,19 +19,18 @@ Graphe d\textquotesingle{}héritage de Geometry\+Mesh\+Engine\+:\begin{figure}[H
 \begin{DoxyCompactItemize}
 \item 
 void \mbox{\hyperlink{class_geometry_mesh_engine_abcbaab46094406b823a5e8f45449372b}{init\+Mesh}} (std\+::string filename, bool collision\+Activated=true, bool centre=false, bool inverse=false)
-\begin{DoxyCompactList}\small\item\em init\+Mesh charge un fichier .off et appelle bind\+Mesh \end{DoxyCompactList}\item 
+\begin{DoxyCompactList}\small\item\em init\+Mesh charge un fichier .off et appelle \mbox{\hyperlink{class_geometry_mesh_engine_abf99cb5a68705d14cdeee4f585000240}{bind\+Mesh()}} \end{DoxyCompactList}\item 
 void \mbox{\hyperlink{class_geometry_mesh_engine_a3b3975e47c841da224e98df7024a6617}{init\+Mesh\+Obj}} (std\+::string filename, bool collision\+Activated=true, bool centre=false, bool inverse=false)
-\item 
-\mbox{\Hypertarget{class_geometry_mesh_engine_abf99cb5a68705d14cdeee4f585000240}\label{class_geometry_mesh_engine_abf99cb5a68705d14cdeee4f585000240}} 
-void {\bfseries bind\+Mesh} (std\+::vector$<$ std\+::vector$<$ unsigned int $>$ $>$ faces, bool a=true, bool centre=false, bool inverse=false)
-\item 
+\begin{DoxyCompactList}\small\item\em init\+Mesh\+Obj charge un fichier .obj et appelle \mbox{\hyperlink{class_geometry_mesh_engine_abf99cb5a68705d14cdeee4f585000240}{bind\+Mesh()}} \end{DoxyCompactList}\item 
+void \mbox{\hyperlink{class_geometry_mesh_engine_abf99cb5a68705d14cdeee4f585000240}{bind\+Mesh}} (std\+::vector$<$ std\+::vector$<$ unsigned int $>$ $>$ faces, bool a=true, bool centre=false, bool inverse=false)
+\begin{DoxyCompactList}\small\item\em bind\+Mesh, \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_geometry_mesh_engine_a899a7922ae225ee6d16b94f08f401978}\label{class_geometry_mesh_engine_a899a7922ae225ee6d16b94f08f401978}} 
 void {\bfseries draw\+With\+Normal} (QOpen\+GLShader\+Program $\ast$program)
 \item 
 void \mbox{\hyperlink{class_geometry_mesh_engine_a3bdf9ec6cb847a69f4e147c69ee031ef}{draw\+Cube\+Geometry}} (QOpen\+GLShader\+Program $\ast$program) override
 \begin{DoxyCompactList}\small\item\em dessine le mesh bind \end{DoxyCompactList}\item 
 QVector3D \mbox{\hyperlink{class_geometry_mesh_engine_a1f38ddcd6719edf67052639b2453334c}{set\+Normal\+To\+Centre\+Circle}} (QVector3D vec, QVector3D centre, bool inverse) override
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em virtual, voir \mbox{\hyperlink{class_geometry_mesh_engine_a1f38ddcd6719edf67052639b2453334c}{Geometry\+Mesh\+Engine\+::set\+Normal\+To\+Centre\+Circle}} \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Attributs publics}
 \begin{DoxyCompactItemize}
 \item 
@@ -48,6 +47,25 @@ std\+::vector$<$ std\+::vector$<$ unsigned int $>$ $>$ {\bfseries indices\+Textu
 la classe \mbox{\hyperlink{class_geometry_mesh_engine}{Geometry\+Mesh\+Engine}} effectue toute les actions en rapport aux maillage importer 
 
 \doxysubsection{Documentation des fonctions membres}
+\mbox{\Hypertarget{class_geometry_mesh_engine_abf99cb5a68705d14cdeee4f585000240}\label{class_geometry_mesh_engine_abf99cb5a68705d14cdeee4f585000240}} 
+\index{GeometryMeshEngine@{GeometryMeshEngine}!bindMesh@{bindMesh}}
+\index{bindMesh@{bindMesh}!GeometryMeshEngine@{GeometryMeshEngine}}
+\doxysubsubsection{\texorpdfstring{bindMesh()}{bindMesh()}}
+{\footnotesize\ttfamily void Geometry\+Mesh\+Engine\+::bind\+Mesh (\begin{DoxyParamCaption}\item[{std\+::vector$<$ std\+::vector$<$ unsigned int $>$ $>$}]{faces,  }\item[{bool}]{a = {\ttfamily true},  }\item[{bool}]{centre = {\ttfamily false},  }\item[{bool}]{inverse = {\ttfamily false} }\end{DoxyParamCaption})}
+
+
+
+bind\+Mesh, 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em faces} & tableau des face de l\textquotesingle{}objet \\
+\hline
+{\em centre} & pour changer la direction des normals \\
+\hline
+{\em inverse} & inverse la direction des normals \\
+\hline
+\end{DoxyParams}
 \mbox{\Hypertarget{class_geometry_mesh_engine_a3bdf9ec6cb847a69f4e147c69ee031ef}\label{class_geometry_mesh_engine_a3bdf9ec6cb847a69f4e147c69ee031ef}} 
 \index{GeometryMeshEngine@{GeometryMeshEngine}!drawCubeGeometry@{drawCubeGeometry}}
 \index{drawCubeGeometry@{drawCubeGeometry}!GeometryMeshEngine@{GeometryMeshEngine}}
@@ -77,7 +95,7 @@ Réimplémentée à partir de \mbox{\hyperlink{class_geometry_engine_a9668fa4c75
 
 
 
-init\+Mesh charge un fichier .off et appelle bind\+Mesh 
+init\+Mesh charge un fichier .off et appelle \mbox{\hyperlink{class_geometry_mesh_engine_abf99cb5a68705d14cdeee4f585000240}{bind\+Mesh()}} 
 
 
 \begin{DoxyParams}{Paramètres}
@@ -102,7 +120,22 @@ Réimplémentée à partir de \mbox{\hyperlink{class_geometry_engine_af31f9d14bd
 
 
 
-Réimplémentée à partir de \mbox{\hyperlink{class_geometry_engine}{Geometry\+Engine}}.
+init\+Mesh\+Obj charge un fichier .obj et appelle \mbox{\hyperlink{class_geometry_mesh_engine_abf99cb5a68705d14cdeee4f585000240}{bind\+Mesh()}} 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em filename} & \\
+\hline
+{\em collision\+Activated} & vrai si collision activé \\
+\hline
+{\em centre} & pour changer la direction des normals \\
+\hline
+{\em inverse} & inverse la direction des normals \\
+\hline
+\end{DoxyParams}
+
+
+Réimplémentée à partir de \mbox{\hyperlink{class_geometry_engine_a39f9719fc31f92eac9d6f2e8a202373d}{Geometry\+Engine}}.
 
 \mbox{\Hypertarget{class_geometry_mesh_engine_a1f38ddcd6719edf67052639b2453334c}\label{class_geometry_mesh_engine_a1f38ddcd6719edf67052639b2453334c}} 
 \index{GeometryMeshEngine@{GeometryMeshEngine}!setNormalToCentreCircle@{setNormalToCentreCircle}}
@@ -112,7 +145,11 @@ Réimplémentée à partir de \mbox{\hyperlink{class_geometry_engine}{Geometry\+
 
 
 
-Réimplémentée à partir de \mbox{\hyperlink{class_geometry_engine}{Geometry\+Engine}}.
+virtual, voir \mbox{\hyperlink{class_geometry_mesh_engine_a1f38ddcd6719edf67052639b2453334c}{Geometry\+Mesh\+Engine\+::set\+Normal\+To\+Centre\+Circle}} 
+
+
+
+Réimplémentée à partir de \mbox{\hyperlink{class_geometry_engine_ad9a0c89b6724bbb270614c917ccc2d0d}{Geometry\+Engine}}.
 
 
 

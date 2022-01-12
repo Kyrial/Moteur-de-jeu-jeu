@@ -1,5 +1,14 @@
 \hypertarget{class_main_widget}{}\doxysection{Référence de la classe Main\+Widget}
 \label{class_main_widget}\index{MainWidget@{MainWidget}}
+
+
+la classe \mbox{\hyperlink{class_main_widget}{Main\+Widget}} est la classe principale qui contiens le graphe de scène et initialise la confiture  
+
+
+
+
+{\ttfamily \#include $<$mainwidget.\+h$>$}
+
 Graphe d\textquotesingle{}héritage de Main\+Widget\+:\begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -30,15 +39,13 @@ void {\bfseries emit\+Filter} (QEvent $\ast$event)
 \doxysubsection*{Fonctions membres publiques}
 \begin{DoxyCompactItemize}
 \item 
-\mbox{\Hypertarget{class_main_widget_a326fee5088b7cebaa102ed5332dd59ee}\label{class_main_widget_a326fee5088b7cebaa102ed5332dd59ee}} 
-{\bfseries Main\+Widget} (QWidget $\ast$parent=0)
-\item 
+\mbox{\hyperlink{class_main_widget_a326fee5088b7cebaa102ed5332dd59ee}{Main\+Widget}} (QWidget $\ast$parent=0)
+\begin{DoxyCompactList}\small\item\em Constructeur. \end{DoxyCompactList}\item 
 \mbox{\Hypertarget{class_main_widget_a35a3ec334b4b3ad09d249e738b026399}\label{class_main_widget_a35a3ec334b4b3ad09d249e738b026399}} 
 {\bfseries Main\+Widget} (int fps)
 \item 
-\mbox{\Hypertarget{class_main_widget_a6506ae94fa00ea024d876d590d9f50b3}\label{class_main_widget_a6506ae94fa00ea024d876d590d9f50b3}} 
-void {\bfseries modif\+FPS} (int x)
-\end{DoxyCompactItemize}
+void \mbox{\hyperlink{class_main_widget_a6506ae94fa00ea024d876d590d9f50b3}{modif\+FPS}} (int x)
+\begin{DoxyCompactList}\small\item\em modif\+FPS \+: modifi les FPS \end{DoxyCompactList}\end{DoxyCompactItemize}
 \doxysubsection*{Attributs publics}
 \begin{DoxyCompactItemize}
 \item 
@@ -89,6 +96,27 @@ void {\bfseries init\+Monde} ()
 \mbox{\Hypertarget{class_main_widget_ab66aa7a0b110a0421249a0f3f2c53259}\label{class_main_widget_ab66aa7a0b110a0421249a0f3f2c53259}} 
 void {\bfseries scene} ()
 \begin{DoxyCompactList}\small\item\em Methode repertoriant tout les object du graphe de scène. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\doxysubsection{Description détaillée}
+la classe \mbox{\hyperlink{class_main_widget}{Main\+Widget}} est la classe principale qui contiens le graphe de scène et initialise la confiture 
+
+\doxysubsection{Documentation des constructeurs et destructeur}
+\mbox{\Hypertarget{class_main_widget_a326fee5088b7cebaa102ed5332dd59ee}\label{class_main_widget_a326fee5088b7cebaa102ed5332dd59ee}} 
+\index{MainWidget@{MainWidget}!MainWidget@{MainWidget}}
+\index{MainWidget@{MainWidget}!MainWidget@{MainWidget}}
+\doxysubsubsection{\texorpdfstring{MainWidget()}{MainWidget()}}
+{\footnotesize\ttfamily Main\+Widget\+::\+Main\+Widget (\begin{DoxyParamCaption}\item[{QWidget $\ast$}]{parent = {\ttfamily 0} }\end{DoxyParamCaption})\hspace{0.3cm}{\ttfamily [explicit]}}
+
+
+
+Constructeur. 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em parent} & \\
+\hline
+\end{DoxyParams}
 
 
 \doxysubsection{Documentation des fonctions membres}
@@ -198,7 +226,22 @@ ajoute un Mobile\+Object au graphe de scène
 
 \mbox{[}3\mbox{]} 
 
-init\+Shaders initialise tous les shaders \mbox{\Hypertarget{class_main_widget_afbf87f376e972633a553a86c55e37e2e}\label{class_main_widget_afbf87f376e972633a553a86c55e37e2e}} 
+init\+Shaders initialise tous les shaders \mbox{\Hypertarget{class_main_widget_a6506ae94fa00ea024d876d590d9f50b3}\label{class_main_widget_a6506ae94fa00ea024d876d590d9f50b3}} 
+\index{MainWidget@{MainWidget}!modifFPS@{modifFPS}}
+\index{modifFPS@{modifFPS}!MainWidget@{MainWidget}}
+\doxysubsubsection{\texorpdfstring{modifFPS()}{modifFPS()}}
+{\footnotesize\ttfamily void Main\+Widget\+::modif\+FPS (\begin{DoxyParamCaption}\item[{int}]{x }\end{DoxyParamCaption})}
+
+
+
+modif\+FPS \+: modifi les FPS 
+
+
+\begin{DoxyParams}{Paramètres}
+{\em x} & \\
+\hline
+\end{DoxyParams}
+\mbox{\Hypertarget{class_main_widget_afbf87f376e972633a553a86c55e37e2e}\label{class_main_widget_afbf87f376e972633a553a86c55e37e2e}} 
 \index{MainWidget@{MainWidget}!paintGL@{paintGL}}
 \index{paintGL@{paintGL}!MainWidget@{MainWidget}}
 \doxysubsubsection{\texorpdfstring{paintGL()}{paintGL()}}
@@ -226,5 +269,5 @@ view
 
 La documentation de cette classe a été générée à partir du fichier suivant \+:\begin{DoxyCompactItemize}
 \item 
-mainwidget.\+h\item 
+\mbox{\hyperlink{mainwidget_8h}{mainwidget.\+h}}\item 
 mainwidget.\+cpp\end{DoxyCompactItemize}

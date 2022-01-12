@@ -1,5 +1,5 @@
 \hypertarget{mainwidget_8h_source}{}\doxysection{mainwidget.\+h}
-
+\mbox{\hyperlink{mainwidget_8h}{Aller à la documentation de ce fichier.}}
 \begin{DoxyCode}{0}
 \DoxyCodeLine{1 \textcolor{comment}{/****************************************************************************}}
 \DoxyCodeLine{2 \textcolor{comment}{**}}
@@ -76,89 +76,87 @@
 \DoxyCodeLine{73 \textcolor{preprocessor}{\#include <QPainter>}}
 \DoxyCodeLine{74 \textcolor{preprocessor}{\#include <QToolTip>}}
 \DoxyCodeLine{75 \textcolor{keyword}{class }\mbox{\hyperlink{class_geometry_engine}{GeometryEngine}};}
-\DoxyCodeLine{76 }
-\DoxyCodeLine{77 \textcolor{keyword}{class }\mbox{\hyperlink{class_main_widget}{MainWidget}} : \textcolor{keyword}{public} QOpenGLWidget, \textcolor{keyword}{protected} QOpenGLFunctions\_4\_1\_Core}
-\DoxyCodeLine{78 \{}
-\DoxyCodeLine{79     Q\_OBJECT}
-\DoxyCodeLine{80 }
-\DoxyCodeLine{81 \textcolor{keyword}{public}:}
-\DoxyCodeLine{82     \textcolor{keyword}{explicit} \mbox{\hyperlink{class_main_widget}{MainWidget}}(QWidget *parent = 0);}
-\DoxyCodeLine{83     \mbox{\hyperlink{class_main_widget}{\string~MainWidget}}();}
-\DoxyCodeLine{84     \mbox{\hyperlink{class_main_widget}{MainWidget}}();}
-\DoxyCodeLine{85 }
-\DoxyCodeLine{86     \mbox{\hyperlink{class_main_widget}{MainWidget}}(\textcolor{keywordtype}{int} fps);}
-\DoxyCodeLine{87 }
-\DoxyCodeLine{88     \textcolor{keywordtype}{void} modifFPS(\textcolor{keywordtype}{int} x);}
-\DoxyCodeLine{89 }
-\DoxyCodeLine{90     \textcolor{keywordtype}{int} FPS = 20;}
-\DoxyCodeLine{91     QElapsedTimer lastFrame;}
-\DoxyCodeLine{92     QElapsedTimer absoluteTime;}
-\DoxyCodeLine{93     \textcolor{keywordtype}{double} deltaTime = 1;}
-\DoxyCodeLine{94 }
-\DoxyCodeLine{95 \textcolor{keyword}{protected}:}
-\DoxyCodeLine{96     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_af95f85af6ec3ce4a2355d82d891ed2c0}{mousePressEvent}}(QMouseEvent *e) \textcolor{keyword}{override};}
-\DoxyCodeLine{97     \textcolor{keywordtype}{void} mouseReleaseEvent(QMouseEvent *e) \textcolor{keyword}{override};}
-\DoxyCodeLine{98     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a77d29c4fd66225ea10ffc5369a907c71}{timerEvent}}(QTimerEvent *e) \textcolor{keyword}{override};}
-\DoxyCodeLine{99 }
-\DoxyCodeLine{100     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a165d742c4d8f6f65458b04ac8b9ea1db}{initializeGL}}() \textcolor{keyword}{override};}
-\DoxyCodeLine{101     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a2a1c57a221291985658820568a8bd5c0}{resizeGL}}(\textcolor{keywordtype}{int} w, \textcolor{keywordtype}{int} h) \textcolor{keyword}{override};}
-\DoxyCodeLine{102     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_afbf87f376e972633a553a86c55e37e2e}{paintGL}}() \textcolor{keyword}{override};}
-\DoxyCodeLine{103 }
-\DoxyCodeLine{104     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a3d8d55c802fd4b4dabeef5bd9592c697}{initShaders}}();}
-\DoxyCodeLine{105     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a45e5b0ff42304bfe4d0500bc4cff79d4}{initTextures}}();}
-\DoxyCodeLine{106 }
-\DoxyCodeLine{107     \textcolor{comment}{//  void keyPressEvent(QKeyEvent *e) override;}}
-\DoxyCodeLine{108 }
-\DoxyCodeLine{109 }
-\DoxyCodeLine{110     \mbox{\hyperlink{class_object}{Object}}* \mbox{\hyperlink{class_main_widget_a7f56fc7caa713e27a14f567a0b3e611f}{addGameObject}}(QOpenGLShaderProgram* shad,\mbox{\hyperlink{class_object}{Object}} *parent, \mbox{\hyperlink{class_transform}{Transform}} *t, \mbox{\hyperlink{class_geometry_engine}{GeometryEngine}} *mesh, \mbox{\hyperlink{class_transform}{Transform}} *anim,QOpenGLTexture *txtr);}
-\DoxyCodeLine{111     \mbox{\hyperlink{class_object}{Object}}* \mbox{\hyperlink{class_main_widget_a9c2ef55bb6c708f24195183d23d22420}{addMobileObject}}(QOpenGLShaderProgram* shad,\mbox{\hyperlink{class_object}{Object}} *parent, \mbox{\hyperlink{class_transform}{Transform}} *t, \mbox{\hyperlink{class_geometry_engine}{GeometryEngine}} *mesh, \mbox{\hyperlink{class_transform}{Transform}} *anim,QOpenGLTexture *texture);}
-\DoxyCodeLine{112     \mbox{\hyperlink{class_object}{Object}}* \mbox{\hyperlink{class_main_widget_a526344b742bb2b3ed931571c2709f7e8}{addBillboardObject}}(QOpenGLShaderProgram* shad,\mbox{\hyperlink{class_object}{Object}} *parent, \mbox{\hyperlink{class_transform}{Transform}} *t, \mbox{\hyperlink{class_geometry_engine}{GeometryEngine}} *mesh, \mbox{\hyperlink{class_transform}{Transform}} *anim,QOpenGLTexture *txtr);}
-\DoxyCodeLine{113 }
-\DoxyCodeLine{114 }
-\DoxyCodeLine{115     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a1d429b8938f23b9feb3765096cad1588}{initMonde}}();}
-\DoxyCodeLine{116     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_ab66aa7a0b110a0421249a0f3f2c53259}{scene}}();}
-\DoxyCodeLine{117 }
-\DoxyCodeLine{118 \textcolor{keyword}{private}:}
+\DoxyCodeLine{83 \textcolor{keyword}{class }\mbox{\hyperlink{class_main_widget}{MainWidget}} : \textcolor{keyword}{public} QOpenGLWidget, \textcolor{keyword}{protected} QOpenGLFunctions\_4\_1\_Core}
+\DoxyCodeLine{84 \{}
+\DoxyCodeLine{85     Q\_OBJECT}
+\DoxyCodeLine{86 }
+\DoxyCodeLine{87 \textcolor{keyword}{public}:}
+\DoxyCodeLine{92     \textcolor{keyword}{explicit} \mbox{\hyperlink{class_main_widget}{MainWidget}}(QWidget *parent = 0);}
+\DoxyCodeLine{93     \mbox{\hyperlink{class_main_widget}{\string~MainWidget}}();}
+\DoxyCodeLine{94     \mbox{\hyperlink{class_main_widget}{MainWidget}}();}
+\DoxyCodeLine{95 }
+\DoxyCodeLine{96     \mbox{\hyperlink{class_main_widget}{MainWidget}}(\textcolor{keywordtype}{int} fps);}
+\DoxyCodeLine{101     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a6506ae94fa00ea024d876d590d9f50b3}{modifFPS}}(\textcolor{keywordtype}{int} x);}
+\DoxyCodeLine{102 }
+\DoxyCodeLine{103     \textcolor{keywordtype}{int} FPS = 20;}
+\DoxyCodeLine{104     QElapsedTimer lastFrame;}
+\DoxyCodeLine{105     QElapsedTimer absoluteTime;}
+\DoxyCodeLine{106     \textcolor{keywordtype}{double} deltaTime = 1;}
+\DoxyCodeLine{107 }
+\DoxyCodeLine{108 \textcolor{keyword}{protected}:}
+\DoxyCodeLine{109     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_af95f85af6ec3ce4a2355d82d891ed2c0}{mousePressEvent}}(QMouseEvent *e) \textcolor{keyword}{override};}
+\DoxyCodeLine{110     \textcolor{keywordtype}{void} mouseReleaseEvent(QMouseEvent *e) \textcolor{keyword}{override};}
+\DoxyCodeLine{111     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a77d29c4fd66225ea10ffc5369a907c71}{timerEvent}}(QTimerEvent *e) \textcolor{keyword}{override};}
+\DoxyCodeLine{112 }
+\DoxyCodeLine{113     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a165d742c4d8f6f65458b04ac8b9ea1db}{initializeGL}}() \textcolor{keyword}{override};}
+\DoxyCodeLine{114     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a2a1c57a221291985658820568a8bd5c0}{resizeGL}}(\textcolor{keywordtype}{int} w, \textcolor{keywordtype}{int} h) \textcolor{keyword}{override};}
+\DoxyCodeLine{115     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_afbf87f376e972633a553a86c55e37e2e}{paintGL}}() \textcolor{keyword}{override};}
+\DoxyCodeLine{116 }
+\DoxyCodeLine{117     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a3d8d55c802fd4b4dabeef5bd9592c697}{initShaders}}();}
+\DoxyCodeLine{118     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a45e5b0ff42304bfe4d0500bc4cff79d4}{initTextures}}();}
 \DoxyCodeLine{119 }
-\DoxyCodeLine{120     QBasicTimer timer;}
-\DoxyCodeLine{121     \textcolor{keywordtype}{void} addAttributeToTexture(QOpenGLTexture* texture);}
-\DoxyCodeLine{122     QOpenGLShaderProgram program;}
-\DoxyCodeLine{123     QVector<QOpenGLShaderProgram*> allShaders;}
-\DoxyCodeLine{124 }
-\DoxyCodeLine{125     \mbox{\hyperlink{class_geometry_engine}{GeometryEngine}} *geometries;}
-\DoxyCodeLine{126     \mbox{\hyperlink{class_game_object}{GameObject}} *gameObj;}
-\DoxyCodeLine{127     \mbox{\hyperlink{class_controler}{Controler}} *control = \textcolor{keyword}{new} \mbox{\hyperlink{class_controler}{Controler}}();}
-\DoxyCodeLine{128 }
-\DoxyCodeLine{129     \textcolor{comment}{//  MobileObj *mobileobj;}}
-\DoxyCodeLine{130     QOpenGLTexture *texture;}
-\DoxyCodeLine{131 }
-\DoxyCodeLine{132     QOpenGLTexture * textureGrass;}
-\DoxyCodeLine{133     QOpenGLTexture * textureRock;}
-\DoxyCodeLine{134     QOpenGLTexture * textureSnow;}
-\DoxyCodeLine{135     QOpenGLTexture * textureEau;}
-\DoxyCodeLine{136     QOpenGLTexture * textureBois;}
-\DoxyCodeLine{137     \textcolor{keywordtype}{bool} polygonMode = \textcolor{keyword}{false};}
-\DoxyCodeLine{138 }
-\DoxyCodeLine{139 }
-\DoxyCodeLine{140     QMatrix4x4 projection;}
+\DoxyCodeLine{120     \textcolor{comment}{//  void keyPressEvent(QKeyEvent *e) override;}}
+\DoxyCodeLine{121 }
+\DoxyCodeLine{122 }
+\DoxyCodeLine{123     \mbox{\hyperlink{class_object}{Object}}* \mbox{\hyperlink{class_main_widget_a7f56fc7caa713e27a14f567a0b3e611f}{addGameObject}}(QOpenGLShaderProgram* shad,\mbox{\hyperlink{class_object}{Object}} *parent, \mbox{\hyperlink{class_transform}{Transform}} *t, \mbox{\hyperlink{class_geometry_engine}{GeometryEngine}} *mesh, \mbox{\hyperlink{class_transform}{Transform}} *anim,QOpenGLTexture *txtr);}
+\DoxyCodeLine{124     \mbox{\hyperlink{class_object}{Object}}* \mbox{\hyperlink{class_main_widget_a9c2ef55bb6c708f24195183d23d22420}{addMobileObject}}(QOpenGLShaderProgram* shad,\mbox{\hyperlink{class_object}{Object}} *parent, \mbox{\hyperlink{class_transform}{Transform}} *t, \mbox{\hyperlink{class_geometry_engine}{GeometryEngine}} *mesh, \mbox{\hyperlink{class_transform}{Transform}} *anim,QOpenGLTexture *texture);}
+\DoxyCodeLine{125     \mbox{\hyperlink{class_object}{Object}}* \mbox{\hyperlink{class_main_widget_a526344b742bb2b3ed931571c2709f7e8}{addBillboardObject}}(QOpenGLShaderProgram* shad,\mbox{\hyperlink{class_object}{Object}} *parent, \mbox{\hyperlink{class_transform}{Transform}} *t, \mbox{\hyperlink{class_geometry_engine}{GeometryEngine}} *mesh, \mbox{\hyperlink{class_transform}{Transform}} *anim,QOpenGLTexture *txtr);}
+\DoxyCodeLine{126 }
+\DoxyCodeLine{127 }
+\DoxyCodeLine{128     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_a1d429b8938f23b9feb3765096cad1588}{initMonde}}();}
+\DoxyCodeLine{129     \textcolor{keywordtype}{void} \mbox{\hyperlink{class_main_widget_ab66aa7a0b110a0421249a0f3f2c53259}{scene}}();}
+\DoxyCodeLine{130 }
+\DoxyCodeLine{131 \textcolor{keyword}{private}:}
+\DoxyCodeLine{132 }
+\DoxyCodeLine{133     QBasicTimer timer;}
+\DoxyCodeLine{134     \textcolor{keywordtype}{void} addAttributeToTexture(QOpenGLTexture* texture);}
+\DoxyCodeLine{135     QOpenGLShaderProgram program;}
+\DoxyCodeLine{136     QVector<QOpenGLShaderProgram*> allShaders;}
+\DoxyCodeLine{137 }
+\DoxyCodeLine{138     \mbox{\hyperlink{class_geometry_engine}{GeometryEngine}} *geometries;}
+\DoxyCodeLine{139     \mbox{\hyperlink{class_game_object}{GameObject}} *gameObj;}
+\DoxyCodeLine{140     \mbox{\hyperlink{class_controler}{Controler}} *control = \textcolor{keyword}{new} \mbox{\hyperlink{class_controler}{Controler}}();}
 \DoxyCodeLine{141 }
-\DoxyCodeLine{142     QVector2D mousePressPosition;}
-\DoxyCodeLine{143     QVector3D rotationAxis;}
-\DoxyCodeLine{144     qreal angularSpeed;}
-\DoxyCodeLine{145     QQuaternion rotation;}
-\DoxyCodeLine{146 }
-\DoxyCodeLine{147     \textcolor{keywordtype}{void} keyPressEvent(QKeyEvent *e) \textcolor{keyword}{override};}
-\DoxyCodeLine{148     \textcolor{keywordtype}{bool} eventFilter(QObject *\textcolor{keywordtype}{object}, QEvent *event) \textcolor{keyword}{override};}
-\DoxyCodeLine{149 signals:}
-\DoxyCodeLine{150     \textcolor{keywordtype}{void} signalKeyPress(QKeyEvent *e);}
-\DoxyCodeLine{151     \textcolor{keywordtype}{void} projectionChanged(QMatrix4x4 val);}
-\DoxyCodeLine{152     \textcolor{keywordtype}{void} emitFilter(QEvent *event);}
-\DoxyCodeLine{153 \textcolor{keyword}{public} slots :}
-\DoxyCodeLine{154     \textcolor{keywordtype}{void} cameraControle();}
-\DoxyCodeLine{155     \textcolor{keywordtype}{void} keyPress(QKeyEvent *e);}
-\DoxyCodeLine{156 }
-\DoxyCodeLine{157 \};}
-\DoxyCodeLine{158 }
-\DoxyCodeLine{159 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// MAINWIDGET\_H}}
+\DoxyCodeLine{142     \textcolor{comment}{//  MobileObj *mobileobj;}}
+\DoxyCodeLine{143     QOpenGLTexture *texture;}
+\DoxyCodeLine{144 }
+\DoxyCodeLine{145     QOpenGLTexture * textureGrass;}
+\DoxyCodeLine{146     QOpenGLTexture * textureRock;}
+\DoxyCodeLine{147     QOpenGLTexture * textureSnow;}
+\DoxyCodeLine{148     QOpenGLTexture * textureEau;}
+\DoxyCodeLine{149     QOpenGLTexture * textureBois;}
+\DoxyCodeLine{150     \textcolor{keywordtype}{bool} polygonMode = \textcolor{keyword}{false};}
+\DoxyCodeLine{151 }
+\DoxyCodeLine{152 }
+\DoxyCodeLine{153     QMatrix4x4 projection;}
+\DoxyCodeLine{154 }
+\DoxyCodeLine{155     QVector2D mousePressPosition;}
+\DoxyCodeLine{156     QVector3D rotationAxis;}
+\DoxyCodeLine{157     qreal angularSpeed;}
+\DoxyCodeLine{158     QQuaternion rotation;}
+\DoxyCodeLine{159 }
+\DoxyCodeLine{160     \textcolor{keywordtype}{void} keyPressEvent(QKeyEvent *e) \textcolor{keyword}{override};}
+\DoxyCodeLine{161     \textcolor{keywordtype}{bool} eventFilter(QObject *\textcolor{keywordtype}{object}, QEvent *event) \textcolor{keyword}{override};}
+\DoxyCodeLine{162 signals:}
+\DoxyCodeLine{163     \textcolor{keywordtype}{void} signalKeyPress(QKeyEvent *e);}
+\DoxyCodeLine{164     \textcolor{keywordtype}{void} projectionChanged(QMatrix4x4 val);}
+\DoxyCodeLine{165     \textcolor{keywordtype}{void} emitFilter(QEvent *event);}
+\DoxyCodeLine{166 \textcolor{keyword}{public} slots :}
+\DoxyCodeLine{167     \textcolor{keywordtype}{void} cameraControle();}
+\DoxyCodeLine{168     \textcolor{keywordtype}{void} keyPress(QKeyEvent *e);}
+\DoxyCodeLine{169 }
+\DoxyCodeLine{170 \};}
+\DoxyCodeLine{171 }
+\DoxyCodeLine{172 \textcolor{preprocessor}{\#endif }\textcolor{comment}{// MAINWIDGET\_H}}
 
 \end{DoxyCode}
