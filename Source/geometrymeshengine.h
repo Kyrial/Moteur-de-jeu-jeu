@@ -50,8 +50,15 @@ public:
     std::vector< std::vector<unsigned int> >  indicesTextures;
 
 //        QOpenGLBuffer normalBuf;
-
+    /**
+     * @brief drawCubeGeometry() avec la normal en plus
+     * @param program
+     */
     void drawWithNormal(QOpenGLShaderProgram *program);
+    /**
+     * @brief dessine la géométrie
+     * @param program
+     */
     void drawCubeGeometry(QOpenGLShaderProgram *program) override;
     QVector3D setNormalToCentreCircle(QVector3D vec, QVector3D centre, bool inverse) override;
 
