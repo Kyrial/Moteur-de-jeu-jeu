@@ -796,24 +796,6 @@ void GeometryEngine::TriangleStripForPlan(int x, int y,GLushort indices[])
      }
       indices[count]=indices[count-1];
 }
-void GeometryEngine::TriangleListForPlan(int x, int y,GLushort indices[]){
-    int count =0;
-    for(int i=0; i<x-1; i++){
-        for(int j=0;j<y-1; j++){
-            indices[count++] = i*y+j;
-            indices[count++] = (i+1)*y+j;
-            indices[count++] = (i+1)*(y+1)+j;
-        }
-    }
-    for(int i=0; i<x-1; i++){
-        for(int j=1;j<y; j++){
-            indices[count++] = i*y+j;
-            indices[count++] = (i+1)*(y-1)+j;
-            indices[count++] = (i+1)*y+j;
-
-        }
-    }
-}
 
 unsigned int GeometryEngine::convertStripToTriangle(GLushort indicesIn[], GLushort indicesOut[], int size){
     short a, b, c;
@@ -974,17 +956,9 @@ void GeometryEngine::addInstancedGrass(float ratioArbre, QVector3D min, QVector3
     }
 
     internbbInstenced.resize(modelMatrices.size());
-    //  gestionBoundingBoxForInstance(min,max);
+
 }
-//todo
-void GeometryEngine::gestionBoundingBoxForInstance( QVector3D min, QVector3D max){
-    Min[0] = min[0];
-    Max[0] = max[0];
-    Min[1] = min[1];
-    Max[1] = max[1];
-    Max[2] = Max[2]+30;
-    Min[2] = min[2]-3.0;
-}
+
 
 
 //! [2]

@@ -156,8 +156,18 @@ public:
      * @param inverse inverse la direction des normals
      */
     virtual void bindMesh(std::vector< std::vector<unsigned int> >  faces,bool centre= false, bool inverse = false){}
+    /**
+     * @brief virtual, voir BillboardObject::initLifeBar()
+     */
     virtual void initLifeBar(){}
+    /**
+     * @brief virtual, voir BillboardObject::updateLifeBar()
+
+     */
     virtual bool updateLifeBar(double deltaTime){}
+    /**
+     * @brief virtual, voir GeometryMeshEngine::setNormalToCentreCircle
+     */
     virtual QVector3D setNormalToCentreCircle(QVector3D vec, QVector3D centre, bool inverse){};
 
     /**
@@ -183,14 +193,26 @@ public:
      * @param collisionActivated boolean si collision
      */
     void initCurvedPlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax,bool collisionActivated);
-
+    /**
+     * @brief change la precision de la texture
+     * @param val
+     */
     void setPrecisionTexture(float val);
 
 protected:
-
+    /**
+     * @brief vertex contient le maillage
+     */
     std::vector<QVector3D>  vertex;
 
+    /**
+     * @brief Min min de l'AABB du mesh
+     */
     QVector3D Min = QVector3D(0,0,0);
+
+    /**
+     * @brief Max max de l'AABB du mesh
+     */
     QVector3D Max = QVector3D(0,0,0);
 
     /**
@@ -206,55 +228,211 @@ protected:
      * @param centreY centre du terrain axe Y
      */
     void subdivisePlan(int x, int y,  VertexData vertices[],float Xmin,float Ymin,float Xmax,float Ymax,float centreX =0, float centreY=0);//,std::string nameWeightMap );
+    /**
+     * @brief Subdivise le plan incurvé de precision x et y,
+     * @param x precision
+     * @param y precision
+     * @param vertices
+     * @param Xmin intervalle
+     * @param Ymin intervalle
+     * @param Xmax intervalle
+     * @param Ymax intervalle
+     */
     void subdiviseCurvedPlan(int x, int y, VertexData vertices[], float Xmin=-1,float Ymin=-1,float Xmax=1,float Ymax=1);
-
+    /**
+     * @brief TriangleStripForPlan ordonne les indices en triangleStrip
+     * @param x
+     * @param y
+     * @param indices
+     */
     void TriangleStripForPlan(int x, int y,GLushort indices[]);
-    void TriangleListForPlan(int x, int y,GLushort indices[]);
+    /**
+     * @brief updatePlanegeometry met a jour le plan du terrain
+     * @param Xmin intervalle
+     * @param Ymin intervalle
+     * @param Xmax intervalle
+     * @param Ymax intervalle
+     * @param centreX centre du terrain axe X
+     * @param centreY centre du terrain axe Y
+     */
     void updatePlanegeometry(float Xmin,float Ymin,float Xmax,float Ymax, float centreX =0, float centreY=0);
+    /**
+     * @brief convertStripToTriangle
+     * @param indicesIn
+     * @param indicesOut
+     * @param size
+     * @return
+     */
     unsigned int convertStripToTriangle(GLushort indicesIn[], GLushort indicesOut[], int size);
 
     std::vector<QVector3D> getVertex();
 
+    /**
+     * @brief precisionX presision du maillage
+     */
     int precisionX = 101; // attention! une valeur trop haute provoque
+    /**
+     * @brief precisionY presision du maillage
+     */
     int precisionY= 101;  // un dépassement de capacité (size > sizemax of array)
 
 
-
+    /**
+     * @brief initBB initialise Min et Max en fonction de vertex
+     * @param vertex
+     */
     void initBB(std::vector<QVector3D> vertex);
+    /**
+     * @brief initBB initialise Min et Max en fonction de vertices
+     * @param vertex
+     */
     void initBB(VertexData vertices[], int i);
+
     void setBBMin(QVector3D v);
     void setBBMax(QVector3D v);
 
   //  float getHauteur(QVector2D coordText);
 public:
 
-
+    /**
+     * @brief findCoordmesh gère la collision entre objet et terrain.
+     * @param geo le geometryEngine de l'objet
+     * @param objM matrice de transformation de geometryEngine
+     * @param ourM matrice de transformation du terrain
+     * @param collision[out] boolean si collision ou non
+     * @param mesh[out] coord du mesh ou l'impact a lieu
+     * @return retourne le vecteur reflechit
+     */
     QVector3D findCoordmesh(GeometryEngine *geo, QMatrix4x4 objM,  QMatrix4x4 ourM,  bool &collision, QVector3D & mesh);
     QVector3D getNormal();
     QVector3D getNormal(QVector3D vertex);
+    /**
+     * @brief recallageCollision
+     * @param geoB
+     * @param instance
+     * @return
+     */
     QVector3D recallageCollision(GeometryEngine *geoB, int instance=-1);
+    /**
+     * @brief resetBB réinitialise la AABB
+     */
     void resetBB();
     bool ifNoeudVide();
+    /**
+     * @brief remplaceBB remplace la AABB
+     * @param geo
+     */
     void remplaceBB(GeometryEngine *geo);
+    /**
+     * @brief remplaceBB remplace la AABB
+     * @param m
+     * @param M
+     */
     void remplaceBB(QVector3D m,QVector3D M);
+    /**
+     * @brief updateBB
+     * @param m
+     * @param lastM
+     * @param courante
+     */
+    /**
+     * @brief updateBB met a jour la AABB avec la matrice de transformation
+     * @param m matrice de base
+     * @param lastM matrice utilisé dans le cas d'objet instancié
+     * @param courante matrice utilisé dans le cas d'objet instancié
+     */
     void updateBB(QMatrix4x4 m, QMatrix4x4 lastM =QMatrix4x4(), QMatrix4x4 courante = QMatrix4x4());
+    /**
+     * @brief ajustBB combine deux AABB
+     * @param geo
+     */
     void ajustBB(GeometryEngine *geo);
+    /**
+     * @brief ajustBB combine deux AABB
+     * @param min
+     * @param max
+     */
     void ajustBB(QVector3D min, QVector3D max);
 
+    /**
+     * @brief intersect verifie si une intersection a lieu entre l'objet et la AABB du noeud du gameobject
+     * @param geo
+     * @return
+     */
     bool intersect(GeometryEngine *geo);
+    /**
+     * @brief internintersect verifie si une intersection a lieu entre l'objet et la AABB du mesh du gameobject
+     * @param geo
+     * @param numInstence lorsque la collision a lieu avec un objet instencié
+     * @param AllTransform
+     * @return
+     */
     bool internintersect(GeometryEngine *geo ,int &numInstence, QMatrix4x4 AllTransform = QMatrix4x4());
+    /**
+     * @brief internintersectInstenced verifie si une intersection a lieu entre l'objet et la AABB d'une instance du mesh
+     * @param geo
+     * @param numInstence numero de l'instance
+     * @param AllTransform
+     * @return
+     */
     bool internintersectInstenced(GeometryEngine *geo ,int &numInstence, QMatrix4x4 AllTransform = QMatrix4x4());
+    /**
+     * @brief gestionCollision une fois la collision detecter, gère la collision AABB vs AABB avec la reflexion
+     * @param geo
+     * @param vec
+     * @return
+     */
     QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec);
+    /**
+     * @brief gestionCollision une fois la collision detecter, gère la collision AABB vs Terrain avec la reflexion
+     * @param geo
+     * @param vec
+     * @return
+     */
     QVector3D gestionCollision(QVector3D vec, QVector3D mesh);
+    /**
+     * @brief gestionCollision une fois la collision detecter, gère la collision AABB vs AABB instenced avec la reflexion
+     * @param geo
+     * @param vec
+     * @return
+     */
     QVector3D gestionCollision(GeometryEngine *geo,QVector3D vec, int numInstenced);
 
+    /**
+     * @brief mapCoordChanged gère les changement de coordonnée du joueur afin que la carte reste centrée sur le joueur
+     * @param vec
+     * @param objM
+     * @param ourM
+     * @return
+     */
     QVector3D mapCoordChanged(QVector3D vec,QMatrix4x4 objM,QMatrix4x4 ourM);
-
+    /**
+     * @brief addInstancedGrass ajoute un nombre d'instance d'arbre
+     * @param ratioArbre devenu inutile
+     * @param min
+     * @param max
+     */
     void addInstancedGrass(float ratioArbre=0.42, QVector3D min=QVector3D(-13,-13,0), QVector3D max=QVector3D(13,13,0));
-    void gestionBoundingBoxForInstance( QVector3D min, QVector3D max);
+    /**
+     * @brief coordLastCollisionUpdateForMeshsCollision met à jour les coordonnée du dernier impacte lors d'une collision AABB vs AABB
+     * @param geo
+     * @param objM
+     */
     void coordLastCollisionUpdateForMeshsCollision(GeometryEngine *geo, QMatrix4x4 objM);
 
+    /**
+     * @brief calcBBMin renvoie le vecteur avec les coordonnée les plus petite entre last et min
+     * @param last
+     * @param min
+     * @return
+     */
     static QVector3D  calcBBMin(QVector3D const & last, QVector3D const & min);
+    /**
+     * @brief calcBBMin renvoie le vecteur avec les coordonnée les plus grande entre last et max
+     * @param last
+     * @param min
+     * @return
+     */
     static QVector3D  calcBBMax(QVector3D const & last, QVector3D const & max);
 };
 
